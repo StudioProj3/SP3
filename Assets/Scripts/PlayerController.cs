@@ -1,26 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // Player controller class for movement.
-// TODO - We should probably separate movement and other mechanics, so a 
-// TODO - PlayerMovement script and maybe a PlayerInventoryController script.
+// TODO (Chris): We should probably separate movement and other mechanics,
+// so a PlayerMovement script and maybe a PlayerInventoryController script.
 [DisallowMultipleComponent]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     #region Serialized Fields
 
-
     [SerializeField]
-    private float _movementSpeed = 0.15f;
+    [Range(0f, 10f)]
+    private float _movementSpeed = 5f;
 
     #endregion
 
     #region Private Fields
+
     private Rigidbody _rigidbody;
+
     #endregion
 
     #region Private Functions
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>(); 
@@ -28,7 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // TODO - These negative axises feel wrong/hacky. Maybe fix our axis to a certain way? (maybe positive x)
+        // FIXME (Chris): These negative axes feel wrong/hacky.
+        // Maybe fix our axes to a certain way? (maybe positive x)
         _rigidbody.velocity = _movementSpeed * new Vector3(
             -Input.GetAxisRaw("Horizontal"),
             0, -Input.GetAxisRaw("Vertical")).normalized;
