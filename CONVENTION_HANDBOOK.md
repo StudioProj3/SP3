@@ -58,7 +58,7 @@
     private bool _extraBool = false;
     ```
     ```csharp
-    void Foo()
+    private void Foo()
     {
         ...
         // BAD!
@@ -178,6 +178,7 @@
         - Public.
         - Protected.
         - Private.
+        - Should other access modifiers be used, the order can be decided then.
 ---
 14. Variable declaration order
     - Variables to be declared in the following order:
