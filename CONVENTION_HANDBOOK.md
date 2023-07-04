@@ -241,3 +241,12 @@
     - Do all development on the respective topic or feature branch, else commit to the `dev` branch.
     - `main` branch should only contain "release ready` builds that have been sufficiently tested.
 ---
+19. Branch name
+    - Branch names should only contain lowercase letters (numbers may be permitted where appropriate) and be delimited by a single dash (`-`).
+
+    **Examples(s):**
+    ```
+    this-is-a-valid-branch-name
+    This-Is_not-a_valid_branch-name
+    ```
+---
