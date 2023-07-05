@@ -30,11 +30,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // FIXME (Chris): These negative axes feel wrong/hacky.
-        // Maybe fix our axes to a certain way? (maybe positive x)
         _rigidbody.velocity = _movementSpeed * new Vector3(
-            -Input.GetAxisRaw("Horizontal"),
-            0, -Input.GetAxisRaw("Vertical")).normalized;
+            Input.GetAxisRaw("Horizontal"),
+            0, Input.GetAxisRaw("Vertical")).normalized;
     }
 
     #endregion
