@@ -3,6 +3,7 @@ using System.Linq;
 
 public static class ExtensionMethods
 {
+    #region Public
     /// Determines whether the collection is null or contains no elements.
     public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
     {
@@ -19,4 +20,5 @@ public static class ExtensionMethods
         }
         return !enumerable.Any(); 
     }
+    #endregion
 }
