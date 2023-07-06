@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class FiniteStateMachine<T>
 {
@@ -7,7 +9,7 @@ public class FiniteStateMachine<T>
 
     private T _owner;
     private Dictionary<Type, State<T>> _states;
-    private State<T> _currentState;
+    private List<State<T>> _currentStates;
 
     #endregion
 
@@ -15,7 +17,7 @@ public class FiniteStateMachine<T>
 
     public void Update()
     {
-        _currentState?.Update();
+        _currentStates.ForEach(s => s?.Update());
     }
 
     public FiniteStateMachine(T owner)
@@ -30,17 +32,45 @@ public class FiniteStateMachine<T>
         _states[state.GetType()] = state;
     }
 
-    public void SetState<S>() where S : State<S>
+    public void AddState(params State<T>[] states)
     {
-        if (_currentState != null)
+        foreach (State<T> state in states)
         {
-            _currentState.Exit();
+            state.SetState(this, _owner);
+            _states[state.GetType()] = state;
+        }
+    }
+
+    public void SetState(params Type[] stateTypes)
+    {
+        Debug.Assert(stateTypes.Where(t => !t.IsSubclassOf(typeof(State<T>))).Count() > 0, "Invalid Type passed into SetState function.");
+
+        if (_currentStates.IsNullOrEmpty())
+        {
+            _currentStates.ForEach(s => s.Exit());
         }
 
-        if (_states.ContainsKey(typeof(S)))
+        foreach (Type stateType in stateTypes)
         {
-            _currentState = _states[typeof(S)];
-            _currentState.Enter();
+            if (_states.ContainsKey(stateType))
+            {
+                State<T> state = _states[stateType];
+
+                // Check if the state already exists.
+                if (!_currentStates.Exists(s => s == state))
+                {
+                    _currentStates.Add(state);
+                    state.Enter();
+                }
+                else
+                {
+                    Debug.LogWarningFormat("Type passed into SetState was already passed in. Type name: '{0}'", stateType.Name);
+                }
+            }
+            else
+            {
+                Debug.LogWarningFormat("Type passed into SetState was not added first. Type name: '{0}'", stateType.Name);
+            }
         }
     }
 
