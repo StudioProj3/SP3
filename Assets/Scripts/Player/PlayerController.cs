@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    // TODO - Add a state machine for the player animations.
     #region Serialized Fields
 
     [SerializeField]
