@@ -43,10 +43,10 @@ public class FiniteStateMachine<T>
 
     public void SetState(params Type[] stateTypes)
     {
-        Debug.Assert(stateTypes.Where(t => !t.IsSubclassOf(typeof(State<T>)))
+        Debug.Assert(stateTypes.Where(t => t.IsSubclassOf(typeof(State<T>)))
             .Count() > 0, "Invalid Type passed into SetState function.");
 
-        if (_currentStates.IsNullOrEmpty())
+        if (!_currentStates.IsNullOrEmpty())
         {
             _currentStates.ForEach(s => s.Exit());
             _currentStates.Clear();
@@ -84,7 +84,7 @@ public class FiniteStateMachine<T>
     {
         // TODO (Chris): Review this. Not completely sure if this works.
 
-        // FIXME (Chris): We might want to change the list into a dictionary so we
+        // TODO (Chris): URGENT -> We SHOULD change the list into a dictionary so we
         // can have a faster lookup.
 
         // NOTE (Chris): We want to find the state that is easier to look up
