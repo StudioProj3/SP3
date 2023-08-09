@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     // TODO (Chris): Add a state machine for the player animations.
     #region Serialized Fields
 
+    [HorizontalDivider]
+    [Header("Basic Parameters")]
+
     [SerializeField]
     [Range(0f, 10f)]
     private float _movementSpeed = 5f;
