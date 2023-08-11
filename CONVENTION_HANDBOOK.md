@@ -263,3 +263,20 @@
     This-Is_not-a_valid_branch-name
     ```
 ---
+20. Generic argument identifiers
+    - Prefer the use of semantic generic argument identifiers
+
+    **Example(s):**
+    ```csharp
+    // BAD!
+    public class StateMachine<T, U>
+    {
+        ...
+    }
+    
+    // CORRECT
+    public class StateMachine<TSelfID, TStateID>
+    {
+        ...
+    }
+    ```
