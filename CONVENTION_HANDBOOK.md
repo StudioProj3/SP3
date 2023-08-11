@@ -225,6 +225,19 @@
     - You should commit and push frequently.
 ---
 16. Use asserts where appropriate to document assumed predicate(s)
+    - An assert message should be present in most of the cases
+
+    **Example(s):**
+    ```csharp
+    private void LoadKeyframes(List<int> indices)
+    {
+        Assert.IsTrue(indices.Count > 0,
+            "`indices` should not be empty as total " +
+            "keyframes must be greater than 0");
+
+        ...
+    }
+    ```
 ---
 17. Comment label format
     - Use of labels such as `TODO`, `FIXME`, `SAFETY` and any others where appropriate.
