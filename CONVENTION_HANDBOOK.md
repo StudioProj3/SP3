@@ -257,7 +257,7 @@
 19. Branch name
     - Branch names should only contain lowercase letters (numbers may be permitted where appropriate) and be delimited by a single dash (`-`).
 
-    **Examples(s):**
+    **Example(s):**
     ```
     this-is-a-valid-branch-name
     This-Is_not-a_valid_branch-name
