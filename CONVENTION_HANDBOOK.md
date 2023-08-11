@@ -1,9 +1,9 @@
 # Convention Handbook
 
 1. Commit Message format
-    - Commit titles start with a captial letter and end with a fullstop.
+    - Commit titles start with a capital letter and end with a fullstop.
     - Commit titles should be strictly one sentence long.
-    - Additional content needed to put placed in the commit description.
+    - Additional content needed should be placed in the commit description.
 
     **Example(s):**
     ```
@@ -41,8 +41,8 @@
 ---
 5. Comments format
     - All comments to start with `//` (per line needed).
-    - It should than be followed by stricty 1 space character.
-    - The first character after the space should be captialize should it be [a-z].
+    - It should than be followed by strictly 1 space character.
+    - The first character after the space should be captialized should it be [a-z].
     - Comment line horizontal length should be around the same as the target code block.
     - If the comment references an identifier in the code surround the identifier in backticks.
 
@@ -129,7 +129,7 @@
     ```
 ---
 9. Braces format
-    - Braces always on its own new line.
+    - Braces should always be on its own new line.
 
     **Example(s):**
     ```csharp
@@ -156,7 +156,7 @@
     ```
 ---
 11. Brace omission
-    - No brace omission should be used even in cases like a 1 liner if branch.
+    - No brace omission is allowed even in cases like a 1 liner if branch.
 
     **Example(s):**
     ```csharp
