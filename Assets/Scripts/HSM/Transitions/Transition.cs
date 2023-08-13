@@ -8,23 +8,23 @@ using UnityEngine.Assertions;
 public abstract class Transition<TStateID> :
     TransitionBase<TStateID>
 {
-    private List<Func<bool>> conditions = new();
+    private List<Func<bool>> _conditions = new();
 
     protected Transition(TStateID fromStateID, TStateID toStateID,
         params Func<bool>[] initConditions) :
         base(fromStateID, toStateID)
     {
-        conditions.AddRange(initConditions);
+        _conditions.AddRange(initConditions);
     }
 
     protected void AddCondition(Func<bool> condition)
     {
-        conditions.Add(condition);
+        _conditions.Add(condition);
     }
 
     public override bool Conditions()
     {
-        bool? result = conditions.AllTrue();
+        bool? result = _conditions.AllTrue();
         Assert.IsTrue(result != null);
 
         return (bool)result;

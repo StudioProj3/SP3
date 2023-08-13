@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class EagerGenericTransition<TStateID> :
     GenericTransition<TStateID>, IEagerTransition
 {
-    private List<Func<bool>> eagerConditions = new();
+    private List<Func<bool>> _eagerConditions = new();
 
     public EagerGenericTransition(TStateID fromStateID, TStateID toStateID,
         params Func<bool>[] initConditions) :
@@ -22,7 +22,7 @@ public class EagerGenericTransition<TStateID> :
 
     public bool IsEager()
     {
-        bool? result = eagerConditions.AllTrue();
+        bool? result = _eagerConditions.AllTrue();
 
         // Take empty `eagerConditions` (`result` is null)
         // as always true
@@ -31,7 +31,7 @@ public class EagerGenericTransition<TStateID> :
 
     public void AddEagerCondition(Func<bool> eagerCondition)
     {
-        eagerConditions.Add(eagerCondition);
+        _eagerConditions.Add(eagerCondition);
     }
 }
 

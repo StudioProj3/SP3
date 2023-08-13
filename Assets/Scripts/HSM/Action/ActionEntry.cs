@@ -38,7 +38,7 @@ public class ActionEntry
         SetActionAndPriority(action, priority);
     }
 
-    // FIXME: Use overloading for now as all the methods should be
+    // FIXME (Cheng Jun): Use overloading for now as all the methods should be
     // the first few arguments and using a `List` is undesirable
     public ActionEntry(string method1, string method2, string method3,
         Action action, uint? priority = null)

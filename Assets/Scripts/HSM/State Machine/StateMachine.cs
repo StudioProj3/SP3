@@ -31,19 +31,19 @@ public class StateMachine<TSelfID, TStateID> :
 
     // Dictionary with all states in this state machine (this can
     // contain state machines if it is a HSM)
-    private Dictionary<TStateID, StateBase<TStateID>> allStates = new();
+    private Dictionary<TStateID, StateBase<TStateID>> _allStates = new();
 
     // Dictionary with all transitions in this state machine
     private Dictionary<TStateID, List<TransitionBase<TStateID>>>
-        allTransitions = new();
+        _allTransitions = new();
 
     // Stores the state this state macine is in at the start
-    private TStateID startStateID;
+    private TStateID _startStateID;
 
     // Max number of exceptions thrown when current state is null,
     // to prevent flooding the editor when message method calls
     // are attempted in loop
-    private uint currentStateExceptionThreshold = 10;
+    private uint _currentStateExceptionThreshold = 10;
 
     // Forward the `selfID` to the readonly `StateID`
     // in `StateBase`
@@ -65,7 +65,7 @@ public class StateMachine<TSelfID, TStateID> :
     {
         VerifyID(stateID);
 
-        startStateID = stateID;
+        _startStateID = stateID;
     }
 
     public void AddState(StateBase<TStateID> newState)
@@ -79,7 +79,7 @@ public class StateMachine<TSelfID, TStateID> :
         newState.parentStateMachine = this;
 
         // Add `newState` into `allStates` dictionary
-        allStates.Add(stateID, newState);
+        _allStates.Add(stateID, newState);
     }
 
     public void AddTransition(TransitionBase<TStateID> newTransition)
@@ -90,26 +90,26 @@ public class StateMachine<TSelfID, TStateID> :
         // Check that both the from and to state IDs are valid
         VerifyID(fromID, toID);
 
-        bool keyExists = allTransitions.TryGetValue(fromID, out var list);
+        bool keyExists = _allTransitions.TryGetValue(fromID, out var list);
 
         // `fromID` key already exists in the dictionary and `list`
         // is not null
         if (keyExists && list != null)
         {
-            allTransitions[fromID].Add(newTransition);
+            _allTransitions[fromID].Add(newTransition);
         }
         // `fromID` key already exists in the dictionary and `list`
         // is null
         else if (keyExists && list == null)
         {
-            allTransitions[fromID] = new List<TransitionBase<TStateID>>
+            _allTransitions[fromID] = new List<TransitionBase<TStateID>>
                 { newTransition };
         }
         // `fromID` key does not yet exist, add the key entry to the
         // dictionary together with `newTransition`
         else
         {
-            allTransitions.Add(fromID, new List<TransitionBase<TStateID>>
+            _allTransitions.Add(fromID, new List<TransitionBase<TStateID>>
                 { newTransition });
         }
     }
@@ -132,10 +132,10 @@ public class StateMachine<TSelfID, TStateID> :
 
     public override void Enter()
     {
-        Assert.IsTrue(startStateID != null);
+        Assert.IsTrue(_startStateID != null);
 
         // Set current state to the default start state
-        CurrentState = allStates[startStateID];
+        CurrentState = _allStates[_startStateID];
 
         HandleTimedTransitions(CurrentState.StateID);
     }
@@ -221,7 +221,7 @@ public class StateMachine<TSelfID, TStateID> :
 
     private void HandleTimedTransitions(TStateID stateID)
     {
-        bool result = allTransitions.TryGetValue(stateID, out var list);
+        bool result = _allTransitions.TryGetValue(stateID, out var list);
         if (!result || list == null || list.Count == 0)
         {
             return;
@@ -244,7 +244,7 @@ public class StateMachine<TSelfID, TStateID> :
     // conditions met, else it will return `default(TStateID)`
     private (TStateID, bool) TryAllTransitions(TStateID stateID)
     {
-        bool result = allTransitions.TryGetValue(stateID, out var list);
+        bool result = _allTransitions.TryGetValue(stateID, out var list);
 
         // The key `stateID` does not exist or the `list` is null,
         // meaning there are no transitions present for state `stateID`
@@ -278,12 +278,12 @@ public class StateMachine<TSelfID, TStateID> :
     // the respective message methods
     private bool VerifyCurrentState()
     {
-        if (currentStateExceptionThreshold > 0)
+        if (_currentStateExceptionThreshold > 0)
         {
             bool currentState = CurrentState == null;
             if (currentState)
             {
-                currentStateExceptionThreshold--;
+                _currentStateExceptionThreshold--;
             }
 
             Assert.IsTrue(!currentState);
@@ -307,7 +307,7 @@ public class StateMachine<TSelfID, TStateID> :
     {
         foreach (TStateID stateID in stateIDs)
         {
-            Assert.IsTrue(allStates.ContainsKey(stateID));
+            Assert.IsTrue(_allStates.ContainsKey(stateID));
         }
     }
 
@@ -315,7 +315,7 @@ public class StateMachine<TSelfID, TStateID> :
     // and return the state if it exists
     private StateBase<TStateID> VerifyGetState(TStateID stateID)
     {
-        bool result = allStates.TryGetValue(stateID, out var state);
+        bool result = _allStates.TryGetValue(stateID, out var state);
         Assert.IsTrue(result);
 
         return state;

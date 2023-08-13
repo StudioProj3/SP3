@@ -2,26 +2,26 @@
 public class TimedTransition<TStateID> :
     Transition<TStateID>, ITimedTransition<TStateID>
 {
-    private bool isTimeUp = false;
-    private readonly float duration;
+    private bool _isTimeUp = false;
+    private readonly float _duration;
 
     public TimedTransition(TStateID fromStateID, TStateID toStateID,
         float duration) : base(fromStateID, toStateID)
     {
-        this.duration = duration;
+        _duration = duration;
     }
 
     public void StartTimer()
     {
-        isTimeUp = false;
+        _isTimeUp = false;
 
         // Change `isTimeUp` after `time` to transit
-        _ = Delay.Execute(() => isTimeUp = true, duration);
+        _ = Delay.Execute(() => _isTimeUp = true, _duration);
     }
 
     public override bool Conditions()
     {
-        return isTimeUp;
+        return _isTimeUp;
     }
 }
 

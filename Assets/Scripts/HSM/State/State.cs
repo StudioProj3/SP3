@@ -16,7 +16,7 @@ public abstract class State<TStateID> :
 {
     // Store all delegates with respect to all the
     // message methods and their respective priorities
-    private Dictionary<StateMessageMethod, ActionList> allMethods = new();
+    private Dictionary<StateMessageMethod, ActionList> _allMethods = new();
 
     public override void Enter()
     {
@@ -94,7 +94,7 @@ public abstract class State<TStateID> :
 
                 // Check to see if the dictionary `allMethods` has the key
                 // `method`
-                bool keyExists = allMethods.TryGetValue(method, out var list);
+                bool keyExists = _allMethods.TryGetValue(method, out var list);
 
                 // `method` key already exists in the dictionary and `list`
                 // is not null
@@ -104,7 +104,7 @@ public abstract class State<TStateID> :
                     if (!list.Any())
                     {
                         // If `priority` is not null use it, else use `1`
-                        allMethods[method].Add(priority ?? 1, action);
+                        _allMethods[method].Add(priority ?? 1, action);
                     }
                     else
                     {
@@ -132,7 +132,7 @@ public abstract class State<TStateID> :
                 else if (keyExists && list == null)
                 {
                     // If `priority` is not null use it, else use `1`
-                    allMethods[method] = new ActionList
+                    _allMethods[method] = new ActionList
                         { { priority ?? 1, action  } };
                 }
                 // `method` key does not yet exist, add the key entry to
@@ -141,7 +141,7 @@ public abstract class State<TStateID> :
                 else
                 {
                     // If `priority` is not null use it, else use `1`
-                    allMethods.Add(method, new ActionList
+                    _allMethods.Add(method, new ActionList
                         { { priority ?? 1, action } });
                 }
             }
@@ -173,7 +173,7 @@ public abstract class State<TStateID> :
     {
         // Check to see if the dictionary `allMethods` has the key
         // `method`
-        bool keyExists = allMethods.TryGetValue(method, out var list);
+        bool keyExists = _allMethods.TryGetValue(method, out var list);
 
         return keyExists && list.Remove(priority);
     }
@@ -184,7 +184,7 @@ public abstract class State<TStateID> :
     {
         // Check to see if the dictionary `allMethods` has the key
         // `method`
-        bool keyExists = allMethods.TryGetValue(method, out var list);
+        bool keyExists = _allMethods.TryGetValue(method, out var list);
 
         if (keyExists)
         {
