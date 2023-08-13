@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class EagerUnconditionalTransition<TStateID> :
     UnconditionalTransition<TStateID>, IEagerTransition
 {
-    private List<Func<bool>> eagerConditions = new();
+    private List<Func<bool>> _eagerConditions = new();
 
     public EagerUnconditionalTransition(TStateID fromStateID,
         TStateID toStateID) :
@@ -22,12 +22,12 @@ public class EagerUnconditionalTransition<TStateID> :
 
     public void AddEagerCondition(Func<bool> eagerCondition)
     {
-        eagerConditions.Add(eagerCondition);
+        _eagerConditions.Add(eagerCondition);
     }
 
     public bool IsEager()
     {
-        bool? result = eagerConditions.AllTrue();
+        bool? result = _eagerConditions.AllTrue();
 
         // Take empty `eagerConditions` (`result` is null)
         // as always true
