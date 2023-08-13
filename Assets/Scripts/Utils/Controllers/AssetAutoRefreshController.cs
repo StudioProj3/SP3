@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 public static class AssetAutoRefreshController
 {
     #region Private Fields
+
     // Use a unified string to guarantee all `GetInt` and `SetInt` calls
     // are called using same key
     private static readonly string _autoRefreshKey = "kAutoRefreshMode";
