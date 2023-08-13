@@ -23,12 +23,17 @@ public class ModifiableValue : IValue
         }
     }
 
-    // TODO - set this up. https://forum.unity.com/threads/tutorial-character-stats-aka-attributes-system.504095/
     public event Action ValueChanged;
+
+    // TODO (Chris): Change to a sorted number. 
+    // List of modifiers.
     private readonly List<Modifier> _modifiers;
     private bool _isDirty = true;
 
-    private float _initialValue;
+    // Store the initial value for cloning.
+    private readonly float _initialValue;
+
+    // The internal value of the container.
     private float _value;
 
     public ModifiableValue(float baseValue)

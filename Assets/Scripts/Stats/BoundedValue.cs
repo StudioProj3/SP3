@@ -1,12 +1,10 @@
-using UnityEngine;
 using System;
 
-[System.Serializable]
+using UnityEngine;
+
+[Serializable]
 public class BoundedValue : ICloneable
 {
-    private IValue _maxValueContainer;
-    private IValue _minValueContainer;
-    
     public float Max => _maxValueContainer?.Value ?? 0; 
     public float Min => _minValueContainer?.Value ?? 0;
 
@@ -22,8 +20,10 @@ public class BoundedValue : ICloneable
         }
     }
 
+    private readonly IValue _maxValueContainer;
+    private readonly IValue _minValueContainer;
 
-
+    // Internal bounded value
     private float _value;
 
     public BoundedValue(IValue minContainer) : this(minContainer, null) {}

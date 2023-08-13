@@ -1,16 +1,13 @@
 using System;
 
-public enum ModifierType
-{
-    Plus,
-    Multiply
-}
-
 public abstract class Modifier : ICloneable
 {
+    // Priority of the modifier (higher = more priority)
+    public int Priority => priority;
+
+    // Internal immutable value.
     protected readonly float value;
     protected readonly int priority;
-    public int Priority => priority;
 
     public Modifier(float value, int priority)
     {
@@ -20,17 +17,19 @@ public abstract class Modifier : ICloneable
 
     public abstract float Modify(float value);
 
+    // Factory functions
     public static Modifier Plus(float value, int priority)
         => new PlusModifier(value, priority);
 
     public static Modifier Multiply(float value, int priority)
         => new PlusModifier(value, priority);
 
+    // 
     protected abstract Modifier CreateClone(float value, int priority);
+
+    // ICloneable implementation
     public virtual object Clone()
     {
         return CreateClone(value, priority);
     }
 }
-
-

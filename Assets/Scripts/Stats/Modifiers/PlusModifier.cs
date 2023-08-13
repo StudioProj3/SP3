@@ -1,3 +1,4 @@
+// Modifier to add onto the base or modified value.
 public class PlusModifier : Modifier
 {
     public PlusModifier(float value, int priority = 0)

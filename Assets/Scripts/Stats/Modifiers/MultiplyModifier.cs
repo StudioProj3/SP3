@@ -1,3 +1,4 @@
+// Multiplies base or modified value based on priority.
 public class MultiplyModifier : Modifier
 {
     public MultiplyModifier(float value, int priority = 0)
