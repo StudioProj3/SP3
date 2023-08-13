@@ -8,7 +8,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // TODO (Chris): Add a state machine for the player animations.
-    #region Serialized Fields
 
     [HorizontalDivider]
     [Header("Basic Parameters")]
@@ -17,15 +16,7 @@ public class PlayerController : MonoBehaviour
     [Range(0f, 10f)]
     private float _movementSpeed = 5f;
 
-    #endregion
-
-    #region Private Fields
-
     private Rigidbody _rigidbody;
-
-    #endregion
-
-    #region Private Functions
 
     private void Start()
     {
@@ -38,6 +29,4 @@ public class PlayerController : MonoBehaviour
             Input.GetAxisRaw("Horizontal"),
             0, Input.GetAxisRaw("Vertical")).normalized;
     }
-
-    #endregion
 }
