@@ -21,8 +21,6 @@ public class PlayerController : MonoBehaviour
 
     #region Private Fields
 
-    private FiniteStateMachine<PlayerController> _stateMachine;
-
     private Rigidbody _rigidbody;
 
     #endregion
@@ -31,10 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _stateMachine = new FiniteStateMachine<PlayerController>(this);
         _rigidbody = GetComponent<Rigidbody>(); 
-
-        _stateMachine.SetState(typeof(PlayerWalkState));
     }
 
     private void FixedUpdate()
