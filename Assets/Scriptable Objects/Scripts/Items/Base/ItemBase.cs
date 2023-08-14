@@ -9,6 +9,9 @@ public abstract class ItemBase :
     [field: SerializeField]
     public Sprite Sprite { get; protected set; }
 
+    [field: SerializeField]
+    public bool Stackable { get; protected set; }
+
     [TextArea]
     public string Description;
 }
