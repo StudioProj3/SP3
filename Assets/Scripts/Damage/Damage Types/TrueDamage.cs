@@ -4,17 +4,17 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
-    menuName = "Damage/PhysicalDamage")]
-public class PhysicalDamage : Damage
+    menuName = "Damage/TrueDamage")]
+public class TrueDamage : Damage
 {
-    public static PhysicalDamage Create(float damage)
+    public static TrueDamage Create(float damage)
     {
-        return CreateInstance<PhysicalDamage>().Init(damage);
+        return CreateInstance<TrueDamage>().Init(damage);
     }
 
-    private PhysicalDamage Init(float damage)
+    private TrueDamage Init(float damage)
     {
-        _amount = damage;
+        _damage = damage;
         return this;
     }
 
@@ -22,6 +22,7 @@ public class PhysicalDamage : Damage
     // damage.OnApply(_playerStats);
     public override void OnApply(IStatContainer entityStats)
     {
-         entityStats.GetStat("Health").Subtract(_amount);
+        // True damage deals damage directly to health, no way to reduce it
+        entityStats.GetStat("Health").Subtract(_damage);
     }
 }
