@@ -4,12 +4,9 @@ using UnityEngine;
 // TODO (Chris): We should probably separate movement and other mechanics,
 // so a PlayerMovement script and maybe a PlayerInventoryController script.
 [DisallowMultipleComponent]
-[RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController :
+    CharacterControllerBase
 {
-    // TODO (Chris): Add a state machine for the player animations.
-    #region Serialized Fields
-
     [HorizontalDivider]
     [Header("Basic Parameters")]
 
@@ -17,19 +14,9 @@ public class PlayerController : MonoBehaviour
     [Range(0f, 10f)]
     private float _movementSpeed = 5f;
 
-    #endregion
-
-    #region Private Fields
-
-    private Rigidbody _rigidbody;
-
-    #endregion
-
-    #region Private Functions
-
-    private void Start()
+    protected override void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>(); 
+        base.Start();
     }
 
     private void FixedUpdate()
@@ -38,6 +25,4 @@ public class PlayerController : MonoBehaviour
             Input.GetAxisRaw("Horizontal"),
             0, Input.GetAxisRaw("Vertical")).normalized;
     }
-
-    #endregion
 }

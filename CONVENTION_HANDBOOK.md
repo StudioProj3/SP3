@@ -78,41 +78,16 @@
     - Functions (including properties): `PascalCase`.
     - All other identifiers: `camelCase`.
 ---
-7. Regions
-    - Use of regions such as `Serialized Fields`, `Private Fields`, `Private Functions` and any others where appropriate.
-    - All region directives should have 1 empty line above and below it, except when the top or bottom is an opening or closing brace.
+7. Order of using
+    - Leave a line between using groups
+    - `System` usings should be first
+    - `Unity` usings should be next
 
     **Example(s):**
     ```csharp
-    public class PlayerController : MonoBehaviour
-    {
-        #region Serialized Fields
+    using System;
 
-        [SerializeField]
-        private float _movementSpeed = 5f;
-
-        #endregion
-
-        #region Private Fields
-
-        private Rigidbody _rigidbody;
-
-        #endregion
-
-        #region Private Functions
-
-        private void Start()
-        {
-            ...
-        }
-
-        private void FixedUpdate()
-        {
-            ...
-        }
-
-        #endregion
-    }
+    using UnityEngine;
     ```
 ---
 8. Create Asset Menu attribute
@@ -144,7 +119,7 @@
     - Rule 3 still applies for attributes.
     - Header attribute should have 1 empty line above and below it, except when the top or bottom is an opening or closing brace.
 
-    **Example(s):** (Rule 7 and 14 omitted to enhance clarity)
+    **Example(s):** (Rule 14 omitted to enhance clarity)
     ```csharp
     private bool _someOtherJunk = true;
 
@@ -186,7 +161,7 @@
         - Private and Serialized (whole block should have 1 empty line above and below it, except when the top or bottom is an opening or closing brace).
         - Private and for internal use only (group all together with the whole group having 1 empty line above and below it, except when the top or bottom is an opening or closing brace).
 
-    **Example(s):** (Rule 7 omitted to enhance clarity)
+    **Example(s):**
     ```csharp
     public class PlayerVitals : MonoBehaviour
     {
