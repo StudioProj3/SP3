@@ -4,7 +4,7 @@ using UnityEngine;
 public class StatType : ScriptableObject 
 {
     [SerializeField] 
-    private readonly string _name; 
+    private string _name; 
 
     public string Name => _name;
 
