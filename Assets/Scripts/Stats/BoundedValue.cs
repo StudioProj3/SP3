@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class BoundedValue : ICloneable
+public class BoundedValue : IValue
 {
     public float Max => _maxValueContainer?.Value ?? 0; 
     public float Min => _minValueContainer?.Value ?? 0;

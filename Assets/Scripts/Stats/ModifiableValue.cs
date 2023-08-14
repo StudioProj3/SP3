@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 
 [Serializable]
-public class ModifiableValue : IValue
+public class ModifiableValue : IModifiableValue 
 {
     public float Value
     {
@@ -61,6 +61,7 @@ public class ModifiableValue : IValue
         _modifiers.Remove(modifier);
         ValueChanged?.Invoke();
     }
+
     public object Clone()
     {
         return new ModifiableValue(_initialValue, _modifiers);
