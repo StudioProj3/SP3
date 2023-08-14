@@ -6,7 +6,7 @@ using UnityEngine;
 // so a PlayerMovement script and maybe a PlayerInventoryController script.
 [DisallowMultipleComponent]
 public class PlayerController :
-    CharacterControllerBase
+    CharacterControllerBase, IDamageable
 {
     [HorizontalDivider]
     [Header("Basic Parameters")]
@@ -20,6 +20,9 @@ public class PlayerController :
 
     [SerializeField]
     private PlayerData _playerData;
+
+    [SerializeField]
+    private Stats _playerStats;
     
     [SerializeField]
     [Range(0f, 10f)]
@@ -28,6 +31,11 @@ public class PlayerController :
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyDown;
+
+    public void TakeDamage(Damage damage)
+    {
+        damage.OnApply(_playerStats);
+    }
 
     protected override void Start()
     {

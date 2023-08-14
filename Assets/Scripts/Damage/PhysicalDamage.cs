@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -19,9 +20,8 @@ public class PhysicalDamage : Damage
 
     // OnApply is in 'TakeDamage()' implemented from IDamageable
     // damage.OnApply(_playerStats);
-    // private void OnApply(IStatContainer entityStats)
-    public override void OnApply()
+    public override void OnApply(IStatContainer entityStats)
     {
-         
+         entityStats.GetStat("Health").Subtract(_amount);
     }
 }
