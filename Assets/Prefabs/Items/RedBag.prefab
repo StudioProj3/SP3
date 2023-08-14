@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1395863710430244219}
   - component: {fileID: 1395863710430244216}
   - component: {fileID: 1395863710430244218}
+  - component: {fileID: 5990556166759447454}
   m_Layer: 0
   m_Name: RedBag
-  m_TagString: Inventory Bag
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,3 +100,18 @@ CapsuleCollider:
   m_Height: 0.32
   m_Direction: 0
   m_Center: {x: 0, y: -0.07868488, z: 0.011260912}
+--- !u!114 &5990556166759447454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395863710430244217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c3a45710b45a54d95bfe0546fb2bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Item>k__BackingField: {fileID: 11400000, guid: 832470d27d72c604bbe3a2ca3a8b20e6,
+    type: 2}
+  <Quantity>k__BackingField: 1
