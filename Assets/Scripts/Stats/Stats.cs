@@ -7,7 +7,7 @@ using UnityEditor;
 
 // NOTE (Chris): Take note that the inspector for this script is in CustomStatsEditor.cs
 [CreateAssetMenu(fileName = "Stats", menuName = "Scriptable Objects/Stats")]
-public class Stats : ScriptableObject
+public class Stats : ScriptableObject, IStatContainer
 {
     [Serializable]
     private class StatMapEntry
@@ -55,14 +55,27 @@ public class Stats : ScriptableObject
 
     private readonly Dictionary<string, StatType> _statTypeMap = new();
 
-    private IModifiableValue GetStat(string typeName)
+    public IModifiableValue GetStat(string typeName)
     {
         return _stats[_statTypeMap[typeName]];
     }
 
-    private IModifiableValue GetStat(StatType type)
+    public IModifiableValue GetStat(StatType type)
     {
         return _stats[type];
+    }
+
+    public bool TryGetStat(StatType type, out IModifiableValue stat) 
+    {
+        return _stats.TryGetValue(type, out stat);
+    }
+
+    public bool TryGetStat(string name, out IModifiableValue stat)
+    {
+        stat = null;
+        if (_statTypeMap.TryGetValue(name, out StatType type)) 
+            return _stats.TryGetValue(type, out stat);
+        return false;
     }
 
     private void OnEnable()
@@ -74,8 +87,8 @@ public class Stats : ScriptableObject
             if (statPair.Key != null && statPair.Value != null)
             {
                 _stats.Add(statPair.Key, statPair.Value);
+                _statTypeMap.Add(statPair.Key.name, statPair.Key);
             }
-            _statTypeMap.Add(statPair.Key.name, statPair.Key);
         });
 
         _instancedStatInitializerList.ForEach(stat => 
@@ -84,16 +97,17 @@ public class Stats : ScriptableObject
             if (statPair.Key != null && statPair.Value != null)
             {
                 _instancedStats.Add(statPair.Key, statPair.Value);
+                _statTypeMap.Add(statPair.Key.name, statPair.Key);
             }
-            _statTypeMap.Add(statPair.Key.name, statPair.Key);
         });
     }
 
-    // Creates a new instanced dictionary of runtime stats.
-    private Dictionary<string, IModifiableValue> GetInstancedStats()
+    // Creates a new instanced stat container of runtime stats.
+    private StatContainer GetInstancedStatContainer()
     {
-        return _instancedStats.ToDictionary(
-            kv => kv.Key.Name, kv => kv.Value.Clone() as IModifiableValue);
+        return new StatContainer(_instancedStats.ToDictionary(
+            kv => kv.Key, kv => kv.Value.Clone() as IModifiableValue),
+            _statTypeMap);
     }
 
     public void CreateBoundedStat()

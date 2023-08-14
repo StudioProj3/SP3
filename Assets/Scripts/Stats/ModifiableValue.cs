@@ -36,6 +36,30 @@ public class ModifiableValue : IModifiableValue
     // The internal value of the container.
     private float _value;
 
+    public void Add(float toAdd)
+    {
+        _value += toAdd;
+        ValueChanged?.Invoke();
+    }
+
+    public void Subtract(float toSubtract)
+    {
+        _value -= toSubtract;
+        ValueChanged?.Invoke();
+    }
+
+    public void Multiply(float toMultiply)
+    {
+        _value *= toMultiply;
+        ValueChanged?.Invoke();
+    }
+
+    public void Divide(float toDivide)
+    {
+        _value /= toDivide;
+        ValueChanged?.Invoke();
+    }
+
     public ModifiableValue(float baseValue)
     {
         this._initialValue = baseValue;
