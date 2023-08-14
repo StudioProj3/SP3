@@ -5,4 +5,7 @@ public abstract class CharacterDataBase :
 {
     [field: SerializeField]
     public string Name { get; protected set; }
+
+    [field: SerializeField]
+    public InventoryBase Inventory { get; protected set; }
 }
