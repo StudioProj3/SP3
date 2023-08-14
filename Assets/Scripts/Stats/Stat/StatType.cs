@@ -8,5 +8,4 @@ public class StatType : ScriptableObject
     private string _name; 
 
     public string Name => _name;
-
 }
