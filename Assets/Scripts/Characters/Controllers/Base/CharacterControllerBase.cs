@@ -7,9 +7,21 @@ public abstract class CharacterControllerBase :
     MonoBehaviour
 {
     protected Rigidbody _rigidbody;
+    protected StateMachine _stateMachine;
+    protected Animator _animator;
 
     protected virtual void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+    }
+
+    protected virtual void SetupStateMachine()
+    {
+        _stateMachine = new StateMachine("main", 
+        
+            new IdleState("Idle")
+        
+        );
     }
 }
