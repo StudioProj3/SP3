@@ -1,9 +1,10 @@
 public class ReadOnlyValueContainer : IValue
 {
     private readonly float _value;
+
     public ReadOnlyValueContainer(float val = 0)
     {
-        this._value = val;
+        _value = val;
     }
 
     public float Value => _value;

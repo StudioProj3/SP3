@@ -26,17 +26,24 @@ public class BoundedValue : IValue
     // Internal bounded value
     private float _value;
 
-    public BoundedValue(IValue minContainer) : this(minContainer, null) {}
-
-    public BoundedValue(IValue minContainer = null, IValue maxContainer = null)
+    public BoundedValue(IValue minContainer) :
+        this(minContainer, null)
     {
-        this._minValueContainer = minContainer;
-        this._maxValueContainer = maxContainer;
-        this._value = maxContainer.Value;
+
+    }
+
+    public BoundedValue(IValue minContainer = null,
+        IValue maxContainer = null)
+    {
+        _minValueContainer = minContainer;
+        _maxValueContainer = maxContainer;
+        _value = maxContainer.Value;
     }
 
     public object Clone()
     {
-        return new BoundedValue(_minValueContainer?.Clone() as IValue, _maxValueContainer?.Clone() as IValue);
+        return new BoundedValue(
+            _minValueContainer?.Clone() as IValue,
+            _maxValueContainer?.Clone() as IValue);
     }
 }
