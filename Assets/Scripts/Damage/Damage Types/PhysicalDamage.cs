@@ -22,9 +22,16 @@ public class PhysicalDamage : Damage
     // damage.OnApply(_playerStats);
     public override void OnApply(IStatContainer entityStats)
     {
-        // DR = (1 – (100/(100 + V)))*100; where V equals the value of armour or magic reduction 
+        // DR = (1 – (100/(100 + V))); where V equals the value of armour or magic reduction 
         // and DR is the percentage of damage that is reduced.
-        float resistance = (1 - (100 / (100 + entityStats.GetStat("Armor").Value))) * 100;
-        entityStats.GetStat("Health").Subtract(_damage * resistance);
+        if (entityStats.GetStat("Armor").Value > 1)
+        {
+            float resistance = (1 - (100 / (100 + entityStats.GetStat("Armor").Value))) * 100;
+            entityStats.GetStat("Health").Subtract(_damage * ((100 - resistance) / 100));
+        }
+        else
+        {
+            entityStats.GetStat("Health").Subtract(_damage);
+        }
     }
 }

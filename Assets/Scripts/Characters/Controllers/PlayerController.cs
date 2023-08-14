@@ -16,6 +16,12 @@ public class PlayerController :
     [SerializeField]
     private Stats _playerStats;
 
+    [SerializeField]
+    private PhysicalDamage _testPhyDamage;
+
+    [SerializeField]
+    private MagicDamage _testMagicDamage;
+
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyDown;
@@ -113,6 +119,19 @@ public class PlayerController :
         if (_horizontalInput != 0)
         {
             _spriteRenderer.flipX = _horizontalInput < 0;
+        }
+
+        // NOTE (Brandon): For testing purposes only
+        // Edit damage dealt in the default damage scriptable objects
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            TakeDamage(_testMagicDamage);
+            Debug.Log("Health after magic dmg: " + _playerStats.GetStat("Health").Value);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TakeDamage(_testPhyDamage);
+            Debug.Log("Health after phy dmg: " + _playerStats.GetStat("Health").Value);
         }
     }
 
