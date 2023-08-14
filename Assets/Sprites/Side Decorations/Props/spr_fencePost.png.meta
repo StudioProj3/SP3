@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 22c01abbe37a7694f9dc82de162ffd96
+guid: e78ec04a1cecc2740bae59b26c9536f2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,55 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: global_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c344d34f74d21bb4b83930aa93582075
-      internalID: -1471945779
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: global_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8301b370cab59574ea4dcc87bfd05ea7
-      internalID: -250943687
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: global_2
+      name: spr_fencePost_0
       rect:
         serializedVersion: 2
         x: 32
-        y: 16
-        width: 16
-        height: 16
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af696a62637896a408622bb3f10a3593
-      internalID: -2117657413
+      spriteID: 7b2ba7f608fa67c4ca3589e000f32579
+      internalID: 1155268103
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: global_3
+      name: spr_fencePost_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4e4376f3118fc64194f8f8af510b8b1
-      internalID: 937579206
+      spriteID: 319cef2c148a6cc438e689be59ad917d
+      internalID: -1669785844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: global_4
+      name: spr_fencePost_2
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -227,20 +185,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 011aec4a5c8df124facb8e03c724141b
-      internalID: -479198374
+      spriteID: b421e12792dd9e84c9fc32adba23359b
+      internalID: 841393313
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: global_5
+      name: spr_fencePost_3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e3682b2d8a44884091c307265a2dfb5
+      internalID: -1154011843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_fencePost_4
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,8 +227,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea8ebc24ada2d194dbe22343ac499c11
-      internalID: 894826215
+      spriteID: b620af0cb4b867f46bd8cd57a7e4cb76
+      internalID: -1444802816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_fencePost_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83e42780f3e7414082c7ae9fbc1a9ee
+      internalID: 1195217149
       vertices: []
       indices: 
       edges: []
@@ -257,7 +257,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ab039b29236322941907035c5504064d
+    spriteID: 784a4dd0acf097c49bbbd46966e56144
     internalID: 0
     vertices: []
     indices: 
@@ -265,12 +265,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      global_0: -1471945779
-      global_1: -250943687
-      global_2: -2117657413
-      global_3: 937579206
-      global_4: -479198374
-      global_5: 894826215
+      spr_fencePost_0: 1155268103
+      spr_fencePost_1: -1669785844
+      spr_fencePost_2: 841393313
+      spr_fencePost_3: -1154011843
+      spr_fencePost_4: -1444802816
+      spr_fencePost_5: 1195217149
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
