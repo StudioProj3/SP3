@@ -1,3 +1,5 @@
+using System;
+
 using UnityEditor;
 using UnityEngine;
 using UnityEditorInternal;
@@ -42,28 +44,34 @@ public class CustomStatsEditor : Editor
             DrawElementBackground(rect, index, isActive, isFocused, true);
     }
 
-    private void OnEnable()
+    private void Generate(string propertyName, string labelName,
+        ref SerializedProperty property, ref ReorderableList list,
+        GenericMenu.MenuFunction2 addHandler,
+        Action<Stats, int> removeHandler)
     {
-        _statsListProperty = serializedObject.
-            FindProperty("_statInitializerList");
-        _statsReorderableList =
-            new(serializedObject, _statsListProperty,
+        property = serializedObject.
+            FindProperty(propertyName);
+
+        var localProperty = property;
+
+        list =
+            new(serializedObject, property,
             true, true, true, true)
         {
             drawHeaderCallback = (Rect rect) =>
-                EditorGUI.LabelField(rect, "Stats"),
+                EditorGUI.LabelField(rect, labelName),
 
             elementHeightCallback = (int index) =>
-                EditorGUI.GetPropertyHeight(_statsListProperty.
+                EditorGUI.GetPropertyHeight(localProperty.
                 GetArrayElementAtIndex(index)),
 
             onAddDropdownCallback = (Rect buttonRect, ReorderableList list) =>
             {
                 GenericMenu menu = new();
-                menu.AddItem(new GUIContent("Stat"), false, OnAddStatHandler,
+                menu.AddItem(new GUIContent("Stat"), false, addHandler,
                     new StatsCreationParams() { isBounded = false });
                 menu.AddItem(new GUIContent("Bounded Stat"), false,
-                    OnAddStatHandler, new StatsCreationParams()
+                    addHandler, new StatsCreationParams()
                     { isBounded = true });
 
                 menu.ShowAsContext();
@@ -72,64 +80,13 @@ public class CustomStatsEditor : Editor
             onRemoveCallback = (ReorderableList list) => 
             {
                 Stats stats = target as Stats;
-                stats.RemoveStatAtIndex(list.index);
+                removeHandler(stats, list.index);
             }, 
 
-            drawElementCallback = (Rect rect, int index, bool isActive,
-                bool isFocused) => 
+            drawElementCallback =
+                (Rect rect, int index, bool isActive, bool isFocused) => 
             {
-                var element = _statsListProperty.
-                    GetArrayElementAtIndex(index);
-
-                rect.x += 10;
-                rect.width -= 10;
-
-                ReorderableList.defaultBehaviours.
-                    DrawElement(rect, element, element.serializedObject,
-                    isActive, isFocused, true, true);
-            },
-
-            drawElementBackgroundCallback = ListDrawElementBackgroundCallback,
-
-            elementHeight = 19,
-        };
-
-        _instancedStatsListProperty = serializedObject.
-            FindProperty("_instancedStatInitializerList");
-        _instancedStatsReorderableList =
-            new(serializedObject, _instancedStatsListProperty,
-            true, true, true, true)
-        {
-            drawHeaderCallback = (Rect rect) =>
-                EditorGUI.LabelField(rect, "Instanced Stats"),
-
-            elementHeightCallback = (int index) =>
-                EditorGUI.GetPropertyHeight(_instancedStatsListProperty.
-                GetArrayElementAtIndex(index)),
-
-            onAddDropdownCallback = (Rect buttonRect, ReorderableList list) =>
-            {
-                GenericMenu menu = new();
-                menu.AddItem(new GUIContent("Stat"), false,
-                    OnAddInstancedStatHandler, new StatsCreationParams()
-                    { isBounded = false });
-                menu.AddItem(new GUIContent("Bounded Stat"), false,
-                    OnAddInstancedStatHandler, new StatsCreationParams()
-                    { isBounded = true });
-
-                menu.ShowAsContext();
-            },
-
-            onRemoveCallback = (ReorderableList list) => 
-            {
-                Stats stats = target as Stats;
-                stats.RemoveInstancedStatAtIndex(list.index);
-            }, 
-
-            drawElementCallback = (Rect rect, int index, bool isActive,
-                bool isFocused) => 
-            {
-                var element = _instancedStatsListProperty.
+                var element = localProperty.
                     GetArrayElementAtIndex(index);
 
                 rect.x += 10;
@@ -146,6 +103,16 @@ public class CustomStatsEditor : Editor
         };
     }
 
+    private void OnEnable()
+    {
+        Generate("_statInitializerList", "Stats", ref _statsListProperty,
+            ref _statsReorderableList, OnAddStatHandler,
+            (stats, index) => { stats.RemoveStatAtIndex(index); });
+        Generate("_instancedStatInitializerList", "Instanced Stats",
+            ref _instancedStatsListProperty, ref _instancedStatsReorderableList,
+            OnAddInstancedStatHandler,
+            (stats, index) => { stats.RemoveInstancedStatAtIndex(index); });
+    }
 
     private void OnAddStatHandler(object clicked)
     {
