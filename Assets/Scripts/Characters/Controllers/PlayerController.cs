@@ -27,7 +27,7 @@ public class PlayerController :
     protected override void SetupStateMachine()
     {
         base.SetupStateMachine();
-        
+
         _stateMachine.AddChilds
         (
             new GenericState("Walk",
@@ -38,13 +38,17 @@ public class PlayerController :
                 })
             ),
 
+            //Transitions
             new EagerGenericTransition("Idle", "Walk", () =>
             {
                 return _horizontalInput != 0 || _verticalInput != 0;
             }),
 
             // Walk State
-            new UnconditionalTransition("Walk", "Idle")
+            new GenericTransition("Walk", "Idle", () =>
+            {
+                return _horizontalInput == 0 && _verticalInput == 0;
+            })
         );
         
         _stateMachine.SetStartState("Idle");
@@ -58,6 +62,7 @@ public class PlayerController :
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
+        _animator.SetBool("isRunning", _stateMachine.CurrentState.StateID == "Walk");
     }
 
     private void FixedUpdate()
