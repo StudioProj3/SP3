@@ -8,13 +8,6 @@ public class PlayerController :
     CharacterControllerBase, IDamageable
 {
     [HorizontalDivider]
-    [Header("Basic Parameters")]
-
-    [SerializeField]
-    [Range(0f, 10f)]
-    private float _movementSpeed = 5f;
-
-    [HorizontalDivider]
     [Header("Character Data")]
 
     [SerializeField]
@@ -22,10 +15,6 @@ public class PlayerController :
 
     [SerializeField]
     private Stats _playerStats;
-    
-    [SerializeField]
-    [Range(0f, 10f)]
-    private float _rollForce = 5f;
 
     private float _horizontalInput;
     private float _verticalInput;
@@ -52,7 +41,7 @@ public class PlayerController :
             new GenericState("Walk",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _rigidbody.velocity = _movementSpeed * new Vector3(
+                    _rigidbody.velocity = _playerStats.GetStat("MoveSpeed").Value * new Vector3(
                         _horizontalInput, 0, _verticalInput).normalized;
                 })
             ),
@@ -70,8 +59,12 @@ public class PlayerController :
 
                     Vector3 direction =
                         new(_horizontalInput, 0, _verticalInput);
-                    _rigidbody.AddForce(direction.normalized * _rollForce,
-                        ForceMode.Impulse);
+
+                    _rigidbody.AddForce(
+                        _playerStats.GetStat("MoveSpeed").Value *
+                        2 * direction.normalized,
+                        ForceMode.Impulse
+                        );
                 })
             ),
 
@@ -112,8 +105,10 @@ public class PlayerController :
     private void Update()
     {
         UpdateInputs();
-        _animator.SetBool("isRunning", _stateMachine.CurrentState.StateID == "Walk");
-        _animator.SetBool("isRolling", _stateMachine.CurrentState.StateID == "Roll");
+        _animator.SetBool("isRunning", 
+            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isRolling", 
+            _stateMachine.CurrentState.StateID == "Roll");
 
         if (_horizontalInput != 0)
         {
