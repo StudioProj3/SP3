@@ -81,7 +81,7 @@ public class PlayerController :
             }),
 
             // Roll > Idle
-            new TimedTransition("Roll", "Idle", 0.7f),
+            new FixedTimedTransition("Roll", "Idle", 0.7f),
 
             // Walk or Idle > Roll
             new EagerGenericTransition("Walk", "Roll", () =>
