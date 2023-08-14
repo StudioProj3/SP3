@@ -9,11 +9,13 @@ public abstract class CharacterControllerBase :
     protected Rigidbody _rigidbody;
     protected StateMachine _stateMachine;
     protected Animator _animator;
+    protected SpriteRenderer _spriteRenderer;
 
     protected virtual void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected virtual void SetupStateMachine()

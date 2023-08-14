@@ -101,6 +101,11 @@ public class PlayerController :
         UpdateInputs();
         _animator.SetBool("isRunning", _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isRolling", _stateMachine.CurrentState.StateID == "Roll");
+
+        if (_horizontalInput != 0)
+        {
+            _spriteRenderer.flipX = _horizontalInput < 0;
+        }
     }
 
     private void FixedUpdate()
