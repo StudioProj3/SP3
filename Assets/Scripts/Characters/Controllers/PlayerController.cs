@@ -1,9 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-// Player controller class for movement.
+// Player controller class for movement
 // TODO (Chris): We should probably separate movement and other mechanics,
-// so a PlayerMovement script and maybe a PlayerInventoryController script.
+// so a PlayerMovement script and maybe a PlayerInventoryController script
 [DisallowMultipleComponent]
 public class PlayerController :
     CharacterControllerBase, IDamageable
@@ -58,15 +57,21 @@ public class PlayerController :
                 })
             ),
 
-            // NOTE (Brandon): Bug where transition to roll doesn't register when input is pressed
-            // Only happens when direction is switched right before input
+            // FIXME (Brandon): Bug where transition to roll doesn't
+            // register when input is pressed. Only happens when
+            // direction is switched right before input
             new GenericState("Roll",
                 new ActionEntry("Enter", () =>
                 {
-                    _animator.SetBool("facingFront", _verticalInput == -1);
-                    _animator.SetBool("facingSide", _horizontalInput != 0);
-                    Vector3 direction = new(_horizontalInput, 0, _verticalInput);
-                    _rigidbody.AddForce(direction.normalized * _rollForce, ForceMode.Impulse);
+                    _animator.SetBool("facingFront",
+                        _verticalInput == -1);
+                    _animator.SetBool("facingSide",
+                        _horizontalInput != 0);
+
+                    Vector3 direction =
+                        new(_horizontalInput, 0, _verticalInput);
+                    _rigidbody.AddForce(direction.normalized * _rollForce,
+                        ForceMode.Impulse);
                 })
             ),
 
