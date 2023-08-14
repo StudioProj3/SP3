@@ -26,8 +26,8 @@ public class FixedTimedTransition<TStateID> :
     }
 }
 
-// A helper class `TimedTransition` with the generic argument
-// defaulted to a common type
+// A helper class `FixedTimedTransition` with the
+// generic argument defaulted to a common type
 public class FixedTimedTransition :
     FixedTimedTransition<string>, ITimedTransition<string>
 {
