@@ -14,6 +14,12 @@ public class PlayerController :
     [Range(0f, 10f)]
     private float _movementSpeed = 5f;
 
+    [HorizontalDivider]
+    [Header("Character Data")]
+
+    [SerializeField]
+    private PlayerData _playerData;
+
     protected override void Start()
     {
         base.Start();
