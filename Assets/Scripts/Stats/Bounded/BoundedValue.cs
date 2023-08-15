@@ -40,6 +40,12 @@ public class BoundedValue : IValue
         _value = maxContainer.Value;
     }
 
+    public void OnMaxValueChanged()
+    {
+        _value = Mathf.Clamp(_value, Min, Max);
+        ValueChanged?.Invoke();
+    }
+
     public object Clone()
     {
         return new BoundedValue(

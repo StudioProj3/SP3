@@ -22,7 +22,7 @@ public abstract class Modifier : ICloneable
         new PlusModifier(value, priority);
 
     public static Modifier Multiply(float value, int priority) =>
-        new PlusModifier(value, priority);
+        new MultiplyModifier(value, priority);
 
     protected abstract Modifier CreateClone(float value,
         int priority);
