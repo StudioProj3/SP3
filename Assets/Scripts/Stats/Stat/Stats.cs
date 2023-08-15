@@ -110,7 +110,7 @@ public class Stats :
     }
 
     // Creates a new instanced stat container of runtime stats
-    private StatContainer GetInstancedStatContainer()
+    public StatContainer GetInstancedStatContainer()
     {
         return new StatContainer(_instancedStats.ToDictionary(
             kv => kv.Key, kv => kv.Value.Clone() as IModifiableValue),
