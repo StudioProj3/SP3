@@ -13,6 +13,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     private float _nextTickTime;
 
     private Vector3 _direction;
+    private float _distance;
 
     IStatContainer IEffectable.EntityStats => _cacodaemonStats;
 
@@ -53,22 +54,30 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
         _stateMachine.AddChilds
        (
            new GenericState("Walk",
+               new ActionEntry("Enter", () =>
+               {
+                   _direction = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
+                   _direction.y = 0;
+
+               }),
                new ActionEntry("FixedUpdate", () =>
                {
-                   _rigidbody.velocity = _cacodaemonStats.GetStat("MoveSpeed").Value * _direction.normalized;
+
+                   _rigidbody.velocity = _cacodaemonStats.GetStat("MoveSpeed").Value * _direction;
                })
            ),
 
            new GenericState("Charge",
                new ActionEntry("Enter", () =>
                {
-
+                   _direction = _player.transform.position - transform.position;
+                   _direction.y = 0;
                    //Vector3 direction =
-                       //new(_horizontalInput, 0, _verticalInput);
+                   //new(_horizontalInput, 0, _verticalInput);
 
                    _rigidbody.AddForce(
                        _cacodaemonStats.GetStat("MoveSpeed").Value *
-                       2 * _direction.normalized,
+                       3 * _direction.normalized,
                        ForceMode.Impulse
                        );
                })
@@ -76,10 +85,16 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
 
            // Transitions
            // Idle > Walk
-           new FixedTimedTransition("Idle", "Walk", 0.5f),
+           new RandomTimedTransition("Idle", "Walk", 1.0f,2.0f),
 
            // Walk > Idle
            new FixedTimedTransition("Walk", "Idle", 0.5f),
+
+           // Idle > Charge
+           new GenericTransition("Idle", "Charge", () =>
+           {
+               return _distance < 1.0f;
+           }),
 
            // Charge > Idle
            new FixedTimedTransition("Charge", "Idle", 0.7f)
@@ -124,13 +139,16 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                 --i;
             }
         }
+
+        _spriteRenderer.flipX = _rigidbody.velocity.x < 0;
+
     }
 
     private void FixedUpdate()
     {
-        Debug.Log(_player.transform.position);
-        _direction = _player.transform.position - transform.position;
-        _direction.y = 0;
+        _distance = Vector3.Distance(_player.transform.position, transform.position);
         _stateMachine.FixedUpdate();
     }
+
+
 }
