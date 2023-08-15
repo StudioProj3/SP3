@@ -3,10 +3,15 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class CacodaemonController : CharacterControllerBase, IEffectable
 {
+   
+   
     [SerializeField]
     private Stats _cacodaemonStats;
 
+    private StatContainer _cacodaemonStatsContainer;
+
     private GameObject _player;
+    private PlayerController _playerController;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _currentEffectTime;
@@ -14,12 +19,16 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
 
     private Vector3 _direction;
     private float _distance;
+    private PhysicalDamage _phyDamage;
 
     IStatContainer IEffectable.EntityStats => _cacodaemonStats;
 
     public void TakeDamage(Damage damage)
     {
+        _animator.SetBool("isHurt", true);
         damage.OnApply(_cacodaemonStats);
+        _animator.SetBool("isHurt", false);
+
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -43,7 +52,8 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     protected override void Start()
     {
         base.Start();
-
+        _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.GetStat("AttackDamage").Value);
         SetupStateMachine();
     }
 
@@ -63,7 +73,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                new ActionEntry("FixedUpdate", () =>
                {
 
-                   _rigidbody.velocity = _cacodaemonStats.GetStat("MoveSpeed").Value * _direction;
+                   _rigidbody.velocity = _cacodaemonStatsContainer.GetStat("MoveSpeed").Value * _direction;
                })
            ),
 
@@ -76,19 +86,21 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                    //new(_horizontalInput, 0, _verticalInput);
 
                    _rigidbody.AddForce(
-                       _cacodaemonStats.GetStat("MoveSpeed").Value *
+                       _cacodaemonStatsContainer.GetStat("MoveSpeed").Value *
                        3 * _direction.normalized,
                        ForceMode.Impulse
                        );
                })
            ),
 
+            new GenericState("Cooldown"),
+
            // Transitions
            // Idle > Walk
            new RandomTimedTransition("Idle", "Walk", 1.0f,2.0f),
 
            // Walk > Idle
-           new FixedTimedTransition("Walk", "Idle", 0.5f),
+           new FixedTimedTransition("Walk", "Cooldown", 0.3f),
 
            // Idle > Charge
            new GenericTransition("Idle", "Charge", () =>
@@ -96,19 +108,12 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                return _distance < 1.0f;
            }),
 
-           // Charge > Idle
-           new FixedTimedTransition("Charge", "Idle", 0.7f)
+           // Charge > Cooldown
+           new FixedTimedTransition("Charge", "Cooldown", 0.7f),
 
-           //// Walk or Idle > Roll
-           //new EagerGenericTransition("Walk", "Roll", () =>
-           //{
-           //    return _rollKeyDown;
-           //}),
+           // Cooldown > Idle
+           new FixedTimedTransition("Cooldown", "Idle", 0.7f)
 
-           //new EagerGenericTransition("Idle", "Roll", () =>
-           //{
-           //    return _rollKeyDown;
-           //})
        );
 
         _stateMachine.SetStartState("Idle");
@@ -119,6 +124,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
+        _playerController = _player.GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -139,8 +145,9 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                 --i;
             }
         }
+            
+        _spriteRenderer.flipX = _direction.x < 0;
 
-        _spriteRenderer.flipX = _rigidbody.velocity.x < 0;
 
     }
 
@@ -150,5 +157,13 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
         _stateMachine.FixedUpdate();
     }
 
+    private void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject == _player)
+        {
+            _playerController.TakeDamage(_phyDamage);
+        }
+        
+    }
 
 }
