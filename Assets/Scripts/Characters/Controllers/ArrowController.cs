@@ -24,18 +24,18 @@ public class ArrowController : MonoBehaviour
         _phyDamage = phyDamage;
         _playerController = playerController;
 
+        _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.velocity = _direction * _speed;
         _currentLifetime = _lifetime;
+
+        transform.rotation = Quaternion.Euler(0, -Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg, 0);
     }
 
-    // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
-        gameObject.SetActive(false);
-        _rigidbody = GetComponent<Rigidbody>();
+        gameObject.SetActive(false);  
     }
 
-    // Update is called once per frame
     private void Update()
     {
         _currentLifetime -= Time.deltaTime;
@@ -43,10 +43,12 @@ public class ArrowController : MonoBehaviour
             RemoveProjectile();
     }
 
-    private void OnCollisionEnter(Collision col)
+
+    private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
-        {
+        { 
+
             _playerController.TakeDamage(_phyDamage);
             RemoveProjectile();
         }
