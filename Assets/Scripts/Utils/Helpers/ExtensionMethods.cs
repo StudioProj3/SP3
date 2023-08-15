@@ -8,4 +8,9 @@ public static class ExtensionMethods
     {
         return enumerable == null || !enumerable.Any(); 
     }
+
+    public static bool IsEmpty<T>(this List<T> list)
+    {
+        return list.Count > 0; 
+    }
 }

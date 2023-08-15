@@ -32,8 +32,8 @@ public abstract class InventoryBase :
     protected List<Pair<int, uint>> _indexToQuantityMap = new();
     protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap = new();
 
-    // Function returns whether the modification request is valid. It caches the data
-    // needed for the modification.
+    // Function returns whether the modification request is valid. 
+    // caches the data needed for the modification.
     protected virtual bool RequestModify(ItemBase item, int number)
     {
         Assert.IsTrue(number != 0,
@@ -103,7 +103,8 @@ public abstract class InventoryBase :
                         continue;
                     }
 
-                    _nonStackableIndexToNewValueMap.Add(new Pair<int, bool>(i, true));
+                    _nonStackableIndexToNewValueMap.Add(
+                        new Pair<int, bool>(i, true));
                     numberLeft--;
                 }
             }
@@ -120,7 +121,8 @@ public abstract class InventoryBase :
                     // New quantity will always be >0.
                     // We want to get the new quantity after subtracting what
                     // is left of the modification amount.
-                    int newQuantity = Mathf.Max(0, (int)(quantity - Mathf.Abs(numberLeft)));
+                    int newQuantity = Mathf.Max(0,
+                        (int)(quantity - Mathf.Abs(numberLeft)));
 
                     // Cache the result.
                     _indexToQuantityMap.Add(new Pair<int, uint>(i,
@@ -149,7 +151,12 @@ public abstract class InventoryBase :
     // a success
     protected virtual bool Modify(ItemBase item, int number, bool request = true)
     {
-        if (!request || (request && RequestModify(item, number)))
+        // If request is false, check that one of the maps have at least one
+        // thing so we know there is a modification cached.
+        // If request is true, then run the RequestModify function.
+        if ((!request && (!_indexToQuantityMap.IsEmpty()
+            || !_nonStackableIndexToNewValueMap.IsEmpty()))
+            || (request && RequestModify(item, number)))
         {
             _indexToQuantityMap.ForEach(i => 
             {
