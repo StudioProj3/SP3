@@ -204,19 +204,19 @@ public class StateMachine<TSelfID, TStateID> :
 
     private void HandleTransitions(Action eagerCallback)
     {
-        (TStateID, bool) result = TryAllTransitions(CurrentState.StateID);
+        Pair<TStateID, bool> result = TryAllTransitions(CurrentState.StateID);
 
         // If `result` is default, nothing
         // more needs to be done, return
-        if (result.Item1.IsDefault())
+        if (result.First.IsDefault())
         {
             return;
         }
 
         // Perform the actual transition with the
         // `eagerCallback` where appropriate
-        SwitchState(result.Item1,
-            result.Item2 ? eagerCallback : null);
+        SwitchState(result.First,
+            result.Second ? eagerCallback : null);
     }
 
     private void HandleTimedTransitions(TStateID stateID)
@@ -242,7 +242,7 @@ public class StateMachine<TSelfID, TStateID> :
     // upon taking a transition if a suitable one is found
     // together with whether it is an eager transition with
     // conditions met, else it will return `default(TStateID)`
-    private (TStateID, bool) TryAllTransitions(TStateID stateID)
+    private Pair<TStateID, bool> TryAllTransitions(TStateID stateID)
     {
         bool result = _allTransitions.TryGetValue(stateID, out var list);
 
@@ -250,7 +250,7 @@ public class StateMachine<TSelfID, TStateID> :
         // meaning there are no transitions present for state `stateID`
         if (!result || list == null)
         {
-            return (default, false);
+            return new(default, false);
         }
 
         // Loop through all the available transitions and if list
@@ -262,13 +262,13 @@ public class StateMachine<TSelfID, TStateID> :
             // return the target state
             if (transition.Conditions())
             {
-                return (transition.ToStateID,
+                return new(transition.ToStateID,
                     transition is IEagerTransition &&
                     (transition as IEagerTransition).IsEager());
             }
         }
 
-        return (default, false);
+        return new(default, false);
     }
 
     // Checks that the current state is not null,
