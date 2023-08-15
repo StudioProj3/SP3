@@ -5,7 +5,7 @@ using TMPro.EditorUtilities;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StatusEffect",
-    menuName = "StatusEffect/DamageOverTimeEffect")]
+    menuName = "Status Effect/DamageOverTimeEffect")]
 public class DamageOverTimeEffect : StatusEffectBase
 {
     public float dotAmount;
