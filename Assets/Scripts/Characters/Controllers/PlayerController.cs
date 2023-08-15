@@ -5,7 +5,7 @@ using UnityEngine;
 // so a PlayerMovement script and maybe a PlayerInventoryController script
 [DisallowMultipleComponent]
 public class PlayerController :
-    CharacterControllerBase, IDamageable
+    CharacterControllerBase, IEffectable
 {
     [HorizontalDivider]
     [Header("Character Data")]
@@ -17,11 +17,11 @@ public class PlayerController :
     private Stats _playerStats;
 
     [SerializeField]
-    private PhysicalDamage _testPhyDamage;
+    private DamageOverTimeEffect dotEffectTest;
 
-    [SerializeField]
-    private MagicDamage _testMagicDamage;
-
+    private StatusEffectBase _statusEffect;
+    private float _currentEffectTime;
+    private float _nextTickTime;
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyDown;
@@ -29,6 +29,37 @@ public class PlayerController :
     public void TakeDamage(Damage damage)
     {
         damage.OnApply(_playerStats);
+    }
+
+    public void ApplyEffect(StatusEffectBase statusEffect)
+    {
+        _statusEffect = statusEffect;
+    }
+
+    public void HandleEffect()
+    {
+        _currentEffectTime += Time.deltaTime;
+
+        if (_currentEffectTime >= _statusEffect.duration)
+        {
+            RemoveEffect();
+        }
+
+        DamageOverTimeEffect damageOverTimeEffect = _statusEffect as DamageOverTimeEffect;
+        SpeedMultiplierEffect speedMultiplierEffect = _statusEffect as SpeedMultiplierEffect;
+        if (damageOverTimeEffect && _currentEffectTime > _nextTickTime)
+        {
+            _nextTickTime += damageOverTimeEffect.tickSpeed;
+            _playerStats.GetStat("Health").Subtract(damageOverTimeEffect.dotAmount);
+            Debug.Log("Health = " + _playerStats.GetStat("Health").Value);
+        }
+    }
+
+    public void RemoveEffect()
+    {
+        _statusEffect = null;
+        _currentEffectTime = 0;
+        _nextTickTime = 0;
     }
 
     protected override void Start()
@@ -111,27 +142,25 @@ public class PlayerController :
     private void Update()
     {
         UpdateInputs();
+
         _animator.SetBool("isRunning", 
             _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isRolling", 
             _stateMachine.CurrentState.StateID == "Roll");
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ApplyEffect(dotEffectTest);
+        }
+
+        if (_statusEffect)
+        {
+            HandleEffect();
+        }
+
         if (_horizontalInput != 0)
         {
             _spriteRenderer.flipX = _horizontalInput < 0;
-        }
-
-        // NOTE (Brandon): For testing purposes only
-        // Edit damage dealt in the default damage scriptable objects
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            TakeDamage(_testMagicDamage);
-            Debug.Log("Health after magic dmg: " + _playerStats.GetStat("Health").Value);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            TakeDamage(_testPhyDamage);
-            Debug.Log("Health after phy dmg: " + _playerStats.GetStat("Health").Value);
         }
     }
 
