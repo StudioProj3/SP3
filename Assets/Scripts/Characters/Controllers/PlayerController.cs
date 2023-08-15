@@ -73,9 +73,6 @@ public class PlayerController :
                 })
             ),
 
-            // FIXME (Brandon): Bug where transition to roll doesn't
-            // register when input is pressed. Only happens when
-            // direction is switched right before input
             new GenericState("Roll",
                 new ActionEntry("Enter", () =>
                 {
