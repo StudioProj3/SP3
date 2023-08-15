@@ -18,7 +18,7 @@ public class PlayerController :
     private Stats _playerStats;
 
     [SerializeField]
-    private DamageOverTimeEffect dotEffectTest;
+    private SpeedMultiplierEffect speedEffectTest;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
@@ -152,7 +152,7 @@ public class PlayerController :
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ApplyEffect(DamageOverTimeEffect.Create(dotEffectTest));
+            ApplyEffect(SpeedMultiplierEffect.Create(speedEffectTest));
         }
 
         if (_horizontalInput != 0)
