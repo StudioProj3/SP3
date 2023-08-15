@@ -76,8 +76,9 @@ public class ArcherController : CharacterControllerBase, IEffectable
            new GenericState("Walk",
                new ActionEntry("Enter", () =>
                {
-                   _direction = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
-                   _direction.y = 0;
+                   _direction = new Vector3(Random.Range(-1.0f, 1.0f),
+                                            0.0f, 
+                                            Random.Range(-1.0f, 1.0f));
 
                }),
                new ActionEntry("FixedUpdate", () =>
@@ -105,6 +106,19 @@ public class ArcherController : CharacterControllerBase, IEffectable
                    }
 
                   
+               })
+           ),
+
+            new GenericState("Roll",
+               new ActionEntry("Enter", () =>
+               {
+                   _direction = _player.transform.position - transform.position;
+                   _direction.y = 0;
+
+                   _rigidbody.AddForce( _archerStats.GetStat("MoveSpeed").Value 
+                       * 2 * -_direction.normalized, 
+                       ForceMode.Impulse);
+
                })
            ),
 

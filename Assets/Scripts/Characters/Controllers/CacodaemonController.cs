@@ -69,8 +69,9 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
            new GenericState("Walk",
                new ActionEntry("Enter", () =>
                {
-                   _direction = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
-                   _direction.y = 0;
+                   _direction = new Vector3(Random.Range(-1.0f, 1.0f),
+                                            0.0f,
+                                            Random.Range(-1.0f, 1.0f));
 
                }),
                new ActionEntry("FixedUpdate", () =>
@@ -92,7 +93,9 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                    // the smallest angle possible between the source and
                    // target.
 
-                   _cacodaemonParticles.transform.rotation = Quaternion.Euler(0, Vector3.Angle(_player.transform.position, transform.position), 0);
+                   float angle = -Mathf.Atan2(_direction.z, _direction.x) * Mathf.Rad2Deg;
+
+                   _cacodaemonParticles.transform.rotation = Quaternion.Euler(0, angle, 0);
                    _cacodaemonParticles.Play();
 
                    _rigidbody.AddForce(
