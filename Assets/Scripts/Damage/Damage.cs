@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public abstract class Damage : ScriptableObject
 {
     [SerializeField]

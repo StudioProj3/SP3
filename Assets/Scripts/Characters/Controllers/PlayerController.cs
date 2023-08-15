@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 using UnityEngine;
 
 // Player controller class for movement
@@ -17,14 +20,14 @@ public class PlayerController :
     private Stats _playerStats;
 
     [SerializeField]
-    private DamageOverTimeEffect dotEffectTest;
+    private SpeedMultiplierEffect speedEffectTest;
 
-    private StatusEffectBase _statusEffect;
-    private float _currentEffectTime;
-    private float _nextTickTime;
+    private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
-    private bool _rollKeyDown;
+    private bool _rollKeyPressed;
+
+    IStatContainer IEffectable.EntityStats => _playerStats;
 
     public void TakeDamage(Damage damage)
     {
@@ -33,33 +36,20 @@ public class PlayerController :
 
     public void ApplyEffect(StatusEffectBase statusEffect)
     {
-        _statusEffect = statusEffect;
+        _statusEffects.Add(statusEffect);
+        statusEffect.OnApply(this);
     }
 
-    public void HandleEffect()
+    public void RemoveEffect(StatusEffectBase statusEffect)
     {
-        _currentEffectTime += Time.deltaTime;
-
-        if (_currentEffectTime >= _statusEffect.duration)
-        {
-            RemoveEffect();
-        }
-
-        DamageOverTimeEffect damageOverTimeEffect = _statusEffect as DamageOverTimeEffect;
-        SpeedMultiplierEffect speedMultiplierEffect = _statusEffect as SpeedMultiplierEffect;
-        if (damageOverTimeEffect && _currentEffectTime > _nextTickTime)
-        {
-            _nextTickTime += damageOverTimeEffect.tickSpeed;
-            _playerStats.GetStat("Health").Subtract(damageOverTimeEffect.dotAmount);
-            Debug.Log("Health = " + _playerStats.GetStat("Health").Value);
-        }
+        int index = _statusEffects.IndexOf(statusEffect);
+        RemoveEffectImpl(statusEffect, index);
     }
-
-    public void RemoveEffect()
+    
+    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
     {
-        _statusEffect = null;
-        _currentEffectTime = 0;
-        _nextTickTime = 0;
+        statusEffect.OnExit(this);
+        _statusEffects.RemoveAt(index);
     }
 
     protected override void Start()
@@ -102,6 +92,11 @@ public class PlayerController :
                         2 * direction.normalized,
                         ForceMode.Impulse
                         );
+                }),
+
+                new ActionEntry("Exit", () =>
+                {
+                    _rollKeyPressed = false;
                 })
             ),
 
@@ -124,12 +119,12 @@ public class PlayerController :
             // Walk or Idle > Roll
             new EagerGenericTransition("Walk", "Roll", () =>
             {
-                return _rollKeyDown;
+                return _rollKeyPressed;
             }),
 
             new EagerGenericTransition("Idle", "Roll", () =>
             {
-                return _rollKeyDown;
+                return _rollKeyPressed;
             })
         );
         
@@ -148,14 +143,23 @@ public class PlayerController :
         _animator.SetBool("isRolling", 
             _stateMachine.CurrentState.StateID == "Roll");
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (!_statusEffects.IsNullOrEmpty())
         {
-            ApplyEffect(dotEffectTest);
+            _statusEffects.ForEach(effect => effect.HandleEffect(this));
         }
 
-        if (_statusEffect)
+        for (int i = 0; i < _statusEffects.Count; ++i)
         {
-            HandleEffect();
+            if (_statusEffects[i].IsDone)
+            {
+                RemoveEffectImpl(_statusEffects[i], i);
+                --i;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ApplyEffect(SpeedMultiplierEffect.Create(speedEffectTest));
         }
 
         if (_horizontalInput != 0)
@@ -171,7 +175,10 @@ public class PlayerController :
 
     private void UpdateInputs()
     {
-        _rollKeyDown = Input.GetKeyDown(KeyCode.LeftShift);
+        if (!_rollKeyPressed)
+        {
+            _rollKeyPressed = Input.GetKeyDown(KeyCode.LeftShift);
+        }
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
     }

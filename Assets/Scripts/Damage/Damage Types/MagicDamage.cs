@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Text;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
