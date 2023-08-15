@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -68,7 +67,8 @@ public class PlayerController :
             new GenericState("Walk",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _rigidbody.velocity = _playerStats.GetStat("MoveSpeed").Value * new Vector3(
+                    _rigidbody.velocity = _playerStats.
+                        GetStat("MoveSpeed").Value * new Vector3(
                         _horizontalInput, 0, _verticalInput).normalized;
                 })
             ),
