@@ -1,9 +1,13 @@
 using System;
 
-public interface IValue : ICloneable
+public interface IValue<T> : ICloneable
 {
-    float Value
-    {
-        get;
-    }
+    T Value { get; }
+}
+
+// A helper interface `IValue` with the generic
+// argument defaulted to a common type
+public interface IValue : IValue<float>
+{
+
 }
