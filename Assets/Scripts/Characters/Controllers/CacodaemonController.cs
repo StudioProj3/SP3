@@ -93,6 +93,8 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                })
            ),
 
+           new GenericState("GoingToCharge"),
+
             new GenericState("Cooldown"),
 
            // Transitions
@@ -100,13 +102,16 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
            new RandomTimedTransition("Idle", "Walk", 1.0f,2.0f),
 
            // Walk > Idle
-           new FixedTimedTransition("Walk", "Cooldown", 0.3f),
+           new FixedTimedTransition("Walk", "Idle", 0.7f),
 
-           // Idle > Charge
-           new GenericTransition("Idle", "Charge", () =>
+           // Idle > Going to charge
+           new GenericTransition("Idle", "GoingToCharge", () =>
            {
                return _distance < 1.0f;
            }),
+
+          // Idle > Going to charge
+          new FixedTimedTransition("GoingToCharge", "Charge", 0.5f),
 
            // Charge > Cooldown
            new FixedTimedTransition("Charge", "Cooldown", 0.7f),
@@ -131,6 +136,8 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     {
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
+        _animator.SetBool("isGoingCharge",
+           _stateMachine.CurrentState.StateID == "GoingToCharge");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
