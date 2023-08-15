@@ -38,6 +38,7 @@ public class BoundedModifiableValue :
     {
         _boundedValue = value;
         _modifiableValue = modifiableValue;
+        _modifiableValue.ValueChanged += () => _boundedValue.OnMaxValueChanged();
     }
 
     public void AddModifier(Modifier modifier)
