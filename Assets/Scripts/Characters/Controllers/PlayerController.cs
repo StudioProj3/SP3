@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -24,7 +25,7 @@ public class PlayerController :
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
-    private bool _rollKeyDown;
+    private bool _rollKeyPressed;
 
     IStatContainer IEffectable.EntityStats => _playerStats;
 
@@ -91,6 +92,11 @@ public class PlayerController :
                         2 * direction.normalized,
                         ForceMode.Impulse
                         );
+                }),
+
+                new ActionEntry("Exit", () =>
+                {
+                    _rollKeyPressed = false;
                 })
             ),
 
@@ -113,12 +119,12 @@ public class PlayerController :
             // Walk or Idle > Roll
             new EagerGenericTransition("Walk", "Roll", () =>
             {
-                return _rollKeyDown;
+                return _rollKeyPressed;
             }),
 
             new EagerGenericTransition("Idle", "Roll", () =>
             {
-                return _rollKeyDown;
+                return _rollKeyPressed;
             })
         );
         
@@ -169,7 +175,10 @@ public class PlayerController :
 
     private void UpdateInputs()
     {
-        _rollKeyDown = Input.GetKeyDown(KeyCode.LeftShift);
+        if (!_rollKeyPressed)
+        {
+            _rollKeyPressed = Input.GetKeyDown(KeyCode.LeftShift);
+        }
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
