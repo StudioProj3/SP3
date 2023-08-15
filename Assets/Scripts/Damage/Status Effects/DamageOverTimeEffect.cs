@@ -54,7 +54,6 @@ public class DamageOverTimeEffect : StatusEffectBase
         {
             _nextTickTime += tickSpeed;
             stats.GetStat("Health").Subtract(dotAmount);
-            Debug.Log("Health = " + stats.GetStat("Health").Value);
         }
     }
 }
