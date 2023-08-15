@@ -92,9 +92,6 @@ public class ArcherController : CharacterControllerBase, IEffectable
                new ActionEntry("Enter", () =>
                {
 
-                   _direction = _player.transform.position - transform.position;
-                   _direction.y = 0;
-
                    for (int i = 0; i < _pooledArrowList.Count; i++)
                    {
                        if (_pooledArrowList[i].gameObject.activeSelf == false)
@@ -112,17 +109,28 @@ public class ArcherController : CharacterControllerBase, IEffectable
             new GenericState("Roll",
                new ActionEntry("Enter", () =>
                {
-                   _direction = _player.transform.position - transform.position;
+                   _direction = transform.position - _player.transform.position;
                    _direction.y = 0;
 
-                   _rigidbody.AddForce( _archerStats.GetStat("MoveSpeed").Value 
-                       * 2 * -_direction.normalized, 
+                   _rigidbody.AddForce( _archerStatsContainer.GetStat("MoveSpeed").Value 
+                       * 4 * _direction.normalized, 
                        ForceMode.Impulse);
 
                })
            ),
 
-           new GenericState("GoingToShoot"),
+           new GenericState("GoingToShoot",
+               new ActionEntry("Enter", () =>
+               {
+
+                   _direction = _player.transform.position - transform.position;
+                   _direction.y = 0;
+
+
+               })
+
+
+           ),
 
             new GenericState("Cooldown"),
 
@@ -134,17 +142,32 @@ public class ArcherController : CharacterControllerBase, IEffectable
            // Walk > Idle
            new FixedTimedTransition("Walk", "Idle", 0.7f),
 
-           // Idle > Going to shoot
-           new GenericTransition("Idle", "GoingToShoot", () =>
+           // Idle > Roll
+           new GenericTransition("Idle", "Roll", () =>
            {
                return _distance < 1.0f;
            }),
 
-          // Idle > Going to Shoot
-          new FixedTimedTransition("GoingToShoot", "Shoot", 0.5f),
+
+           // Idle > Going to shoot
+           new GenericTransition("Idle", "GoingToShoot", () =>
+           {
+               return _distance < 3.0f;
+           }),
+           
+          // Roll > Going to Shoot
+          new FixedTimedTransition("Roll", "GoingToShoot", 0.5f),
+
+          //FIXME (Aquila): Sometimes when archer shoots,
+          // it plays the shoot animation but does not
+          // shoot an arrow. Likely due to transition
+          // timings between states
+
+          //  Going to Shoot > Shoot
+          new FixedTimedTransition("GoingToShoot", "Shoot", 0.6f),
 
            // Shoot > Cooldown
-           new FixedTimedTransition("Shoot", "Cooldown", 0.1f),
+           new FixedTimedTransition("Shoot", "Cooldown", 0.2f),
 
            // Cooldown > Idle
            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
@@ -168,6 +191,8 @@ public class ArcherController : CharacterControllerBase, IEffectable
             _stateMachine.CurrentState.StateID == "GoingToShoot");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isRolling",
+         _stateMachine.CurrentState.StateID == "Roll");
 
 
         if (!_statusEffects.IsNullOrEmpty())
