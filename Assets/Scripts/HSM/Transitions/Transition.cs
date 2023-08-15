@@ -10,16 +10,17 @@ public abstract class Transition<TStateID> :
 {
     private List<Func<bool>> _conditions = new();
 
-    protected Transition(TStateID fromStateID, TStateID toStateID,
-        params Func<bool>[] initConditions) :
-        base(fromStateID, toStateID)
+    private Action _callback;
+
+    public override void SetCallback(Action callback)
     {
-        _conditions.AddRange(initConditions);
+        _callback = callback;
     }
 
-    protected void AddCondition(Func<bool> condition)
+    // Should not be called outside of `StateMachine`
+    public override void TriggerCallback()
     {
-        _conditions.Add(condition);
+        _callback?.Invoke();
     }
 
     public override bool Conditions()
@@ -28,6 +29,25 @@ public abstract class Transition<TStateID> :
         Assert.IsTrue(result != null);
 
         return (bool)result;
+    }
+
+    protected Transition(TStateID fromStateID, TStateID toStateID,
+        params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID)
+    {
+        _conditions.AddRange(initConditions);
+    }
+
+    protected Transition(TStateID fromStateID, TStateID toStateID,
+        Action callback, params Func<bool>[] initConditions) :
+        this(fromStateID, toStateID, initConditions)
+    {
+        SetCallback(callback);
+    }
+
+    protected void AddCondition(Func<bool> condition)
+    {
+        _conditions.Add(condition);
     }
 }
 
@@ -39,6 +59,13 @@ public abstract class Transition :
     protected Transition(string fromStateID, string toStateID,
         params Func<bool>[] initConditions) :
         base(fromStateID, toStateID, initConditions)
+    {
+
+    }
+
+    protected Transition(string fromStateID, string toStateID,
+        Action callback, params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID, callback, initConditions)
     {
 
     }

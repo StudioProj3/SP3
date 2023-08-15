@@ -13,11 +13,19 @@ public class EagerGenericTransition<TStateID> :
 {
     private List<Func<bool>> _eagerConditions = new();
 
-    public EagerGenericTransition(TStateID fromStateID, TStateID toStateID,
-        params Func<bool>[] initConditions) :
+    public EagerGenericTransition(TStateID fromStateID,
+        TStateID toStateID, params Func<bool>[] initConditions) :
         base(fromStateID, toStateID, initConditions)
     {
 
+    }
+
+    public EagerGenericTransition(TStateID fromStateID,
+        TStateID toStateID, Action callback,
+        params Func<bool>[] initConditions) :
+        this(fromStateID, toStateID, initConditions)
+    {
+        SetCallback(callback);
     }
 
     public bool IsEager()
@@ -40,9 +48,17 @@ public class EagerGenericTransition<TStateID> :
 public class EagerGenericTransition :
     EagerGenericTransition<string>
 {
-    public EagerGenericTransition(string fromStateID, string toStateID,
-        params Func<bool>[] initConditions) :
+    public EagerGenericTransition(string fromStateID,
+        string toStateID, params Func<bool>[] initConditions) :
         base(fromStateID, toStateID, initConditions)
+    {
+
+    }
+
+    public EagerGenericTransition(string fromStateID,
+        string toStateID, Action callback,
+        params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID, callback, initConditions)
     {
         
     }

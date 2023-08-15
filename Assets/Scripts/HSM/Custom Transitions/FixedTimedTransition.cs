@@ -1,3 +1,5 @@
+using System;
+
 // Transition that will happen after `duration` amount of seconds
 // where `duration` is fixed right from the start
 public class FixedTimedTransition<TStateID> :
@@ -6,10 +8,18 @@ public class FixedTimedTransition<TStateID> :
     private bool _isTimeUp = false;
     private readonly float _duration;
 
-    public FixedTimedTransition(TStateID fromStateID, TStateID toStateID,
-        float duration) : base(fromStateID, toStateID)
+    public FixedTimedTransition(TStateID fromStateID,
+        TStateID toStateID, float duration) :
+        base(fromStateID, toStateID)
     {
         _duration = duration;
+    }
+
+    public FixedTimedTransition(TStateID fromStateID,
+        TStateID toStateID, float duration, Action callback) :
+        this(fromStateID, toStateID, duration)
+    {
+        SetCallback(callback);
     }
 
     public void StartTimer()
@@ -31,8 +41,16 @@ public class FixedTimedTransition<TStateID> :
 public class FixedTimedTransition :
     FixedTimedTransition<string>, ITimedTransition<string>
 {
-    public FixedTimedTransition(string fromStateID, string toStateID,
-        float duration) : base(fromStateID, toStateID, duration)
+    public FixedTimedTransition(string fromStateID,
+        string toStateID, float duration) :
+        base(fromStateID, toStateID, duration)
+    {
+
+    }
+
+    public FixedTimedTransition(string fromStateID,
+        string toStateID, float duration, Action callback) :
+        base(fromStateID, toStateID, duration, callback)
     {
 
     }

@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine.Assertions;
 
 public abstract class TransitionBase<TStateID> :
@@ -5,6 +7,10 @@ public abstract class TransitionBase<TStateID> :
 {
     public TStateID FromStateID { get; protected set; }
     public TStateID ToStateID { get; protected set; }
+
+    public abstract void SetCallback(Action callback);
+
+    public abstract void TriggerCallback();
 
     public abstract bool Conditions();
 

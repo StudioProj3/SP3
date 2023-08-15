@@ -238,6 +238,12 @@ public class StateMachine<TSelfID, TStateID> :
         }
     }
 
+    private void HandleTransitionCallback(TransitionBase<TStateID>
+        transition)
+    {
+        transition.TriggerCallback();
+    }
+
     // Returns the new state the state machine should be in
     // upon taking a transition if a suitable one is found
     // together with whether it is an eager transition with
@@ -262,6 +268,8 @@ public class StateMachine<TSelfID, TStateID> :
             // return the target state
             if (transition.Conditions())
             {
+                HandleTransitionCallback(transition);
+
                 return new(transition.ToStateID,
                     transition is IEagerTransition &&
                     (transition as IEagerTransition).IsEager());
