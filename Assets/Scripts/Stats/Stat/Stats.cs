@@ -1,13 +1,15 @@
-using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEditor;
 
-// NOTE (Chris): Take note that the inspector for this script is in CustomStatsEditor.cs
-[CreateAssetMenu(fileName = "Stats", menuName = "Scriptable Objects/Stats")]
-public class Stats : ScriptableObject, IStatContainer
+// NOTE (Chris): Take note that the inspector for
+// this script is in `CustomStatsEditor`
+[CreateAssetMenu(fileName = "Stats",
+    menuName = "Stats/Stats")]
+public class Stats :
+    ScriptableObject, IStatContainer
 {
     [Serializable]
     private class StatMapEntry
@@ -18,16 +20,15 @@ public class Stats : ScriptableObject, IStatContainer
         public virtual KeyValuePair<StatType, IModifiableValue> CreatePair()
         {
             return new KeyValuePair<StatType, IModifiableValue>(
-                type,
-                new ModifiableValue(initialValue));
+                type, new ModifiableValue(initialValue));
         }
     }
 
     [Serializable]
     private class BoundedStatMapEntry : StatMapEntry
     {
-        // TODO (Chris): Have the user be able to choose between readonly 
-        // and not lower bound.
+        // TODO (Chris): Have the user be able to
+        // choose between readonly and not lower bound
         public float initialLowerBoundValue;
 
         public override KeyValuePair<StatType, IModifiableValue> CreatePair()
@@ -36,7 +37,7 @@ public class Stats : ScriptableObject, IStatContainer
             return new KeyValuePair<StatType, IModifiableValue>(type,
                 new BoundedModifiableValue(
                     new BoundedValue(
-                        new ReadOnlyValueContainer(initialLowerBoundValue),
+                        new ReadOnlyValue(initialLowerBoundValue),
                         modifiableValue
                     ),
                     modifiableValue
@@ -51,9 +52,11 @@ public class Stats : ScriptableObject, IStatContainer
     private List<StatMapEntry> _instancedStatInitializerList;
 
     private Dictionary<StatType, IModifiableValue> _stats = new();
-    private Dictionary<StatType, IModifiableValue> _instancedStats = new();
+    private Dictionary<StatType, IModifiableValue> _instancedStats =
+        new();
 
-    private readonly Dictionary<string, StatType> _statTypeMap = new();
+    private readonly Dictionary<string, StatType> _statTypeMap =
+        new();
 
     public IModifiableValue GetStat(string typeName)
     {
@@ -73,8 +76,12 @@ public class Stats : ScriptableObject, IStatContainer
     public bool TryGetStat(string name, out IModifiableValue stat)
     {
         stat = null;
-        if (_statTypeMap.TryGetValue(name, out StatType type)) 
+
+        if (_statTypeMap.TryGetValue(name, out StatType type))
+        {
             return _stats.TryGetValue(type, out stat);
+        }
+
         return false;
     }
 
@@ -102,7 +109,7 @@ public class Stats : ScriptableObject, IStatContainer
         });
     }
 
-    // Creates a new instanced stat container of runtime stats.
+    // Creates a new instanced stat container of runtime stats
     private StatContainer GetInstancedStatContainer()
     {
         return new StatContainer(_instancedStats.ToDictionary(
@@ -139,5 +146,4 @@ public class Stats : ScriptableObject, IStatContainer
     {
         _instancedStatInitializerList.RemoveAt(index);
     }
-
 }

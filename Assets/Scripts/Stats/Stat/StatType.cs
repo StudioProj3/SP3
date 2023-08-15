@@ -1,11 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Stat Type", menuName = "Scriptable Objects/Stat Type")]
+[CreateAssetMenu(fileName = "StatType",
+    menuName = "Stats/StatType")]
 public class StatType : ScriptableObject 
 {
-    [SerializeField] 
-    private string _name; 
-
-    public string Name => _name;
-
+    [field: SerializeField]
+    public string Name { get; private set; }
 }

@@ -1,6 +1,7 @@
 using System;
 
-public class BoundedModifiableValue : IModifiableValue
+public class BoundedModifiableValue :
+    IModifiableValue
 {
     public float Value => _boundedValue.Value;
     public event Action ValueChanged;
@@ -35,8 +36,9 @@ public class BoundedModifiableValue : IModifiableValue
     public BoundedModifiableValue(BoundedValue value,
         ModifiableValue modifiableValue)
     {
-        this._boundedValue = value;
-        this._modifiableValue = modifiableValue;
+        _boundedValue = value;
+        _modifiableValue = modifiableValue;
+        _modifiableValue.ValueChanged += () => _boundedValue.OnMaxValueChanged();
     }
 
     public void AddModifier(Modifier modifier)
@@ -53,7 +55,8 @@ public class BoundedModifiableValue : IModifiableValue
 
     public object Clone()
     {
-        return new BoundedModifiableValue(_boundedValue.Clone() as BoundedValue,
+        return new BoundedModifiableValue(
+            _boundedValue.Clone() as BoundedValue,
             _modifiableValue.Clone() as ModifiableValue);
     }
 }
