@@ -10,6 +10,8 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
 
     private StatContainer _cacodaemonStatsContainer;
 
+    private ParticleSystem _cacodaemonParticles;
+
     private GameObject _player;
     private PlayerController _playerController;
 
@@ -52,6 +54,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     protected override void Start()
     {
         base.Start();
+        _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
         _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.GetStat("AttackDamage").Value);
         SetupStateMachine();
@@ -80,10 +83,17 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
            new GenericState("Charge",
                new ActionEntry("Enter", () =>
                {
+
                    _direction = _player.transform.position - transform.position;
                    _direction.y = 0;
-                   //Vector3 direction =
-                   //new(_horizontalInput, 0, _verticalInput);
+
+                   // FIXME (Aquila): Bug where rotation of particles is
+                   // not accurate, likely due to Vector3.Angle() giving
+                   // the smallest angle possible between the source and
+                   // target.
+
+                   _cacodaemonParticles.transform.rotation = Quaternion.Euler(0, Vector3.Angle(_player.transform.position, transform.position), 0);
+                   _cacodaemonParticles.Play();
 
                    _rigidbody.AddForce(
                        _cacodaemonStatsContainer.GetStat("MoveSpeed").Value *
@@ -98,6 +108,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
             new GenericState("Cooldown"),
 
            // Transitions
+
            // Idle > Walk
            new RandomTimedTransition("Idle", "Walk", 1.0f,2.0f),
 
