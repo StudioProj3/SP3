@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using UnityEngine;
 using UnityEngine.Assertions;
 
 // `TSelfID` is used as a type for when this `StateMachine` is
@@ -44,6 +45,8 @@ public class StateMachine<TSelfID, TStateID> :
     // to prevent flooding the editor when message method calls
     // are attempted in loop
     private uint _currentStateExceptionThreshold = 10;
+
+    private bool _transitionDebugLogs = false;
 
     // Forward the `selfID` to the readonly `StateID`
     // in `StateBase`
@@ -187,6 +190,16 @@ public class StateMachine<TSelfID, TStateID> :
 
     }
 
+    public void EnableTransitionDebugLogs()
+    {
+        _transitionDebugLogs = true;
+    }
+
+    public void DisableTransitionDebugLogs()
+    {
+        _transitionDebugLogs = false;
+    }
+
     private void SwitchState(TStateID toStateID,
         Action eagerCallback = null)
     {
@@ -244,6 +257,16 @@ public class StateMachine<TSelfID, TStateID> :
         transition.TriggerCallback();
     }
 
+    private void HandleTransitionDebugLogs(TransitionBase<TStateID>
+        transition)
+    {
+        if (_transitionDebugLogs)
+        {
+            Debug.Log("State Machine \"" + StateID + "\" | " +
+                transition.FromStateID + " > " + transition.ToStateID);
+        }
+    }
+
     // Returns the new state the state machine should be in
     // upon taking a transition if a suitable one is found
     // together with whether it is an eager transition with
@@ -269,6 +292,7 @@ public class StateMachine<TSelfID, TStateID> :
             if (transition.Conditions())
             {
                 HandleTransitionCallback(transition);
+                HandleTransitionDebugLogs(transition);
 
                 return new(transition.ToStateID,
                     transition is IEagerTransition &&
