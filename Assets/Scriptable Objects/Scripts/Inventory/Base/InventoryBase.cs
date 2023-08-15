@@ -27,6 +27,9 @@ public abstract class InventoryBase :
     protected uint _maxPerSlot;
 
     [SerializeField]
+    protected List<Pair<ItemBase, uint>> _itemInitializerList = new();
+
+    // [SerializeReference]
     protected List<Pair<ItemBase, uint>> _allItems = new();
 
     protected List<Pair<int, uint>> _indexToQuantityMap = new();
@@ -43,7 +46,7 @@ public abstract class InventoryBase :
         int numberLeft = number;
         bool isItemStackable = item.Stackable;
 
-        bool CanAddOrRemove()
+        bool CannotAddOrRemove()
         {
             return (isAdd && numberLeft <= 0) ||
                 (!isAdd && numberLeft >= 0);
@@ -53,46 +56,65 @@ public abstract class InventoryBase :
         for (int i = 0; i < _maxNumSlots; ++i)
         {
             // If all adding or removing was done
-            if (!CanAddOrRemove())
+            if (CannotAddOrRemove())
             {
                 return true;
             }
 
-            ItemBase currentItem = _allItems[i].Key;
-            uint quantity = _allItems[i].Value;
-            bool isNull = currentItem == null;
-            bool isCurrentStackable = currentItem.Stackable;
+            bool isNull = _allItems[i] == null; 
+            ItemBase currentItem = null;
+            uint quantity = 0;
 
-            // Check if `item` is the not that same as
-            // `currentItem`, if so continue to next iteration
-            if (item != currentItem)
+            if (!isNull)
             {
-                continue;
+                currentItem = _allItems[i].Key;
+                quantity = _allItems[i].Value;
             }
+
 
             if (isAdd)
             {
-                if (currentItem.Stackable)
+                if (item.Stackable)
                 {
-                    // If the current slot is already full move
-                    // to the next iteration
-                    if (quantity >= _maxPerSlot)
+                    if (!isNull)
                     {
-                        continue;
-                    }
-                    // Get the difference that we are able to fill up.
-                    int difference = (int)(_maxPerSlot - quantity);
-                    
-                    // If there is more than the difference, it will use the
-                    // difference. If there is less than the difference, it
-                    // will use the remainder
-                    _indexToQuantityMap.Add(new Pair<int, uint>(i, 
-                        (uint)Mathf.Min(numberLeft,
-                        (int)quantity + difference)));
+                        // Check if `item` is the not that same as
+                        // `currentItem`, if so continue to next iteration
+                        if (item != currentItem)
+                        {
+                            continue;
+                        }
 
-                    // Hence, all we need to do is just minus the difference,
-                    // which will be the max 'difference'
-                    numberLeft -= difference;
+                        // If the current slot is already full move
+                        // to the next iteration
+                        if (quantity >= _maxPerSlot)
+                        {
+                            continue;
+                        }
+                        // Get the difference that we are able to fill up.
+                        int difference = (int)(_maxPerSlot - quantity);
+                        
+                        // If there is more than the difference, it will use the
+                        // difference. If there is less than the difference, it
+                        // will use the remainder
+                        _indexToQuantityMap.Add(new Pair<int, uint>(i, 
+                            (uint)(Mathf.Min(numberLeft,
+                            difference) + quantity)));
+
+                        // Hence, all we need to do is just minus the difference,
+                        // which will be the max 'difference'
+                        numberLeft -= difference;
+                    }
+                    else
+                    {
+                        // Either get the max per slot or remainder.
+                        int newValue = Mathf.Min((int)_maxPerSlot, numberLeft);
+
+                        // Use the new value obtained. 
+                        _indexToQuantityMap.Add(
+                            new Pair<int, uint>(i, (uint)newValue));
+                        numberLeft -= newValue;    
+                    }
                 }
                 else
                 {
@@ -103,6 +125,7 @@ public abstract class InventoryBase :
                         continue;
                     }
 
+                    // Since it's an empty slot, we can just add to it.
                     _nonStackableIndexToNewValueMap.Add(
                         new Pair<int, bool>(i, true));
                     numberLeft--;
@@ -110,6 +133,8 @@ public abstract class InventoryBase :
             }
             else
             {
+                // Handle all the cases for removal
+
                 // The slot is already empty. Continue to next iteration.
                 if (isNull)
                 {
@@ -143,7 +168,7 @@ public abstract class InventoryBase :
         }
 
         // If we can still add or remove, modification is rejected.
-        return !CanAddOrRemove();
+        return CannotAddOrRemove();
     }
 
     // Add or remove items from the inventory based on the sign
@@ -170,7 +195,15 @@ public abstract class InventoryBase :
                 {
                     // The same item type already exists, just modify
                     // the existing item in the item slot.
-                    _allItems[i.Key].Value = i.Value;
+                    // However, if the new value is 0, we should empty the slot.
+                    if (i.Value > 0)
+                    {
+                        _allItems[i.Key].Value = i.Value;
+                    }
+                    else
+                    {
+                        _allItems[i.Key] = null;
+                    }
                 }
             });
 
@@ -205,26 +238,85 @@ public abstract class InventoryBase :
         return false;
     }
 
-    protected virtual bool Add(ItemBase item, uint number)
+    public virtual bool Add(ItemBase item, uint number)
     {
         return Modify(item, (int)number);
     }
 
-    protected virtual bool Remove(ItemBase item, uint number)
+    public virtual bool Remove(ItemBase item, uint number)
     {
         return Modify(item, (int)(number * -1));
     }
 
-    // Update the inventory list `_allItems` such that the
-    // `Count` matches that of `_maxNumSlots` with empty
-    // elements initialized to `null`
+    // For debugging
+    public void Print()
+    {
+        Debug.Log("Inventory size: "  + _allItems.Count.ToString());
+        for (int i = 0; i < _allItems.Count; ++i)
+        {
+            if (_allItems[i] != null) 
+            {
+                Debug.Log("Index " + i.ToString() + " : " +
+                    _allItems[i].First.Name + 
+                    " : " + _allItems[i].Second.ToString()); 
+            }
+        }
+    }
+
+    // Update the inventory list `_allItems` 
+    // with the starter items and new max number of slots
     protected virtual void OnValidate()
     {
-        _allItems.Capacity = (int)_maxNumSlots;
+        bool InitializerItemExists(Pair<ItemBase, uint> pair) 
+            => pair != null && pair.First != null;
 
-        while (_allItems.Count < _maxNumSlots)
+        bool ItemExists(Pair<ItemBase, uint> pair) 
+            => pair != null && pair.First != null && pair.Second != 0;
+
+        // If the new max number of slots is below the current count,
+        // start removing from the end
+        // else, add nulls to the back.
+        // NOTE (Chris): By adding null, you are just adding a new pair with
+        // null values
+        if (_maxNumSlots < _itemInitializerList.Count)
         {
-            _allItems.Add(null);
+            while (_itemInitializerList.Count > _maxNumSlots)
+            {
+                _itemInitializerList.RemoveAt(_itemInitializerList.Count - 1);
+            }
         }
+        else
+        {
+            while (_itemInitializerList.Count < _maxNumSlots)
+            {
+                _itemInitializerList.Add(null);
+            }
+        }
+
+        // If the initializer item is valid keep it, basically have at least
+        // the item base scriptable object, but then will be validated
+        // later at the later for loop that adds it
+        // If it is not, just set it to null, which will empty out the fields
+        for (int i = 0; i < _itemInitializerList.Count; ++i)
+        {
+            if (!InitializerItemExists(_itemInitializerList[i]))
+            {
+                _itemInitializerList[i] = null;
+            }
+        }
+
+        _itemInitializerList.Capacity = (int)_maxNumSlots;
+        
+        // Clear the internal item list
+        _allItems.Clear();
+
+        // Initialize the internal item list.
+        for (int i = 0; i < _itemInitializerList.Count; ++i)
+        {
+            _allItems.Add(ItemExists(_itemInitializerList[i]) ? 
+                _itemInitializerList[i] : null);
+        }
+
+        Debug.Log("All items count: " + _allItems.Count.ToString());
     }
 }

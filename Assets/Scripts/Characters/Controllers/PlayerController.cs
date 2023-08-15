@@ -22,6 +22,15 @@ public class PlayerController :
     [SerializeField]
     private SpeedMultiplierEffect speedEffectTest;
 
+    [SerializeField]
+    private Inventory _inventory;
+
+    [SerializeField]
+    private ItemBase _rottenWood;
+
+    [SerializeField]
+    private ItemBase _wood;
+
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
@@ -155,6 +164,24 @@ public class PlayerController :
                 RemoveEffectImpl(_statusEffects[i], i);
                 --i;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            _inventory.Print();
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if (!_inventory.Add(_rottenWood, 2))
+            {
+                Debug.Log("Could not add.");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            _inventory.Remove(_rottenWood, 1);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
