@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028386, g: 0.22571427, b: 0.3069231, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -195,6 +195,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6114176376506045733, guid: 0b0858ded62eb8042b790518f8d4860f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6114176376506045738, guid: 0b0858ded62eb8042b790518f8d4860f,
         type: 3}
       propertyPath: m_Sprite
@@ -219,7 +224,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &14356137
 Transform:
@@ -317,7 +322,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &25658858
 Transform:
@@ -421,7 +426,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &75068873
 Transform:
@@ -519,7 +524,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &78776268
 Transform:
@@ -623,7 +628,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &100922838
 Transform:
@@ -727,7 +732,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &136975709
 Transform:
@@ -825,7 +830,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &138482746
 Transform:
@@ -923,7 +928,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &139173379
 Transform:
@@ -1021,7 +1026,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &143225040
 Transform:
@@ -1175,6 +1180,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 681456010814084385, guid: 74050bc8fd450304f9f80f1df6427578,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74050bc8fd450304f9f80f1df6427578, type: 3}
 --- !u!1 &162856404
@@ -1260,7 +1270,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &173386952
 Transform:
@@ -1358,7 +1368,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &191694063
 Transform:
@@ -1456,7 +1466,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &232967448
 Transform:
@@ -1615,6 +1625,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 7192536295239691655, guid: 25604438dacdb2e4884b78289584c8a8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25604438dacdb2e4884b78289584c8a8, type: 3}
 --- !u!4 &247316078 stripped
@@ -1639,7 +1654,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &249097082
 Transform:
@@ -1737,7 +1752,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &249549111
 Transform:
@@ -1835,7 +1850,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &266257589
 Transform:
@@ -1994,6 +2009,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 7192536295239691655, guid: 25604438dacdb2e4884b78289584c8a8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25604438dacdb2e4884b78289584c8a8, type: 3}
 --- !u!4 &269976024 stripped
@@ -2018,7 +2038,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &281170843
 Transform:
@@ -2116,7 +2136,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &292862869
 Transform:
@@ -2220,7 +2240,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &294328483
 Transform:
@@ -2318,7 +2338,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &308922337
 Transform:
@@ -2416,7 +2436,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &314975413
 Transform:
@@ -2514,7 +2534,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &323463492
 Transform:
@@ -2612,7 +2632,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &326610479
 Transform:
@@ -2710,7 +2730,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &330734959
 Transform:
@@ -2808,7 +2828,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &350564826
 Transform:
@@ -2906,7 +2926,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &351784660
 Transform:
@@ -3004,7 +3024,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &375951179
 Transform:
@@ -3102,7 +3122,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &379656259
 Transform:
@@ -3200,7 +3220,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &384308285
 Transform:
@@ -3297,7 +3317,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &386007126
 Transform:
@@ -3382,7 +3402,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &389652351
 Transform:
@@ -3480,7 +3500,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &389863113
 Transform:
@@ -3578,7 +3598,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &404762923
 Transform:
@@ -3737,6 +3757,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6735526134944522386, guid: a8e0e25f06859bc47b32839532eaceef,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e0e25f06859bc47b32839532eaceef, type: 3}
 --- !u!1 &410807775
@@ -3755,7 +3780,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &410807776
 Transform:
@@ -3853,7 +3878,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &414602562
 Transform:
@@ -3951,7 +3976,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &414780362
 Transform:
@@ -4049,7 +4074,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &417020299
 Transform:
@@ -4147,7 +4172,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &421292664
 Transform:
@@ -4244,7 +4269,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &425590168
 Transform:
@@ -4329,7 +4354,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &428875254
 Transform:
@@ -4433,7 +4458,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &441398923
 Transform:
@@ -4537,7 +4562,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &466571656
 Transform:
@@ -4635,7 +4660,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &471170898
 Transform:
@@ -4733,7 +4758,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &473033070
 Transform:
@@ -4887,6 +4912,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 681456010814084385, guid: 74050bc8fd450304f9f80f1df6427578,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 681456010814084386, guid: 74050bc8fd450304f9f80f1df6427578,
         type: 3}
       propertyPath: m_Sprite
@@ -4909,7 +4939,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &489722721
 Transform:
@@ -5023,6 +5053,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 5368978804529288771, guid: ad114669e04cd054fa8daf4345e5a6b4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad114669e04cd054fa8daf4345e5a6b4, type: 3}
 --- !u!1 &509510711
@@ -5040,7 +5075,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &509510712
 SpriteRenderer:
@@ -5125,7 +5160,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &512454386
 Transform:
@@ -5222,7 +5257,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &519484771
 Transform:
@@ -5307,7 +5342,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &526095678
 Transform:
@@ -5405,7 +5440,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &564440816
 Transform:
@@ -5536,7 +5571,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &581045048
 Transform:
@@ -5634,7 +5669,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &588639309
 Transform:
@@ -5732,7 +5767,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &592455034
 Transform:
@@ -5830,7 +5865,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &593039379
 Transform:
@@ -5928,7 +5963,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &596158811
 Transform:
@@ -6027,7 +6062,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &596620242
 Transform:
@@ -6124,7 +6159,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &603725695
 Transform:
@@ -6209,7 +6244,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &604339172
 Transform:
@@ -6307,7 +6342,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &604897884
 Transform:
@@ -6461,7 +6496,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!54 &633062469
 Rigidbody:
@@ -6636,6 +6671,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 8415704405129772231, guid: fcadfd68f4e8b2b4a8c5281c09c51704,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcadfd68f4e8b2b4a8c5281c09c51704, type: 3}
 --- !u!4 &633833443 stripped
@@ -6660,7 +6700,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &637273631
 Transform:
@@ -6758,7 +6798,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &646204749
 Transform:
@@ -6929,7 +6969,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -7027,6 +7067,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6114176376506045733, guid: 0b0858ded62eb8042b790518f8d4860f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6114176376506045738, guid: 0b0858ded62eb8042b790518f8d4860f,
         type: 3}
       propertyPath: m_Sprite
@@ -7051,7 +7096,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &701620026
 Transform:
@@ -7149,7 +7194,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &713448591
 Transform:
@@ -7247,7 +7292,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &715354376
 Transform:
@@ -7378,7 +7423,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &740533132
 Transform:
@@ -7476,7 +7521,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &742946429
 Transform:
@@ -7574,7 +7619,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &744099803
 Transform:
@@ -7672,7 +7717,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &750672872
 Transform:
@@ -7770,7 +7815,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &762409545
 Transform:
@@ -7868,7 +7913,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &767647028
 Transform:
@@ -7966,7 +8011,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &768629842
 Transform:
@@ -8064,7 +8109,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &779383147
 Transform:
@@ -8162,7 +8207,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &807977427
 Transform:
@@ -8258,7 +8303,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &818877033
 Transform:
@@ -8298,7 +8343,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &819358442
 Transform:
@@ -8396,7 +8441,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &821900082
 Transform:
@@ -8494,7 +8539,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &856037799
 Transform:
@@ -8592,7 +8637,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &862441315
 Transform:
@@ -8689,7 +8734,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &866221445
 Transform:
@@ -8774,7 +8819,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &867602651
 Transform:
@@ -8872,7 +8917,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &870327641
 Transform:
@@ -9026,6 +9071,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 1627455235042118158, guid: b382eb0f11d7cf543988015f77283d35,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b382eb0f11d7cf543988015f77283d35, type: 3}
 --- !u!1 &888703049
@@ -9044,7 +9094,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &888703050
 Transform:
@@ -9142,7 +9192,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &900803452
 Transform:
@@ -9240,7 +9290,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &901567278
 Transform:
@@ -9338,7 +9388,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &902368548
 Transform:
@@ -9435,7 +9485,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &906462862
 Transform:
@@ -9520,7 +9570,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &917161787
 Transform:
@@ -9618,7 +9668,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &918930893
 Transform:
@@ -9777,6 +9827,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6300331576270658753, guid: 502dc25a7de69134a8834995f1545b3f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 502dc25a7de69134a8834995f1545b3f, type: 3}
 --- !u!1 &924279860
@@ -9795,7 +9850,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &924279861
 Transform:
@@ -9893,7 +9948,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &929932710
 Transform:
@@ -9991,7 +10046,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &934880346
 Transform:
@@ -10089,7 +10144,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &950088363
 Transform:
@@ -10187,7 +10242,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &958751926
 Transform:
@@ -10285,7 +10340,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &963173887
 SpriteRenderer:
@@ -10383,7 +10438,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &980621220
 Transform:
@@ -10481,7 +10536,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &980855603
 Transform:
@@ -10579,7 +10634,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &988304764
 Transform:
@@ -10738,6 +10793,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6735526134944522386, guid: a8e0e25f06859bc47b32839532eaceef,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e0e25f06859bc47b32839532eaceef, type: 3}
 --- !u!4 &999107593 stripped
@@ -10761,7 +10821,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &999707203
 Transform:
@@ -10844,7 +10904,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1004521500
 Transform:
@@ -10884,7 +10944,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1006187880
 Transform:
@@ -10982,7 +11042,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1023897822
 Transform:
@@ -11080,7 +11140,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1033897581
 Transform:
@@ -11178,7 +11238,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1036622208
 Transform:
@@ -11338,6 +11398,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 1627455235042118158, guid: b382eb0f11d7cf543988015f77283d35,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b382eb0f11d7cf543988015f77283d35, type: 3}
 --- !u!1 &1047884002
@@ -11356,7 +11421,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1047884003
 Transform:
@@ -11454,7 +11519,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1059144756
 Transform:
@@ -11551,7 +11616,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1060224562
 Transform:
@@ -11635,7 +11700,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1071284672
 Transform:
@@ -11720,7 +11785,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1087859373
 Transform:
@@ -11874,6 +11939,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 5134186182259208646, guid: 02416c0d95b7ad240a20dc73a1d42cc7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5134186182259208667, guid: 02416c0d95b7ad240a20dc73a1d42cc7,
         type: 3}
       propertyPath: m_Sprite
@@ -11898,7 +11968,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1096192946
 Transform:
@@ -11996,7 +12066,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1097113887
 Transform:
@@ -12094,7 +12164,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1100321916
 Transform:
@@ -12343,6 +12413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 0.05
+  _castDistance: 20
   _duration: 0.3
   _lowOpacity: 0.55
 --- !u!1 &1117747951
@@ -12361,7 +12432,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1117747952
 Transform:
@@ -12459,7 +12530,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1125222994
 Transform:
@@ -12557,7 +12628,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1135044502
 Transform:
@@ -12655,7 +12726,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1139474810
 Transform:
@@ -12753,7 +12824,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1145078633
 Transform:
@@ -12851,7 +12922,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1150401356
 Transform:
@@ -12955,7 +13026,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1166799300
 Transform:
@@ -13059,7 +13130,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1168681071
 Transform:
@@ -23003,7 +23074,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1170047765
 Transform:
@@ -23108,7 +23179,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1179019103
 Transform:
@@ -23204,7 +23275,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1185911439
 Transform:
@@ -23370,7 +23441,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1190539829
 Transform:
@@ -23468,7 +23539,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1193134561
 Transform:
@@ -23565,7 +23636,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1206601201
 Transform:
@@ -23650,7 +23721,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1207735156
 Transform:
@@ -23754,7 +23825,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1214028484
 Transform:
@@ -23852,7 +23923,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1222438813
 Transform:
@@ -23949,7 +24020,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1222635294
 Transform:
@@ -24034,7 +24105,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1237112433
 Transform:
@@ -24132,7 +24203,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1246550043
 Transform:
@@ -24230,7 +24301,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1248104540
 Transform:
@@ -24328,7 +24399,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1265214016
 Transform:
@@ -24426,7 +24497,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1267945560
 Transform:
@@ -24523,7 +24594,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1269814003
 Transform:
@@ -24607,7 +24678,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1273918996
 Transform:
@@ -24692,7 +24763,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1281443261
 Transform:
@@ -24790,7 +24861,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1282673230
 Transform:
@@ -24944,6 +25015,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6114176376506045733, guid: 0b0858ded62eb8042b790518f8d4860f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6114176376506045738, guid: 0b0858ded62eb8042b790518f8d4860f,
         type: 3}
       propertyPath: m_Sprite
@@ -24968,7 +25044,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1327209937
 Transform:
@@ -25066,7 +25142,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1327584536
 Transform:
@@ -25164,7 +25240,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1335649358
 Transform:
@@ -25323,6 +25399,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 8415704405129772231, guid: fcadfd68f4e8b2b4a8c5281c09c51704,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcadfd68f4e8b2b4a8c5281c09c51704, type: 3}
 --- !u!4 &1337022569 stripped
@@ -25359,7 +25440,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1345537234
 Transform:
@@ -25457,7 +25538,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1375252341
 Transform:
@@ -25555,7 +25636,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1378253143
 Transform:
@@ -25651,7 +25732,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1422617836
 Transform:
@@ -25731,7 +25812,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1423423969
 Transform:
@@ -25829,7 +25910,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1453112742
 Transform:
@@ -25927,7 +26008,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1453961207
 Transform:
@@ -26025,7 +26106,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1456537521
 Transform:
@@ -26135,7 +26216,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1493145634
 Transform:
@@ -26233,7 +26314,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1501508559
 Transform:
@@ -26331,7 +26412,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1530752723
 Transform:
@@ -26523,7 +26604,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1550410350
 Transform:
@@ -26706,7 +26787,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -26748,7 +26829,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1570140751
 Transform:
@@ -26944,7 +27025,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1581808389
 Transform:
@@ -27042,7 +27123,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1585670458
 Transform:
@@ -27172,7 +27253,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1616372218
 Transform:
@@ -27270,7 +27351,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1624431966
 Transform:
@@ -27368,7 +27449,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1626234292
 Transform:
@@ -27465,7 +27546,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &1634192552
 SpriteRenderer:
@@ -27550,7 +27631,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1636693595
 Transform:
@@ -27648,7 +27729,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1646313763
 Transform:
@@ -27746,7 +27827,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1651270055
 Transform:
@@ -27844,7 +27925,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1661111370
 Transform:
@@ -27942,7 +28023,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1677700766
 Transform:
@@ -28040,7 +28121,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1683141054
 Transform:
@@ -28138,7 +28219,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1684143169
 Transform:
@@ -28236,7 +28317,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1691188995
 Transform:
@@ -28334,7 +28415,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1745606089
 Transform:
@@ -28431,7 +28512,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &1752732672
 SpriteRenderer:
@@ -28517,7 +28598,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1778864855
 Transform:
@@ -28628,7 +28709,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1780294046
 Transform:
@@ -28726,7 +28807,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1789482952
 Transform:
@@ -28829,7 +28910,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &1820707898
 SpriteRenderer:
@@ -28914,7 +28995,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1825066755
 Transform:
@@ -29012,7 +29093,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1833687380
 Transform:
@@ -29110,7 +29191,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1836264168
 Transform:
@@ -29214,7 +29295,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1851450643
 Transform:
@@ -29389,7 +29470,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1865703580
 Transform:
@@ -29487,7 +29568,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1867645572
 Transform:
@@ -29585,7 +29666,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1875573905
 Transform:
@@ -29752,7 +29833,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1897074258
 Transform:
@@ -29850,7 +29931,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1936391312
 Transform:
@@ -29948,7 +30029,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1940691862
 Transform:
@@ -30107,6 +30188,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6735526134944522386, guid: a8e0e25f06859bc47b32839532eaceef,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e0e25f06859bc47b32839532eaceef, type: 3}
 --- !u!1 &1956180904
@@ -30125,7 +30211,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1956180905
 Transform:
@@ -30223,7 +30309,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1973945800
 Transform:
@@ -30321,7 +30407,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &1982714546
 SpriteRenderer:
@@ -30419,7 +30505,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1987367108
 Transform:
@@ -30517,7 +30603,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1990985157
 Transform:
@@ -30615,7 +30701,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1995184552
 Transform:
@@ -30713,7 +30799,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2006559708
 Transform:
@@ -30856,7 +30942,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2026756100
 Transform:
@@ -30954,7 +31040,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2039522112
 Transform:
@@ -31052,7 +31138,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2039826564
 Transform:
@@ -31150,7 +31236,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2057425602
 Transform:
@@ -31309,6 +31395,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 7192536295239691655, guid: 25604438dacdb2e4884b78289584c8a8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25604438dacdb2e4884b78289584c8a8, type: 3}
 --- !u!4 &2059013001 stripped
@@ -31331,7 +31422,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2073066533
 Transform:
@@ -31369,7 +31460,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2077270337
 Transform:
@@ -31467,7 +31558,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2096649242
 Transform:
@@ -31569,7 +31660,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2101334949
 Transform:
@@ -31619,7 +31710,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2107064767
 Transform:
@@ -31704,7 +31795,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2124375930
 Transform:
@@ -31858,6 +31949,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6114176376506045733, guid: 0b0858ded62eb8042b790518f8d4860f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6114176376506045738, guid: 0b0858ded62eb8042b790518f8d4860f,
         type: 3}
       propertyPath: m_Sprite
@@ -31882,7 +31978,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2139145960
 Transform:
@@ -31980,7 +32076,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &2141736149
 SpriteRenderer:
@@ -32078,7 +32174,7 @@ GameObject:
   m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2144934610
 Transform:
@@ -32232,6 +32328,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 681456010814084385, guid: 74050bc8fd450304f9f80f1df6427578,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74050bc8fd450304f9f80f1df6427578, type: 3}
 --- !u!1001 &1627455234082547837
@@ -32305,6 +32406,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Scene Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627455235042118158, guid: b382eb0f11d7cf543988015f77283d35,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b382eb0f11d7cf543988015f77283d35, type: 3}
@@ -32449,6 +32555,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 5134186182259208646, guid: 02416c0d95b7ad240a20dc73a1d42cc7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02416c0d95b7ad240a20dc73a1d42cc7, type: 3}
 --- !u!1001 &5368978803590613881
@@ -32528,6 +32639,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 5368978804529288771, guid: ad114669e04cd054fa8daf4345e5a6b4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad114669e04cd054fa8daf4345e5a6b4, type: 3}
 --- !u!1001 &6114176375881938403
@@ -32601,6 +32717,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Scene Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114176376506045733, guid: 0b0858ded62eb8042b790518f8d4860f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b0858ded62eb8042b790518f8d4860f, type: 3}
@@ -32680,6 +32801,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Scene Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 6300331576270658753, guid: 502dc25a7de69134a8834995f1545b3f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 502dc25a7de69134a8834995f1545b3f, type: 3}
@@ -32835,6 +32961,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 6735526134944522386, guid: a8e0e25f06859bc47b32839532eaceef,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e0e25f06859bc47b32839532eaceef, type: 3}
 --- !u!1001 &7192536296625300116
@@ -32914,6 +33045,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Scene Object
       objectReference: {fileID: 0}
+    - target: {fileID: 7192536295239691655, guid: 25604438dacdb2e4884b78289584c8a8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25604438dacdb2e4884b78289584c8a8, type: 3}
 --- !u!1001 &8415704404451004623
@@ -32992,6 +33128,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Scene Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 8415704405129772231, guid: fcadfd68f4e8b2b4a8c5281c09c51704,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcadfd68f4e8b2b4a8c5281c09c51704, type: 3}
