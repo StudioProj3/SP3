@@ -29,7 +29,8 @@ public abstract class InventoryBase :
     [SerializeField]
     protected List<Pair<ItemBase, uint>> _allItems = new();
 
-    protected Dictionary<int, int> _indexToQuantityMap = new();
+    protected List<Pair<int, uint>> _indexToQuantityMap = new();
+    protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap = new();
 
     // Function returns whether the modification request is valid. It caches the data
     // needed for the modification.
@@ -42,14 +43,19 @@ public abstract class InventoryBase :
         int numberLeft = number;
         bool isItemStackable = item.Stackable;
 
+        bool CanAddOrRemove()
+        {
+            return (isAdd && numberLeft <= 0) ||
+                (!isAdd && numberLeft >= 0);
+        }
+
         // Loop through all the slots available
         for (int i = 0; i < _maxNumSlots; ++i)
         {
             // If all adding or removing was done
-            if ((isAdd && numberLeft <= 0) ||
-                (!isAdd && numberLeft >= 0))
+            if (!CanAddOrRemove())
             {
-                break;
+                return true;
             }
 
             ItemBase currentItem = _allItems[i].Key;
@@ -66,102 +72,130 @@ public abstract class InventoryBase :
 
             if (isAdd)
             {
-                // There is already an unstackable item in
-                // this slot, move on to the next iteration
-                if (!isNull && !currentItem.Stackable)
+                if (currentItem.Stackable)
                 {
-                    continue;
-                }
+                    // If the current slot is already full move
+                    // to the next iteration
+                    if (quantity >= _maxPerSlot)
+                    {
+                        continue;
+                    }
+                    // Get the difference that we are able to fill up.
+                    int difference = (int)(_maxPerSlot - quantity);
+                    
+                    // If there is more than the difference, it will use the
+                    // difference. If there is less than the difference, it
+                    // will use the remainder
+                    _indexToQuantityMap.Add(new Pair<int, uint>(i, 
+                        (uint)Mathf.Min(numberLeft,
+                        (int)quantity + difference)));
 
-                // If the current slot is already full move
-                // to the next iteration
-                if (quantity >= _maxPerSlot)
-                {
-                    continue;
-                }
-
-                // TODO (Cheng Jun): Continue adding item codes
-
-                // Get the difference that we are able to fill up.
-                int difference = (int)(_maxPerSlot - quantity);
-                
-                // Check if we can fill up the slot fully.
-                if (numberLeft >= difference)
-                {
-                    _indexToQuantityMap.Add(i, difference);
+                    // Hence, all we need to do is just minus the difference,
+                    // which will be the max 'difference'
                     numberLeft -= difference;
                 }
-                
+                else
+                {
+                    // There is already an item in
+                    // this slot, move on to the next iteration
+                    if (!isNull)
+                    {
+                        continue;
+                    }
+
+                    _nonStackableIndexToNewValueMap.Add(new Pair<int, bool>(i, true));
+                    numberLeft--;
+                }
             }
             else
             {
-                // TODO (Cheng Jun): Continue removing item codes
+                // The slot is already empty. Continue to next iteration.
+                if (isNull)
+                {
+                    continue;
+                }
+
+                if (currentItem.Stackable)
+                {
+                    // New quantity will always be >0.
+                    // We want to get the new quantity after subtracting what
+                    // is left of the modification amount.
+                    int newQuantity = Mathf.Max(0, (int)(quantity - Mathf.Abs(numberLeft)));
+
+                    // Cache the result.
+                    _indexToQuantityMap.Add(new Pair<int, uint>(i,
+                        (uint)newQuantity));
+                    numberLeft += (int)_maxPerSlot - newQuantity;
+                }
+                else
+                {
+                    // Since this item is not stackable, we can immediately
+                    // remove this item on modify.
+
+                    // Cache the result.
+                    _nonStackableIndexToNewValueMap.Add(
+                        new Pair<int, bool>(i, false));
+                    numberLeft++;
+                }
             }
         }
 
-        return true;
-        
+        // If we can still add or remove, modification is rejected.
+        return !CanAddOrRemove();
     }
 
     // Add or remove items from the inventory based on the sign
     // of `number` with it returning whether the operation was
     // a success
-    protected virtual bool Modify(ItemBase item, int number)
+    protected virtual bool Modify(ItemBase item, int number, bool request = true)
     {
-        Assert.IsTrue(number != 0,
-            "`number` is zero");
-
-        bool isAdd = number > 0;
-        int numberLeft = number;
-        bool isItemStackable = item.Stackable;
-
-        // Loop through all the slots available
-        for (int i = 0; i < _maxNumSlots; ++i)
+        if (!request || (request && RequestModify(item, number)))
         {
-            // If all adding or removing was done
-            if ((isAdd && numberLeft <= 0) ||
-                (!isAdd && numberLeft >= 0))
+            _indexToQuantityMap.ForEach(i => 
             {
-                break;
-            }
-
-            ItemBase currentItem = _allItems[i].Key;
-            uint quantity = _allItems[i].Value;
-            bool isNull = currentItem == null;
-            bool isCurrentStackable = currentItem.Stackable;
-
-            // Check if `item` is the not that same as
-            // `currentItem`, if so continue to next iteration
-            if (item != currentItem)
-            {
-                continue;
-            }
-
-            if (isAdd)
-            {
-                // There is already an unstackable item in
-                // this slot, move on to the next iteration
-                if (!isNull && !currentItem.Stackable)
+                if (_allItems[i.Key] == null)
                 {
-                    continue;
+                    // The item slot is empty, create a new item with
+                    // its new quantity.
+                    _allItems[i.Key] = new Pair<ItemBase, uint>(item, i.Value);
                 }
-
-                // If the current slot is already full move
-                // to the next iteration
-                if (quantity >= _maxPerSlot)
+                else
                 {
-                    continue;
+                    // The same item type already exists, just modify
+                    // the existing item in the item slot.
+                    _allItems[i.Key].Value = i.Value;
                 }
+            });
 
-                // TODO (Cheng Jun): Continue adding item codes
-            }
-            else
+            _nonStackableIndexToNewValueMap.ForEach(i => 
             {
-                // TODO (Cheng Jun): Continue removing item codes
-            }
+                if (i.Value)
+                {
+                    // We want to import this stackable item.
+                    if (_allItems[i.Key] != null)
+                    {
+                        // Just modify the item when it already exists.
+                        _allItems[i.Key].Value = 1;
+                    }
+                    else
+                    {
+                        // Create the new missing item.
+                        _allItems[i.Key] = new Pair<ItemBase, uint>(item, 1);
+                    }
+                }
+                else
+                {
+                    // We are exporting this stackable item, and since
+                    // there's only one of it, we can just empty the slot out
+                    _allItems[i.Key] = null;
+                }
+            });
+
+            _indexToQuantityMap.Clear();
+            _nonStackableIndexToNewValueMap.Clear();
+            return true;
         }
-
-        return true;
+        return false;
     }
 
     protected virtual bool Add(ItemBase item, uint number)
