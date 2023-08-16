@@ -18,20 +18,6 @@ public class PlayerController :
     [SerializeField]
     private Stats _playerStats;
 
-    [SerializeField]
-    private DamageOverTimeEffect fireDmgEffecttest;
-    [SerializeField]
-    private FireDamage fireDmgtest;
-
-    [SerializeField]
-    private Inventory _inventory;
-
-    [SerializeField]
-    private ItemBase _rottenWood;
-
-    [SerializeField]
-    private ItemBase _wood;
-
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
