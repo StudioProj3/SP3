@@ -1,4 +1,4 @@
 public interface ISellable
 {
-    int Cost { get; protected set; }
+    int Cost { get; }
 }

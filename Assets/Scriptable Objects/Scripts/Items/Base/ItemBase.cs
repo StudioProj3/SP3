@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public abstract class ItemBase :
-    ScriptableObject, INameable
+    ScriptableObject, INameable, ISellable
 {
     [field: SerializeField]
     public string Name { get; protected set; }
@@ -17,4 +17,8 @@ public abstract class ItemBase :
 
     [TextArea]
     public string Description;
+
+    [field: SerializeField]
+    public int Cost { get; protected set; } = 0;
+
 }
