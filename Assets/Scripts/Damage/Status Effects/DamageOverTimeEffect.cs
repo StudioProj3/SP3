@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StatusEffect",
-    menuName = "Status Effect/DamageOverTimeEffect")]
+    menuName = "Scriptable Objects/Status Effect/DamageOverTimeEffect")]
 public class DamageOverTimeEffect : StatusEffectBase
 {
     public float dotAmount;

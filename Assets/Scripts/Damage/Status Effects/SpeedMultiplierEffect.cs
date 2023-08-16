@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StatusEffect",
-    menuName = "Status Effect/SpeedMultiplierEffect")]
+    menuName = "Scriptable Objects/Status Effect/SpeedMultiplierEffect")]
 public class SpeedMultiplierEffect : StatusEffectBase
 {
     public float movementPenalty;

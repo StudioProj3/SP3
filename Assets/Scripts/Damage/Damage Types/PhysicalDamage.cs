@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
-    menuName = "Damage/PhysicalDamage")]
+    menuName = "Scriptable Objects/Damage/PhysicalDamage")]
 public class PhysicalDamage : Damage
 {
     public static PhysicalDamage Create(float damage)

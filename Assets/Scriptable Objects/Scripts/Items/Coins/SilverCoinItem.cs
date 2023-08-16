@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SilverCoin",
-    menuName = "Items/Coins/SilverCoin")]
+    menuName = "Scriptable Objects/Items/Coins/SilverCoin")]
 public class SilverCoinItem : CoinItemBase
 {
 
