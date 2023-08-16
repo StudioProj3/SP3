@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
-    menuName = "Damage/ColdDamage")]
+    menuName = "Scriptable Objects/Damage/ColdDamage")]
 public class ColdDamage : Damage
 {
     private SpeedMultiplierEffect _speedMultiplierEffect;
