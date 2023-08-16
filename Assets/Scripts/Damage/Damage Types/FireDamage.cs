@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
-    menuName = "Damage/FireDamage")]
+    menuName = "Scriptable Objects/Damage/FireDamage")]
 public class FireDamage : Damage
 {
     private DamageOverTimeEffect _damageOverTimeEffect;

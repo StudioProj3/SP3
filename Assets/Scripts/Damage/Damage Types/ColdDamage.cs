@@ -1,17 +1,19 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
-    menuName = "Scriptable Objects/Damage/PhysicalDamage")]
-public class PhysicalDamage : Damage
+    menuName = "Damage/ColdDamage")]
+public class ColdDamage : Damage
 {
-    public static PhysicalDamage Create(float damage)
+    private SpeedMultiplierEffect _speedMultiplierEffect;
+    public static ColdDamage Create(float damage, SpeedMultiplierEffect speedMultiplierEffect)
     {
-        return CreateInstance<PhysicalDamage>().Init(damage);
+        return CreateInstance<ColdDamage>().Init(damage, speedMultiplierEffect);
     }
 
-    private PhysicalDamage Init(float damage)
+    private ColdDamage Init(float damage, SpeedMultiplierEffect speedMultiplierEffect)
     {
         _damage = damage;
+        _speedMultiplierEffect = speedMultiplierEffect;
         return this;
     }
 
@@ -22,16 +24,17 @@ public class PhysicalDamage : Damage
         var entityStats = effectable.EntityStats;
         // DR = (1 – (100/(100 + V))); where V equals the value of armour or magic reduction 
         // and DR is the percentage of damage that is reduced.
-        if (entityStats.GetStat("Armor").Value > 1)
+        if (entityStats.GetStat("MagicResistance").Value > 1)
         {
-            float resistance = (1 - (100 / (100 + entityStats.GetStat("Armor").Value))) * 100;
+            float resistance = (1 - (100 / (100 + entityStats.GetStat("MagicResistance").Value))) * 100;
             float damage = Mathf.Round(_damage * ((100 - resistance) / 100));
             entityStats.GetStat("Health").Subtract(damage);
-            Debug.Log(entityStats.GetStat("Health").Value);
         }
         else
         {
             entityStats.GetStat("Health").Subtract(Mathf.Round(_damage));
         }
+
+        effectable.ApplyEffect(SpeedMultiplierEffect.Create(_speedMultiplierEffect));
     }
 }
