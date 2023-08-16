@@ -33,7 +33,7 @@ public class HealTurretController : CharacterControllerBase, IEffectable
 
     public void TakeDamage(Damage damage)
     {
-        damage.OnApply(_healTurretStats);
+        damage.OnApply(this);
 
     }
 

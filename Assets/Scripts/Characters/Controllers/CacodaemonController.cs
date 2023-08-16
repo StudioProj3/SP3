@@ -28,7 +28,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     public void TakeDamage(Damage damage)
     {
         _animator.SetBool("isHurt", true);
-        damage.OnApply(_cacodaemonStats);
+        damage.OnApply(this);
         _animator.SetBool("isHurt", false);
 
     }
