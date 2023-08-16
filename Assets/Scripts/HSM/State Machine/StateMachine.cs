@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Assertions;
+
+using static DebugUtils;
 
 // `TSelfID` is used as a type for when this `StateMachine` is
 // used as a state inside another `StateMachine` in a HSM setup
@@ -135,7 +136,8 @@ public class StateMachine<TSelfID, TStateID> :
 
     public override void Enter()
     {
-        Assert.IsTrue(_startStateID != null);
+        Assert(_startStateID != null,
+            "`_startStateID` is null");
 
         // Set current state to the default start state
         CurrentState = _allStates[_startStateID];
@@ -318,7 +320,7 @@ public class StateMachine<TSelfID, TStateID> :
                 _currentStateExceptionThreshold--;
             }
 
-            Assert.IsTrue(!currentState);
+            Assert(!currentState, "`CurrentState` is null");
             return false;
         }
 
@@ -328,7 +330,7 @@ public class StateMachine<TSelfID, TStateID> :
     // New state ID validation
     private void VerifyNewStateID(TStateID newStateID)
     {
-        Assert.IsTrue(newStateID != null && !newStateID.IsDefault(),
+        Assert(newStateID != null && !newStateID.IsDefault(),
             "`newStateID` must not be null and cannot " +
             "be equals to its default value");
     }
@@ -339,7 +341,8 @@ public class StateMachine<TSelfID, TStateID> :
     {
         foreach (TStateID stateID in stateIDs)
         {
-            Assert.IsTrue(_allStates.ContainsKey(stateID));
+            Assert(_allStates.ContainsKey(stateID),
+                "`stateID` does not exist");
         }
     }
 
@@ -348,7 +351,7 @@ public class StateMachine<TSelfID, TStateID> :
     private StateBase<TStateID> VerifyGetState(TStateID stateID)
     {
         bool result = _allStates.TryGetValue(stateID, out var state);
-        Assert.IsTrue(result);
+        Assert(result, "`stateID` does not exist");
 
         return state;
     }
