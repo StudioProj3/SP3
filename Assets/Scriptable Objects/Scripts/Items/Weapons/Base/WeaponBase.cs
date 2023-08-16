@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public abstract class WeaponBase : ItemBase
 {
     [field: SerializeField]
