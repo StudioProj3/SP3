@@ -12,13 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974c496abfdad28409b6f1a02af2ce34, type: 3}
   m_Name: WoodShopItem
   m_EditorClassIdentifier: 
-  _item:
-    rid: -2
-  _cost:
-    coinItem: {fileID: 0}
-    cost: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+  _sellableItem: {fileID: 11400000, guid: b1bd6da47c952504ea66d7bea8b14ac3, type: 2}
