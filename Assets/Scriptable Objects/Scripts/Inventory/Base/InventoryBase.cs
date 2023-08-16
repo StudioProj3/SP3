@@ -29,11 +29,11 @@ public abstract class InventoryBase :
     [SerializeField]
     protected List<Pair<ItemBase, uint>> _itemInitializerList = new();
 
-    // [SerializeReference]
     protected List<Pair<ItemBase, uint>> _allItems = new();
 
     protected List<Pair<int, uint>> _indexToQuantityMap = new();
-    protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap = new();
+    protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap =
+        new();
 
     public virtual void Reset()
     {
@@ -48,8 +48,8 @@ public abstract class InventoryBase :
         _nonStackableIndexToNewValueMap.Clear();
     }
 
-    // Function returns whether the modification request is valid. 
-    // caches the data needed for the modification.
+    // Function returns whether the modification request is valid
+    // and caches the data needed for the modification
     protected virtual bool RequestModify(ItemBase item, int number)
     {
         bool isAdd = number > 0;
@@ -80,7 +80,6 @@ public abstract class InventoryBase :
                 quantity = _allItems[i].Value;
             }
 
-
             if (isAdd)
             {
                 if (item.Stackable)
@@ -100,7 +99,8 @@ public abstract class InventoryBase :
                         {
                             continue;
                         }
-                        // Get the difference that we are able to fill up.
+
+                        // Get the difference that we are able to fill up
                         int difference = (int)(_maxPerSlot - quantity);
                         
                         // If there is more than the difference, it will use the
@@ -116,10 +116,10 @@ public abstract class InventoryBase :
                     }
                     else
                     {
-                        // Either get the max per slot or remainder.
+                        // Either get the max per slot or remainder
                         int newValue = Mathf.Min((int)_maxPerSlot, numberLeft);
 
-                        // Use the new value obtained. 
+                        // Use the new value obtained
                         _indexToQuantityMap.Add(
                             new Pair<int, uint>(i, (uint)newValue));
                         numberLeft -= newValue;    
@@ -134,7 +134,7 @@ public abstract class InventoryBase :
                         continue;
                     }
 
-                    // Since it's an empty slot, we can just add to it.
+                    // Since it's an empty slot, we can just add to it
                     _nonStackableIndexToNewValueMap.Add(
                         new Pair<int, bool>(i, true));
                     numberLeft--;
@@ -147,7 +147,7 @@ public abstract class InventoryBase :
                 // The slot is already empty. Continue to next iteration.
                 // For the second condition, we already know that it is not
                 // null since it will have to had been false to go
-                // to the other condition in the Or statement.
+                // to the other condition in the Or statement
                 if (isNull || currentItem != item)
                 {
                     continue;
@@ -157,7 +157,7 @@ public abstract class InventoryBase :
                 {
                     // New quantity will always be >0.
                     // We want to get the new quantity after subtracting what
-                    // is left of the modification amount.
+                    // is left of the modification amount
                     int newQuantity = Mathf.Max(0,
                         (int)(quantity - Mathf.Abs(numberLeft)));
 
@@ -169,9 +169,9 @@ public abstract class InventoryBase :
                 else
                 {
                     // Since this item is not stackable, we can immediately
-                    // remove this item on modify.
+                    // remove this item on modify
 
-                    // Cache the result.
+                    // Cache the result
                     _nonStackableIndexToNewValueMap.Add(
                         new Pair<int, bool>(i, false));
                     numberLeft++;
@@ -179,7 +179,7 @@ public abstract class InventoryBase :
             }
         }
 
-        // If we can still add or remove, modification is rejected.
+        // If we can still add or remove, modification is rejected
         return CannotAddOrRemove();
     }
 
@@ -192,8 +192,8 @@ public abstract class InventoryBase :
             "`number` is zero");
 
         // If request is false, check that one of the maps have at least one
-        // thing so we know there is a modification cached.
-        // If request is true, then run the RequestModify function.
+        // thing so we know there is a modification cached
+        // If request is true, then run the RequestModify function
         if ((!request && (!_indexToQuantityMap.IsEmpty()
             || !_nonStackableIndexToNewValueMap.IsEmpty()))
             || (request && RequestModify(item, number)))
@@ -203,15 +203,15 @@ public abstract class InventoryBase :
                 if (_allItems[i.Key] == null)
                 {
                     // The item slot is empty, create a new item with
-                    // its new quantity.
+                    // its new quantity
                     _allItems[i.Key] = new Pair<ItemBase, uint>(item, i.Value);
                     _itemInitializerList[i.Key] = _allItems[i.Key];
                 }
                 else
                 {
                     // The same item type already exists, just modify
-                    // the existing item in the item slot.
-                    // However, if the new value is 0, we should empty the slot.
+                    // the existing item in the item slot
+                    // However, if the new value is 0, we should empty the slot
                     if (i.Value > 0)
                     {
                         _allItems[i.Key].Value = i.Value;
@@ -229,16 +229,16 @@ public abstract class InventoryBase :
             {
                 if (i.Value)
                 {
-                    // We want to import this stackable item.
+                    // We want to import this stackable item
                     if (_allItems[i.Key] != null)
                     {
-                        // Just modify the item when it already exists.
+                        // Just modify the item when it already exists
                         _allItems[i.Key].Value = 1;
                         _itemInitializerList[i.Key].Value = 1;
                     }
                     else
                     {
-                        // Create the new missing item.
+                        // Create the new missing item
                         _allItems[i.Key] = new Pair<ItemBase, uint>(item, 1);
                         _itemInitializerList[i.Key] = _allItems[i.Key];
                     }
@@ -254,8 +254,10 @@ public abstract class InventoryBase :
 
             _indexToQuantityMap.Clear();
             _nonStackableIndexToNewValueMap.Clear();
+
             return true;
         }
+
         return false;
     }
 
@@ -273,6 +275,7 @@ public abstract class InventoryBase :
     public void Print()
     {
         Debug.Log("Inventory size: "  + _allItems.Count.ToString());
+
         for (int i = 0; i < _allItems.Count; ++i)
         {
             if (_allItems[i] != null) 
@@ -284,8 +287,8 @@ public abstract class InventoryBase :
         }
     }
 
-    // Update the inventory list `_allItems` 
-    // with the starter items and new max number of slots
+    // Update the inventory list `_allItems` with
+    // the starter items and new max number of slots
     protected virtual void OnValidate()
     {
         bool InitializerItemExists(Pair<ItemBase, uint> pair) 
@@ -296,7 +299,8 @@ public abstract class InventoryBase :
 
         // If the new max number of slots is below the current count,
         // start removing from the end
-        // else, add nulls to the back.
+        // else, add nulls to the back
+        //
         // NOTE (Chris): By adding null, you are just adding a new pair with
         // null values
         if (_maxNumSlots < _itemInitializerList.Count)
@@ -331,7 +335,7 @@ public abstract class InventoryBase :
         // Clear the internal item list
         _allItems.Clear();
 
-        // Initialize the internal item list.
+        // Initialize the internal item list
         for (int i = 0; i < _itemInitializerList.Count; ++i)
         {
             _allItems.Add(ItemExists(_itemInitializerList[i]) ? 
