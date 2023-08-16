@@ -35,6 +35,19 @@ public abstract class InventoryBase :
     protected List<Pair<int, uint>> _indexToQuantityMap = new();
     protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap = new();
 
+    public virtual void Reset()
+    {
+        // Clear any items that might still be in there
+        for (int i = 0; i < _allItems.Capacity; ++i)
+        {
+            _allItems[i] = null;
+            _itemInitializerList[i] = null;
+        }
+
+        _indexToQuantityMap.Clear();
+        _nonStackableIndexToNewValueMap.Clear();
+    }
+
     // Function returns whether the modification request is valid. 
     // caches the data needed for the modification.
     protected virtual bool RequestModify(ItemBase item, int number)
@@ -192,6 +205,7 @@ public abstract class InventoryBase :
                     // The item slot is empty, create a new item with
                     // its new quantity.
                     _allItems[i.Key] = new Pair<ItemBase, uint>(item, i.Value);
+                    _itemInitializerList[i.Key] = _allItems[i.Key];
                 }
                 else
                 {
@@ -201,10 +215,12 @@ public abstract class InventoryBase :
                     if (i.Value > 0)
                     {
                         _allItems[i.Key].Value = i.Value;
+                        _itemInitializerList[i.Key].Value = i.Value;
                     }
                     else
                     {
                         _allItems[i.Key] = null;
+                        _itemInitializerList[i.Key] = null;
                     }
                 }
             });
@@ -218,11 +234,13 @@ public abstract class InventoryBase :
                     {
                         // Just modify the item when it already exists.
                         _allItems[i.Key].Value = 1;
+                        _itemInitializerList[i.Key].Value = 1;
                     }
                     else
                     {
                         // Create the new missing item.
                         _allItems[i.Key] = new Pair<ItemBase, uint>(item, 1);
+                        _itemInitializerList[i.Key] = _allItems[i.Key];
                     }
                 }
                 else
@@ -230,6 +248,7 @@ public abstract class InventoryBase :
                     // We are exporting this stackable item, and since
                     // there's only one of it, we can just empty the slot out
                     _allItems[i.Key] = null;
+                    _itemInitializerList[i.Key] = null;
                 }
             });
 
