@@ -10,6 +10,8 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
 
     private StatContainer _cacodaemonStatsContainer;
 
+    private ParticleSystem _cacodaemonParticles;
+
     private GameObject _player;
     private PlayerController _playerController;
 
@@ -21,12 +23,12 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _cacodaemonStats;
+    IStatContainer IEffectable.EntityStats => _cacodaemonStatsContainer;
 
     public void TakeDamage(Damage damage)
     {
         _animator.SetBool("isHurt", true);
-        damage.OnApply(_cacodaemonStats);
+        damage.OnApply(this);
         _animator.SetBool("isHurt", false);
 
     }
@@ -52,6 +54,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     protected override void Start()
     {
         base.Start();
+        _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
         _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.GetStat("AttackDamage").Value);
         SetupStateMachine();
@@ -66,8 +69,9 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
            new GenericState("Walk",
                new ActionEntry("Enter", () =>
                {
-                   _direction = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
-                   _direction.y = 0;
+                   _direction = new Vector3(Random.Range(-1.0f, 1.0f),
+                                            0.0f,
+                                            Random.Range(-1.0f, 1.0f));
 
                }),
                new ActionEntry("FixedUpdate", () =>
@@ -80,10 +84,19 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
            new GenericState("Charge",
                new ActionEntry("Enter", () =>
                {
+
                    _direction = _player.transform.position - transform.position;
                    _direction.y = 0;
-                   //Vector3 direction =
-                   //new(_horizontalInput, 0, _verticalInput);
+
+                   // FIXME (Aquila): Bug where rotation of particles is
+                   // not accurate, likely due to Vector3.Angle() giving
+                   // the smallest angle possible between the source and
+                   // target.
+
+                   float angle = -Mathf.Atan2(_direction.z, _direction.x) * Mathf.Rad2Deg;
+
+                   _cacodaemonParticles.transform.rotation = Quaternion.Euler(0, angle, 0);
+                   _cacodaemonParticles.Play();
 
                    _rigidbody.AddForce(
                        _cacodaemonStatsContainer.GetStat("MoveSpeed").Value *
@@ -93,20 +106,26 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
                })
            ),
 
+           new GenericState("GoingToCharge"),
+
             new GenericState("Cooldown"),
 
            // Transitions
+
            // Idle > Walk
            new RandomTimedTransition("Idle", "Walk", 1.0f,2.0f),
 
            // Walk > Idle
-           new FixedTimedTransition("Walk", "Cooldown", 0.3f),
+           new FixedTimedTransition("Walk", "Idle", 0.7f),
 
-           // Idle > Charge
-           new GenericTransition("Idle", "Charge", () =>
+           // Idle > Going to charge
+           new GenericTransition("Idle", "GoingToCharge", () =>
            {
                return _distance < 1.0f;
            }),
+
+          // Idle > Going to charge
+          new FixedTimedTransition("GoingToCharge", "Charge", 0.5f),
 
            // Charge > Cooldown
            new FixedTimedTransition("Charge", "Cooldown", 0.7f),
@@ -131,6 +150,8 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     {
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
+        _animator.SetBool("isGoingCharge",
+           _stateMachine.CurrentState.StateID == "GoingToCharge");
 
         if (!_statusEffects.IsNullOrEmpty())
         {

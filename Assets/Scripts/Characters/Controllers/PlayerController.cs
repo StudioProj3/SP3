@@ -18,9 +18,6 @@ public class PlayerController :
     [SerializeField]
     private Stats _playerStats;
 
-    [SerializeField]
-    private SpeedMultiplierEffect speedEffectTest;
-
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
@@ -30,7 +27,7 @@ public class PlayerController :
 
     public void TakeDamage(Damage damage)
     {
-        damage.OnApply(_playerStats);
+        damage.OnApply(this);
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -152,11 +149,6 @@ public class PlayerController :
                 RemoveEffectImpl(_statusEffects[i], i);
                 --i;
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ApplyEffect(SpeedMultiplierEffect.Create(speedEffectTest));
         }
 
         if (_horizontalInput != 0)

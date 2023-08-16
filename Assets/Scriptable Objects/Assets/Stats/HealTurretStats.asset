@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9d827f34ee9b742aafd78b26b2054c, type: 3}
+  m_Name: HealTurretStats
+  m_EditorClassIdentifier: 
+  _statInitializerList: []
+  _instancedStatInitializerList:
+  - rid: 8269461383876968448
+  - rid: 8269461400773459968
+  - rid: 8269461400773459969
+  - rid: 8269461400773459970
+  references:
+    version: 2
+    RefIds:
+    - rid: 8269461383876968448
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
+        initialValue: 100
+    - rid: 8269461400773459968
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: a1536f4c9d0ad7d489785c8e46b8e540, type: 2}
+        initialValue: 10
+    - rid: 8269461400773459969
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 7a5862a2e73e150429d02e59c59bb71f, type: 2}
+        initialValue: 30
+    - rid: 8269461400773459970
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 54790303e6a70064c9d0bdc5056fd391, type: 2}
+        initialValue: 20

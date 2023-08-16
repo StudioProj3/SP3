@@ -7,7 +7,7 @@ using UnityEngine;
 // NOTE (Chris): Take note that the inspector for
 // this script is in `CustomStatsEditor`
 [CreateAssetMenu(fileName = "Stats",
-    menuName = "Stats/Stats")]
+    menuName = "Scriptable Objects/Stats/Stats")]
 public class Stats :
     ScriptableObject, IStatContainer
 {
