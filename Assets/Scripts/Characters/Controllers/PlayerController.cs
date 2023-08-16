@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -20,7 +19,18 @@ public class PlayerController :
     private Stats _playerStats;
 
     [SerializeField]
-    private SpeedMultiplierEffect speedEffectTest;
+    private DamageOverTimeEffect fireDmgEffecttest;
+    [SerializeField]
+    private FireDamage fireDmgtest;
+
+    [SerializeField]
+    private Inventory _inventory;
+
+    [SerializeField]
+    private ItemBase _rottenWood;
+
+    [SerializeField]
+    private ItemBase _wood;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
@@ -31,7 +41,7 @@ public class PlayerController :
 
     public void TakeDamage(Damage damage)
     {
-        damage.OnApply(_playerStats);
+        damage.OnApply(this);
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -68,14 +78,12 @@ public class PlayerController :
             new GenericState("Walk",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _rigidbody.velocity = _playerStats.GetStat("MoveSpeed").Value * new Vector3(
+                    _rigidbody.velocity = _playerStats.
+                        GetStat("MoveSpeed").Value * new Vector3(
                         _horizontalInput, 0, _verticalInput).normalized;
                 })
             ),
 
-            // FIXME (Brandon): Bug where transition to roll doesn't
-            // register when input is pressed. Only happens when
-            // direction is switched right before input
             new GenericState("Roll",
                 new ActionEntry("Enter", () =>
                 {
@@ -155,11 +163,6 @@ public class PlayerController :
                 RemoveEffectImpl(_statusEffects[i], i);
                 --i;
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ApplyEffect(SpeedMultiplierEffect.Create(speedEffectTest));
         }
 
         if (_horizontalInput != 0)

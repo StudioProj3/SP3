@@ -12,6 +12,9 @@ public abstract class ItemBase :
     [field: SerializeField]
     public bool Stackable { get; protected set; }
 
+    [field: SerializeField]
+    public float Weight { get; protected set; } = 0f;
+
     [TextArea]
     public string Description;
 }

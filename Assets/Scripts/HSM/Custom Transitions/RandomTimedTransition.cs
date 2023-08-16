@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 // Transition that will happen after a random amount of
@@ -18,12 +20,20 @@ public class RandomTimedTransition<TStateID> :
         _maxDuration = maxDuration;
     }
 
+    public RandomTimedTransition(TStateID fromStateID,
+        TStateID toStateID, float minDuration, float maxDuration,
+        Action callback) :
+        this(fromStateID, toStateID, minDuration, maxDuration)
+    {
+        SetCallback(callback);
+    }
+
     public void StartTimer()
     {
         _isTimeUp = false;
 
         float randomDuration =
-            Random.Range(_minDuration, _maxDuration);
+            UnityEngine.Random.Range(_minDuration, _maxDuration);
 
         // Change `isTimeUp` after `time` to transit
         _ = Delay.Execute(() => _isTimeUp = true, randomDuration);
@@ -40,9 +50,17 @@ public class RandomTimedTransition<TStateID> :
 public class RandomTimedTransition :
     RandomTimedTransition<string>, ITimedTransition<string>
 {
-    public RandomTimedTransition(string fromStateID, string toStateID,
-        float minDuration, float maxDuration) :
+    public RandomTimedTransition(string fromStateID,
+        string toStateID, float minDuration, float maxDuration) :
         base(fromStateID, toStateID, minDuration, maxDuration)
+    {
+
+    }
+
+    public RandomTimedTransition(string fromStateID,
+        string toStateID, float minDuration, float maxDuration,
+        Action callback) :
+        base(fromStateID, toStateID, minDuration, maxDuration, callback)
     {
 
     }

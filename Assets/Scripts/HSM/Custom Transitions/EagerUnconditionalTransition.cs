@@ -17,7 +17,14 @@ public class EagerUnconditionalTransition<TStateID> :
         TStateID toStateID) :
         base(fromStateID, toStateID)
     {
-        
+
+    }
+
+    public EagerUnconditionalTransition(TStateID fromStateID,
+        TStateID toStateID, Action callback) :
+        this(fromStateID, toStateID)
+    {
+        SetCallback(callback); 
     }
 
     public void AddEagerCondition(Func<bool> eagerCondition)
@@ -43,6 +50,13 @@ public class EagerUnconditionalTransition :
     public EagerUnconditionalTransition(string fromStateID,
         string toStateID) :
         base(fromStateID, toStateID)
+    {
+
+    }
+
+    public EagerUnconditionalTransition(string fromStateID,
+        string toStateID, Action callback) :
+        base(fromStateID, toStateID, callback)
     {
 
     }

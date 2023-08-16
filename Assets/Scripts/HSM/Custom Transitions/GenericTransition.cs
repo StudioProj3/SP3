@@ -16,6 +16,13 @@ public class GenericTransition<TStateID> :
             "There must be at least 1 condition in this transition");
     }
 
+    public GenericTransition(TStateID fromStateID, TStateID toStateID,
+        Action callback, params Func<bool>[] initConditions) :
+        this(fromStateID, toStateID, initConditions)
+    {
+        SetCallback(callback);
+    }
+
     public new void AddCondition(Func<bool> condition)
     {
         base.AddCondition(condition);
@@ -35,6 +42,13 @@ public class GenericTransition :
     public GenericTransition(string fromStateID, string toStateID,
         params Func<bool>[] initConditions) :
         base(fromStateID, toStateID, initConditions)
+    {
+
+    }
+
+    public GenericTransition(string fromStateID, string toStateID,
+        Action callback, params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID, callback, initConditions)
     {
 
     }

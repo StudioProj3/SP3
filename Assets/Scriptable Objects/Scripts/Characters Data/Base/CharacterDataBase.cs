@@ -7,5 +7,11 @@ public abstract class CharacterDataBase :
     public string Name { get; protected set; }
 
     [field: SerializeField]
-    public InventoryBase Inventory { get; protected set; }
+    public InventoryBase Inventory { get; set; }
+
+    [field: SerializeField]
+    public ItemBase LeftHandItem { get; set; }
+
+    [field: SerializeField]
+    public ItemBase RightHandItem { get; set; }
 }

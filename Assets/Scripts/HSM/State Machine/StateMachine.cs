@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using UnityEngine;
 using UnityEngine.Assertions;
 
 // `TSelfID` is used as a type for when this `StateMachine` is
@@ -44,6 +45,8 @@ public class StateMachine<TSelfID, TStateID> :
     // to prevent flooding the editor when message method calls
     // are attempted in loop
     private uint _currentStateExceptionThreshold = 10;
+
+    private bool _transitionDebugLogs = false;
 
     // Forward the `selfID` to the readonly `StateID`
     // in `StateBase`
@@ -187,6 +190,16 @@ public class StateMachine<TSelfID, TStateID> :
 
     }
 
+    public void EnableTransitionDebugLogs()
+    {
+        _transitionDebugLogs = true;
+    }
+
+    public void DisableTransitionDebugLogs()
+    {
+        _transitionDebugLogs = false;
+    }
+
     private void SwitchState(TStateID toStateID,
         Action eagerCallback = null)
     {
@@ -204,19 +217,19 @@ public class StateMachine<TSelfID, TStateID> :
 
     private void HandleTransitions(Action eagerCallback)
     {
-        (TStateID, bool) result = TryAllTransitions(CurrentState.StateID);
+        Pair<TStateID, bool> result = TryAllTransitions(CurrentState.StateID);
 
         // If `result` is default, nothing
         // more needs to be done, return
-        if (result.Item1.IsDefault())
+        if (result.First.IsDefault())
         {
             return;
         }
 
         // Perform the actual transition with the
         // `eagerCallback` where appropriate
-        SwitchState(result.Item1,
-            result.Item2 ? eagerCallback : null);
+        SwitchState(result.First,
+            result.Second ? eagerCallback : null);
     }
 
     private void HandleTimedTransitions(TStateID stateID)
@@ -238,11 +251,27 @@ public class StateMachine<TSelfID, TStateID> :
         }
     }
 
+    private void HandleTransitionCallback(TransitionBase<TStateID>
+        transition)
+    {
+        transition.TriggerCallback();
+    }
+
+    private void HandleTransitionDebugLogs(TransitionBase<TStateID>
+        transition)
+    {
+        if (_transitionDebugLogs)
+        {
+            Debug.Log("State Machine \"" + StateID + "\" | " +
+                transition.FromStateID + " > " + transition.ToStateID);
+        }
+    }
+
     // Returns the new state the state machine should be in
     // upon taking a transition if a suitable one is found
     // together with whether it is an eager transition with
     // conditions met, else it will return `default(TStateID)`
-    private (TStateID, bool) TryAllTransitions(TStateID stateID)
+    private Pair<TStateID, bool> TryAllTransitions(TStateID stateID)
     {
         bool result = _allTransitions.TryGetValue(stateID, out var list);
 
@@ -250,7 +279,7 @@ public class StateMachine<TSelfID, TStateID> :
         // meaning there are no transitions present for state `stateID`
         if (!result || list == null)
         {
-            return (default, false);
+            return new(default, false);
         }
 
         // Loop through all the available transitions and if list
@@ -262,13 +291,16 @@ public class StateMachine<TSelfID, TStateID> :
             // return the target state
             if (transition.Conditions())
             {
-                return (transition.ToStateID,
+                HandleTransitionCallback(transition);
+                HandleTransitionDebugLogs(transition);
+
+                return new(transition.ToStateID,
                     transition is IEagerTransition &&
                     (transition as IEagerTransition).IsEager());
             }
         }
 
-        return (default, false);
+        return new(default, false);
     }
 
     // Checks that the current state is not null,
