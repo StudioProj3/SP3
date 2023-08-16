@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using static DebugUtils;
+
 public class CameraFadeTrack : MonoBehaviour
 {
     [HorizontalDivider]
@@ -34,7 +36,7 @@ public class CameraFadeTrack : MonoBehaviour
     private Camera _camera;
     private Transform _player;
 
-    // Stores dictionary of active sprites involved in the
+    // Stores dictionary of active objects involved in the
     // transition to and from opaque and translucent, with
     // the respective alpha and whether its still blocking
     private Dictionary<Renderer, Pair<float, bool>>
@@ -83,11 +85,11 @@ public class CameraFadeTrack : MonoBehaviour
             // Not found in dictionary, add to it
             if (!found)
             {
-                // Set it to the current opacity of the texture to account
-                // for the case where the texture's opacity is not 1 yet and
-                // it has resumed to blocking the player
-
-                AddActiveObjectPair(_activeObjects, renderer);
+                // Set it to the current alpha of the object to account
+                // for the case where the object's opacity is not 1 yet
+                // and it has resumed to blocking the player
+                AddActiveObjectPair(_activeObjects, renderer,
+                    flag: true);
 
                 continue;
             }
@@ -102,15 +104,15 @@ public class CameraFadeTrack : MonoBehaviour
             // Store the new alpha into the dictionary
             _activeObjects[renderer] = new(newAlpha, true);
 
-            // TODO (Cheng Jun): use the new `SetAlpha` method in `RendererUtils`
+            renderer.SetAlpha(newAlpha);
         }
 
-        // New dictionary with updated active sprites
+        // New dictionary with updated active objects
         Dictionary<Renderer, Pair<float, bool>> newActiveObjects =
             new();
 
         // Loop through the dictionary and restore opacity for
-        // those sprites that are no longer blocking before removing
+        // those objects that are no longer blocking before removing
         // them
         foreach (KeyValuePair<Renderer, Pair<float, bool>>
             keyValuePair in _activeObjects)
@@ -121,7 +123,8 @@ public class CameraFadeTrack : MonoBehaviour
             // This object was blocking the player this cycle
             if (keyValuePair.Value.Second)
             {
-                AddActiveObjectPair(newActiveObjects, renderer, alpha);
+                AddActiveObjectPair(newActiveObjects, renderer,
+                    alpha);
 
                 continue;
             }
@@ -133,14 +136,15 @@ public class CameraFadeTrack : MonoBehaviour
             newAlpha += OpacityStep();
             newAlpha = Mathf.Clamp(newAlpha, _lowOpacity, 1f);
 
-            // TODO (Cheng Jun): use the new `SetAlpha` method in `RendererUtils`
+            renderer.SetAlpha(newAlpha);
 
-            // Only add the sprite entry back into the new
+            // Only add the object entry back into the new
             // dictionary if it has yet to transit back to
             // fully opaque
             if (newAlpha < 1f)
             {
-                AddActiveObjectPair(newActiveObjects, renderer, newAlpha);
+                AddActiveObjectPair(newActiveObjects, renderer,
+                    newAlpha);
             }
         }
 
@@ -155,26 +159,24 @@ public class CameraFadeTrack : MonoBehaviour
 
     private void AddActiveObjectPair(
         Dictionary<Renderer, Pair<float, bool>> objectDict,
-        Renderer renderer, float alpha = -1f)
+        Renderer renderer, float alpha = -1f, bool flag = false)
     {
         if (renderer is SpriteRenderer spriteRenderer)
         {
             alpha = alpha == -1f ? spriteRenderer.color.a : alpha;
 
-            objectDict.Add(spriteRenderer,
-                new(alpha, true));
+            objectDict.Add(renderer, new(alpha, flag));
         }
         else if (renderer is MeshRenderer meshRenderer)
         {
             alpha = alpha == -1f ? meshRenderer.material.color.a :
                 alpha;
 
-            objectDict.Add(meshRenderer,
-                new(alpha, true));
+            objectDict.Add(renderer, new(alpha, flag));
         }
         else
         {
-            // TODO (Cheng Jun): include fatal assertion here
+            Fatal("Unhandled renderer type");
         }
     }
 }
