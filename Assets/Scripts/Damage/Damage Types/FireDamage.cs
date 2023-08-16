@@ -1,17 +1,19 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
-    menuName = "Damage/MagicDamage")]
-public class MagicDamage : Damage
+    menuName = "Damage/FireDamage")]
+public class FireDamage : Damage
 {
-    public static MagicDamage Create(float damage)
+    private DamageOverTimeEffect _damageOverTimeEffect;
+    public static FireDamage Create(float damage, DamageOverTimeEffect damageOverTimeEffect)
     {
-        return CreateInstance<MagicDamage>().Init(damage);
+        return CreateInstance<FireDamage>().Init(damage, damageOverTimeEffect);
     }
 
-    private MagicDamage Init(float damage)
+    private FireDamage Init(float damage, DamageOverTimeEffect damageOverTimeEffect)
     {
         _damage = damage;
+        _damageOverTimeEffect = damageOverTimeEffect;
         return this;
     }
 
@@ -32,5 +34,7 @@ public class MagicDamage : Damage
         {
             entityStats.GetStat("Health").Subtract(Mathf.Round(_damage));
         }
+
+        effectable.ApplyEffect(DamageOverTimeEffect.Create(_damageOverTimeEffect));
     }
 }
