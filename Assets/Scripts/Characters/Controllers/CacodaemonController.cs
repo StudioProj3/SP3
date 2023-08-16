@@ -23,7 +23,7 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _cacodaemonStats;
+    IStatContainer IEffectable.EntityStats => _cacodaemonStatsContainer;
 
     public void TakeDamage(Damage damage)
     {
