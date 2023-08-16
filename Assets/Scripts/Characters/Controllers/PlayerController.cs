@@ -21,6 +21,15 @@ public class PlayerController :
     [SerializeField]
     private SpeedMultiplierEffect speedEffectTest;
 
+    [SerializeField]
+    private Inventory _inventory;
+
+    [SerializeField]
+    private ItemBase _rottenWood;
+
+    [SerializeField]
+    private ItemBase _wood;
+
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
