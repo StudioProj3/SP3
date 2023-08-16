@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public abstract class ItemBase :
@@ -17,4 +18,11 @@ public abstract class ItemBase :
 
     [TextArea]
     public string Description;
+
+    public virtual void OnUseEnter(IEffectable effectable) {}
+    public virtual void OnUseStay(IEffectable effectable) {}
+
+    public virtual void OnUseExit(IEffectable effectable) {}
+
+
 }

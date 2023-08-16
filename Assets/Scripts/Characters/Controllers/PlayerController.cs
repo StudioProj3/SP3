@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using UnityEditor.Animations;
 using UnityEngine;
 
 // Player controller class for movement
@@ -7,8 +7,14 @@ using UnityEngine;
 // so a PlayerMovement script and maybe a PlayerInventoryController script
 [DisallowMultipleComponent]
 public class PlayerController :
-    CharacterControllerBase, IEffectable
+    CharacterControllerBase, ISwordUser
 {
+    [field: SerializeField]
+    public Animator WeaponAnimator { get; private set; }
+
+    [field: SerializeField]
+    public SpriteRenderer CurrentWeaponRenderer { get; private set; }
+
     [HorizontalDivider]
     [Header("Character Data")]
 
@@ -17,6 +23,14 @@ public class PlayerController :
 
     [SerializeField]
     private Stats _playerStats;
+
+    //For debug
+    [SerializeField]
+    private SwordWeaponItem _meleeItemTest;
+
+    //For debug
+    [SerializeField]
+    private SpriteRenderer _currentWeaponTest;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
@@ -53,6 +67,8 @@ public class PlayerController :
         base.Start();
 
         SetupStateMachine();
+
+
 
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
@@ -159,6 +175,11 @@ public class PlayerController :
         if (_horizontalInput != 0)
         {
             _spriteRenderer.flipX = _horizontalInput < 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            _meleeItemTest.OnUseEnter(this);
         }
     }
 
