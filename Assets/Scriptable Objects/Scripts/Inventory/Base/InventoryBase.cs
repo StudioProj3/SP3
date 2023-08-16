@@ -44,7 +44,6 @@ public abstract class InventoryBase :
 
         bool isAdd = number > 0;
         int numberLeft = number;
-        bool isItemStackable = item.Stackable;
 
         bool CannotAddOrRemove()
         {
@@ -136,7 +135,10 @@ public abstract class InventoryBase :
                 // Handle all the cases for removal
 
                 // The slot is already empty. Continue to next iteration.
-                if (isNull)
+                // For the second condition, we already know that it is not
+                // null since it will have to had been false to go
+                // to the other condition in the Or statement.
+                if (isNull || currentItem != item)
                 {
                     continue;
                 }
