@@ -12,6 +12,7 @@ public abstract class CharacterPickupBase :
     [HorizontalDivider]
     [Header("Allowed pickups")]
 
+    [SerializeField]
     protected bool _pickupInventory = false;
 
     protected abstract void OnTriggerEnter(Collider other);

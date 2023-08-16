@@ -30,13 +30,22 @@ public class PlayerPickup :
                 return;
             }
 
-            bool tryPickup = _characterData.Inventory.Add(item, quantity);
-
-            // Only if the character can successfully
-            // pick the items up
-            if (tryPickup)
+            // Attempt to pickup into inventory
+            if (_characterData.Inventory)
             {
-                other.gameObject.SetActive(false);
+                bool tryPickup = _characterData.Inventory.Add(item, quantity);
+
+                // Only if the character can successfully
+                // pick the items up
+                if (tryPickup)
+                {
+                    other.gameObject.SetActive(false);
+                }
+            }
+            // Attempt to pickup into left and/or right hand
+            else
+            {
+
             }
         }
     }

@@ -53,6 +53,11 @@ public class PlayerController :
         base.Start();
 
         SetupStateMachine();
+
+        // TODO (Cheng Jun): This should be updated to try
+        // and fetch the player's local save instead of performing
+        // a reset once the save system is ready
+        _playerData.Reset();
     }
 
     protected override void SetupStateMachine()
