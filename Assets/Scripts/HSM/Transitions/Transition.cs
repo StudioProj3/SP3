@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-using UnityEngine.Assertions;
+using static DebugUtils;
 
 // All custom transitions should inherit from this
 // class instead of `TransitionBase`
@@ -26,7 +26,7 @@ public abstract class Transition<TStateID> :
     public override bool Conditions()
     {
         bool? result = _conditions.AllTrue();
-        Assert.IsTrue(result != null);
+        Assert(result != null, "`result` is null");
 
         return (bool)result;
     }

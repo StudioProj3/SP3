@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.Assertions;
+
+using static DebugUtils;
 
 public class PlayerPickup :
     CharacterPickupBase
@@ -11,8 +12,7 @@ public class PlayerPickup :
             bool result = other.TryGetComponent(
                 out Collectible collectible);
 
-            Assert.IsTrue(result,
-                "There should be a `Collectible` " +
+            Assert(result, "There should be a `Collectible` " +
                 "component on the gameobject");
 
             ItemBase item = collectible.Item;

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Assertions;
+
+using static DebugUtils;
 
 public abstract class InventoryBase :
     ScriptableObject
@@ -188,8 +189,7 @@ public abstract class InventoryBase :
     // a success
     protected virtual bool Modify(ItemBase item, int number, bool request = true)
     {
-        Assert.IsTrue(number != 0,
-            "`number` is zero");
+        Assert(number != 0, "`number` is zero");
 
         // If request is false, check that one of the maps have at least one
         // thing so we know there is a modification cached

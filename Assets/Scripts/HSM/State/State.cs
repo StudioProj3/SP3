@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-using UnityEngine.Assertions;
+using static DebugUtils;
 
 // A `SortedList` containing all actions of a particular
 // `StateMessageMethod` ordered by their priorities
@@ -90,7 +90,7 @@ public abstract class State<TStateID> :
                 // Create a `StateMessageMethod` for usage
                 bool result = Enum.TryParse<StateMessageMethod>(flag.ToString(),
                     out var method);
-                Assert.IsTrue(result);
+                Assert(result, "`flag` is invalid");
 
                 // Check to see if the dictionary `allMethods` has the key
                 // `method`
