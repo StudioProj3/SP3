@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public abstract class ItemBase :
+[CreateAssetMenu(fileName = "ItemBase",
+    menuName = "Scriptable Objects/ItemBase/ItemBase")]
+public class ItemBase :
     ScriptableObject, INameable
 {
     [field: SerializeField]
@@ -16,13 +19,22 @@ public abstract class ItemBase :
     [field: SerializeField]
     public float Weight { get; protected set; } = 0f;
 
+    [SerializeReference]
+    private List<ItemComponentBase> _itemComponents = new();
+
+    // TODO (BRAND): Make it immutable.
     [TextArea]
     public string Description;
 
-    public virtual void OnUseEnter(IEffectable effectable) {}
-    public virtual void OnUseStay(IEffectable effectable) {}
+    public bool TryGetItemComponent<T>(out T itemComponent) where T : ItemComponentBase
+    {
+        itemComponent = _itemComponents.Find(c => c.GetType() == typeof(T)) as T;
 
-    public virtual void OnUseExit(IEffectable effectable) {}
+        return itemComponent != null;
+    }
 
-
+    public T GetItemComponent<T>() where T : ItemComponentBase
+    {
+        return _itemComponents.Find(c => c.GetType() == typeof(T)) as T;
+    }
 }

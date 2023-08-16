@@ -7,13 +7,14 @@ using UnityEngine;
 // so a PlayerMovement script and maybe a PlayerInventoryController script
 [DisallowMultipleComponent]
 public class PlayerController :
-    CharacterControllerBase, ISwordUser
+    CharacterControllerBase, IEffectable
 {
+    //For debug
     [field: SerializeField]
-    public Animator WeaponAnimator { get; private set; }
+    private Animator WeaponAnimator;
 
     [field: SerializeField]
-    public SpriteRenderer CurrentWeaponRenderer { get; private set; }
+    private ItemBaseWrapper swordItemTest;
 
     [HorizontalDivider]
     [Header("Character Data")]
@@ -23,14 +24,6 @@ public class PlayerController :
 
     [SerializeField]
     private Stats _playerStats;
-
-    //For debug
-    [SerializeField]
-    private SwordWeaponItem _meleeItemTest;
-
-    //For debug
-    [SerializeField]
-    private SpriteRenderer _currentWeaponTest;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
@@ -174,12 +167,19 @@ public class PlayerController :
 
         if (_horizontalInput != 0)
         {
-            _spriteRenderer.flipX = _horizontalInput < 0;
+            transform.localScale = new(_horizontalInput * transform.localScale.x, 
+                                        transform.localScale.y, 
+                                        transform.localScale.z);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            _meleeItemTest.OnUseEnter(this);
+            swordItemTest.ItemBase.TryGetItemComponent(out SwordComponent swordComponent);
+            if (swordComponent)
+            {
+                swordComponent.WeaponAnimator = WeaponAnimator;
+                swordComponent.UseItem();
+            }
         }
     }
 
