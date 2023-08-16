@@ -39,9 +39,6 @@ public abstract class InventoryBase :
     // caches the data needed for the modification.
     protected virtual bool RequestModify(ItemBase item, int number)
     {
-        Assert.IsTrue(number != 0,
-            "`number` is zero");
-
         bool isAdd = number > 0;
         int numberLeft = number;
 
@@ -178,6 +175,9 @@ public abstract class InventoryBase :
     // a success
     protected virtual bool Modify(ItemBase item, int number, bool request = true)
     {
+        Assert.IsTrue(number != 0,
+            "`number` is zero");
+
         // If request is false, check that one of the maps have at least one
         // thing so we know there is a modification cached.
         // If request is true, then run the RequestModify function.
@@ -318,7 +318,5 @@ public abstract class InventoryBase :
             _allItems.Add(ItemExists(_itemInitializerList[i]) ? 
                 _itemInitializerList[i] : null);
         }
-
-        Debug.Log("All items count: " + _allItems.Count.ToString());
     }
 }

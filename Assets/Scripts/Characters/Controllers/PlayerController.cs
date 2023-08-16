@@ -166,24 +166,6 @@ public class PlayerController :
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            _inventory.Print();
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            if (!_inventory.Add(_rottenWood, 2))
-            {
-                Debug.Log("Could not add.");
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            _inventory.Remove(_rottenWood, 1);
-        }
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             ApplyEffect(SpeedMultiplierEffect.Create(speedEffectTest));
