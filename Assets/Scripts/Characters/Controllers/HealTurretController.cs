@@ -11,9 +11,6 @@ public class HealTurretController : CharacterControllerBase, IEffectable
     [SerializeField]
     private LayerMask enemyLayer;
 
-    [SerializeField]
-    private float healAmount;
-
     private StatContainer _healTurretStatsContainer;
 
     private ParticleSystem _healTurretParticles;
@@ -76,17 +73,21 @@ public class HealTurretController : CharacterControllerBase, IEffectable
                new ActionEntry("Enter", () =>
                {
                    Collider[] healTargets;
-                   healTargets = Physics.OverlapSphere(transform.position, 4, enemyLayer, 0);
+                   healTargets = Physics.OverlapCapsule(transform.position, new Vector3(4,4,4), enemyLayer, 0);
+
                    for (int i = 0; i < healTargets.Length; i++)
                    {
                        if (healTargets[i].tag == "Enemy")
                        {
-                           IStatContainer container = healTargets[i].GetComponent<IEffectable>().EntityStats;
-                           container.GetStat("Health").Add(healAmount);
+                           //TODO (Aquila) Work on healing enemies
+
+                           //IStatContainer test = healTargets[i].GetComponent<IEffectable>().EntityStats;
+                           //test.GetStat("Health").Value
                        }
                    }
                    float angle = -Mathf.Atan2(_direction.z, _direction.x) * Mathf.Rad2Deg;
 
+                   _healTurretParticles.transform.rotation = Quaternion.Euler(0, angle, 0);
                    _healTurretParticles.Play();
 
 
@@ -126,7 +127,7 @@ public class HealTurretController : CharacterControllerBase, IEffectable
     private void Update()
     {
  
-        _animator.SetBool("isHealing",
+        _animator.SetBool("isGoingHeal",
            _stateMachine.CurrentState.StateID == "GoingToHeal");
 
         if (!_statusEffects.IsNullOrEmpty())
