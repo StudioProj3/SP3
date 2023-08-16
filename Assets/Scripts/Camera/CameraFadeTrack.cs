@@ -37,8 +37,8 @@ public class CameraFadeTrack : MonoBehaviour
     // Stores dictionary of active sprites involved in the
     // transition to and from opaque and translucent, with
     // the respective alpha and whether its still blocking
-    private Dictionary<SpriteRenderer, Pair<float, bool>>
-        _activeSprites = new();
+    private Dictionary<Renderer, Pair<float, bool>>
+        _activeObjects = new();
 
     // Change in opacity per iteration
     private float OpacityStep()
@@ -74,20 +74,20 @@ public class CameraFadeTrack : MonoBehaviour
                 continue;
             }
 
-            SpriteRenderer spriteRenderer =
-                transform.GetComponent<SpriteRenderer>();
+            Renderer renderer =
+                transform.GetComponent<Renderer>();
 
-            bool found = _activeSprites.
-                TryGetValue(spriteRenderer, out Pair<float, bool> pair);
+            bool found = _activeObjects.
+                TryGetValue(renderer, out Pair<float, bool> pair);
 
             // Not found in dictionary, add to it
             if (!found)
             {
-                // Set it to the current opacity of the sprite to account
-                // for the case where the sprite's opacity is not 1 yet and
+                // Set it to the current opacity of the texture to account
+                // for the case where the texture's opacity is not 1 yet and
                 // it has resumed to blocking the player
-                _activeSprites.Add(spriteRenderer,
-                    new(spriteRenderer.color.a, true));
+
+                AddActiveObjectPair(_activeObjects, renderer);
 
                 continue;
             }
@@ -100,29 +100,28 @@ public class CameraFadeTrack : MonoBehaviour
             newAlpha = Mathf.Clamp(newAlpha, _lowOpacity, 1f);
 
             // Store the new alpha into the dictionary
-            _activeSprites[spriteRenderer] = new(newAlpha, true);
+            _activeObjects[renderer] = new(newAlpha, true);
 
-            spriteRenderer.SetAlpha(newAlpha);
+            // TODO (Cheng Jun): use the new `SetAlpha` method in `RendererUtils`
         }
 
         // New dictionary with updated active sprites
-        Dictionary<SpriteRenderer, Pair<float, bool>> newActiveSprites =
+        Dictionary<Renderer, Pair<float, bool>> newActiveObjects =
             new();
 
         // Loop through the dictionary and restore opacity for
         // those sprites that are no longer blocking before removing
         // them
-        foreach (KeyValuePair<SpriteRenderer, Pair<float, bool>>
-            keyValuePair in _activeSprites)
+        foreach (KeyValuePair<Renderer, Pair<float, bool>>
+            keyValuePair in _activeObjects)
         {
-            SpriteRenderer spriteRenderer = keyValuePair.Key;
+            Renderer renderer = keyValuePair.Key;
             float alpha = keyValuePair.Value.First;
             
-            // This sprite was blocking the player this cycle
+            // This object was blocking the player this cycle
             if (keyValuePair.Value.Second)
             {
-                newActiveSprites.Add(spriteRenderer,
-                    new(alpha, false));
+                AddActiveObjectPair(newActiveObjects, renderer, alpha);
 
                 continue;
             }
@@ -134,24 +133,48 @@ public class CameraFadeTrack : MonoBehaviour
             newAlpha += OpacityStep();
             newAlpha = Mathf.Clamp(newAlpha, _lowOpacity, 1f);
 
-            spriteRenderer.SetAlpha(newAlpha);
+            // TODO (Cheng Jun): use the new `SetAlpha` method in `RendererUtils`
 
             // Only add the sprite entry back into the new
             // dictionary if it has yet to transit back to
             // fully opaque
             if (newAlpha < 1f)
             {
-                newActiveSprites.Add(spriteRenderer,
-                    new(newAlpha, false));
+                AddActiveObjectPair(newActiveObjects, renderer, newAlpha);
             }
         }
 
-        _activeSprites = newActiveSprites;
+        _activeObjects = newActiveObjects;
     }
 
     private void Awake()
     {
         _camera = GetComponent<Camera>();
         _player = GameObject.FindWithTag("Player").transform;
+    }
+
+    private void AddActiveObjectPair(
+        Dictionary<Renderer, Pair<float, bool>> objectDict,
+        Renderer renderer, float alpha = -1f)
+    {
+        if (renderer is SpriteRenderer spriteRenderer)
+        {
+            alpha = alpha == -1f ? spriteRenderer.color.a : alpha;
+
+            objectDict.Add(spriteRenderer,
+                new(alpha, true));
+        }
+        else if (renderer is MeshRenderer meshRenderer)
+        {
+            alpha = alpha == -1f ? meshRenderer.material.color.a :
+                alpha;
+
+            objectDict.Add(meshRenderer,
+                new(alpha, true));
+        }
+        else
+        {
+            // TODO (Cheng Jun): include fatal assertion here
+        }
     }
 }
