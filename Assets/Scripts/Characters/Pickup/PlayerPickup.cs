@@ -15,7 +15,38 @@ public class PlayerPickup :
                 "There should be a `Collectible` " +
                 "component on the gameobject");
 
-            other.gameObject.SetActive(false);
+            ItemBase item = collectible.Item;
+            uint quantity = collectible.Quantity;
+
+            // Pickup inventory when the inventory slot is empty
+            if (_pickupInventory && _characterData.Inventory == null &&
+                item.Name == "BasicInventory")
+            {
+                _characterData.Inventory =
+                    (item as InventoryItem).Inventory;
+
+                other.gameObject.SetActive(false);
+
+                return;
+            }
+
+            // Attempt to pickup into inventory
+            if (_characterData.Inventory)
+            {
+                bool tryPickup = _characterData.Inventory.Add(item, quantity);
+
+                // Only if the character can successfully
+                // pick the items up
+                if (tryPickup)
+                {
+                    other.gameObject.SetActive(false);
+                }
+            }
+            // Attempt to pickup into left and/or right hand
+            else
+            {
+
+            }
         }
     }
 }

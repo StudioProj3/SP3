@@ -133,7 +133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
   _playerStats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
-  speedEffectTest: {fileID: 11400000, guid: d696b9baef2bf2b4db158b4ba73142ad, type: 2}
 --- !u!95 &6696665779751592124
 Animator:
   serializedVersion: 5
@@ -168,3 +167,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
+  _pickupInventory: 1
