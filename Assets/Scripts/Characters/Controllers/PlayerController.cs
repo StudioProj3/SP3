@@ -28,6 +28,11 @@ public class PlayerController :
     public void TakeDamage(Damage damage)
     {
         damage.OnApply(this);
+
+        if (_playerStats.GetStat("Health").Value <= 0)
+        {
+            _playerData.IsDead = true;
+        }
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
