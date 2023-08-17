@@ -209,7 +209,7 @@ public class NecromancerController :
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isSummoning",
-         _stateMachine.CurrentState.StateID == "Summon");
+         _stateMachine.CurrentState.StateID == "GoingToSummon");
 
 
         if (!_statusEffects.IsNullOrEmpty())

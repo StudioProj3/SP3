@@ -32,6 +32,13 @@ public class SkeletonController :
 
     IStatContainer IEffectable.EntityStats => _skeletonStats;
 
+    public void Init(Transform source)
+    {
+        gameObject.SetActive(true);
+        _currentLifetime = _lifetime;
+        _source = source;
+    }
+
     public void TakeDamage(Damage damage)
     {
         _animator.SetBool("isHurt", true);
@@ -119,13 +126,6 @@ public class SkeletonController :
             ),
 
             new GenericState("Cooldown"),
-            new GenericState("Dying"),
-            new GenericState("Dead",
-                new ActionEntry("Enter", () =>
-                {
-                    RemoveCharacter();
-                })
-            ),
 
             // Transitions
 
@@ -157,10 +157,7 @@ public class SkeletonController :
             new FixedTimedTransition("Attack", "Cooldown", 0.4f),
 
             // Cooldown > Idle
-            new FixedTimedTransition("Cooldown", "Idle", 0.2f),
-
-            // Dying > Dead
-            new FixedTimedTransition("Dying", "Dead", 0.5f)
+            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
             
         ) ;
 
@@ -181,20 +178,12 @@ public class SkeletonController :
     private void Update()
     {
 
-        _currentLifetime -= Time.deltaTime;
-
-        if (_currentLifetime < 0f)
-        {
-            //_stateMachine.SetState("Dying");
-            RemoveCharacter();
-        }
+        
 
         _animator.SetBool("isAttacking",
             _stateMachine.CurrentState.StateID == "GoingToAttack");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
-        _animator.SetBool("isDead",
-          _stateMachine.CurrentState.StateID == "Dying");
 
 
         if (!_statusEffects.IsNullOrEmpty())
@@ -219,7 +208,19 @@ public class SkeletonController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        _stateMachine.FixedUpdate();
+        _currentLifetime -= Time.deltaTime;
+
+        if (_currentLifetime < 0f)
+        {
+            _animator.SetBool("isDead", true);
+        }
+        else
+            _stateMachine.FixedUpdate();
+    }
+
+    private void OnDisable()
+    {
+        Invoke("SetSourceParent",1f);
     }
 
     private void OnCollisionEnter(Collision col)
@@ -230,16 +231,13 @@ public class SkeletonController :
         }
     }
 
-    public void Init(Transform source)
+    private void SetSourceParent()
     {
-        gameObject.SetActive(true);
-        _currentLifetime = _lifetime;
-        _source = source;
-    }
-
-    private void RemoveCharacter()
-    {
-        gameObject.SetActive(false);
         transform.SetParent(_source);
     }
+
+   
+
+    
+
 }
