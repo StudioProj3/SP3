@@ -11,11 +11,16 @@ public class SkeletonController :
     private Stats _skeletonStats;
     [SerializeField]
     private LayerMask _playerLayer;
+    [SerializeField]
+    private float _lifetime;
+
+    private float _currentLifetime;
 
     private StatContainer _skeletonStatsContainer;
 
     private GameObject _player;
     private PlayerController _playerController;
+    private Transform _source;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _currentEffectTime;
@@ -57,9 +62,7 @@ public class SkeletonController :
     {
         base.Start();
 
-        _skeletonStatsContainer = _skeletonStats.GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
-            GetStat("AttackDamage").Value);
+
 
         SetupStateMachine();
     }
@@ -159,10 +162,21 @@ public class SkeletonController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
+        _skeletonStatsContainer = _skeletonStats.GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
+            GetStat("AttackDamage").Value);
     }
 
     private void Update()
     {
+
+        _currentLifetime -= Time.deltaTime;
+
+        if (_currentLifetime < 0f)
+        {
+            RemoveCharacter();
+        }
+
         _animator.SetBool("isAttacking",
             _stateMachine.CurrentState.StateID == "GoingToAttack");
         _animator.SetBool("isMoving",
@@ -204,6 +218,14 @@ public class SkeletonController :
 
     public void Init(Transform source)
     {
+        gameObject.SetActive(true);
+        _currentLifetime = _lifetime;
+        _source = source;
+    }
 
+    private void RemoveCharacter()
+    {
+        gameObject.SetActive(true);
+        transform.SetParent(_source);
     }
 }

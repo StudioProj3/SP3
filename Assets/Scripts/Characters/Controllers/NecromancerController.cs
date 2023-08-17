@@ -104,11 +104,13 @@ public class NecromancerController :
                     for (int i = 0; i < _pooledSkullList.Count; i++)
                     {
                         if (!(_pooledSkullList[i].gameObject.activeSelf))
-                        {
+                        {                       
+                            _pooledSkullList[i].transform.position =
+                                new Vector3(transform.position.x + Random.Range(-0.75f, 0.75f),
+                                            transform.position.y - 0.4f,
+                                            transform.position.z + Random.Range(-0.75f, 0.75f));
                             _pooledSkullList[i].Init(_direction, _phyDamage,
                                 _playerController, _pooledSkulls.transform);
-                            _pooledSkullList[i].transform.position =
-                                transform.position;
                             _pooledSkullList[i].transform.SetParent(null);
 
                             break;
@@ -126,7 +128,9 @@ public class NecromancerController :
                         {
                             _pooledSkeletonList[i].Init( _pooledSkeletons.transform);
                             _pooledSkeletonList[i].transform.position =
-                                transform.position;
+                                new Vector3(transform.position.x + Random.Range(-0.75f,0.75f),
+                                            transform.position.y - 0.4f,
+                                            transform.position.z + Random.Range(-0.75f,0.75f));
                             _pooledSkeletonList[i].transform.SetParent(null);
 
                             break;
@@ -134,6 +138,8 @@ public class NecromancerController :
                     }
                 })
             ),
+
+            new GenericState("GoingToSummon"),
 
             new GenericState("GoingToShoot",
                 new ActionEntry("Enter", () =>
@@ -154,7 +160,7 @@ public class NecromancerController :
             new FixedTimedTransition("Walk", "Idle", 0.7f),
 
             // Idle > Roll
-            new GenericTransition("Idle", "Summon", () =>
+            new GenericTransition("Idle", "GoingToSummon", () =>
             {
                 return _distance < 1.0f;
             }),
@@ -166,16 +172,19 @@ public class NecromancerController :
             }),
 
             // Roll > Going to Shoot
-            new FixedTimedTransition("Summon", "GoingToShoot", 0.5f),
+            new FixedTimedTransition("GoingToSummon", "Summon", 1.2f),
 
             //  Going to Shoot > Shoot
-            new FixedTimedTransition("GoingToShoot", "Shoot", 0.6f),
+            new FixedTimedTransition("GoingToShoot", "Shoot", 1.2f),
+
+            // Shoot > Cooldown
+            new FixedTimedTransition("Summon", "Cooldown", 0.2f),
 
             // Shoot > Cooldown
             new FixedTimedTransition("Shoot", "Cooldown", 0.2f),
 
             // Cooldown > Idle
-            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
+            new FixedTimedTransition("Cooldown", "Idle", 1.0f)
         );
 
         _stateMachine.SetStartState("Idle");

@@ -60,10 +60,7 @@ public class RedSkullController : MonoBehaviour
             _playerController.TakeDamage(_phyDamage);
             RemoveProjectile();
         }
-        else if (col.gameObject.tag == "Scene Object")
-        {
-            RemoveProjectile();
-        }
+        
     }
 
     private void RemoveProjectile()
