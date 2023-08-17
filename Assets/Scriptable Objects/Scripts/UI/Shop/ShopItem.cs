@@ -7,9 +7,11 @@ using UnityEngine;
 public class ShopItem : ISerializationCallbackReceiver
 {
     [SerializeField, RequireInterface(typeof(ISellable))]
-    private UnityEngine.Object _sellableItem = null;
+    private ItemBase _sellableItem = null;
+    // private UnityEngine.Object _sellableItem = null;
 
     public ISellable SellableItem { get; private set; } = null;
+    public ItemBase Item => _sellableItem;
 
     public void OnAfterDeserialize()
     {
