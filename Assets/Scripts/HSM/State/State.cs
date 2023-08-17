@@ -12,11 +12,20 @@ using ActionList = System.Collections.Generic.
 // All custom states should inherit from this class
 // instead of `StateBase`
 public abstract class State<TStateID> :
-    StateBase<TStateID>
+    StateBase<TStateID>, ISealable
 {
+    // Gets whether the current state is already sealed
+    public bool IsSealed
+    {
+        get => _isSealed;
+        protected set => _isSealed = value;
+    }
+
     // Store all delegates with respect to all the
     // message methods and their respective priorities
     private Dictionary<StateMessageMethod, ActionList> _allMethods = new();
+
+    private bool _isSealed = false;
 
     public override void Enter()
     {
@@ -198,6 +207,13 @@ public abstract class State<TStateID> :
         }
 
         return false;
+    }
+
+    public void Seal()
+    {
+        Assert(!_isSealed, "Attempted to reseal");
+
+        _isSealed = true;
     }
 }
 
