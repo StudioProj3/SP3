@@ -63,10 +63,10 @@ public class UINotification : MonoBehaviour
 
         _itemIcon.gameObject.SetActive(true);
 
-        _notifTextTransform.position =
-            _notifTextTransform.position.Set(x: -210f);
-        _notifTextTransform.localScale =
-            _notifTextTransform.localScale.Set(x: 380f);
+        _notifTextTransform.anchoredPosition =
+            _notifTextTransform.anchoredPosition.Set(x: -210f);
+        _notifTextTransform.sizeDelta =
+            _notifTextTransform.sizeDelta.Set(x: 380f);
     }
 
     // Change layout to show text only which is center aligned
@@ -77,9 +77,9 @@ public class UINotification : MonoBehaviour
 
         _itemIcon.gameObject.SetActive(false);
 
-        _notifTextTransform.position =
-            _notifTextTransform.position.Set(x: -250f);
-        _notifTextTransform.localScale =
-            _notifTextTransform.localScale.Set(x: 470f);
+        _notifTextTransform.anchoredPosition =
+            _notifTextTransform.anchoredPosition.Set(x: -250f);
+        _notifTextTransform.sizeDelta =
+            _notifTextTransform.sizeDelta.Set(x: 470f);
     }
 }
