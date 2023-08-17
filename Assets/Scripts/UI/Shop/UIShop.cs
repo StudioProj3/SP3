@@ -48,10 +48,14 @@ public class UIShop : MonoBehaviour
     {
     }
 
-    // private int[] GetPlayerWealth()
-    // {
-
-    // }
+    private int[] GetPlayerWealth()
+    {
+        int[] wealth = new int[3];
+        wealth[CoinType.Bronze] = _playerInventory.GetAmount(_bronzeCoin);
+        wealth[CoinType.Silver] = _playerInventory.GetAmount(_silverCoin);
+        wealth[CoinType.Gold] = _playerInventory.GetAmount(_goldCoin);
+        return wealth;
+    }
 
     private void Start()
     {
