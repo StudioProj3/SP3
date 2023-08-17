@@ -4,11 +4,14 @@ using static DebugUtils;
 
 // A meta transition that allows the state machine to
 // transit from any state except the target to the target
-// based on a set of predicates
+// based on a set of predicates, if live update is true
+// If live update is false, the "all" will then refer to
+// those states that are added to the state machine before this
+// meta transition
 public class AllToOneTransition<TStateID> :
     Transition<TStateID>, IMetaTransition
 {
-    public bool LiveUpdate { get; set; } = true;
+    public bool LiveUpdate { get; protected set; } = true;
 
     public AllToOneTransition(TStateID toStateID,
         params Func<bool>[] initConditions) :
