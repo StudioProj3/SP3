@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+
 using UnityEngine;
 
 // Player controller class for movement
@@ -9,6 +10,7 @@ using UnityEngine;
 public class PlayerController :
     CharacterControllerBase, IEffectable
 {
+
     [field: SerializeField]
     public Animator WeaponAnimator { get; private set; }
 
@@ -25,6 +27,7 @@ public class PlayerController :
     [SerializeField]
     private SwordWeaponItem _meleeItemTest;
 
+    private ItemBase _currentlyHolding;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
@@ -60,8 +63,9 @@ public class PlayerController :
     {
         base.Start();
 
-        SetupStateMachine();
+        _currentlyHolding = _meleeItemTest;
 
+        SetupStateMachine();
 
 
         // TODO (Cheng Jun): This should be updated to try
@@ -173,7 +177,14 @@ public class PlayerController :
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            WeaponAnimator.Play(_meleeItemTest.AnimationName);
+            if (_currentlyHolding is ISwordWeapon swordWeapon)
+            {
+                WeaponAnimator.Play(swordWeapon.AnimationName);
+            }
+            if (_currentlyHolding is IBeginUseHandler beginUseHandler)
+            {
+                beginUseHandler.OnUseEnter();
+            }
         }
     }
 
