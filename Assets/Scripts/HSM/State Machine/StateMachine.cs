@@ -9,7 +9,8 @@ using static DebugUtils;
 // used as a state inside another `StateMachine` in a HSM setup
 // `TStateID` is used as a type for all states in this `StateMachine`
 public class StateMachine<TSelfID, TStateID> :
-    StateBase<TSelfID>, IStateMachine<TStateID>
+    StateBase<TSelfID>, IStateMachine<TStateID>,
+    ISealable
 {
     public enum TransitionProtocol
     {
@@ -31,6 +32,13 @@ public class StateMachine<TSelfID, TStateID> :
     // only if it does not have a parent
     public bool IsRoot => parentStateMachine != null;
 
+    // Gets whether the current state machine is already sealed
+    public bool IsSealed
+    {
+        get => _isSealed;
+        protected set => _isSealed = value;
+    }
+
     // Dictionary with all states in this state machine (this can
     // contain state machines if it is a HSM)
     private Dictionary<TStateID, StateBase<TStateID>> _allStates = new();
@@ -48,6 +56,7 @@ public class StateMachine<TSelfID, TStateID> :
     private uint _currentStateExceptionThreshold = 10;
 
     private bool _transitionDebugLogs = false;
+    private bool _isSealed = false;
 
     // Forward the `selfID` to the readonly `StateID`
     // in `StateBase`
@@ -373,6 +382,13 @@ public class StateMachine<TSelfID, TStateID> :
             messageMethod();
             HandleTransitions(eagerCallback);
         }
+    }
+
+    public void Seal()
+    {
+        Assert(!_isSealed, "Attempted to reseal");
+
+        _isSealed = true;
     }
 }
 
