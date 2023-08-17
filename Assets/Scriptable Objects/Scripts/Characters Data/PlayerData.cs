@@ -4,5 +4,5 @@ using UnityEngine;
     menuName = "Scriptable Objects/Character Data/PlayerData")]
 public class PlayerData : CharacterDataBase
 {
-
+    
 }
