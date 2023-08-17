@@ -54,6 +54,8 @@ public abstract class State<TStateID> :
     {
         // Process all `initActions` passed in
         AddAction(initActions);
+
+        CanSeal = true;
     }
 
     // Main `AddAction` method that handles most of the
@@ -69,6 +71,8 @@ public abstract class State<TStateID> :
     // guaranteed), else just add it.
     protected void AddAction(params ActionEntry[] entries)
     {
+        InternalCheckSeal();
+
         foreach (ActionEntry entry in entries)
         {
             StateMessageMethodFlag methods = entry.Method;
@@ -153,6 +157,8 @@ public abstract class State<TStateID> :
     protected void AddAction(StateMessageMethodFlag method,
         Action action, uint? priority = null)
     {
+        InternalCheckSeal();
+
         AddAction(new ActionEntry(method, action, priority));
     }
 
@@ -161,6 +167,8 @@ public abstract class State<TStateID> :
     protected void AddAction(string method, Action action,
         uint? priority = null)
     {
+        InternalCheckSeal();
+
         AddAction(new ActionEntry(method, action, priority));
     }
 
@@ -171,6 +179,8 @@ public abstract class State<TStateID> :
     // Returns whether an action entry is successfully removed
     protected bool RemoveAction(StateMessageMethod method, uint priority)
     {
+        InternalCheckSeal();
+
         // Check to see if the dictionary `allMethods` has the key
         // `method`
         bool keyExists = _allMethods.TryGetValue(method, out var list);
