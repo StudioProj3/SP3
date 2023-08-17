@@ -19,5 +19,8 @@ public class UINotification : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _itemIcon = transform.GetChild(0).GetComponent<Image>();
+        _notificationText = transform.GetChild(1).
+            GetComponent<TMP_Text>();
     }
 }
