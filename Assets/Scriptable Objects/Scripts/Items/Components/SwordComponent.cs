@@ -6,9 +6,8 @@ using UnityEngine;
     menuName = "Scriptable Objects/Item Components/SwordComponent")]
 public class SwordComponent : WeaponComponentBase
 {
-    public Animator WeaponAnimator { get; set; }
-    public override void UseItem()
+    public void Swing(Animator animator)
     {
-        WeaponAnimator.Play("MeleeSwing");
+        animator.Play("MeleeSwing");
     }
 }

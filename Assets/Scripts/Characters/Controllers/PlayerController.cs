@@ -61,8 +61,6 @@ public class PlayerController :
 
         SetupStateMachine();
 
-
-
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
         // a reset once the save system is ready
@@ -167,18 +165,16 @@ public class PlayerController :
 
         if (_horizontalInput != 0)
         {
-            transform.localScale = new(_horizontalInput * transform.localScale.x, 
+            transform.localScale = new(_horizontalInput, 
                                         transform.localScale.y, 
                                         transform.localScale.z);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            swordItemTest.ItemBase.TryGetItemComponent(out SwordComponent swordComponent);
-            if (swordComponent)
+            if (swordItemTest.ItemBase.TryGetItemComponent(out SwordComponent swordComponent))
             {
-                swordComponent.WeaponAnimator = WeaponAnimator;
-                swordComponent.UseItem();
+                swordComponent.Swing(WeaponAnimator);
             }
         }
     }
