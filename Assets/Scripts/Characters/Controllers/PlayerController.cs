@@ -23,7 +23,7 @@ public class PlayerController :
 
     //For debug
     [SerializeField]
-    private SwordWeaponItem _meleeItemTest;
+    private BowWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
@@ -70,7 +70,8 @@ public class PlayerController :
         _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
         _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
         
-        Equip(_meleeItemTest);
+        // For debug
+        Equip(_weaponItemTest);
 
         SetupStateMachine();
 
@@ -194,6 +195,11 @@ public class PlayerController :
                 _weaponAnimator.Play(swordWeapon.AnimationName);
                 _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
             }
+            if (_currentlyHolding is IBowWeapon bowWeapon)
+            {
+                _weaponAnimator.Play(bowWeapon.AnimationName);
+                _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
+            }
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
@@ -206,7 +212,7 @@ public class PlayerController :
         _stateMachine.FixedUpdate();
 
         // Replace when item pickup is integrated with player
-        Equip(_meleeItemTest);
+        Equip(_weaponItemTest);
     }
 
     private void UpdateInputs()
@@ -221,11 +227,11 @@ public class PlayerController :
 
     private void DealDamage(IEffectable effectable)
     {
-        effectable.TakeDamage(_meleeItemTest.WeaponDamageType);
+        effectable.TakeDamage(_weaponItemTest.WeaponDamageType);
 
-        if (_meleeItemTest.WeaponStatusEffect)
+        if (_weaponItemTest.WeaponStatusEffect)
         {
-            effectable.ApplyEffect(_meleeItemTest.WeaponStatusEffect);
+            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect);
         }
     }
 
