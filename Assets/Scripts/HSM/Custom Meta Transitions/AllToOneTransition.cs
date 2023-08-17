@@ -52,3 +52,37 @@ public class AllToOneTransition<TStateID> :
         return base.Conditions();
     }
 }
+
+// A helper class `AllToOneTransition` with the generic
+// argument defaulted to a common type
+public class AllToOneTransition :
+    AllToOneTransition<string>
+{
+    public AllToOneTransition(string toStateID,
+        params Func<bool>[] initConditions) :
+        base(toStateID, initConditions)
+    {
+
+    }
+
+    public AllToOneTransition(string toStateID, Action callback,
+        params Func<bool>[] initConditions) :
+        base(toStateID, callback, initConditions)
+    {
+
+    }
+
+    public AllToOneTransition(string toStateID,
+        bool liveUpdate, params Func<bool>[] initConditions) :
+        base(toStateID, liveUpdate, initConditions)
+    {
+
+    }
+
+    public AllToOneTransition(string toStateID, Action callback,
+        bool liveupdate, params Func<bool>[] initConditions) :
+        base(toStateID, callback, liveupdate, initConditions)
+    {
+
+    }
+}
