@@ -52,6 +52,13 @@ public abstract class State<TStateID> :
         LoopActionsIfKeyExists(StateMessageMethod.Exit);
     }
 
+    public override void Seal()
+    {
+        Assert(!_isSealed, "Attempted to reseal");
+
+        _isSealed = true;
+    }
+
     // Forward the `stateID` to the readonly `StateID`
     // in `StateBase`
     //
@@ -187,6 +194,12 @@ public abstract class State<TStateID> :
         return keyExists && list.Remove(priority);
     }
 
+    protected override void InternalCheckSeal()
+    {
+        Assert(!_isSealed, "State is already sealed, " +
+            "no further mutation are allowed");
+    }
+
     // Returns whether the key exists and at least 1 action is completed
     // (i.e. the corresponding `SortedList` is not empty)
     private bool LoopActionsIfKeyExists(StateMessageMethod method)
@@ -207,13 +220,6 @@ public abstract class State<TStateID> :
         }
 
         return false;
-    }
-
-    public override void Seal()
-    {
-        Assert(!_isSealed, "Attempted to reseal");
-
-        _isSealed = true;
     }
 }
 

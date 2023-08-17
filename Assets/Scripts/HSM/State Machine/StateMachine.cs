@@ -210,6 +210,19 @@ public class StateMachine<TSelfID, TStateID> :
         _transitionDebugLogs = false;
     }
 
+    public override void Seal()
+    {
+        Assert(!_isSealed, "Attempted to reseal");
+
+        _isSealed = true;
+    }
+
+    protected override void InternalCheckSeal()
+    {
+        Assert(!_isSealed, "State Machine is already sealed, " +
+            "no further mutation are allowed");
+    }
+
     private void SwitchState(TStateID toStateID,
         Action eagerCallback = null)
     {
@@ -381,13 +394,6 @@ public class StateMachine<TSelfID, TStateID> :
             messageMethod();
             HandleTransitions(eagerCallback);
         }
-    }
-
-    public override void Seal()
-    {
-        Assert(!_isSealed, "Attempted to reseal");
-
-        _isSealed = true;
     }
 }
 

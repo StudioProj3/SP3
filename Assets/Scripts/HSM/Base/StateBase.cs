@@ -43,6 +43,8 @@ public abstract class StateBase<TStateID> :
     }
 
     public abstract void Seal();
+
+    protected abstract void InternalCheckSeal();
 }
 
 // A helper abstract class `StateBase` with the generic
