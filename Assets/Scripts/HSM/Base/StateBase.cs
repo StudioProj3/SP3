@@ -9,6 +9,8 @@ public abstract class StateBase<TStateID> :
 
     public abstract bool IsSealed { get; protected set; }
 
+    public abstract bool CanSeal { get; protected set; }
+
     protected StateBase(TStateID stateID)
     {
         Assert(stateID != null,

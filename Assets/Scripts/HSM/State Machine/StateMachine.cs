@@ -38,6 +38,13 @@ public class StateMachine<TSelfID, TStateID> :
         protected set => _isSealed = value;
     }
 
+    // Get whether the current state is ready to be sealed
+    public override bool CanSeal
+    {
+        get => _canSeal;
+        protected set => _canSeal = value;
+    }
+
     // Dictionary with all states in this state machine (this can
     // contain state machines if it is a HSM)
     private Dictionary<TStateID, StateBase<TStateID>> _allStates = new();
@@ -56,6 +63,7 @@ public class StateMachine<TSelfID, TStateID> :
 
     private bool _transitionDebugLogs = false;
     private bool _isSealed = false;
+    private bool _canSeal = false;
 
     // Forward the `selfID` to the readonly `StateID`
     // in `StateBase`
