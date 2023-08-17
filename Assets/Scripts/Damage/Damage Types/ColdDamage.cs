@@ -2,6 +2,10 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
     menuName = "Scriptable Objects/Damage/ColdDamage")]
+
+    // NOTE (BRANDON): This damage type is redundant,
+    // if a weaopn wants to apply status effect,
+    // set it in the weapon instead.
 public class ColdDamage : Damage
 {
     private SpeedMultiplierEffect _speedMultiplierEffect;

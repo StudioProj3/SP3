@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 // Player controller class for movement
 // TODO (Chris): We should probably separate movement and other mechanics,
@@ -27,7 +24,6 @@ public class PlayerController :
     //For debug
     [SerializeField]
     private SwordWeaponItem _meleeItemTest;
- 
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
@@ -226,6 +222,11 @@ public class PlayerController :
     private void DealDamage(IEffectable effectable)
     {
         effectable.TakeDamage(_meleeItemTest.WeaponDamageType);
+
+        if (_meleeItemTest.WeaponStatusEffect)
+        {
+            effectable.ApplyEffect(_meleeItemTest.WeaponStatusEffect);
+        }
     }
 
     private void Equip(WeaponBase itemToEquip)
