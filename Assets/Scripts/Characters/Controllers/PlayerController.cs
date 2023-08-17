@@ -31,7 +31,7 @@ public class PlayerController :
 
         if (_playerStats.GetStat("Health").Value <= 0)
         {
-            _playerData.IsDead = true;
+            GameManager.Instance.ChangeGameState(GameState.Lose);
         }
     }
 
