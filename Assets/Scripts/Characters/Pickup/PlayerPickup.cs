@@ -37,7 +37,7 @@ public class PlayerPickup :
 
                 other.gameObject.SetActive(false);
 
-                _notification.Show(sprite, "Collected " + quantity + " " + name);
+                _notification.Collect(sprite, name);
 
                 return;
             }
@@ -53,7 +53,7 @@ public class PlayerPickup :
                 {
                     other.gameObject.SetActive(false);
 
-                    _notification.Show(sprite, "Collected " + quantity + " " + name);
+                    _notification.Collect(sprite, name);
                 }
             }
             // Attempt to pickup into left and/or right hand
