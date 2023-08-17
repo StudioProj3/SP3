@@ -62,18 +62,27 @@ public class StateMachine<TSelfID, TStateID> :
 
     public void SetTransitionProtocol(TransitionProtocol protocol)
     {
+        InternalCheckSeal();
+
         CurrentTransitionProtocol = protocol;
     }
 
     public void SetStartState(TStateID stateID)
     {
+        InternalCheckSeal();
         VerifyID(stateID);
 
         _startStateID = stateID;
+
+        // Only allow sealing after the current
+        // state machine's start state has been set
+        CanSeal = true;
     }
 
     public void AddState(StateBase<TStateID> newState)
     {
+        InternalCheckSeal();
+
         TStateID stateID = newState.StateID;
 
         // Validate the new state's ID
@@ -88,6 +97,8 @@ public class StateMachine<TSelfID, TStateID> :
 
     public void AddTransition(TransitionBase<TStateID> newTransition)
     {
+        InternalCheckSeal();
+
         TStateID fromID = newTransition.FromStateID;
         TStateID toID = newTransition.ToStateID;
 
@@ -121,6 +132,8 @@ public class StateMachine<TSelfID, TStateID> :
     // Add any amount of states and transitions
     public void AddChilds(params SMChild<TStateID>[] childs)
     {
+        InternalCheckSeal();
+
         foreach (SMChild<TStateID> child in childs)
         {
             if (child is StateBase<TStateID> state)
@@ -194,11 +207,15 @@ public class StateMachine<TSelfID, TStateID> :
 
     public void EnableTransitionDebugLogs()
     {
+        InternalCheckSeal();
+
         _transitionDebugLogs = true;
     }
 
     public void DisableTransitionDebugLogs()
     {
+        InternalCheckSeal();
+
         _transitionDebugLogs = false;
     }
 
