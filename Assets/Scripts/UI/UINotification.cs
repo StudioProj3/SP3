@@ -8,10 +8,12 @@ public class UINotification : MonoBehaviour
     private Image _itemIcon;
     private TMP_Text _notificationText;
 
-    public void Show(Sprite sprite, string text)
+    public void Collect(Sprite sprite, string name,
+        uint quantity = 1, bool forceWrap = false)
     {
         _itemIcon.sprite = sprite;
-        _notificationText.text = text;
+        _notificationText.text = "Collected " + quantity +
+            (forceWrap ? "\n" : " ") + name;
 
         _animator.SetTrigger("showNotification");
     }
