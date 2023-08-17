@@ -1,8 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Timeline;
 
-public class SwordWeaponItem : WeaponBase
+public class SwordWeaponItem : WeaponBase, ISwordWeapon
 {
     [field: SerializeField]
-    public Sprite WeaponSprite {get; private set;}
+    private string _animationName = "MeleeSwing";
+    public string AnimationName => _animationName;
+
+    public void OnUseEnter()
+    {
+        
+    }
+
+    public void OnUseExit()
+    {
+        
+    }
 }
