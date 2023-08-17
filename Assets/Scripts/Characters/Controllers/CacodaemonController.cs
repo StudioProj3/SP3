@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+
 using UnityEngine;
+
 [DisallowMultipleComponent]
-public class CacodaemonController : CharacterControllerBase, IEffectable
+public class CacodaemonController :
+    CharacterControllerBase, IEffectable
 {
-   
-   
     [SerializeField]
     private Stats _cacodaemonStats;
 
@@ -30,7 +31,6 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
-
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -54,9 +54,12 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     protected override void Start()
     {
         base.Start();
+
         _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
         _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.GetStat("AttackDamage").Value);
+        _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.
+            GetStat("AttackDamage").Value);
+
         SetupStateMachine();
     }
 
@@ -64,76 +67,72 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
     {
         base.SetupStateMachine();
 
-        _stateMachine.AddChilds
-       (
-           new GenericState("Walk",
-               new ActionEntry("Enter", () =>
-               {
-                   _direction = new Vector3(Random.Range(-1.0f, 1.0f),
-                                            0.0f,
-                                            Random.Range(-1.0f, 1.0f));
+        _stateMachine.AddChilds(
+            new GenericState("Walk",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = new Vector3(Random.Range(-1f, 1f),
+                        0f, Random.Range(-1f, 1f));
+                }),
+                new ActionEntry("FixedUpdate", () =>
+                {
+                    _rigidbody.velocity = _cacodaemonStatsContainer.
+                        GetStat("MoveSpeed").Value * _direction;
+                })
+            ),
 
-               }),
-               new ActionEntry("FixedUpdate", () =>
-               {
+            new GenericState("Charge",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = _player.transform.position -
+                        transform.position;
+                    _direction.y = 0f;
 
-                   _rigidbody.velocity = _cacodaemonStatsContainer.GetStat("MoveSpeed").Value * _direction;
-               })
-           ),
+                    // FIXME (Aquila): Bug where rotation of particles is
+                    // not accurate, likely due to Vector3.Angle() giving
+                    // the smallest angle possible between the source and
+                    // target.
 
-           new GenericState("Charge",
-               new ActionEntry("Enter", () =>
-               {
+                    float angle = -Mathf.Atan2(_direction.z, _direction.x) *
+                        Mathf.Rad2Deg;
 
-                   _direction = _player.transform.position - transform.position;
-                   _direction.y = 0;
+                    _cacodaemonParticles.transform.rotation =
+                        Quaternion.Euler(0, angle, 0);
+                    _cacodaemonParticles.Play();
 
-                   // FIXME (Aquila): Bug where rotation of particles is
-                   // not accurate, likely due to Vector3.Angle() giving
-                   // the smallest angle possible between the source and
-                   // target.
+                    _rigidbody.AddForce(_cacodaemonStatsContainer.
+                        GetStat("MoveSpeed").Value * 3f * _direction.
+                        normalized,ForceMode.Impulse);
+                })
+            ),
 
-                   float angle = -Mathf.Atan2(_direction.z, _direction.x) * Mathf.Rad2Deg;
-
-                   _cacodaemonParticles.transform.rotation = Quaternion.Euler(0, angle, 0);
-                   _cacodaemonParticles.Play();
-
-                   _rigidbody.AddForce(
-                       _cacodaemonStatsContainer.GetStat("MoveSpeed").Value *
-                       3 * _direction.normalized,
-                       ForceMode.Impulse
-                       );
-               })
-           ),
-
-           new GenericState("GoingToCharge"),
+            new GenericState("GoingToCharge"),
 
             new GenericState("Cooldown"),
 
-           // Transitions
+            // Transitions
 
-           // Idle > Walk
-           new RandomTimedTransition("Idle", "Walk", 1.0f,2.0f),
+            // Idle > Walk
+            new RandomTimedTransition("Idle", "Walk", 1f, 2f),
 
-           // Walk > Idle
-           new FixedTimedTransition("Walk", "Idle", 0.7f),
+            // Walk > Idle
+            new FixedTimedTransition("Walk", "Idle", 0.7f),
 
-           // Idle > Going to charge
-           new GenericTransition("Idle", "GoingToCharge", () =>
-           {
-               return _distance < 1.0f;
-           }),
+            // Idle > Going to charge
+            new GenericTransition("Idle", "GoingToCharge", () =>
+            {
+                return _distance < 1.0f;
+            }),
 
-          // Idle > Going to charge
-          new FixedTimedTransition("GoingToCharge", "Charge", 0.5f),
+            // Idle > Going to charge
+            new FixedTimedTransition("GoingToCharge", "Charge", 0.5f),
 
-           // Charge > Cooldown
-           new FixedTimedTransition("Charge", "Cooldown", 0.7f),
+            // Charge > Cooldown
+            new FixedTimedTransition("Charge", "Cooldown", 0.7f),
 
-           // Cooldown > Idle
-           new FixedTimedTransition("Cooldown", "Idle", 0.7f)
-
-       );
+            // Cooldown > Idle
+            new FixedTimedTransition("Cooldown", "Idle", 0.7f)
+        );
 
         _stateMachine.SetStartState("Idle");
 
@@ -168,8 +167,6 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
         }
             
         _spriteRenderer.flipX = _direction.x < 0;
-
-
     }
 
     private void FixedUpdate()
@@ -180,11 +177,9 @@ public class CacodaemonController : CharacterControllerBase, IEffectable
 
     private void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject == _player)
+        if (col.gameObject == _player)
         {
             _playerController.TakeDamage(_phyDamage);
         }
-        
     }
-
 }
