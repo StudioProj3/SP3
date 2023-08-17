@@ -7,9 +7,11 @@ public abstract class StateBase<TStateID> :
 {
     public readonly TStateID StateID;
 
-    public abstract bool IsSealed { get; protected set; }
+    // Gets whether the current object is already sealed
+    public bool IsSealed { get; protected set; }
 
-    public abstract bool CanSeal { get; protected set; }
+    // Gets whether the current object is ready to be sealed
+    public bool CanSeal { get; protected set; }
 
     protected StateBase(TStateID stateID)
     {
@@ -44,7 +46,13 @@ public abstract class StateBase<TStateID> :
 
     }
 
-    public abstract void Seal();
+    public virtual void Seal()
+    {
+        Assert(CanSeal, "Seal operation is invalid");
+        Assert(!IsSealed, "Attempted to reseal");
+
+        IsSealed = true;
+    }
 
     protected abstract void InternalCheckSeal();
 }

@@ -14,26 +14,9 @@ using ActionList = System.Collections.Generic.
 public abstract class State<TStateID> :
     StateBase<TStateID>
 {
-    // Gets whether the current state is already sealed
-    public override bool IsSealed
-    {
-        get => _isSealed;
-        protected set => _isSealed = value;
-    }
-
-    // Get whether the current state is ready to be sealed
-    public override bool CanSeal
-    {
-        get => _canSeal;
-        protected set => _canSeal = value;
-    }
-
     // Store all delegates with respect to all the
     // message methods and their respective priorities
     private Dictionary<StateMessageMethod, ActionList> _allMethods = new();
-
-    private bool _isSealed = false;
-    private bool _canSeal = false;
 
     public override void Enter()
     {
@@ -58,13 +41,6 @@ public abstract class State<TStateID> :
     public override void Exit()
     {
         LoopActionsIfKeyExists(StateMessageMethod.Exit);
-    }
-
-    public override void Seal()
-    {
-        Assert(!_isSealed, "Attempted to reseal");
-
-        _isSealed = true;
     }
 
     // Forward the `stateID` to the readonly `StateID`
@@ -204,7 +180,7 @@ public abstract class State<TStateID> :
 
     protected override void InternalCheckSeal()
     {
-        Assert(!_isSealed, "State is already sealed, " +
+        Assert(!IsSealed, "State is already sealed, " +
             "no further mutation are allowed");
     }
 
