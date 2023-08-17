@@ -45,7 +45,7 @@ public class StateMachine<TSelfID, TStateID> :
     // For use with `AllToOneTransition`s that have their live update
     // set to false, such that this stores all those `stateID`s where
     // the meta transition applies
-    private Dictionary<IMetaTransition, List<TStateID>>
+    private Dictionary<AllToOneTransition<TStateID>, List<TStateID>>
         _allAllToOneTransitionData;
 
     // Stores the state this state macine is in at the start
@@ -144,14 +144,14 @@ public class StateMachine<TSelfID, TStateID> :
 
         // If meta transition is `AllToOneTransition` and `LiveUpdate`
         // is false
-        if (newMetaTransition is AllToOneTransition<TStateID> &&
-            !newMetaTransition.LiveUpdate)
+        if (newMetaTransition is AllToOneTransition<TStateID>
+            allToOneTransition && !newMetaTransition.LiveUpdate)
         {
-            _allAllToOneTransitionData[newMetaTransition] = new();
+            _allAllToOneTransitionData[allToOneTransition] = new();
 
             // Add all the `stateID`s of those that are currently
             // in this state machine
-            _allAllToOneTransitionData[newMetaTransition].
+            _allAllToOneTransitionData[allToOneTransition].
                 AddRange(_allStates.Keys);
         }
     }
@@ -348,7 +348,7 @@ public class StateMachine<TSelfID, TStateID> :
                 // state, else only transit if it is within the list of
                 // valid `stateID`s
                 if (allToOneTransition.LiveUpdate ||
-                    _allAllToOneTransitionData[transition].
+                    _allAllToOneTransitionData[allToOneTransition].
                     Contains(CurrentState.StateID))
                 {
                     return new(allToOneTransition.ToStateID,
