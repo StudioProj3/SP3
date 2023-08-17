@@ -142,7 +142,6 @@ public class ArcherController :
                 return _distance < 1.0f;
             }),
 
-
             // Idle > Going to shoot
             new GenericTransition("Idle", "GoingToShoot", () =>
             {

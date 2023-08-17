@@ -137,7 +137,7 @@ public class HealTurretController :
             if (_statusEffects[i].IsDone)
             {
                 RemoveEffectImpl(_statusEffects[i], i);
-                --i;
+                i--;
             }
         }
 

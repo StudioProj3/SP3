@@ -42,8 +42,11 @@ public class ArrowController : MonoBehaviour
     private void Update()
     {
         _currentLifetime -= Time.deltaTime;
-        if(_currentLifetime < 0)
+
+        if (_currentLifetime < 0f)
+        {
             RemoveProjectile();
+        }
     }
 
     private void OnTriggerEnter(Collider col)

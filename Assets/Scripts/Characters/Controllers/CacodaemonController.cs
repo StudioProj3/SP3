@@ -162,16 +162,18 @@ public class CacodaemonController :
             if (_statusEffects[i].IsDone)
             {
                 RemoveEffectImpl(_statusEffects[i], i);
-                --i;
+                i--;
             }
         }
-            
-        _spriteRenderer.flipX = _direction.x < 0;
+
+        _spriteRenderer.flipX = _direction.x < 0f;
     }
 
     private void FixedUpdate()
     {
-        _distance = Vector3.Distance(_player.transform.position, transform.position);
+        _distance = Vector3.Distance(_player.transform.position,
+            transform.position);
+
         _stateMachine.FixedUpdate();
     }
 
