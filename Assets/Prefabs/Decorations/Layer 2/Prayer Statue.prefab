@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1191104324787864250}
   m_Layer: 0
   m_Name: Prayer Statue
-  m_TagString: Untagged
+  m_TagString: Scene Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,6 +57,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shrine Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537002467700405570, guid: 765077321db22fa4494bca839830bb3d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3473384630812133185, guid: 765077321db22fa4494bca839830bb3d,
         type: 3}
@@ -278,6 +283,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Single Candle
       objectReference: {fileID: 0}
+    - target: {fileID: 6827972752941972363, guid: 41256da9b940cc3418000aeb26f4207b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41256da9b940cc3418000aeb26f4207b, type: 3}
 --- !u!4 &9140937258190811911 stripped
@@ -297,6 +307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Double Candle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442827887648326984, guid: 8c2ba374e8ad7ad4ca7a49b50265d986,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1442827887648326990, guid: 8c2ba374e8ad7ad4ca7a49b50265d986,
         type: 3}
@@ -353,6 +368,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1442827888242621024, guid: 8c2ba374e8ad7ad4ca7a49b50265d986,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 255
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c2ba374e8ad7ad4ca7a49b50265d986, type: 3}
 --- !u!4 &3755724300879018336 stripped
@@ -372,6 +392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floor Runes
+      objectReference: {fileID: 0}
+    - target: {fileID: 491557984621148746, guid: 9e89f54b0a774ee4d9de77d1104a680c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 491557984621148748, guid: 9e89f54b0a774ee4d9de77d1104a680c,
         type: 3}
