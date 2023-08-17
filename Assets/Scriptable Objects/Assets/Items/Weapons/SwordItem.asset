@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: SwordItem
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Sword
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 16c7cb3bd2b74e144b1e9f359dd10673,
+  <Sprite>k__BackingField: {fileID: 1192551367, guid: 8e0a3e26d89e0e5458d743be8d53599b,
     type: 3}
   <Stackable>k__BackingField: 0
   <Weight>k__BackingField: 0
   Description: 
   <WeaponDamageType>k__BackingField: {fileID: 11400000, guid: 3bca250d4bfb2b64cbb3631521cb9b47,
     type: 2}
+  <WeaponStatusEffect>k__BackingField: {fileID: 0}
   <WeaponStats>k__BackingField: {fileID: 11400000, guid: 23cd16b30edf51d4c9f65e7c4cc796df,
     type: 2}
-  <WeaponAnimation>k__BackingField: {fileID: 0}
+  _animationName: MeleeSwing
