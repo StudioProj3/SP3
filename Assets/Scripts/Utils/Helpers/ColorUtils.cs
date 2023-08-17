@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class ColorUtils
+public static class ColorUtils
 {
-    public static Color SetAlpha(Color color, float newAlpha)
+    public static Color SetAlpha(this Color color, float newAlpha)
     {
         color.a = newAlpha;
         return color;
