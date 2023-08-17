@@ -1,16 +1,41 @@
-using Unity.Collections.LowLevel.Unsafe;
+using System;
+
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ShopItem", menuName = "Scriptable Objects/Shop Item")]
-public class ShopItem : ScriptableObject
+// [CreateAssetMenu(fileName = "ShopItem", menuName = "Scriptable Objects/Shop Item")]
+[Serializable]
+public class ShopItem : ISerializationCallbackReceiver
 {
     [SerializeField, RequireInterface(typeof(ISellable))]
-    private Object _sellableItem;
+    private UnityEngine.Object _sellableItem = null;
 
-    private ISellable _item; 
+    public ISellable SellableItem { get; private set; } = null;
 
-    private void OnValidate()
+    public void OnAfterDeserialize()
     {
-        _item = _sellableItem as ISellable;
+        SellableItem = _sellableItem as ISellable;
+    }
+
+    public void OnBeforeSerialize()
+    {
+    }
+
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as ShopItem);
+    }
+
+    private bool Equals(ShopItem other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return SellableItem == other.SellableItem;
+    }
+
+    public override int GetHashCode()
+    {
+        return SellableItem?.GetHashCode() ?? 0;
     }
 }

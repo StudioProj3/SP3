@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Wood",
     menuName = "Scriptable Objects/Items/Wood")]
-public class WoodItem : ItemBase
+public class WoodItem : ItemBase, ISellable
 {
     [field: SerializeField]
     public bool Rotten { get; protected set; }
