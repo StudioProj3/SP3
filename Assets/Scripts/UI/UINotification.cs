@@ -33,7 +33,7 @@ public class UINotification : MonoBehaviour
         _animator.SetTrigger("showNotification");
     }
 
-    private void Alert(string message)
+    public void Alert(string message)
     {
         if (_currentLayout != Layout.FullText)
         {
