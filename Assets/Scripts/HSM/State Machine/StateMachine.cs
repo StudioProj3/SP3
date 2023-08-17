@@ -39,6 +39,15 @@ public class StateMachine<TSelfID, TStateID> :
     private Dictionary<TStateID, List<TransitionBase<TStateID>>>
         _allTransitions = new();
 
+    // List with all the meta transitions
+    private List<IMetaTransition> _allMetaTransitions = new();
+
+    // For use with `AllToOneTransition`s that have their live update
+    // set to false, such that this stores all those `stateID`s where
+    // the meta transition applies
+    private Dictionary<AllToOneTransition<TStateID>, List<TStateID>>
+        _allAllToOneTransitionData;
+
     // Stores the state this state macine is in at the start
     private TStateID _startStateID;
 
@@ -129,6 +138,24 @@ public class StateMachine<TSelfID, TStateID> :
         }
     }
 
+    public void AddMetaTransition(IMetaTransition newMetaTransition)
+    {
+        _allMetaTransitions.Add(newMetaTransition);
+
+        // If meta transition is `AllToOneTransition` and `LiveUpdate`
+        // is false
+        if (newMetaTransition is AllToOneTransition<TStateID>
+            allToOneTransition && !newMetaTransition.LiveUpdate)
+        {
+            _allAllToOneTransitionData[allToOneTransition] = new();
+
+            // Add all the `stateID`s of those that are currently
+            // in this state machine
+            _allAllToOneTransitionData[allToOneTransition].
+                AddRange(_allStates.Keys);
+        }
+    }
+
     // Add any amount of states and transitions
     public void AddChilds(params SMChild<TStateID>[] childs)
     {
@@ -136,7 +163,11 @@ public class StateMachine<TSelfID, TStateID> :
 
         foreach (SMChild<TStateID> child in childs)
         {
-            if (child is StateBase<TStateID> state)
+            if (child is IMetaTransition metaTransition)
+            {
+                AddMetaTransition(metaTransition);
+            }
+            else if (child is StateBase<TStateID> state)
             {
                 AddState(state);
             }
@@ -240,21 +271,36 @@ public class StateMachine<TSelfID, TStateID> :
         eagerCallback?.Invoke();
     }
 
-    private void HandleTransitions(Action eagerCallback)
+    private void HandleAllTransitions(Action eagerCallback)
     {
-        Pair<TStateID, bool> result = TryAllTransitions(CurrentState.StateID);
+        Pair<TStateID, bool> metaResult = TryAllMetaTransitions();
 
-        // If `result` is default, nothing
-        // more needs to be done, return
-        if (result.First.IsDefault())
+        // If `metaResult` is default, move on
+        // to check the normal transitions
+        if (metaResult.First.IsDefault())
         {
+            Pair<TStateID, bool> normalResult =
+                TryAllTransitions(CurrentState.StateID);
+
+            // If `normalResult` is default, nothing
+            // more needs to be done, return
+            if (normalResult.First.IsDefault())
+            {
+                return;
+            }
+
+            // Perform the actual normal transition with the
+            // `eagerCallback` where appropriate
+            SwitchState(normalResult.First,
+                normalResult.Second ? eagerCallback : null);
+
             return;
         }
 
-        // Perform the actual transition with the
+        // Perform the actual meta transition with the
         // `eagerCallback` where appropriate
-        SwitchState(result.First,
-            result.Second ? eagerCallback : null);
+        SwitchState(metaResult.First,
+            metaResult.Second ? eagerCallback : null);
     }
 
     private void HandleTimedTransitions(TStateID stateID)
@@ -276,6 +322,50 @@ public class StateMachine<TSelfID, TStateID> :
         }
     }
 
+    private Pair<TStateID, bool> TryAllMetaTransitions()
+    {
+        foreach (IMetaTransition transition in _allMetaTransitions)
+        {
+            if (transition is AllToOneTransition<TStateID>
+                allToOneTransition)
+            {
+                // `AllToOneTransition` does not transit to itself
+                if (EqualityComparer<TStateID>.Default.Equals(
+                    CurrentState.StateID, allToOneTransition.ToStateID))
+                {
+                    continue;
+                }
+
+                bool result = allToOneTransition.Conditions();
+
+                if (!result)
+                {
+                    continue;
+                }
+
+                // If `LiveUpdate` is true, it means that any state the
+                // state machine is in currently can be transit to target
+                // state, else only transit if it is within the list of
+                // valid `stateID`s
+                if (allToOneTransition.LiveUpdate ||
+                    _allAllToOneTransitionData[allToOneTransition].
+                    Contains(CurrentState.StateID))
+                {
+                    return new(allToOneTransition.ToStateID,
+                        allToOneTransition is IEagerTransition &&
+                        (allToOneTransition as IEagerTransition).
+                        IsEager());
+                }
+            }
+            else
+            {
+                Fatal("Unhandled meta transition type");
+            }
+        }
+
+        return new(default, false);
+    }
+
     private void HandleTransitionCallback(TransitionBase<TStateID>
         transition)
     {
@@ -287,6 +377,14 @@ public class StateMachine<TSelfID, TStateID> :
     {
         if (_transitionDebugLogs)
         {
+            if (transition is AllToOneTransition<TStateID>)
+            {
+                Debug.Log("State Machine \"" + StateID + "\" | " +
+                    CurrentState.StateID + " > " + transition.ToStateID);
+
+                return;
+            }
+
             Debug.Log("State Machine \"" + StateID + "\" | " +
                 transition.FromStateID + " > " + transition.ToStateID);
         }
@@ -387,14 +485,14 @@ public class StateMachine<TSelfID, TStateID> :
         if (CurrentTransitionProtocol ==
             TransitionProtocol.HandleBefore)
         {
-            HandleTransitions(eagerCallback);
+            HandleAllTransitions(eagerCallback);
             messageMethod();
         }
         else if (CurrentTransitionProtocol ==
             TransitionProtocol.HandleAfter)
         {
             messageMethod();
-            HandleTransitions(eagerCallback);
+            HandleAllTransitions(eagerCallback);
         }
     }
 }
