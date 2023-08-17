@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArrowController : MonoBehaviour
@@ -17,7 +16,8 @@ public class ArrowController : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    public void Init(Vector3 direction, PhysicalDamage phyDamage, PlayerController playerController)
+    public void Init(Vector3 direction, PhysicalDamage phyDamage,
+        PlayerController playerController)
     {
         gameObject.SetActive(true);
         _direction = direction;
@@ -28,7 +28,9 @@ public class ArrowController : MonoBehaviour
         _rigidbody.velocity = _direction * _speed;
         _currentLifetime = _lifetime;
 
-        float angle = -Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+        float angle = -Mathf.Atan2(direction.z, direction.x) *
+            Mathf.Rad2Deg;
+
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
@@ -40,16 +42,17 @@ public class ArrowController : MonoBehaviour
     private void Update()
     {
         _currentLifetime -= Time.deltaTime;
-        if(_currentLifetime < 0)
-            RemoveProjectile();
-    }
 
+        if (_currentLifetime < 0f)
+        {
+            RemoveProjectile();
+        }
+    }
 
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
         { 
-
             _playerController.TakeDamage(_phyDamage);
             RemoveProjectile();
         }
@@ -57,7 +60,6 @@ public class ArrowController : MonoBehaviour
         {
             RemoveProjectile();
         }
-
     }
 
     private void RemoveProjectile()

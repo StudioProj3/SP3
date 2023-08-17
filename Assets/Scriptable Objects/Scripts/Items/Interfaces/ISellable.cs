@@ -1,4 +1,4 @@
 public interface ISellable
 {
-    int Cost { get; }
+    CurrencyCost CurrencyCost { get;}
 }

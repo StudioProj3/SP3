@@ -34,11 +34,16 @@ public class PlayerController :
     private float _verticalInput;
     private bool _rollKeyPressed;
 
-    IStatContainer IEffectable.EntityStats => _playerStats;
+    public IStatContainer EntityStats => _playerStats;
 
     public void TakeDamage(Damage damage)
     {
         damage.OnApply(this);
+
+        if (_playerStats.GetStat("Health").Value <= 0)
+        {
+            GameManager.Instance.ChangeGameState(GameState.Lose);
+        }
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
