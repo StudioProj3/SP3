@@ -11299,7 +11299,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 16c7cb3bd2b74e144b1e9f359dd10673, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc886f1963c25a74786a98d29526efa3, type: 3}
   m_Color: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -13499,7 +13499,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
+      propertyPath: _dotTest
+      value: 
+      objectReference: {fileID: 11400000, guid: b94292033a47ab34a9dedc56e97caf49,
+        type: 2}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
       propertyPath: fireDmgtest
+      value: 
+      objectReference: {fileID: 11400000, guid: d83eef53c26371640a527c2c0ac8e897,
+        type: 2}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
+      propertyPath: _firedmgTest
       value: 
       objectReference: {fileID: 11400000, guid: d83eef53c26371640a527c2c0ac8e897,
         type: 2}
@@ -13507,8 +13519,19 @@ PrefabInstance:
         type: 3}
       propertyPath: _meleeItemTest
       value: 
-      objectReference: {fileID: 11400000, guid: 4cad33885d1bd544fbc98f85dcbb8d5b,
+      objectReference: {fileID: 11400000, guid: a18e10561eaaf60488bae23a5a30dafa,
         type: 2}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
+      propertyPath: _weaponItemTest
+      value: 
+      objectReference: {fileID: 11400000, guid: 71369df1517f36d43a6974dc49f34097,
+        type: 2}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
+      propertyPath: CurrentWeaponSlot
+      value: 
+      objectReference: {fileID: 1428265300}
     - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
       propertyPath: fireDmgEffecttest
@@ -13525,6 +13548,11 @@ PrefabInstance:
       propertyPath: <WeaponAnimator>k__BackingField
       value: 
       objectReference: {fileID: 1428265303}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
+      propertyPath: <CurrentWeaponSlot>k__BackingField
+      value: 
+      objectReference: {fileID: 1428265300}
     - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
       propertyPath: OnWeaponHit.m_PersistentCalls.m_Calls.Array.size

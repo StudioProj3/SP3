@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08529fb053e9a6f42825c743e45a4c53, type: 3}
-  m_Name: SwordItem
+  m_Script: {fileID: 11500000, guid: 8263715a6be652b43bb5881a4c4eb99c, type: 3}
+  m_Name: BowItem
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Sword
-  <Sprite>k__BackingField: {fileID: 1192551367, guid: 8e0a3e26d89e0e5458d743be8d53599b,
+  <Name>k__BackingField: Basic Bow
+  <Sprite>k__BackingField: {fileID: 21300000, guid: fc886f1963c25a74786a98d29526efa3,
     type: 3}
   <Stackable>k__BackingField: 0
   <Weight>k__BackingField: 0
@@ -21,6 +21,6 @@ MonoBehaviour:
   <WeaponDamageType>k__BackingField: {fileID: 11400000, guid: 3bca250d4bfb2b64cbb3631521cb9b47,
     type: 2}
   <WeaponStatusEffect>k__BackingField: {fileID: 0}
-  <WeaponStats>k__BackingField: {fileID: 11400000, guid: 23cd16b30edf51d4c9f65e7c4cc796df,
+  <WeaponStats>k__BackingField: {fileID: 11400000, guid: 87c848ad6a43b6b4da021e11250cc3e6,
     type: 2}
-  _animationName: MeleeSwing
+  _animationName: Shoot

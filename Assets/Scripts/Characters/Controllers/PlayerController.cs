@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-
 using UnityEngine;
-using UnityEngine.Events;
 
 // Player controller class for movement
 // TODO (Chris): We should probably separate movement and other mechanics,
@@ -13,7 +10,7 @@ public class PlayerController :
 {
 
     [field: SerializeField]
-    public Animator WeaponAnimator { get; private set; }
+    private GameObject CurrentWeaponSlot;
 
     [HorizontalDivider]
     [Header("Character Data")]
@@ -26,10 +23,11 @@ public class PlayerController :
 
     //For debug
     [SerializeField]
-    private SwordWeaponItem _meleeItemTest;
- 
+    private BowWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
+    private Animator _weaponAnimator;
+    private SpriteRenderer _weaponDisplay;
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
@@ -69,7 +67,11 @@ public class PlayerController :
     {
         base.Start();
 
-        _currentlyHolding = _meleeItemTest;
+        _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
+        _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
+        
+        // For debug
+        Equip(_weaponItemTest);
 
         SetupStateMachine();
 
@@ -190,8 +192,13 @@ public class PlayerController :
         {
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
-                WeaponAnimator.Play(swordWeapon.AnimationName);
+                _weaponAnimator.Play(swordWeapon.AnimationName);
                 _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
+            }
+            if (_currentlyHolding is IBowWeapon bowWeapon)
+            {
+                _weaponAnimator.Play(bowWeapon.AnimationName);
+                _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
             }
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
@@ -203,6 +210,9 @@ public class PlayerController :
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
+
+        // Replace when item pickup is integrated with player
+        Equip(_weaponItemTest);
     }
 
     private void UpdateInputs()
@@ -217,6 +227,17 @@ public class PlayerController :
 
     private void DealDamage(IEffectable effectable)
     {
-        effectable.TakeDamage(_meleeItemTest.WeaponDamageType);
+        effectable.TakeDamage(_weaponItemTest.WeaponDamageType);
+
+        if (_weaponItemTest.WeaponStatusEffect)
+        {
+            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect);
+        }
+    }
+
+    private void Equip(WeaponBase itemToEquip)
+    {
+        _weaponDisplay.sprite = itemToEquip.Sprite;
+        _currentlyHolding = itemToEquip;
     }
 }

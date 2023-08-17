@@ -2,6 +2,10 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Damage",
     menuName = "Scriptable Objects/Damage/FireDamage")]
+
+    // NOTE (BRANDON): This damage type is redundant,
+    // if a weaopn wants to apply status effect,
+    // set it in the weapon instead.
 public class FireDamage : Damage
 {
     private DamageOverTimeEffect _damageOverTimeEffect;
@@ -35,6 +39,6 @@ public class FireDamage : Damage
             entityStats.GetStat("Health").Subtract(Mathf.Round(_damage));
         }
 
-        effectable.ApplyEffect(DamageOverTimeEffect.Create(_damageOverTimeEffect));
+        //effectable.ApplyEffect(DamageOverTimeEffect.Create(_damageOverTimeEffect));
     }
 }

@@ -39,7 +39,7 @@ public class SpeedMultiplierEffect : StatusEffectBase
     {
         var stats = effectable.EntityStats;
         stats.GetStat("MoveSpeed").AddModifier(_movementModifier);
-
+        
         IsDone = false;
         _currentEffectTime = 0;
     }
