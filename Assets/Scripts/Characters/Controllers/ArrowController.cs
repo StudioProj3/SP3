@@ -13,16 +13,18 @@ public class ArrowController : MonoBehaviour
     private Vector3 _direction;
     private PhysicalDamage _phyDamage;
     private PlayerController _playerController;
+    private Transform _source;
 
     private Rigidbody _rigidbody;
 
     public void Init(Vector3 direction, PhysicalDamage phyDamage,
-        PlayerController playerController)
+        PlayerController playerController, Transform source)
     {
         gameObject.SetActive(true);
         _direction = direction;
         _phyDamage = phyDamage;
         _playerController = playerController;
+        _source = source;
 
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.velocity = _direction * _speed;
@@ -65,5 +67,6 @@ public class ArrowController : MonoBehaviour
     private void RemoveProjectile()
     {
         gameObject.SetActive(false);
+        transform.SetParent(_source);
     }
 }
