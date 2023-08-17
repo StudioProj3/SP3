@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 // Player controller class for movement
 // TODO (Chris): We should probably separate movement and other mechanics,
@@ -26,9 +27,9 @@ public class PlayerController :
     //For debug
     [SerializeField]
     private SwordWeaponItem _meleeItemTest;
+ 
 
     private ItemBase _currentlyHolding;
-
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
@@ -152,6 +153,11 @@ public class PlayerController :
         _stateMachine.Enter();
     }
 
+    private void Awake()
+    {
+        WeaponDamage.OnWeaponHit += DealDamage;
+    }
+
     private void Update()
     {
         UpdateInputs();
@@ -185,6 +191,7 @@ public class PlayerController :
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 WeaponAnimator.Play(swordWeapon.AnimationName);
+                _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
             }
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
@@ -206,5 +213,10 @@ public class PlayerController :
         }
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    private void DealDamage(IEffectable effectable)
+    {
+        effectable.TakeDamage(_meleeItemTest.WeaponDamageType);
     }
 }
