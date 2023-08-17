@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 using static DebugUtils;
+using static CoinItemBase;
 
 public class UIShop : MonoBehaviour
 {
@@ -39,9 +41,19 @@ public class UIShop : MonoBehaviour
 
     // NOTE (Chris): I have these unrolled to make sure they are in order.
 
+    [HorizontalDivider]
+    [Header("Player Data")]
+    [SerializeField]
+    private Inventory _playerInventory;
+
     private void OnValidate()
     {
     }
+
+    // private int[] GetPlayerWealth()
+    // {
+
+    // }
 
     private void Start()
     {
@@ -58,6 +70,10 @@ public class UIShop : MonoBehaviour
         // NOTE (Chris): Hard-coded 3 value 
         // since we have only 3 coins right now.
         int[] itemCosts = new int[3];
+        ItemBase[] coinItems = new ItemBase[3]
+        {
+            _bronzeCoin, _silverCoin, _goldCoin
+        };
 
         foreach (ShopItem item in items)
         {
@@ -67,28 +83,20 @@ public class UIShop : MonoBehaviour
             UIShopItem uiItem = Instantiate(_itemPrefab, target);
             foreach (var pair in item.SellableItem.CurrencyCost.costs)
             {
-                // TODO (Chris): Find a way to optimize this. It is very
-                // hard-coded.
-
                 if (pair == null || pair.First == null) 
                 {
                     continue;
                 }
-                if (pair.First.Equals(_bronzeCoin))
+                for (int i = 0; i < itemCosts.Length; ++i)
                 {
-                    itemCosts[0] = pair.Second;
-                }
-                if (pair.First.Equals(_silverCoin))
-                {
-                    itemCosts[1] = pair.Second;
-                }
-                if (pair.First.Equals(_goldCoin))
-                {
-                    itemCosts[2] = pair.Second;
+                    if (pair.First.Equals(coinItems[i]))
+                    {
+                        itemCosts[i] = pair.Second;
+                    }
                 }
 
-                uiItem.Initialize(item.Item.Sprite, itemCosts[0],
-                    itemCosts[1], itemCosts[2]);
+                uiItem.Initialize(item.Item.Sprite, itemCosts[CoinType.Bronze],
+                    itemCosts[CoinType.Silver], itemCosts[CoinType.Gold]);
             }
 
         }
