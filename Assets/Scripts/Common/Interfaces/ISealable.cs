@@ -4,7 +4,7 @@
 // a reduction in tendency for semantic errors
 public interface ISealable
 {
-    bool IsSealed { get; protected set; }
+    bool IsSealed { get; }
 
     // Attempts to seal the underlying object
     void Seal();
