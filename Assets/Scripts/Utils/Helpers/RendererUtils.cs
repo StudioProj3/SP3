@@ -9,17 +9,13 @@ public static class RendererUtils
     {
         if (renderer is SpriteRenderer spriteRenderer)
         {
-            Color newColor = spriteRenderer.color;
-            newColor.a = newAlpha;
-
-            spriteRenderer.color = newColor;
+            spriteRenderer.color =
+                spriteRenderer.color.SetAlpha(newAlpha);
         }
         else if (renderer is MeshRenderer meshRenderer)
         {
-            Color newColor = meshRenderer.material.color;
-            newColor.a = newAlpha;
-
-            meshRenderer.material.color = newColor;
+            meshRenderer.material.color =
+                meshRenderer.material.color.SetAlpha(newAlpha);
         }
         else
         {
