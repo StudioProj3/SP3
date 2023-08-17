@@ -1,6 +1,6 @@
 using System;
 
-using UnityEngine.Assertions;
+using static DebugUtils;
 
 // Contains all information needed to add a particular
 // action to a single or multiple corresponding
@@ -57,8 +57,8 @@ public class ActionEntry
             bool result = Enum.TryParse<StateMessageMethodFlag>
                 (method, out var flag);
 
-            Assert.IsTrue(result,
-                "Invalid method string while parsing `StateMessageMethod`");
+            Assert(result, "Invalid method string while parsing " +
+                "`StateMessageMethod`");
 
             Method |= flag;
         }

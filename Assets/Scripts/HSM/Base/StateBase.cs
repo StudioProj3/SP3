@@ -1,4 +1,4 @@
-using UnityEngine.Assertions;
+using static DebugUtils;
 
 // Base abstract class shared between
 // an actual `State` and a `StateMachine`
@@ -9,7 +9,8 @@ public abstract class StateBase<TStateID> :
 
     protected StateBase(TStateID stateID)
     {
-        Assert.IsTrue(stateID != null);
+        Assert(stateID != null,
+            "`stateID` is null");
 
         StateID = stateID;
     }

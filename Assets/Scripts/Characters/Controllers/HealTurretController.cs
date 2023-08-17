@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+
 using UnityEngine;
+
 [DisallowMultipleComponent]
-public class HealTurretController : CharacterControllerBase, IEffectable
+public class HealTurretController :
+    CharacterControllerBase, IEffectable
 {
-
-
     [SerializeField]
     private Stats _healTurretStats;
 
@@ -34,7 +35,6 @@ public class HealTurretController : CharacterControllerBase, IEffectable
     public void TakeDamage(Damage damage)
     {
         damage.OnApply(this);
-
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -58,9 +58,13 @@ public class HealTurretController : CharacterControllerBase, IEffectable
     protected override void Start()
     {
         base.Start();
+
         _healTurretParticles = GetComponentInChildren<ParticleSystem>();
-        _healTurretStatsContainer = _healTurretStats.GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_healTurretStatsContainer.GetStat("AttackDamage").Value);
+        _healTurretStatsContainer = _healTurretStats.
+            GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_healTurretStatsContainer.
+            GetStat("AttackDamage").Value);
+
         SetupStateMachine();
     }
 
@@ -68,49 +72,44 @@ public class HealTurretController : CharacterControllerBase, IEffectable
     {
         base.SetupStateMachine();
 
-        _stateMachine.AddChilds
-       (
+        _stateMachine.AddChilds(
+            new GenericState("Heal",
+                new ActionEntry("Enter", () =>
+                {
+                    Collider[] healTargets;
+                    healTargets = Physics.OverlapSphere(transform.position,
+                        4f, enemyLayer, 0);
 
+                    for (int i = 0; i < healTargets.Length; ++i)
+                    {
+                        if (healTargets[i].CompareTag("Enemy"))
+                        {
+                            IStatContainer container = healTargets[i].
+                                GetComponent<IEffectable>().EntityStats;
+                            container.GetStat("Health").Add(healAmount);
+                        }
+                    }
 
-           new GenericState("Heal",
-               new ActionEntry("Enter", () =>
-               {
-                   Collider[] healTargets;
-                   healTargets = Physics.OverlapSphere(transform.position, 4, enemyLayer, 0);
-                   for (int i = 0; i < healTargets.Length; i++)
-                   {
-                       if (healTargets[i].tag == "Enemy")
-                       {
-                           IStatContainer container = healTargets[i].GetComponent<IEffectable>().EntityStats;
-                           container.GetStat("Health").Add(healAmount);
-                       }
-                   }
-                   float angle = -Mathf.Atan2(_direction.z, _direction.x) * Mathf.Rad2Deg;
+                    float angle = -Mathf.Atan2(_direction.z, _direction.x) *
+                        Mathf.Rad2Deg;
 
-                   _healTurretParticles.Play();
+                    _healTurretParticles.Play();
+                })
+            ),
 
+            new GenericState("GoingToHeal"),
 
-               })
-           ),
+            // Transitions
 
-           new GenericState("GoingToHeal"),
+            // Idle > GoingToHeal
+            new FixedTimedTransition("Idle", "GoingToHeal", 0.7f),
 
+            // Idle > Going to charge
+            new FixedTimedTransition("GoingToHeal", "Heal", 1f),
 
-           // Transitions
-
-
-           // Idle > GoingToHeal
-           new FixedTimedTransition("Idle", "GoingToHeal", 0.7f),
-
-          // Idle > Going to charge
-           new FixedTimedTransition("GoingToHeal", "Heal", 1.0f),
-
-           // Heal > Idle
-           new FixedTimedTransition("Heal", "Idle", 0.7f)
-
- 
-
-       );
+            // Heal > Idle
+            new FixedTimedTransition("Heal", "Idle", 0.7f)
+        );
 
         _stateMachine.SetStartState("Idle");
 
@@ -125,7 +124,6 @@ public class HealTurretController : CharacterControllerBase, IEffectable
 
     private void Update()
     {
- 
         _animator.SetBool("isHealing",
            _stateMachine.CurrentState.StateID == "GoingToHeal");
 
@@ -139,13 +137,11 @@ public class HealTurretController : CharacterControllerBase, IEffectable
             if (_statusEffects[i].IsDone)
             {
                 RemoveEffectImpl(_statusEffects[i], i);
-                --i;
+                i--;
             }
         }
 
         _spriteRenderer.flipX = _direction.x < 0;
-
-
     }
 
     private void FixedUpdate()
@@ -160,7 +156,5 @@ public class HealTurretController : CharacterControllerBase, IEffectable
         {
             _playerController.TakeDamage(_phyDamage);
         }
-
     }
-
 }

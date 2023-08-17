@@ -1,6 +1,6 @@
 using System;
 
-using UnityEngine.Assertions;
+using static DebugUtils;
 
 // A generic transition that does not warrant an
 // additional custom transition which allows adding
@@ -12,7 +12,7 @@ public class GenericTransition<TStateID> :
         params Func<bool>[] initConditions) :
         base(fromStateID, toStateID, initConditions)
     {
-        Assert.IsTrue(initConditions.Length > 0,
+        Assert(initConditions.Length > 0,
             "There must be at least 1 condition in this transition");
     }
 
