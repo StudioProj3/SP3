@@ -13511,6 +13511,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
+      propertyPath: CurrentWeaponSlot
+      value: 
+      objectReference: {fileID: 1428265300}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
       propertyPath: fireDmgEffecttest
       value: 
       objectReference: {fileID: 11400000, guid: b94292033a47ab34a9dedc56e97caf49,
@@ -13525,6 +13530,11 @@ PrefabInstance:
       propertyPath: <WeaponAnimator>k__BackingField
       value: 
       objectReference: {fileID: 1428265303}
+    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
+      propertyPath: <CurrentWeaponSlot>k__BackingField
+      value: 
+      objectReference: {fileID: 1428265300}
     - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
       propertyPath: OnWeaponHit.m_PersistentCalls.m_Calls.Array.size

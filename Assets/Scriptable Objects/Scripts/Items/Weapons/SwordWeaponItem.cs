@@ -1,7 +1,7 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Timeline;
 
+[CreateAssetMenu(fileName = "Sword",
+    menuName = "Scriptable Objects/Items/Weapons/Sword")]
 public class SwordWeaponItem : WeaponBase, ISwordWeapon
 {
     [field: SerializeField]

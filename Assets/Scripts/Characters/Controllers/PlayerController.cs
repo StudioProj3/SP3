@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +13,7 @@ public class PlayerController :
 {
 
     [field: SerializeField]
-    public Animator WeaponAnimator { get; private set; }
+    private GameObject CurrentWeaponSlot;
 
     [HorizontalDivider]
     [Header("Character Data")]
@@ -30,6 +30,8 @@ public class PlayerController :
  
 
     private ItemBase _currentlyHolding;
+    private Animator _weaponAnimator;
+    private SpriteRenderer _weaponDisplay;
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
@@ -69,7 +71,10 @@ public class PlayerController :
     {
         base.Start();
 
-        _currentlyHolding = _meleeItemTest;
+        _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
+        _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
+        
+        Equip(_meleeItemTest);
 
         SetupStateMachine();
 
@@ -190,7 +195,7 @@ public class PlayerController :
         {
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
-                WeaponAnimator.Play(swordWeapon.AnimationName);
+                _weaponAnimator.Play(swordWeapon.AnimationName);
                 _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
             }
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
@@ -203,6 +208,9 @@ public class PlayerController :
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
+
+        // Replace when item pickup is integrated with player
+        Equip(_meleeItemTest);
     }
 
     private void UpdateInputs()
@@ -218,5 +226,11 @@ public class PlayerController :
     private void DealDamage(IEffectable effectable)
     {
         effectable.TakeDamage(_meleeItemTest.WeaponDamageType);
+    }
+
+    private void Equip(WeaponBase itemToEquip)
+    {
+        _weaponDisplay.sprite = itemToEquip.Sprite;
+        _currentlyHolding = itemToEquip;
     }
 }
