@@ -3,9 +3,11 @@ using static DebugUtils;
 // Base abstract class shared between
 // an actual `State` and a `StateMachine`
 public abstract class StateBase<TStateID> :
-    SMChild<TStateID>
+    SMChild<TStateID>, ISealable
 {
     public readonly TStateID StateID;
+
+    public abstract bool IsSealed { get; protected set; }
 
     protected StateBase(TStateID stateID)
     {
@@ -39,6 +41,8 @@ public abstract class StateBase<TStateID> :
     {
 
     }
+
+    public abstract void Seal();
 }
 
 // A helper abstract class `StateBase` with the generic

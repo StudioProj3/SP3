@@ -9,8 +9,7 @@ using static DebugUtils;
 // used as a state inside another `StateMachine` in a HSM setup
 // `TStateID` is used as a type for all states in this `StateMachine`
 public class StateMachine<TSelfID, TStateID> :
-    StateBase<TSelfID>, IStateMachine<TStateID>,
-    ISealable
+    StateBase<TSelfID>, IStateMachine<TStateID>
 {
     public enum TransitionProtocol
     {
@@ -33,7 +32,7 @@ public class StateMachine<TSelfID, TStateID> :
     public bool IsRoot => parentStateMachine != null;
 
     // Gets whether the current state machine is already sealed
-    public bool IsSealed
+    public override bool IsSealed
     {
         get => _isSealed;
         protected set => _isSealed = value;
@@ -384,7 +383,7 @@ public class StateMachine<TSelfID, TStateID> :
         }
     }
 
-    public void Seal()
+    public override void Seal()
     {
         Assert(!_isSealed, "Attempted to reseal");
 

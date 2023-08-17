@@ -12,10 +12,10 @@ using ActionList = System.Collections.Generic.
 // All custom states should inherit from this class
 // instead of `StateBase`
 public abstract class State<TStateID> :
-    StateBase<TStateID>, ISealable
+    StateBase<TStateID>
 {
     // Gets whether the current state is already sealed
-    public bool IsSealed
+    public override bool IsSealed
     {
         get => _isSealed;
         protected set => _isSealed = value;
@@ -209,7 +209,7 @@ public abstract class State<TStateID> :
         return false;
     }
 
-    public void Seal()
+    public override void Seal()
     {
         Assert(!_isSealed, "Attempted to reseal");
 
