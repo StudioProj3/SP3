@@ -119,6 +119,13 @@ public class SkeletonController :
             ),
 
             new GenericState("Cooldown"),
+            new GenericState("Dying"),
+            new GenericState("Dead",
+                new ActionEntry("Enter", () =>
+                {
+                    RemoveCharacter();
+                })
+            ),
 
             // Transitions
 
@@ -150,8 +157,12 @@ public class SkeletonController :
             new FixedTimedTransition("Attack", "Cooldown", 0.4f),
 
             // Cooldown > Idle
-            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
-        );
+            new FixedTimedTransition("Cooldown", "Idle", 0.2f),
+
+            // Dying > Dead
+            new FixedTimedTransition("Dying", "Dead", 0.5f)
+            
+        ) ;
 
         _stateMachine.SetStartState("Init");
 
@@ -174,6 +185,7 @@ public class SkeletonController :
 
         if (_currentLifetime < 0f)
         {
+            //_stateMachine.SetState("Dying");
             RemoveCharacter();
         }
 
@@ -181,6 +193,8 @@ public class SkeletonController :
             _stateMachine.CurrentState.StateID == "GoingToAttack");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isDead",
+          _stateMachine.CurrentState.StateID == "Dying");
 
 
         if (!_statusEffects.IsNullOrEmpty())
@@ -225,7 +239,7 @@ public class SkeletonController :
 
     private void RemoveCharacter()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
         transform.SetParent(_source);
     }
 }

@@ -35,7 +35,7 @@ public class RedSkullController : MonoBehaviour
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
     private void Awake()

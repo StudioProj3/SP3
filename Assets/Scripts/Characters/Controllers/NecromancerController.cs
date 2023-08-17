@@ -106,9 +106,13 @@ public class NecromancerController :
                         if (!(_pooledSkullList[i].gameObject.activeSelf))
                         {                       
                             _pooledSkullList[i].transform.position =
-                                new Vector3(transform.position.x + Random.Range(-0.75f, 0.75f),
+                                new Vector3(transform.position.x + Random.Range(-0.5f, 0.5f),
                                             transform.position.y - 0.4f,
-                                            transform.position.z + Random.Range(-0.75f, 0.75f));
+                                            transform.position.z + Random.Range(-0.5f, 0.5f));
+
+                            _direction = _player.transform.position -
+                                        _pooledSkullList[i].transform.position;
+
                             _pooledSkullList[i].Init(_direction, _phyDamage,
                                 _playerController, _pooledSkulls.transform);
                             _pooledSkullList[i].transform.SetParent(null);
