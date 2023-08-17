@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class necromancerController :
+public class NecromancerController :
     CharacterControllerBase, IEffectable
 {
     [SerializeField]
@@ -68,6 +68,11 @@ public class necromancerController :
             _pooledSkullList.Add(child.GetComponent<RedSkullController>());
         }
 
+        foreach (Transform child in _pooledSkeletons.transform)
+        {
+            _pooledSkeletonList.Add(child.GetComponent<SkeletonController>());
+        }
+
         _necromancerStatsContainer = _necromancerStats.GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_necromancerStatsContainer.
             GetStat("AttackDamage").Value);
@@ -119,8 +124,7 @@ public class necromancerController :
                     {
                         if (!(_pooledSkeletonList[i].gameObject.activeSelf))
                         {
-                            _pooledSkeletonList[i].Init(_direction, _phyDamage,
-                                _playerController, _pooledSkeletons.transform);
+                            _pooledSkeletonList[i].Init( _pooledSkeletons.transform);
                             _pooledSkeletonList[i].transform.position =
                                 transform.position;
                             _pooledSkeletonList[i].transform.SetParent(null);
@@ -227,4 +231,6 @@ public class necromancerController :
             _playerController.TakeDamage(_phyDamage);
         }
     }
+
+
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8130153164828319792}
   - component: {fileID: 8130153164828319799}
   - component: {fileID: 8130153164828319795}
+  - component: {fileID: -1765627647032886062}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -138,3 +139,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1765627647032886062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130153164828319798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 093d78d87cde61346977c6bbd4eac656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skeletonStats: {fileID: 11400000, guid: 0c0398863233f7342a38871f26fb2f32, type: 2}
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 8

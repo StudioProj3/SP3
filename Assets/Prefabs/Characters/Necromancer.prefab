@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 8130153164828319792}
   - component: {fileID: 8130153164828319799}
   - component: {fileID: 8130153164828319795}
+  - component: {fileID: 3441005501141988108}
   m_Layer: 0
   m_Name: Necromancer
   m_TagString: Enemy
@@ -208,6 +209,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3441005501141988108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130153164828319798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5558e00ed050c2b44a9a5e2955d28261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _necromancerStats: {fileID: 11400000, guid: 33c2ea401141a3d40a4c6cb9030ba6a0, type: 2}
 --- !u!1001 &284909454403326428
 PrefabInstance:
   m_ObjectHideFlags: 0

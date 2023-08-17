@@ -2,73 +2,208 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonController : MonoBehaviour
+public class SkeletonController : 
+    CharacterControllerBase, IEffectable
 {
-    [SerializeField]
-    private float _speed;
+
 
     [SerializeField]
-    private float _lifetime;
+    private Stats _skeletonStats;
+    [SerializeField]
+    private LayerMask _playerLayer;
 
-    private float _currentLifetime;
+    private StatContainer _skeletonStatsContainer;
+
+    private GameObject _player;
+    private PlayerController _playerController;
+
+    private List<StatusEffectBase> _statusEffects = new();
+    private float _currentEffectTime;
+    private float _nextTickTime;
 
     private Vector3 _direction;
+    private float _distance;
     private PhysicalDamage _phyDamage;
-    private PlayerController _playerController;
-    private Transform _source;
 
-    private Rigidbody _rigidbody;
+    IStatContainer IEffectable.EntityStats => _skeletonStats;
 
-    public void Init(Vector3 direction, PhysicalDamage phyDamage,
-        PlayerController playerController, Transform source)
+    public void TakeDamage(Damage damage)
     {
-        gameObject.SetActive(true);
-        _direction = direction;
-        _phyDamage = phyDamage;
-        _playerController = playerController;
-        _source = source;
+        _animator.SetBool("isHurt", true);
+        damage.OnApply(this);
+        _animator.SetBool("isHurt", false);
 
-        _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.velocity = _direction * _speed;
-        _currentLifetime = _lifetime;
+    }
 
-        float angle = -Mathf.Atan2(direction.z, direction.x) *
-            Mathf.Rad2Deg;
+    public void ApplyEffect(StatusEffectBase statusEffect)
+    {
+        _statusEffects.Add(statusEffect);
+        statusEffect.OnApply(this);
+    }
 
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+    public void RemoveEffect(StatusEffectBase statusEffect)
+    {
+        int index = _statusEffects.IndexOf(statusEffect);
+        RemoveEffectImpl(statusEffect, index);
+    }
+
+    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
+    {
+        statusEffect.OnExit(this);
+        _statusEffects.RemoveAt(index);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        _skeletonStatsContainer = _skeletonStats.GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
+            GetStat("AttackDamage").Value);
+
+        SetupStateMachine();
+    }
+
+    protected override void SetupStateMachine()
+    {
+        base.SetupStateMachine();
+
+        _stateMachine.AddChilds(
+            new GenericState("Init"),
+
+            new GenericState("Walk",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = _player.transform.position - transform.position;
+                    _direction.y = 0;
+                }),
+                new ActionEntry("FixedUpdate", () =>
+                {
+                    _rigidbody.velocity = _skeletonStatsContainer.
+                        GetStat("MoveSpeed").Value * _direction;
+                })
+            ),
+
+            new GenericState("Attack",
+                new ActionEntry("Enter", () =>
+                {
+                    Collider[] attackTarget;
+                    attackTarget = Physics.OverlapCapsule(transform.position,
+                        new Vector3(transform.position.x + _direction.x * 0.5f, transform.position.y, transform.position.z),
+                        0.35f, _playerLayer, 0);
+
+
+                    for (int i = 0; i < attackTarget.Length; i++)
+                    {
+                        Debug.Log(attackTarget[i]);
+
+                        if (attackTarget[i].CompareTag("Player"))
+                        {
+                            Debug.Log("L");
+                            _playerController.TakeDamage(_phyDamage);
+                            break;
+                        }
+                    }
+                })
+            ),
+
+            new GenericState("GoingToAttack",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = _player.transform.position - transform.position;
+                    _direction.y = 0;
+                })
+            ),
+
+            new GenericState("Cooldown"),
+
+            // Transitions
+
+            // Init > Idle
+            new FixedTimedTransition("Init", "Idle", 2.0f),
+
+            // Idle > Walk
+            new RandomTimedTransition("Idle", "Walk", 0.2f, 0.5f),
+
+            // Walk > Idle
+            new FixedTimedTransition("Walk", "Idle", 0.7f),
+
+            // Idle > GoingToAttack
+            new GenericTransition("Idle", "GoingToAttack", () =>
+            {
+                return _distance < 0.8f;
+            }),
+
+            // Walk > GoingToAttack
+            new GenericTransition("Walk", "GoingToAttack", () =>
+            {
+                return _distance < 0.8f;
+            }),
+
+            //  GoingToAttack > Attack
+            new FixedTimedTransition("GoingToAttack", "Attack", 0.4f),
+
+            // Attack > Cooldown
+            new FixedTimedTransition("Attack", "Cooldown", 0.4f),
+
+            // Cooldown > Idle
+            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
+        );
+
+        _stateMachine.SetStartState("Init");
+
+        _stateMachine.Enter();
     }
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        _player = GameObject.FindWithTag("Player");
+        _playerController = _player.GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        _currentLifetime -= Time.deltaTime;
+        _animator.SetBool("isAttacking",
+            _stateMachine.CurrentState.StateID == "GoingToAttack");
+        _animator.SetBool("isMoving",
+           _stateMachine.CurrentState.StateID == "Walk");
 
-        if (_currentLifetime < 0f)
+
+        if (!_statusEffects.IsNullOrEmpty())
         {
-            RemoveProjectile();
+            _statusEffects.ForEach(effect => effect.HandleEffect(this));
         }
+
+        for (int i = 0; i < _statusEffects.Count; ++i)
+        {
+            if (_statusEffects[i].IsDone)
+            {
+                RemoveEffectImpl(_statusEffects[i], i);
+                --i;
+            }
+        }
+
+        _spriteRenderer.flipX = _direction.x < 0;
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void FixedUpdate()
     {
-        if (col.gameObject.tag == "Player")
+        _distance = Vector3.Distance(_player.transform.position,
+            transform.position);
+
+        _stateMachine.FixedUpdate();
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject == _player)
         {
             _playerController.TakeDamage(_phyDamage);
-            RemoveProjectile();
-        }
-        else if (col.gameObject.tag == "Scene Object")
-        {
-            RemoveProjectile();
         }
     }
 
-    private void RemoveProjectile()
+    public void Init(Transform source)
     {
-        gameObject.SetActive(false);
-        transform.SetParent(_source);
+
     }
 }
