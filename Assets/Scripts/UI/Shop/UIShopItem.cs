@@ -4,10 +4,6 @@ using TMPro;
 
 public class UIShopItem : MonoBehaviour
 {
-    // TODO (Chris): Maybe change this to actually store the ItemBase
-    // scriptable object on init so when the purchasing logic runs through,
-    // it queries that field.
-
     [SerializeField]
     private Image _itemIcon;
 
@@ -28,6 +24,8 @@ public class UIShopItem : MonoBehaviour
     [SerializeField]
     private UIShopItemBackground _background;
 
+    public ItemBase Item { get; private set; }
+
     private void OnPointerEvent(bool mouseOver)
     {
         _animator.SetBool("mouseOver", mouseOver);
@@ -43,10 +41,11 @@ public class UIShopItem : MonoBehaviour
         _background.UnsubscribePointerEvent(OnPointerEvent);
     }
 
-    public void Initialize(Sprite icon, int bronzeCount,
+    public void Initialize(ItemBase item, int bronzeCount,
        int silverCount, int goldCount) 
     {
-        _itemIcon.sprite = icon;
+        Item = item;
+        _itemIcon.sprite = item.Sprite;
 
         if (bronzeCount > 0)
         {

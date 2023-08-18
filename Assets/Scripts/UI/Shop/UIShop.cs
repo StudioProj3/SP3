@@ -97,7 +97,7 @@ public class UIShop : MonoBehaviour
                     }
                 }
 
-                uiItem.Initialize(item.Item.Sprite, itemCosts[CoinType.Bronze],
+                uiItem.Initialize(item.Item, itemCosts[CoinType.Bronze],
                     itemCosts[CoinType.Silver], itemCosts[CoinType.Gold]);
             }
 
