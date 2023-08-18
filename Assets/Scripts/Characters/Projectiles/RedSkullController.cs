@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowController : MonoBehaviour
+public class RedSkullController : MonoBehaviour
 {
     [SerializeField]
     private float _speed;
@@ -13,16 +15,18 @@ public class ArrowController : MonoBehaviour
     private Vector3 _direction;
     private PhysicalDamage _phyDamage;
     private PlayerController _playerController;
+    private Transform _source;
 
     private Rigidbody _rigidbody;
 
     public void Init(Vector3 direction, PhysicalDamage phyDamage,
-        PlayerController playerController)
+        PlayerController playerController, Transform source)
     {
         gameObject.SetActive(true);
         _direction = direction;
         _phyDamage = phyDamage;
         _playerController = playerController;
+        _source = source;
 
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.velocity = _direction * _speed;
@@ -31,12 +35,12 @@ public class ArrowController : MonoBehaviour
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
     private void Awake()
     {
-        gameObject.SetActive(false);  
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -52,18 +56,16 @@ public class ArrowController : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
-        { 
+        {
             _playerController.TakeDamage(_phyDamage);
             RemoveProjectile();
         }
-        else if (col.gameObject.tag == "Scene Object")
-        {
-            RemoveProjectile();
-        }
+        
     }
 
     private void RemoveProjectile()
     {
         gameObject.SetActive(false);
+        transform.SetParent(_source);
     }
 }
