@@ -1,4 +1,3 @@
-using log4net.Filter;
 using System.Collections.Generic;
 
 using UnityEditor;
@@ -32,10 +31,8 @@ public abstract class ReorderEditor : Editor
 
     protected void Add(Type type, string name, uint order = 0)
     {
-        if (type == Type.Property)
-        {
-            name = "<" + name + ">k__BackingField";
-        }
+        // Convert to the backing field name if necessary
+        name = (type == Type.Property) ? name.BackingField() : name;
 
         SerializedProperty property = serializedObject.
             FindProperty(name);
