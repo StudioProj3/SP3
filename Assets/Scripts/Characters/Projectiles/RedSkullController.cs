@@ -10,6 +10,9 @@ public class RedSkullController : MonoBehaviour
     [SerializeField]
     private float _lifetime;
 
+    [SerializeField]
+    private float _knockback;
+
     private float _currentLifetime;
 
     private Vector3 _direction;
@@ -57,7 +60,9 @@ public class RedSkullController : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            _playerController.TakeDamage(_phyDamage);
+            Vector3 knockbackForce = _direction * _knockback;
+
+            _playerController.TakeDamage(_phyDamage,knockbackForce);
             RemoveProjectile();
         }
         

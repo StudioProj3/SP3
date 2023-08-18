@@ -39,8 +39,9 @@ public class SkeletonController :
         _source = source;
     }
 
-    public void TakeDamage(Damage damage)
+    public void TakeDamage(Damage damage, Vector3 knockback)
     {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
@@ -111,7 +112,11 @@ public class SkeletonController :
                     {
                         if (attackTarget[i].CompareTag("Player"))
                         {
-                            _playerController.TakeDamage(_phyDamage);
+
+                            Vector3 knockbackForce =
+                                (_player.transform.position - transform.position).normalized *
+                                _skeletonStatsContainer.GetStat("Knockback").Value;
+                            _playerController.TakeDamage(_phyDamage, knockbackForce);
                             break;
                         }
                     }
@@ -232,7 +237,11 @@ public class SkeletonController :
     {
         if (col.gameObject == _player)
         {
-            _playerController.TakeDamage(_phyDamage);
+
+            Vector3 knockbackForce =
+                (col.transform.position - transform.position).normalized *
+                _skeletonStatsContainer.GetStat("Knockback").Value;
+            _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }   
 
