@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b9d827f34ee9b742aafd78b26b2054c, type: 3}
-  m_Name: Cacodaemon Stats
+  m_Name: MinotaurStats
   m_EditorClassIdentifier: 
   _statInitializerList: []
   _instancedStatInitializerList:
-  - rid: 8269461446570541057
+  - rid: 8269461436494774277
   - rid: 8269461383876968449
   - rid: 8269461383876968450
   - rid: 8269461383876968451
@@ -26,7 +26,7 @@ MonoBehaviour:
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: e1ee6d50190725b49ab694749b2744d2, type: 2}
-        initialValue: 1.5
+        initialValue: 1
     - rid: 8269461383876968450
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
@@ -41,9 +41,9 @@ MonoBehaviour:
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 54790303e6a70064c9d0bdc5056fd391, type: 2}
-        initialValue: 10
-    - rid: 8269461446570541057
+        initialValue: 20
+    - rid: 8269461436494774277
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
-        initialValue: 70
+        initialValue: 100

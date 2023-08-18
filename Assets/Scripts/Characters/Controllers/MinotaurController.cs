@@ -2,25 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonController : 
+public class MinotaurController : 
     CharacterControllerBase, IEffectable
 {
-
-
     [SerializeField]
-    private Stats _skeletonStats;
+    private Stats _minotaurStats;
     [SerializeField]
     private LayerMask _playerLayer;
-    [SerializeField]
-    private float _lifetime;
 
-    private float _currentLifetime;
-
-    private StatContainer _skeletonStatsContainer;
+    private StatContainer _minotaurStatsContainer;
 
     private GameObject _player;
     private PlayerController _playerController;
-    private Transform _source;
 
     private List<StatusEffectBase> _statusEffects = new();
     private float _currentEffectTime;
@@ -30,14 +23,7 @@ public class SkeletonController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _skeletonStats;
-
-    public void Init(Transform source)
-    {
-        gameObject.SetActive(true);
-        _currentLifetime = _lifetime;
-        _source = source;
-    }
+    IStatContainer IEffectable.EntityStats => _minotaurStats;
 
     public void TakeDamage(Damage damage)
     {
@@ -79,8 +65,6 @@ public class SkeletonController :
         base.SetupStateMachine();
 
         _stateMachine.AddChilds(
-            new GenericState("Init"),
-
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
@@ -89,12 +73,12 @@ public class SkeletonController :
                 }),
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _rigidbody.velocity = _skeletonStatsContainer.
+                    _rigidbody.velocity = _minotaurStatsContainer.
                         GetStat("MoveSpeed").Value * _direction;
                 })
             ),
 
-            new GenericState("Attack",
+            new GenericState("Spin",
                 new ActionEntry("Enter", () =>
                 {
                     Collider[] attackTarget;
@@ -117,7 +101,7 @@ public class SkeletonController :
                 })
             ),
 
-            new GenericState("GoingToAttack",
+            new GenericState("GoingToSpin",
                 new ActionEntry("Enter", () =>
                 {
                     _direction = _player.transform.position - transform.position;
@@ -125,12 +109,41 @@ public class SkeletonController :
                 })
             ),
 
+            new GenericState("Quake",
+                new ActionEntry("Enter", () =>
+                {
+                    Collider[] attackTarget;
+                    attackTarget = Physics.OverlapCapsule(transform.position,
+                        new Vector3(transform.position.x + _direction.x * 0.5f, transform.position.y, transform.position.z),
+                        0.35f, _playerLayer, 0);
+
+
+                    for (int i = 0; i < attackTarget.Length; i++)
+                    {
+                        Debug.Log(attackTarget[i]);
+
+                        if (attackTarget[i].CompareTag("Player"))
+                        {
+                            Debug.Log("L");
+                            _playerController.TakeDamage(_phyDamage);
+                            break;
+                        }
+                    }
+                })
+            ),
+
+            new GenericState("GoingToQuake",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = _player.transform.position - transform.position;
+                    _direction.y = 0;
+                })
+            ),
+
+
             new GenericState("Cooldown"),
 
             // Transitions
-
-            // Init > Idle
-            new FixedTimedTransition("Init", "Idle", 2.0f),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 0.2f, 0.5f),
@@ -139,29 +152,50 @@ public class SkeletonController :
             new FixedTimedTransition("Walk", "Idle", 0.7f),
 
             // Idle > GoingToAttack
-            new GenericTransition("Idle", "GoingToAttack", () =>
+            new GenericTransition("Idle", "GoingToQuake", () =>
             {
                 return _distance < 0.8f;
             }),
 
             // Walk > GoingToAttack
-            new GenericTransition("Walk", "GoingToAttack", () =>
+            new GenericTransition("Walk", "GoingToQuake", () =>
             {
                 return _distance < 0.8f;
             }),
 
-            //  GoingToAttack > Attack
-            new FixedTimedTransition("GoingToAttack", "Attack", 0.4f),
+            //  GoingToQuake > Quake
+            new FixedTimedTransition("GoingToQuake", "Quake", 0.4f),
+
+            // Quake > Cooldown
+            new FixedTimedTransition("Quake", "Cooldown", 0.4f),
+
+            // Idle > GoingToSpin
+            new GenericTransition("Idle", "GoingToSpin", () =>
+            {
+                return _distance < 0.8f;
+            }),
+
+            // Walk > GoingToSpin
+            new GenericTransition("Walk", "GoingToSpin", () =>
+            {
+                return _distance < 0.8f;
+            }),
+
+            //  GoingToSpin > Spin
+            new FixedTimedTransition("GoingToSpin", "Spin", 0.4f),
+
+            //  Spin > Idle
+            new FixedTimedTransition("Spin", "Idle", 2.0f),
 
             // Attack > Cooldown
-            new FixedTimedTransition("Attack", "Cooldown", 0.4f),
+            new FixedTimedTransition("Spin", "Cooldown", 0.4f),
 
             // Cooldown > Idle
             new FixedTimedTransition("Cooldown", "Idle", 0.2f)
-            
-        ) ;
 
-        _stateMachine.SetStartState("Init");
+        );
+
+        _stateMachine.SetStartState("Idle");
 
         _stateMachine.Enter();
     }
@@ -170,20 +204,23 @@ public class SkeletonController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _skeletonStatsContainer = _skeletonStats.GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
+        _minotaurStatsContainer = _minotaurStats.GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
             GetStat("AttackDamage").Value);
     }
 
     private void Update()
     {
 
-        
 
-        _animator.SetBool("isAttacking",
-            _stateMachine.CurrentState.StateID == "GoingToAttack");
-        _animator.SetBool("isMoving",
-           _stateMachine.CurrentState.StateID == "Walk");
+        //_animator.SetBool("isCharging",
+        //    _stateMachine.CurrentState.StateID == "GoingToSpin");
+        //_animator.SetBool("isSpinning",
+        //    _stateMachine.CurrentState.StateID == "Spin");
+        //_animator.SetBool("isQuaking",
+        //    _stateMachine.CurrentState.StateID == "Quake");
+        //_animator.SetBool("isMoving",
+        //   _stateMachine.CurrentState.StateID == "Walk");
 
 
         if (!_statusEffects.IsNullOrEmpty())
@@ -208,20 +245,10 @@ public class SkeletonController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        _currentLifetime -= Time.deltaTime;
 
-        if (_currentLifetime < 0f)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-            _stateMachine.FixedUpdate();
+        _stateMachine.FixedUpdate();
     }
 
-    private void OnDisable()
-    {
-        Invoke("SetSourceParent",1f);
-    }
 
     private void OnCollisionEnter(Collision col)
     {
@@ -230,10 +257,5 @@ public class SkeletonController :
             _playerController.TakeDamage(_phyDamage);
         }
     }
-
-    private void SetSourceParent()
-    {
-        transform.SetParent(_source);
-    }    
 
 }
