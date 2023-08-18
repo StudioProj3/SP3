@@ -96,8 +96,8 @@ public class ArcherController :
                     {
                         if (!(_pooledArrowList[i].gameObject.activeSelf))
                         {
-                            _pooledArrowList[i].Init(_direction, _phyDamage,
-                                _playerController,_pooledArrows.transform);
+                            _pooledArrowList[i].Init(_direction, _phyDamage
+                                ,_pooledArrows.transform);
                             _pooledArrowList[i].transform.position =
                                 transform.position;
                             _pooledArrowList[i].transform.SetParent(null);

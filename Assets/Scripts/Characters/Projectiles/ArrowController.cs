@@ -1,29 +1,29 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    [SerializeField]
+    [field: SerializeField]
     private float _speed;
 
-    [SerializeField]
+    [field: SerializeField]
     private float _lifetime;
 
-    private float _currentLifetime;
+    [field: SerializeField]
+    private LayerMask targetLayer;
 
+    private float _currentLifetime;
     private Vector3 _direction;
     private PhysicalDamage _phyDamage;
-    private PlayerController _playerController;
     private Transform _source;
-
     private Rigidbody _rigidbody;
 
-    public void Init(Vector3 direction, PhysicalDamage phyDamage,
-        PlayerController playerController, Transform source)
+    public void Init(Vector3 direction, PhysicalDamage phyDamage, 
+        Transform source)
     {
         gameObject.SetActive(true);
         _direction = direction;
         _phyDamage = phyDamage;
-        _playerController = playerController;
         _source = source;
 
         _rigidbody = GetComponent<Rigidbody>();
@@ -51,15 +51,16 @@ public class ArrowController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (col.gameObject.CompareTag("Player"))
-        { 
-            Vector3 knockbackForce = (col.transform.position - transform.position).normalized * 5;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+        if (collider.TryGetComponent<IEffectable>(out var effectable) &&
+            (targetLayer.value & 1 << collider.gameObject.layer) != 0)
+        {
+            Vector3 knockbackForce = (collider.transform.position - transform.position).normalized * 5;
+            effectable.TakeDamage(_phyDamage, knockbackForce);
             RemoveProjectile();
         }
-        else if (col.gameObject.CompareTag("Scene Object"))
+        else if (collider.gameObject.CompareTag("Scene Object"))
         {
             RemoveProjectile();
         }
