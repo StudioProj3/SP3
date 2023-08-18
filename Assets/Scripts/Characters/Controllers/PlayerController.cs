@@ -23,7 +23,7 @@ public class PlayerController :
 
     //For debug
     [SerializeField]
-    private BowWeaponItem _weaponItemTest;
+    private SwordWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
@@ -231,7 +231,7 @@ public class PlayerController :
 
         if (_weaponItemTest.WeaponStatusEffect)
         {
-            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect);
+            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect.Clone());
         }
     }
 
