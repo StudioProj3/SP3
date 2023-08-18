@@ -146,8 +146,6 @@ public class CacodaemonController :
 
     private void Update()
     {
-        Debug.Log(_cacodaemonStatsContainer.GetStat("MoveSpeed").Value);
-
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
         _animator.SetBool("isGoingCharge",
