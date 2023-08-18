@@ -32,8 +32,9 @@ public class HealTurretController :
 
     IStatContainer IEffectable.EntityStats => _healTurretStats;
 
-    public void TakeDamage(Damage damage)
+    public void TakeDamage(Damage damage, Vector3 knockback)
     {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
         damage.OnApply(this);
     }
 
@@ -154,7 +155,10 @@ public class HealTurretController :
     {
         if (col.gameObject == _player)
         {
-            _playerController.TakeDamage(_phyDamage);
+            Vector3 knockbackForce = 
+                (col.transform.position - transform.position).normalized *
+                _healTurretStatsContainer.GetStat("Knockback").Value;
+            _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }
 }
