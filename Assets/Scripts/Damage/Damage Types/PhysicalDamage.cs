@@ -27,7 +27,6 @@ public class PhysicalDamage : Damage
             float resistance = (1 - (100 / (100 + entityStats.GetStat("Armor").Value))) * 100;
             float damage = Mathf.Round(_damage * ((100 - resistance) / 100));
             entityStats.GetStat("Health").Subtract(damage);
-            Debug.Log(entityStats.GetStat("Health").Value);
         }
         else
         {

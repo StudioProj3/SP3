@@ -14,4 +14,15 @@ public abstract class CharacterDataBase :
 
     [field: SerializeField]
     public ItemBase RightHandItem { get; set; }
+
+    [field: SerializeField]
+    public bool IsDead { get; set; }
+
+    public virtual void Reset()
+    {
+        Inventory = null;
+        LeftHandItem = null;
+        RightHandItem = null;
+        IsDead = false;
+    }
 }

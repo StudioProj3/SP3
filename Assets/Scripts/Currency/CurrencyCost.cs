@@ -6,14 +6,17 @@ using UnityEngine;
 [Serializable]
 public class CurrencyCost : ISerializationCallbackReceiver
 {
+    // NOTE (Chris): Take note of this. Should be global.
+    private const int _currencyTypeCount = 3;
     public List<Pair<ItemBase, int>> costs;
 
     public void OnAfterDeserialize()
     {
-        if (costs.Count > 4)
+        if (costs.Count > _currencyTypeCount)
         {
-            Debug.LogError("More than 4 costs set.");
-            while (costs.Count > 4) 
+            Debug.LogErrorFormat("More than {0} costs set.", 
+                _currencyTypeCount);
+            while (costs.Count > _currencyTypeCount) 
             {
                 costs.RemoveAt(costs.Count - 1);
             }
@@ -22,7 +25,7 @@ public class CurrencyCost : ISerializationCallbackReceiver
 
     public void OnBeforeSerialize()
     {
-        costs.Capacity = 4;
+        costs.Capacity = _currencyTypeCount;
 
         while (costs.Count < costs.Capacity)
         {

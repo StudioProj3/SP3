@@ -1,6 +1,6 @@
 using System;
 
-using UnityEngine.Assertions;
+using static DebugUtils;
 
 public abstract class TransitionBase<TStateID> :
     SMChild<TStateID>
@@ -23,7 +23,8 @@ public abstract class TransitionBase<TStateID> :
 
     protected TransitionBase(TStateID fromStateID, TStateID toStateID)
     {
-        Assert.IsTrue(fromStateID != null && toStateID != null);
+        Assert(fromStateID != null && toStateID != null,
+            "`fromStateID` and/or `toStateID` is null");
 
         FromStateID = fromStateID;
         ToStateID = toStateID;
@@ -38,8 +39,9 @@ public abstract class TransitionBase :
     protected TransitionBase(string fromStateID, string toStateID)
     {
         // Ensure that the strings passed in is neither null nor empty
-        Assert.IsTrue(!string.IsNullOrEmpty(fromStateID) &&
-            !string.IsNullOrEmpty(toStateID));
+        Assert(!string.IsNullOrEmpty(fromStateID) &&
+            !string.IsNullOrEmpty(toStateID),
+            "`fromStateID` and/or `toStateID` is null or empty");
 
         FromStateID = fromStateID;
         ToStateID = toStateID;

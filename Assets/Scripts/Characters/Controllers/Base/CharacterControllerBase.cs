@@ -21,9 +21,7 @@ public abstract class CharacterControllerBase :
     protected virtual void SetupStateMachine()
     {
         _stateMachine = new StateMachine("main", 
-        
             new IdleState("Idle")
-        
         );
     }
 }

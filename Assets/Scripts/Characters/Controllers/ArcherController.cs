@@ -1,10 +1,10 @@
-
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class ArcherController : CharacterControllerBase, IEffectable
+public class ArcherController :
+    CharacterControllerBase, IEffectable
 {
-
     [SerializeField]
     private Stats _archerStats;
 
@@ -57,13 +57,16 @@ public class ArcherController : CharacterControllerBase, IEffectable
         base.Start();
         _pooledArrows = transform.GetChild(0).gameObject;
         _pooledArrowList = new List<ArrowController>();
+
         foreach (Transform child in _pooledArrows.transform)
         {
             _pooledArrowList.Add(child.GetComponent<ArrowController>());
         }
 
         _archerStatsContainer = _archerStats.GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_archerStatsContainer.GetStat("AttackDamage").Value);
+        _phyDamage = PhysicalDamage.Create(_archerStatsContainer.
+            GetStat("AttackDamage").Value);
+
         SetupStateMachine();
     }
 
@@ -71,108 +74,97 @@ public class ArcherController : CharacterControllerBase, IEffectable
     {
         base.SetupStateMachine();
 
-        _stateMachine.AddChilds
-       (
-           new GenericState("Walk",
-               new ActionEntry("Enter", () =>
-               {
-                   _direction = new Vector3(Random.Range(-1.0f, 1.0f),
-                                            0.0f, 
-                                            Random.Range(-1.0f, 1.0f));
+        _stateMachine.AddChilds(
+            new GenericState("Walk",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = new Vector3(Random.Range(-1.0f, 1.0f),
+                        0.0f, Random.Range(-1.0f, 1.0f));
+                }),
+                new ActionEntry("FixedUpdate", () =>
+                {
+                    _rigidbody.velocity = _archerStatsContainer.
+                        GetStat("MoveSpeed").Value * _direction;
+                })
+            ),
 
-               }),
-               new ActionEntry("FixedUpdate", () =>
-               {
+            new GenericState("Shoot",
+                new ActionEntry("Enter", () =>
+                {
+                    for (int i = 0; i < _pooledArrowList.Count; i++)
+                    {
+                        if (!(_pooledArrowList[i].gameObject.activeSelf))
+                        {
+                            _pooledArrowList[i].Init(_direction, _phyDamage,
+                                _playerController);
+                            _pooledArrowList[i].transform.position =
+                                transform.position;
 
-                   _rigidbody.velocity = _archerStatsContainer.GetStat("MoveSpeed").Value * _direction;
-               })
-           ),
-
-           new GenericState("Shoot",
-               new ActionEntry("Enter", () =>
-               {
-
-                   for (int i = 0; i < _pooledArrowList.Count; i++)
-                   {
-                       if (_pooledArrowList[i].gameObject.activeSelf == false)
-                       {
-                           _pooledArrowList[i].Init(_direction, _phyDamage, _playerController);
-                           _pooledArrowList[i].transform.position = transform.position;
-                           break;
-                       }
-                   }
-
-                  
-               })
-           ),
+                            break;
+                        }
+                    }
+                })
+            ),
 
             new GenericState("Roll",
-               new ActionEntry("Enter", () =>
-               {
-                   _direction = transform.position - _player.transform.position;
-                   _direction.y = 0;
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = transform.position - _player.transform.position;
+                    _direction.y = 0;
 
-                   _rigidbody.AddForce( _archerStatsContainer.GetStat("MoveSpeed").Value 
-                       * 4 * _direction.normalized, 
-                       ForceMode.Impulse);
+                    _rigidbody.AddForce( _archerStatsContainer.
+                        GetStat("MoveSpeed").Value * 4f * _direction.normalized, 
+                        ForceMode.Impulse);
+                })
+            ),
 
-               })
-           ),
-
-           new GenericState("GoingToShoot",
-               new ActionEntry("Enter", () =>
-               {
-
-                   _direction = _player.transform.position - transform.position;
-                   _direction.y = 0;
-
-
-               })
-
-
-           ),
+            new GenericState("GoingToShoot",
+                new ActionEntry("Enter", () =>
+                {
+                    _direction = _player.transform.position - transform.position;
+                    _direction.y = 0;
+                })
+            ),
 
             new GenericState("Cooldown"),
 
-           // Transitions
+            // Transitions
 
-           // Idle > Walk
-           new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
+            // Idle > Walk
+            new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
 
-           // Walk > Idle
-           new FixedTimedTransition("Walk", "Idle", 0.7f),
+            // Walk > Idle
+            new FixedTimedTransition("Walk", "Idle", 0.7f),
 
-           // Idle > Roll
-           new GenericTransition("Idle", "Roll", () =>
-           {
-               return _distance < 1.0f;
-           }),
+            // Idle > Roll
+            new GenericTransition("Idle", "Roll", () =>
+            {
+                return _distance < 1.0f;
+            }),
 
-
-           // Idle > Going to shoot
-           new GenericTransition("Idle", "GoingToShoot", () =>
-           {
-               return _distance < 3.0f;
-           }),
+            // Idle > Going to shoot
+            new GenericTransition("Idle", "GoingToShoot", () =>
+            {
+                return _distance < 3.0f;
+            }),
            
-          // Roll > Going to Shoot
-          new FixedTimedTransition("Roll", "GoingToShoot", 0.5f),
+            // Roll > Going to Shoot
+            new FixedTimedTransition("Roll", "GoingToShoot", 0.5f),
 
-          //FIXME (Aquila): Sometimes when archer shoots,
-          // it plays the shoot animation but does not
-          // shoot an arrow. Likely due to transition
-          // timings between states
+            // FIXME (Aquila): Sometimes when archer shoots,
+            // it plays the shoot animation but does not
+            // shoot an arrow. Likely due to transition
+            // timings between states
 
-          //  Going to Shoot > Shoot
-          new FixedTimedTransition("GoingToShoot", "Shoot", 0.6f),
+            //  Going to Shoot > Shoot
+            new FixedTimedTransition("GoingToShoot", "Shoot", 0.6f),
 
-           // Shoot > Cooldown
-           new FixedTimedTransition("Shoot", "Cooldown", 0.2f),
+            // Shoot > Cooldown
+            new FixedTimedTransition("Shoot", "Cooldown", 0.2f),
 
-           // Cooldown > Idle
-           new FixedTimedTransition("Cooldown", "Idle", 0.2f)
-
-       );
+            // Cooldown > Idle
+            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
+        );
 
         _stateMachine.SetStartState("Idle");
 
@@ -210,13 +202,13 @@ public class ArcherController : CharacterControllerBase, IEffectable
         }
 
         _spriteRenderer.flipX = _direction.x < 0;
-
-
     }
 
     private void FixedUpdate()
     {
-        _distance = Vector3.Distance(_player.transform.position, transform.position);
+        _distance = Vector3.Distance(_player.transform.position,
+            transform.position);
+
         _stateMachine.FixedUpdate();
     }
 
@@ -226,6 +218,5 @@ public class ArcherController : CharacterControllerBase, IEffectable
         {
             _playerController.TakeDamage(_phyDamage);
         }
-
     }
 }

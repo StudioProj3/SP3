@@ -1,5 +1,6 @@
 using UnityEditor;
-using UnityEngine.Assertions;
+
+using static DebugUtils;
 
 public static class AssetAutoRefreshController
 {
@@ -13,7 +14,7 @@ public static class AssetAutoRefreshController
 
         // Ensure that the key supplied above exists and only
         // contains the valid values [0, 1]
-        Assert.IsTrue(currentState is >= 0 and <= 1,
+        Assert(currentState is >= 0 and <= 1,
             "`_autoRefreshKey` key is invalid");
 
         return currentState;
