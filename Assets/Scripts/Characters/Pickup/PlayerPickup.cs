@@ -37,7 +37,12 @@ public class PlayerPickup :
 
                 other.gameObject.SetActive(false);
 
-                _notification.Collect(sprite, name);
+                // Do not attempt to trigger notification if the
+                // UI objects are not found
+                if (_notification)
+                {
+                    _notification.Collect(sprite, name);
+                }
 
                 return;
             }
@@ -53,7 +58,12 @@ public class PlayerPickup :
                 {
                     other.gameObject.SetActive(false);
 
-                    _notification.Collect(sprite, name);
+                    // Do not attempt to trigger notification if the
+                    // UI objects are not found
+                    if (_notification)
+                    {
+                        _notification.Collect(sprite, name);
+                    }
                 }
             }
             // Attempt to pickup into left and/or right hand

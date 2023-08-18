@@ -21,7 +21,11 @@ public abstract class CharacterPickupBase :
 
     protected virtual void Awake()
     {
-        _notification = GameObject.FindWithTag("UINotification").
-            GetComponent<UINotification>();
+        GameObject notifUI = GameObject.FindWithTag("UINotification");
+
+        if (notifUI)
+        {
+            _notification = notifUI.GetComponent<UINotification>();
+        }
     }
 }
