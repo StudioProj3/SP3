@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 3146799219688396927}
   - component: {fileID: 3146799219688396924}
   - component: {fileID: 330748996}
+  - component: {fileID: 5881562032292855015}
   m_Layer: 5
   m_Name: ItemBackground
   m_TagString: Untagged
@@ -538,6 +539,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5881562032292855015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146799219688396914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c39d8f282b18a24cbe2654cd8317993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pointerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3146799219834921084
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3146799220559115576}
   - component: {fileID: 5094951074406150245}
+  - component: {fileID: 5688127627509732742}
   m_Layer: 5
   m_Name: ShopItem v1
   m_TagString: Untagged
@@ -640,6 +657,29 @@ MonoBehaviour:
   _bronzeCountText: {fileID: 1457408858218005530}
   _silverCountText: {fileID: 5193008808324266086}
   _goldCountText: {fileID: 5380005514238277355}
+  _animator: {fileID: 5688127627509732742}
+  _background: {fileID: 5881562032292855015}
+--- !u!95 &5688127627509732742
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146799220559115577}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25cf56a4b7c753a48a534ddce7e84b44, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3601574199454024507
 GameObject:
   m_ObjectHideFlags: 0

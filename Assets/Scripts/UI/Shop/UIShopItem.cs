@@ -22,6 +22,27 @@ public class UIShopItem : MonoBehaviour
     [SerializeField]
     private TMP_Text _goldCountText;
 
+    [SerializeField]
+    private Animator _animator;
+
+    [SerializeField]
+    private UIShopItemBackground _background;
+
+    private void OnPointerEvent(bool mouseOver)
+    {
+        _animator.SetBool("mouseOver", mouseOver);
+    }
+
+    private void Start()
+    {
+        _background.SubscribePointerEvent(OnPointerEvent);
+    }
+
+    private void OnDestroy() 
+    {
+        _background.UnsubscribePointerEvent(OnPointerEvent);
+    }
+
     public void Initialize(Sprite icon, int bronzeCount,
        int silverCount, int goldCount) 
     {
