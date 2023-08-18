@@ -23,7 +23,7 @@ public class PlayerController :
 
     //For debug
     [SerializeField]
-    private BowWeaponItem _weaponItemTest;
+    private SwordWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;

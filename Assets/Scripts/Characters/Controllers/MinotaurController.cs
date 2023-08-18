@@ -245,8 +245,13 @@ public class MinotaurController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-
-        _stateMachine.FixedUpdate();
+        if (_minotaurStatsContainer.
+            GetStat("Health").Value <= 0)
+        {
+            _animator.SetBool("isDead", true);
+        }
+        else
+            _stateMachine.FixedUpdate();
     }
 
 

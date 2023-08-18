@@ -234,7 +234,13 @@ public class NecromancerController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        _stateMachine.FixedUpdate();
+        if (_necromancerStatsContainer.
+            GetStat("Health").Value <= 0)
+        {
+            _animator.SetBool("isDead", true);
+        }
+        else
+            _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)

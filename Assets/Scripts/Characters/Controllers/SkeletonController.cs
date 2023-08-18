@@ -79,8 +79,12 @@ public class SkeletonController :
         base.SetupStateMachine();
 
         _stateMachine.AddChilds(
-            new GenericState("Init"),
-
+            new GenericState("Init",
+                new ActionEntry("Enter", () =>
+                {
+                    _rigidbody.velocity = new Vector3(0, 0, 0);
+                })
+            ),
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
@@ -105,11 +109,8 @@ public class SkeletonController :
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        Debug.Log(attackTarget[i]);
-
                         if (attackTarget[i].CompareTag("Player"))
                         {
-                            Debug.Log("L");
                             _playerController.TakeDamage(_phyDamage);
                             break;
                         }
@@ -210,7 +211,8 @@ public class SkeletonController :
 
         _currentLifetime -= Time.deltaTime;
 
-        if (_currentLifetime < 0f)
+        if (_currentLifetime < 0f || _skeletonStatsContainer.
+            GetStat("Health").Value <= 0)
         {
             _animator.SetBool("isDead", true);
         }
@@ -220,7 +222,10 @@ public class SkeletonController :
 
     private void OnDisable()
     {
-        Invoke("SetSourceParent",1f);
+        _ = Delay.Execute(() =>
+        {
+            transform.SetParent(_source);
+        }, 0.01f);
     }
 
     private void OnCollisionEnter(Collision col)
@@ -229,11 +234,6 @@ public class SkeletonController :
         {
             _playerController.TakeDamage(_phyDamage);
         }
-    }
-
-    private void SetSourceParent()
-    {
-        transform.SetParent(_source);
-    }    
+    }   
 
 }
