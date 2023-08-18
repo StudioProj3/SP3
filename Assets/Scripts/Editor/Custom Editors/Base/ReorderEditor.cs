@@ -42,7 +42,6 @@ public abstract class ReorderEditor : Editor
 
         _properties.Add(order == 0 ? _currentOrder++ : order,
             property);
-        UnityEngine.Debug.Log(_currentOrder); 
     }
 
     protected void AddField(string name, uint order = 0)
