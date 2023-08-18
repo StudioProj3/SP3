@@ -11,6 +11,7 @@ public class UINotification : MonoBehaviour
     }
 
     private Animator _animator;
+    private Image _background;
     private Image _itemIcon;
 
     private TMP_Text _notificationText;
@@ -45,9 +46,17 @@ public class UINotification : MonoBehaviour
         _animator.SetTrigger("showNotification");
     }
 
+    public void Error(string message)
+    {
+        _background.color = Color.red;
+
+        Alert(message);
+    }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _background = GetComponent<Image>();
         _itemIcon = transform.GetChild(0).GetComponent<Image>();
         _notificationText = transform.GetChild(1).
             GetComponent<TMP_Text>();
