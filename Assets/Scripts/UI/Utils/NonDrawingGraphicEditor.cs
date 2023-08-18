@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.UI;
@@ -17,3 +19,5 @@ public class NonDrawingGraphicEditor : GraphicEditor
         base.serializedObject.ApplyModifiedProperties();
     }
 }
+
+#endif
