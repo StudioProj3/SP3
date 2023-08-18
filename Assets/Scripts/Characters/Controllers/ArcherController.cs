@@ -26,8 +26,9 @@ public class ArcherController :
 
     IStatContainer IEffectable.EntityStats => _archerStats;
 
-    public void TakeDamage(Damage damage)
+    public void TakeDamage(Damage damage, Vector3 knockback)
     {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
@@ -223,7 +224,10 @@ public class ArcherController :
     {
         if (col.gameObject == _player)
         {
-            _playerController.TakeDamage(_phyDamage);
+            Vector3 knockbackForce = 
+                (col.transform.position - transform.position).normalized *
+                _archerStatsContainer.GetStat("Knockback").Value;
+            _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }
 }

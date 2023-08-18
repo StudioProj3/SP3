@@ -25,8 +25,9 @@ public class MinotaurController :
 
     IStatContainer IEffectable.EntityStats => _minotaurStats;
 
-    public void TakeDamage(Damage damage)
+    public void TakeDamage(Damage damage, Vector3 knockback)
     {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
@@ -89,12 +90,14 @@ public class MinotaurController :
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        Debug.Log(attackTarget[i]);
 
                         if (attackTarget[i].CompareTag("Player"))
                         {
-                            Debug.Log("L");
-                            _playerController.TakeDamage(_phyDamage);
+
+                            Vector3 knockbackForce =
+                                (_player.transform.position - transform.position).normalized *
+                                _minotaurStatsContainer.GetStat("Knockback").Value;
+                            _playerController.TakeDamage(_phyDamage, knockbackForce);
                             break;
                         }
                     }
@@ -120,12 +123,14 @@ public class MinotaurController :
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        Debug.Log(attackTarget[i]);
 
                         if (attackTarget[i].CompareTag("Player"))
                         {
-                            Debug.Log("L");
-                            _playerController.TakeDamage(_phyDamage);
+
+                            Vector3 knockbackForce =
+                                (_player.transform.position - transform.position).normalized *
+                                _minotaurStatsContainer.GetStat("Knockback").Value;
+                            _playerController.TakeDamage(_phyDamage, knockbackForce);
                             break;
                         }
                     }
@@ -259,7 +264,11 @@ public class MinotaurController :
     {
         if (col.gameObject == _player)
         {
-            _playerController.TakeDamage(_phyDamage);
+
+            Vector3 knockbackForce =
+                (col.transform.position - transform.position).normalized *
+                _minotaurStatsContainer.GetStat("Knockback").Value;
+            _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }
 

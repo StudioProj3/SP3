@@ -18,9 +18,20 @@ MonoBehaviour:
   - rid: 8269461400773459968
   - rid: 8269461400773459969
   - rid: 8269461400773459970
+  - rid: 4735661862413402113
   references:
     version: 2
     RefIds:
+    - rid: 4735661862413402113
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: e15db4b0babfeb54c924dbcd088966bd, type: 2}
+        initialValue: 5
+    - rid: 8269461383876968448
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
+        initialValue: 100
     - rid: 8269461400773459968
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
