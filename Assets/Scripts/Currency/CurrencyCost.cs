@@ -14,7 +14,8 @@ public class CurrencyCost : ISerializationCallbackReceiver
     {
         if (costs.Count > _currencyTypeCount)
         {
-            Debug.LogError("More than 4 costs set.");
+            Debug.LogErrorFormat("More than {0} costs set.", 
+                _currencyTypeCount);
             while (costs.Count > _currencyTypeCount) 
             {
                 costs.RemoveAt(costs.Count - 1);
