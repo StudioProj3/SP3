@@ -32,15 +32,16 @@ public abstract class Transition<TStateID> :
     }
 
     protected Transition(TStateID fromStateID, TStateID toStateID,
-        params Func<bool>[] initConditions) :
-        base(fromStateID, toStateID)
+        bool allowDefault = false, params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID, allowDefault)
     {
         _conditions.AddRange(initConditions);
     }
 
     protected Transition(TStateID fromStateID, TStateID toStateID,
-        Action callback, params Func<bool>[] initConditions) :
-        this(fromStateID, toStateID, initConditions)
+        Action callback, bool allowDefault = false,
+        params Func<bool>[] initConditions) :
+        this(fromStateID, toStateID, allowDefault, initConditions)
     {
         SetCallback(callback);
     }
@@ -57,15 +58,17 @@ public abstract class Transition :
     Transition<string>
 {
     protected Transition(string fromStateID, string toStateID,
-        params Func<bool>[] initConditions) :
-        base(fromStateID, toStateID, initConditions)
+        bool allowDefault = false, params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID, allowDefault, initConditions)
     {
 
     }
 
     protected Transition(string fromStateID, string toStateID,
-        Action callback, params Func<bool>[] initConditions) :
-        base(fromStateID, toStateID, callback, initConditions)
+        Action callback, bool allowDefault = false,
+        params Func<bool>[] initConditions) :
+        base(fromStateID, toStateID, callback, allowDefault,
+        initConditions)
     {
 
     }
