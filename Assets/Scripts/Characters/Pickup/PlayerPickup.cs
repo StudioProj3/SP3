@@ -65,11 +65,25 @@ public class PlayerPickup :
                         _notification.Collect(sprite, name);
                     }
                 }
+                // Failed to pickup items
+                else
+                {
+                    if (_notification)
+                    {
+                        _notification.Error("Inventory Full");
+                    }
+                }
             }
             // Attempt to pickup into left and/or right hand
             else
             {
+                // TODO (Cheng Jun): Add handling for adding into
+                // the respective hand slots
 
+                if (_notification)
+                {
+                    _notification.Error("No Free Hand Slots");
+                }
             }
         }
     }
