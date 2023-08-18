@@ -8,14 +8,13 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
     private string _animationName = "Shoot";
 
     [field: SerializeField]
-    private GameObject _projectile;
+    private ItemBase _projectile;
     public string AnimationName => _animationName;
 
-    public GameObject Projectile => _projectile;
+    public ItemBase Projectile => _projectile;
 
     public void OnUseEnter()
     {
-        
     }
 
     public void OnUse()
@@ -26,5 +25,12 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
     public void OnUseExit()
     {
         
+    }
+
+    public void Shoot(ArrowController projectileToFire, Vector3 direction, Transform source)
+    {
+        projectileToFire.Init(direction, WeaponDamageType, source, Projectile.Sprite);
+        projectileToFire.transform.position = source.position;
+        projectileToFire.transform.SetParent(null);
     }
 }

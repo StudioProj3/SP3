@@ -14,11 +14,34 @@ public class ArrowController : MonoBehaviour
 
     private float _currentLifetime;
     private Vector3 _direction;
-    private PhysicalDamage _phyDamage;
+    private Damage _phyDamage;
     private Transform _source;
     private Rigidbody _rigidbody;
+    private SpriteRenderer _spriteRenderer;
 
-    public void Init(Vector3 direction, PhysicalDamage phyDamage, 
+    public void Init(Vector3 direction, Damage phyDamage, 
+        Transform source, Sprite sprite)
+    {
+        gameObject.SetActive(true);
+        _direction = direction;
+        _phyDamage = phyDamage;
+        _source = source;
+
+        _rigidbody.velocity = _direction * _speed;
+
+        _currentLifetime = _lifetime;
+
+        if (_spriteRenderer.sprite != sprite)
+        {
+            _spriteRenderer.sprite = sprite;
+        }
+
+        float angle = -Mathf.Atan2(direction.z, direction.x) *
+            Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
+    public void Init(Vector3 direction, Damage phyDamage, 
         Transform source)
     {
         gameObject.SetActive(true);
@@ -26,8 +49,8 @@ public class ArrowController : MonoBehaviour
         _phyDamage = phyDamage;
         _source = source;
 
-        _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.velocity = _direction * _speed;
+
         _currentLifetime = _lifetime;
 
         float angle = -Mathf.Atan2(direction.z, direction.x) *
@@ -39,6 +62,8 @@ public class ArrowController : MonoBehaviour
     private void Awake()
     {
         gameObject.SetActive(false);  
+        _rigidbody = GetComponent<Rigidbody>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -56,7 +81,7 @@ public class ArrowController : MonoBehaviour
         if (collider.TryGetComponent<IEffectable>(out var effectable) &&
             (targetLayer.value & 1 << collider.gameObject.layer) != 0)
         {
-            Vector3 knockbackForce = (collider.transform.position - transform.position).normalized * 5;
+            Vector3 knockbackForce = _direction * 2.5f;
             effectable.TakeDamage(_phyDamage, knockbackForce);
             RemoveProjectile();
         }

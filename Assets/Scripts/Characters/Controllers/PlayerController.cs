@@ -23,15 +23,17 @@ public class PlayerController :
 
     //For debug
     [SerializeField]
-    private SwordWeaponItem _weaponItemTest;
+    private BowWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
     private SpriteRenderer _weaponDisplay;
-    private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyPressed;
+    private GameObject _pooledArrows;
+    private List<ArrowController> _pooledArrowList;
+    private List<StatusEffectBase> _statusEffects = new();
 
     public IStatContainer EntityStats => _playerStats;
 
@@ -70,6 +72,14 @@ public class PlayerController :
 
         _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
         _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
+
+        _pooledArrows = transform.GetChild(1).gameObject;
+        _pooledArrowList = new List<ArrowController>();
+
+        foreach (Transform child in _pooledArrows.transform)
+        {
+            _pooledArrowList.Add(child.GetComponent<ArrowController>());
+        }
         
         // For debug
         Equip(_weaponItemTest);
@@ -200,12 +210,23 @@ public class PlayerController :
             {
                 _weaponAnimator.Play(bowWeapon.AnimationName);
                 _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
-            }
+
+                Vector3 shootDirection = transform.forward;
+                for (int i = 0; i < _pooledArrowList.Count; i++)
+                    {
+                        if (!_pooledArrowList[i].gameObject.activeSelf)
+                        {
+                            bowWeapon.Shoot(_pooledArrowList[i], shootDirection, _pooledArrows.transform);
+                        }
+                    }
+                }
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
             }
         }
+
+        Debug.Log(_playerStats.GetStat("Health").Value);
     }
 
     private void FixedUpdate()
@@ -231,7 +252,6 @@ public class PlayerController :
         Vector3 knockbackForce = 
                 (hitPos - transform.position).normalized *
                 _playerStats.GetStat("Knockback").Value;
-                
         effectable.TakeDamage(_weaponItemTest.WeaponDamageType, knockbackForce);
 
         if (_weaponItemTest.WeaponStatusEffect)
