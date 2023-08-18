@@ -10,12 +10,12 @@ public static class RendererUtils
         if (renderer is SpriteRenderer spriteRenderer)
         {
             spriteRenderer.color =
-                spriteRenderer.color.SetAlpha(newAlpha);
+                spriteRenderer.color.Set(a: newAlpha);
         }
         else if (renderer is MeshRenderer meshRenderer)
         {
             meshRenderer.material.color =
-                meshRenderer.material.color.SetAlpha(newAlpha);
+                meshRenderer.material.color.Set(a: newAlpha);
         }
         else
         {

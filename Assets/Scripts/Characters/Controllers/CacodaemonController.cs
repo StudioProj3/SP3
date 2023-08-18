@@ -25,8 +25,9 @@ public class CacodaemonController :
 
     IStatContainer IEffectable.EntityStats => _cacodaemonStatsContainer;
 
-    public void TakeDamage(Damage damage)
+    public void TakeDamage(Damage damage, Vector3 knockback)
     {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
@@ -146,8 +147,6 @@ public class CacodaemonController :
 
     private void Update()
     {
-        Debug.Log(_cacodaemonStatsContainer.GetStat("MoveSpeed").Value);
-
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
         _animator.SetBool("isGoingCharge",
@@ -175,14 +174,23 @@ public class CacodaemonController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        _stateMachine.FixedUpdate();
+        if (_cacodaemonStatsContainer.
+             GetStat("Health").Value <= 0)
+        {
+            _animator.SetBool("isDead", true);
+        }
+        else
+            _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject == _player)
         {
-            _playerController.TakeDamage(_phyDamage);
+            Vector3 knockbackForce = 
+                (col.transform.position - transform.position).normalized *
+                _cacodaemonStatsContainer.GetStat("Knockback").Value;
+            _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }
 }

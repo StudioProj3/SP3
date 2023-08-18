@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StatusEffectBase : ScriptableObject
+public abstract class StatusEffectBase : ScriptableObject
 {
     [field: SerializeField]
     public IEffectable Effectable { get; private set; }
@@ -14,4 +14,6 @@ public class StatusEffectBase : ScriptableObject
     public virtual void HandleEffect(IEffectable effectable) {}
 
     public virtual void OnExit(IEffectable effectable) {}
+
+    public abstract StatusEffectBase Clone();
 }

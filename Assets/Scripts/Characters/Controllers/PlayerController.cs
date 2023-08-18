@@ -23,7 +23,7 @@ public class PlayerController :
 
     //For debug
     [SerializeField]
-    private BowWeaponItem _weaponItemTest;
+    private SwordWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
@@ -35,8 +35,9 @@ public class PlayerController :
 
     public IStatContainer EntityStats => _playerStats;
 
-    public void TakeDamage(Damage damage)
+    public void TakeDamage(Damage damage, Vector3 knockback)
     {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
         damage.OnApply(this);
 
         if (_playerStats.GetStat("Health").Value <= 0)
@@ -225,13 +226,17 @@ public class PlayerController :
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
 
-    private void DealDamage(IEffectable effectable)
+    private void DealDamage(IEffectable effectable, Vector3 hitPos)
     {
-        effectable.TakeDamage(_weaponItemTest.WeaponDamageType);
+        Vector3 knockbackForce = 
+                (hitPos - transform.position).normalized *
+                _playerStats.GetStat("Knockback").Value;
+                
+        effectable.TakeDamage(_weaponItemTest.WeaponDamageType, knockbackForce);
 
         if (_weaponItemTest.WeaponStatusEffect)
         {
-            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect);
+            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect.Clone());
         }
     }
 

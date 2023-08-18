@@ -19,6 +19,11 @@ public class DamageOverTimeEffect : StatusEffectBase
         return CreateInstance<DamageOverTimeEffect>().Init(effect.duration, effect.tickSpeed, effect.dotAmount);
     }
 
+    public override StatusEffectBase Clone()
+    {
+        return Create(this);
+    }
+
     private DamageOverTimeEffect Init(float duration, float tickSpeed, float dotAmount)
     {
         IsDone = false;

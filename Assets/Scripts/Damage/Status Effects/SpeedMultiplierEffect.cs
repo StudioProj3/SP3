@@ -6,7 +6,6 @@ public class SpeedMultiplierEffect : StatusEffectBase
 {
     public float movementPenalty;
 
-    private float _currentEffectTime = 0;
     private Modifier _movementModifier;
 
     private void OnEnable()
@@ -25,6 +24,11 @@ public class SpeedMultiplierEffect : StatusEffectBase
         return CreateInstance<SpeedMultiplierEffect>().Init(effect.duration, effect.movementPenalty);
     }
 
+    public override StatusEffectBase Clone()
+    {
+        return Create(this);
+    }
+
     private SpeedMultiplierEffect Init(float duration, float movementPenalty)
     {
         IsDone = false;
@@ -34,28 +38,26 @@ public class SpeedMultiplierEffect : StatusEffectBase
         return this;
     }
 
-
     public override void OnApply(IEffectable effectable)
     {
+        Debug.Log(_movementModifier);
         var stats = effectable.EntityStats;
         stats.GetStat("MoveSpeed").AddModifier(_movementModifier);
         
         IsDone = false;
-        _currentEffectTime = 0;
     }
 
     public override void HandleEffect(IEffectable effectable) 
     {
-        _currentEffectTime += Time.deltaTime;
-
-        if (_currentEffectTime >= duration)
+        _ = Delay.Execute(() =>
         {
             IsDone = true;
-        }
+        }, duration);
     }
 
     public override void OnExit(IEffectable effectable) 
     {
+
         var stats = effectable.EntityStats;
         stats.GetStat("MoveSpeed").RemoveModifier(_movementModifier);
     }
