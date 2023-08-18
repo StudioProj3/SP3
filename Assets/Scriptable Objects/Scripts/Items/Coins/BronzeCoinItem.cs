@@ -4,5 +4,8 @@ using UnityEngine;
     menuName = "Scriptable Objects/Items/Coins/BronzeCoin")]
 public class BronzeCoinItem : CoinItemBase
 {
-
+    public BronzeCoinItem()
+    {
+        Name = "Bronze Coin";
+    }
 }

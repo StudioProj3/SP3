@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 public static class ListUtils
 {
+    public static bool IsEmpty<T>(this List<T> list)
+    {
+        return list.Count > 0; 
+    }
+
     // Checks that every single `Func<bool>` returns true
     // If the `list` is null or empty, return `null`
     public static bool? AllTrue(this List<Func<bool>> list)

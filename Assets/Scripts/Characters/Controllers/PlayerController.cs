@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-
 using UnityEngine;
 
 // Player controller class for movement
@@ -9,6 +8,10 @@ using UnityEngine;
 public class PlayerController :
     CharacterControllerBase, IEffectable
 {
+
+    [field: SerializeField]
+    private GameObject CurrentWeaponSlot;
+
     [HorizontalDivider]
     [Header("Character Data")]
 
@@ -18,16 +21,28 @@ public class PlayerController :
     [SerializeField]
     private Stats _playerStats;
 
+    //For debug
+    [SerializeField]
+    private BowWeaponItem _weaponItemTest;
+
+    private ItemBase _currentlyHolding;
+    private Animator _weaponAnimator;
+    private SpriteRenderer _weaponDisplay;
     private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyPressed;
 
-    IStatContainer IEffectable.EntityStats => _playerStats;
+    public IStatContainer EntityStats => _playerStats;
 
     public void TakeDamage(Damage damage)
     {
         damage.OnApply(this);
+
+        if (_playerStats.GetStat("Health").Value <= 0)
+        {
+            GameManager.Instance.ChangeGameState(GameState.Lose);
+        }
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -52,7 +67,14 @@ public class PlayerController :
     {
         base.Start();
 
+        _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
+        _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
+        
+        // For debug
+        Equip(_weaponItemTest);
+
         SetupStateMachine();
+
 
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
@@ -133,6 +155,11 @@ public class PlayerController :
         _stateMachine.Enter();
     }
 
+    private void Awake()
+    {
+        WeaponDamage.OnWeaponHit += DealDamage;
+    }
+
     private void Update()
     {
         UpdateInputs();
@@ -158,13 +185,34 @@ public class PlayerController :
 
         if (_horizontalInput != 0)
         {
-            _spriteRenderer.flipX = _horizontalInput < 0;
+            transform.localScale = new(_horizontalInput, transform.localScale.y, transform.localScale.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (_currentlyHolding is ISwordWeapon swordWeapon)
+            {
+                _weaponAnimator.Play(swordWeapon.AnimationName);
+                _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
+            }
+            if (_currentlyHolding is IBowWeapon bowWeapon)
+            {
+                _weaponAnimator.Play(bowWeapon.AnimationName);
+                _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
+            }
+            if (_currentlyHolding is IBeginUseHandler beginUseHandler)
+            {
+                beginUseHandler.OnUseEnter();
+            }
         }
     }
 
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
+
+        // Replace when item pickup is integrated with player
+        Equip(_weaponItemTest);
     }
 
     private void UpdateInputs()
@@ -175,5 +223,21 @@ public class PlayerController :
         }
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    private void DealDamage(IEffectable effectable)
+    {
+        effectable.TakeDamage(_weaponItemTest.WeaponDamageType);
+
+        if (_weaponItemTest.WeaponStatusEffect)
+        {
+            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect);
+        }
+    }
+
+    private void Equip(WeaponBase itemToEquip)
+    {
+        _weaponDisplay.sprite = itemToEquip.Sprite;
+        _currentlyHolding = itemToEquip;
     }
 }

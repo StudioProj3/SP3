@@ -16,6 +16,9 @@ public class PlayerPickup :
                 "component on the gameobject");
 
             ItemBase item = collectible.Item;
+            Sprite sprite = item.Sprite;
+            string name = item.Name;
+
             uint quantity = collectible.Quantity;
 
             // Pickup inventory when the inventory slot is empty
@@ -34,6 +37,8 @@ public class PlayerPickup :
 
                 other.gameObject.SetActive(false);
 
+                _notification.Collect(sprite, name);
+
                 return;
             }
 
@@ -47,6 +52,8 @@ public class PlayerPickup :
                 if (tryPickup)
                 {
                     other.gameObject.SetActive(false);
+
+                    _notification.Collect(sprite, name);
                 }
             }
             // Attempt to pickup into left and/or right hand
@@ -55,5 +62,10 @@ public class PlayerPickup :
 
             }
         }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
     }
 }

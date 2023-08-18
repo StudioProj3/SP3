@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Damage : ScriptableObject
 {
-    [SerializeField]
+    [field: SerializeField]
     protected float _damage;
 
     public abstract void OnApply(IEffectable entityStats);

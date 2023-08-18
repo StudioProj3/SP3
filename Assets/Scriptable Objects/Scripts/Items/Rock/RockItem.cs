@@ -4,5 +4,8 @@ using UnityEngine;
     menuName = "Scriptable Objects/Items/Rock")]
 public class RockItem : ItemBase
 {
-
+    public RockItem()
+    {
+        Name = "Rock";
+    }
 }

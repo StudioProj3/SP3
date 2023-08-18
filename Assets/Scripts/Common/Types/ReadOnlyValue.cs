@@ -30,6 +30,6 @@ public class ReadOnlyValue : IValue
 
     public object Clone()
     {
-        throw new System.NotImplementedException();
+        return new ReadOnlyValue(_value);
     }
 }
