@@ -6,7 +6,6 @@ public class SpeedMultiplierEffect : StatusEffectBase
 {
     public float movementPenalty;
 
-    private float _currentEffectTime = 0;
     private Modifier _movementModifier;
 
     private void OnEnable()
@@ -46,13 +45,10 @@ public class SpeedMultiplierEffect : StatusEffectBase
         stats.GetStat("MoveSpeed").AddModifier(_movementModifier);
         
         IsDone = false;
-        _currentEffectTime = 0;
     }
 
     public override void HandleEffect(IEffectable effectable) 
     {
-        //_currentEffectTime += Time.deltaTime;
-
         _ = Delay.Execute(() =>
         {
             IsDone = true;

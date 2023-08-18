@@ -53,12 +53,13 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.CompareTag("Player"))
         { 
-            _playerController.TakeDamage(_phyDamage);
+            Vector3 knockbackForce = (col.transform.position - transform.position).normalized * 5;
+            _playerController.TakeDamage(_phyDamage, knockbackForce);
             RemoveProjectile();
         }
-        else if (col.gameObject.tag == "Scene Object")
+        else if (col.gameObject.CompareTag("Scene Object"))
         {
             RemoveProjectile();
         }
