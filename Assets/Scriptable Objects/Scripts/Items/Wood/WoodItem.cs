@@ -10,4 +10,8 @@ public class WoodItem : ItemBase
     [field: SerializeField]
     public CurrencyCost CurrencyCost { get; protected set; }
 
+    public WoodItem()
+    {
+        Name = "Wood";
+    }
 }
