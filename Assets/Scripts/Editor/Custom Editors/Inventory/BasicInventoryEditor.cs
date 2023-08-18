@@ -1,28 +1,14 @@
 using UnityEditor;
 
 [CustomEditor(typeof(BasicInventory))]
-public class BasicInventoryEditor : Editor
+public class BasicInventoryEditor : ReorderEditor
 {
-    private SerializedProperty _itemInitializerList;
-    private SerializedProperty _maxNumSlots;
-    private SerializedProperty _maxPerSlot;
-
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        _itemInitializerList = serializedObject.
-            FindProperty("_itemInitializerList");
-        _maxNumSlots = serializedObject.
-            FindProperty("<MaxNumSlots>k__BackingField");
-        _maxPerSlot = serializedObject.
-            FindProperty("<MaxPerSlot>k__BackingField");
-    }
+        base.OnEnable();
 
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-        EditorGUILayout.PropertyField(_maxNumSlots);
-        EditorGUILayout.PropertyField(_maxPerSlot);
-        EditorGUILayout.PropertyField(_itemInitializerList);
-        serializedObject.ApplyModifiedProperties();
+        AddProperty("MaxNumSlots");
+        AddProperty("MaxPerSlot");
+        AddField("_itemInitializerList");
     }
 }
