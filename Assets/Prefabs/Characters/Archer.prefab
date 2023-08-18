@@ -117,6 +117,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifetime: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!65 &7631282667804642085
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -247,6 +250,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifetime: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!65 &3877268281072708055
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -411,6 +417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifetime: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!65 &3809579340990436599
 BoxCollider:
   m_ObjectHideFlags: 0
