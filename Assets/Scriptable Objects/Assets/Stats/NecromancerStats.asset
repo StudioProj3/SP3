@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statInitializerList: []
   _instancedStatInitializerList:
-  - rid: 8269461436494774279
+  - rid: 8269461446570541058
   - rid: 8269461383876968449
   - rid: 8269461383876968450
   - rid: 8269461383876968451
@@ -42,8 +42,9 @@ MonoBehaviour:
       data:
         type: {fileID: 11400000, guid: 54790303e6a70064c9d0bdc5056fd391, type: 2}
         initialValue: 15
-    - rid: 8269461436494774279
-      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+    - rid: 8269461446570541058
+      type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
         initialValue: 60
+        initialLowerBoundValue: 0
