@@ -2,12 +2,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+using static DebugUtils;
+
 public class UINotification : MonoBehaviour
 {
     public enum Layout
     {
         SpriteText,
         FullText,
+    }
+
+    public enum BackgroundColor
+    {
+        Normal,
+        Red,
     }
 
     private Animator _animator;
@@ -18,14 +26,13 @@ public class UINotification : MonoBehaviour
     private RectTransform _notifTextTransform;
 
     private Layout _currentLayout = Layout.SpriteText;
+    private BackgroundColor _currentColor = BackgroundColor.Normal;
 
     public void Collect(Sprite sprite, string name,
         uint quantity = 1, bool forceWrap = false)
     {
-        if (_currentLayout != Layout.SpriteText)
-        {
-            SpriteTextLayout();
-        }
+        SwitchLayout(Layout.SpriteText);
+        SwitchColor(BackgroundColor.Normal);
 
         _itemIcon.sprite = sprite;
         _notificationText.text = "Collected " + quantity +
@@ -36,10 +43,8 @@ public class UINotification : MonoBehaviour
 
     public void Alert(string message)
     {
-        if (_currentLayout != Layout.FullText)
-        {
-            FullTextLayout();
-        }
+        SwitchLayout(Layout.FullText);
+        SwitchColor(BackgroundColor.Normal);
 
         _notificationText.text = message;
 
@@ -48,9 +53,12 @@ public class UINotification : MonoBehaviour
 
     public void Error(string message)
     {
-        _background.color = Color.red;
+        SwitchLayout(Layout.FullText);
+        SwitchColor(BackgroundColor.Red);
 
-        Alert(message);
+        _notificationText.text = message;
+
+        _animator.SetTrigger("showNotification");
     }
 
     private void Awake()
@@ -90,5 +98,71 @@ public class UINotification : MonoBehaviour
             _notifTextTransform.anchoredPosition.Set(x: -250f);
         _notifTextTransform.sizeDelta =
             _notifTextTransform.sizeDelta.Set(x: 470f);
+    }
+
+    private void SwitchLayout(Layout newLayout)
+    {
+        // The layout is already correct, no
+        // more action needs to be done, return
+        if (_currentLayout == newLayout)
+        {
+            return;
+        }
+
+        switch (newLayout)
+        {
+            case Layout.SpriteText:
+                SpriteTextLayout();
+                break;
+
+            case Layout.FullText:
+                FullTextLayout();
+                break;
+
+            default:
+                Fatal("Unhandled layout type");
+                break;
+        }
+    }
+
+    private void NormalColor()
+    {
+        _currentColor = BackgroundColor.Normal;
+
+        _background.color = _background.color.
+            Set(1f, 1f, 1f);
+    }
+
+    private void RedColor()
+    {
+        _currentColor = BackgroundColor.Red;
+
+        _background.color = _background.color.
+            Set(1f, 0.53f, 0.53f);
+    }
+
+    private void SwitchColor(BackgroundColor newColor)
+    {
+        // The color is already correct, no
+        // more action needs to be done, return
+        if (_currentColor == newColor)
+        {
+            return;
+        }
+
+        switch (newColor)
+        {
+            case BackgroundColor.Normal:
+                NormalColor();
+                break;
+
+            case BackgroundColor.Red:
+                RedColor();
+                break;
+
+            default:
+                Fatal("Unhandled color type");
+                break;
+        }
     }
 }
