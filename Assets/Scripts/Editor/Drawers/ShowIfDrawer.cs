@@ -55,6 +55,11 @@ public class ShowIfDrawer : PropertyDrawer
         else if (showIfAttribute.DisableType ==
             ShowIfAttribute.Type.Hide)
         {
+            // HACK (Cheng Jun): To remove the circle of the object
+            // picker since that does not seem to go away even with
+            // a height of 0
+            position.y = 10000f;
+
             GUI.enabled = false;
             EditorGUI.PropertyField(position, property);
             GUI.enabled = true;
