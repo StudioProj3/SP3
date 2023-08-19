@@ -11,13 +11,12 @@ public class UIHUDStatBar : MonoBehaviour
 
     private RectMask2D _statBarLeft;
     private RectMask2D _statBarRight;
-
     private float _length;
+    private IModifiableValue _value;
 
     private void Update()
     {
-        IModifiableValue value = _stats.GetStat(_statType);
-        float ratio = value.Value / value.Max;
+        float ratio = _value.Value / _value.Max;
 
         float padding = (1f - ratio) * _length;
 
@@ -33,5 +32,6 @@ public class UIHUDStatBar : MonoBehaviour
             GetComponent<RectMask2D>();
 
         _length = _statBarLeft.rectTransform.sizeDelta.x;
+        _value = _stats.GetStat(_statType);
     }
 }
