@@ -7749,6 +7749,7 @@ GameObject:
   - component: {fileID: 548169921}
   - component: {fileID: 548169923}
   - component: {fileID: 548169922}
+  - component: {fileID: 548169924}
   m_Layer: 5
   m_Name: Sanity Display
   m_TagString: Untagged
@@ -7873,6 +7874,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548169920}
   m_CullTransparentMesh: 1
+--- !u!114 &548169924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548169920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c97505bb739a23488b9df583c341538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
+  _statType: {fileID: 11400000, guid: ae32616fa6e751f4e85f7639dfe65e40, type: 2}
 --- !u!1 &549143452
 GameObject:
   m_ObjectHideFlags: 0
@@ -35838,6 +35853,7 @@ GameObject:
   - component: {fileID: 1348248655}
   - component: {fileID: 1348248657}
   - component: {fileID: 1348248656}
+  - component: {fileID: 1348248658}
   m_Layer: 5
   m_Name: Health Display
   m_TagString: Untagged
@@ -35962,6 +35978,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348248654}
   m_CullTransparentMesh: 1
+--- !u!114 &1348248658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348248654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c97505bb739a23488b9df583c341538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
+  _statType: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
 --- !u!1001 &1359858591
 PrefabInstance:
   m_ObjectHideFlags: 0
