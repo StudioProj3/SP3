@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statInitializerList:
   - rid: 1976639655321272360
+  - rid: 789197994644209664
   - rid: 4735661783682383872
   - rid: 4735661783682383877
   - rid: 4735661783682383878
@@ -21,6 +22,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 789197994644209664
+      type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: ae32616fa6e751f4e85f7639dfe65e40, type: 2}
+        initialValue: 100
+        initialLowerBoundValue: 0
     - rid: 1976639655321272360
       type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
       data:
