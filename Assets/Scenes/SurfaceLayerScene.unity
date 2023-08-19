@@ -6719,6 +6719,7 @@ GameObject:
   m_Component:
   - component: {fileID: 509510713}
   - component: {fileID: 509510712}
+  - component: {fileID: 509510714}
   m_Layer: 6
   m_Name: Mountain 1
   m_TagString: Scene Object
@@ -6793,6 +6794,19 @@ Transform:
   m_Father: {fileID: 818877033}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &509510714
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509510711}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 4, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &512454385
 GameObject:
   m_ObjectHideFlags: 0
@@ -7182,6 +7196,7 @@ GameObject:
   - component: {fileID: 538874941}
   - component: {fileID: 538874943}
   - component: {fileID: 538874942}
+  - component: {fileID: 538874944}
   m_Layer: 6
   m_Name: Red Tree
   m_TagString: Scene Object
@@ -7215,8 +7230,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4375, y: 0.4375, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.53125, y: 1.6, z: 0.4}
+  m_Center: {x: 0, y: 0.31, z: 0}
 --- !u!212 &538874943
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7269,6 +7284,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &538874944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538874940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 2.34375, z: 0.4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &544175054
 GameObject:
   m_ObjectHideFlags: 0
@@ -36811,8 +36839,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.875, y: 0.6484375, z: 0.3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.875, y: 0.6484375, z: 0.4}
+  m_Center: {x: 0, y: 0, z: -0.075}
 --- !u!212 &1536840742
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38085,6 +38113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1634192553}
   - component: {fileID: 1634192552}
+  - component: {fileID: 1634192554}
   m_Layer: 6
   m_Name: Mountain 2
   m_TagString: Scene Object
@@ -38159,6 +38188,19 @@ Transform:
   m_Father: {fileID: 818877033}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1634192554
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634192551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 4, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1636693594
 GameObject:
   m_ObjectHideFlags: 0
@@ -39962,8 +40004,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.33, y: 4.34375, z: 0.4}
-  m_Center: {x: -0.05, y: 0, z: 0}
+  m_Size: {x: 1.33, y: 4.34375, z: 0.6}
+  m_Center: {x: -0.05, y: 0, z: -0.1}
 --- !u!65 &1778864859
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39975,7 +40017,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.484375, y: 3, z: 0.4}
+  m_Size: {x: 4.484375, y: 3, z: 0.6}
   m_Center: {x: 0, y: 0.57, z: 0}
 --- !u!1 &1780294045
 GameObject:
@@ -40212,6 +40254,7 @@ GameObject:
   - component: {fileID: 1820707899}
   - component: {fileID: 1820707898}
   - component: {fileID: 1820707900}
+  - component: {fileID: 1820707901}
   m_Layer: 6
   m_Name: Waterfall
   m_TagString: Scene Object
@@ -40307,6 +40350,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &1820707901
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820707897}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1833687379
 GameObject:
   m_ObjectHideFlags: 0
@@ -40436,14 +40492,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840451990}
-  m_LocalRotation: {x: -0, y: -0.6002346, z: -0, w: 0.799824}
-  m_LocalPosition: {x: -17.84, y: -0.41, z: -9.52}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -18.13, y: -0.41, z: -9.39}
   m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 818877033}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: -73.773, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &1840451992
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40452,7 +40508,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840451990}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.78125, y: 1.375, z: 0.2}
