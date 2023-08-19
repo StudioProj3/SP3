@@ -142,7 +142,7 @@ public class HealTurretController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()

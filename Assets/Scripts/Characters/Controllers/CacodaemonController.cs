@@ -166,7 +166,8 @@ public class CacodaemonController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0f;
+        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
+
     }
 
     private void FixedUpdate()
