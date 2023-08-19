@@ -14,17 +14,17 @@ public class ArrowController : MonoBehaviour
 
     private float _currentLifetime;
     private Vector3 _direction;
-    private Damage _phyDamage;
+    private Damage _damage;
     private Transform _source;
     private Rigidbody _rigidbody;
     private SpriteRenderer _spriteRenderer;
 
-    public void Init(Vector3 direction, Damage phyDamage, 
+    public void Init(Vector3 direction, Damage damage, 
         Transform source, Sprite sprite)
     {
         gameObject.SetActive(true);
         _direction = direction;
-        _phyDamage = phyDamage;
+        _damage = damage;
         _source = source;
 
         _rigidbody.velocity = _direction * _speed;
@@ -39,14 +39,14 @@ public class ArrowController : MonoBehaviour
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        transform.rotation = Quaternion.Euler(90, angle, 0);
     }
-    public void Init(Vector3 direction, Damage phyDamage, 
+    public void Init(Vector3 direction, Damage damage, 
         Transform source)
     {
         gameObject.SetActive(true);
         _direction = direction;
-        _phyDamage = phyDamage;
+        _damage = damage;
         _source = source;
 
         _rigidbody.velocity = _direction * _speed;
@@ -78,11 +78,13 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        Debug.Log(collider);
         if (collider.TryGetComponent<IEffectable>(out var effectable) &&
             (targetLayer.value & 1 << collider.gameObject.layer) != 0)
         {
-            Vector3 knockbackForce = _direction * 2.5f;
-            effectable.TakeDamage(_phyDamage, knockbackForce);
+            Debug.Log("Hit:" + effectable);
+            Vector3 knockbackForce = _direction * 1.5f;
+            effectable.TakeDamage(_damage, knockbackForce);
             RemoveProjectile();
         }
         else if (collider.gameObject.CompareTag("Scene Object"))

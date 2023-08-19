@@ -34,6 +34,8 @@ public class PlayerController :
     private GameObject _pooledArrows;
     private List<ArrowController> _pooledArrowList;
     private List<StatusEffectBase> _statusEffects = new();
+    private Vector3 _mousePositon;
+    private Plane _detectionPlane;
 
     public IStatContainer EntityStats => _playerStats;
 
@@ -80,6 +82,8 @@ public class PlayerController :
         {
             _pooledArrowList.Add(child.GetComponent<ArrowController>());
         }
+
+        _detectionPlane = new Plane(Vector3.up, 0);
         
         // For debug
         Equip(_weaponItemTest);
@@ -174,6 +178,7 @@ public class PlayerController :
     private void Update()
     {
         UpdateInputs();
+        CalculateMousePos();
 
         _animator.SetBool("isRunning", 
             _stateMachine.CurrentState.StateID == "Walk");
@@ -211,12 +216,14 @@ public class PlayerController :
                 _weaponAnimator.Play(bowWeapon.AnimationName);
                 _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
 
-                Vector3 shootDirection = transform.forward;
+                Vector3 aimDirection = _mousePositon - _rigidbody.position;
+                Vector3 shootDirection = new(aimDirection.x, 0, aimDirection.z);
                 for (int i = 0; i < _pooledArrowList.Count; i++)
                     {
                         if (!_pooledArrowList[i].gameObject.activeSelf)
                         {
-                            bowWeapon.Shoot(_pooledArrowList[i], shootDirection, _pooledArrows.transform);
+                            bowWeapon.Shoot(_pooledArrowList[i], shootDirection.normalized, _pooledArrows.transform);
+                            break;
                         }
                     }
                 }
@@ -225,8 +232,6 @@ public class PlayerController :
                 beginUseHandler.OnUseEnter();
             }
         }
-
-        Debug.Log(_playerStats.GetStat("Health").Value);
     }
 
     private void FixedUpdate()
@@ -264,5 +269,15 @@ public class PlayerController :
     {
         _weaponDisplay.sprite = itemToEquip.Sprite;
         _currentlyHolding = itemToEquip;
+    }
+
+    private void CalculateMousePos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (_detectionPlane.Raycast(ray, out float distance))
+        {
+            _mousePositon = ray.GetPoint(distance);
+        }
     }
 }

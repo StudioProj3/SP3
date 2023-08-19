@@ -7,5 +7,5 @@ public interface IBowWeapon :
 
     ItemBase Projectile {get;}
 
-    void Shoot(ArrowController projectile, Vector3 direction,Transform source);
+    void Shoot(ArrowController projectile, Vector3 direction, Transform source);
 }
