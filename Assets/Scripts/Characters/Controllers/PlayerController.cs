@@ -17,17 +17,20 @@ public class PlayerController :
     [SerializeField]
     private Stats _playerStats;
 
-    private ItemBase _currentlyHolding;
-    private Animator _weaponAnimator;
+    [SerializeField]
     private SpriteRenderer _weaponDisplay;
+
+    private ItemBase _currentlyHolding;
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyPressed;
     private GameObject _pooledArrows;
+    private Transform _heldItemContainer;
     private List<ArrowController> _pooledArrowList;
     private List<StatusEffectBase> _statusEffects = new();
     private Vector3 _mousePositon;
     private Plane _detectionPlane;
+    private Quaternion _weaponFlipAngle;
 
     public IStatContainer EntityStats => _playerStats;
 
@@ -64,9 +67,6 @@ public class PlayerController :
     {
         base.Start();
 
-        _weaponAnimator = transform.GetChild(0).GetComponent<Animator>();
-        _weaponDisplay = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
         _pooledArrows = transform.GetChild(1).gameObject;
         _pooledArrowList = new List<ArrowController>();
 
@@ -78,6 +78,9 @@ public class PlayerController :
         _detectionPlane = new Plane(Vector3.up, 0);
 
         SetupStateMachine();
+
+        _heldItemContainer = transform.GetChild(0);
+        _weaponFlipAngle = Quaternion.Euler(0, -360, 0);
 
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
@@ -190,18 +193,28 @@ public class PlayerController :
         if (_horizontalInput != 0)
         {
             transform.rotation = Quaternion.Euler(0, _horizontalInput < 0 ? 180 : 0, 0);
+            _heldItemContainer.transform.localScale = new(_horizontalInput, 1, 1);
+
+            if (_horizontalInput < 0)
+            {
+                _heldItemContainer.transform.rotation = _weaponFlipAngle;
+            }
+            else
+            {
+                _heldItemContainer.transform.rotation = Quaternion.identity;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
-                _weaponAnimator.Play(swordWeapon.AnimationName);
+                _animator.Play(swordWeapon.AnimationName);
                 _rigidbody.AddForce(2 * transform.right , ForceMode.Impulse);
             }
             if (_currentlyHolding is IBowWeapon bowWeapon)
             {
-                _weaponAnimator.Play(bowWeapon.AnimationName);
+                _animator.Play(bowWeapon.AnimationName);
                 _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
 
                 Vector3 aimDirection = _mousePositon - _rigidbody.position;
