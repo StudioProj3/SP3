@@ -201,7 +201,7 @@ public class PlayerController :
 
         if (_horizontalInput != 0)
         {
-            transform.localScale = new(_horizontalInput, transform.localScale.y, transform.localScale.z);
+            transform.rotation = Quaternion.Euler(0, _horizontalInput < 0 ? 180 : 0, 0);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))

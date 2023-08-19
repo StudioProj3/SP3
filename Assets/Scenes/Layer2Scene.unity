@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028386, g: 0.22571427, b: 0.3069231, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
+  m_BindingMode: 0
   m_FollowOffset: {x: 0, y: 1.5, z: -2.7}
   m_XDamping: 1
   m_YDamping: 1
@@ -2208,6 +2208,41 @@ PrefabInstance:
       propertyPath: targetLayer.m_Bits
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.6886792
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.6886792
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.6886792
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130153164828319793, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
+        type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8130153164828319794, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
         type: 3}
       propertyPath: m_RootOrder
@@ -2216,17 +2251,17 @@ PrefabInstance:
     - target: {fileID: 8130153164828319794, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.44
+      value: -1.937
       objectReference: {fileID: 0}
     - target: {fileID: 8130153164828319794, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.84905213
+      value: 0.837
       objectReference: {fileID: 0}
     - target: {fileID: 8130153164828319794, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.5
+      value: 3.1
       objectReference: {fileID: 0}
     - target: {fileID: 8130153164828319794, guid: 6f1189015c5dd4c4fb1944bbf69b3ff0,
         type: 3}
@@ -2916,6 +2951,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1771517191}
     m_Modifications:
+    - target: {fileID: 1735807020, guid: 86133b613247f314abf7a7f7d66b9a36, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 383
+      objectReference: {fileID: 0}
     - target: {fileID: 5377891213093689347, guid: 86133b613247f314abf7a7f7d66b9a36,
         type: 3}
       propertyPath: m_Name
