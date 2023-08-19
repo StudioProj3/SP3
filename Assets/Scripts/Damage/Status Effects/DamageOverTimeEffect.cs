@@ -7,17 +7,20 @@ public class DamageOverTimeEffect : StatusEffectBase
     [SerializeField]
     protected float _dotAmount;
 
-    private float _currentEffectTime = 0;
-    private float _nextTickTime = 1;
+    private float _currentEffectTime = 0f;
+    private float _nextTickTime = 1f;
 
-    public static DamageOverTimeEffect Create(float duration = 0, float tickSpeed = 0, float dotAmount = 0)
+    public static DamageOverTimeEffect Create(float duration = 0,
+        float tickSpeed = 0, float dotAmount = 0)
     {
-        return CreateInstance<DamageOverTimeEffect>().Init(duration, tickSpeed, dotAmount);
+        return CreateInstance<DamageOverTimeEffect>().
+            Init(duration, tickSpeed, dotAmount);
     }
 
     public static DamageOverTimeEffect Create(DamageOverTimeEffect effect)
     {
-        return CreateInstance<DamageOverTimeEffect>().Init(effect._duration, effect._tickSpeed, effect._dotAmount);
+        return CreateInstance<DamageOverTimeEffect>().
+            Init(effect._duration, effect._tickSpeed, effect._dotAmount);
     }
 
     public override StatusEffectBase Clone()
@@ -25,19 +28,22 @@ public class DamageOverTimeEffect : StatusEffectBase
         return Create(this);
     }
 
-    private DamageOverTimeEffect Init(float duration, float tickSpeed, float dotAmount)
+    private DamageOverTimeEffect Init(float duration,
+        float tickSpeed, float dotAmount)
     {
         IsDone = false;
+
         _duration = duration;
         _tickSpeed = tickSpeed;
         _dotAmount = dotAmount; 
+
         return this;
     }
-
 
     public override void OnApply(IEffectable effectable)
     {
         IsDone = false;
+
         _currentEffectTime = 0;
         _nextTickTime = 1;
     }
