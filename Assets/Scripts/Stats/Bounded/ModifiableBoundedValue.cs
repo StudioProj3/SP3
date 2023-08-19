@@ -1,6 +1,6 @@
 using System;
 
-public class BoundedModifiableValue :
+public class ModifiableBoundedValue :
     IModifiableValue
 {
     public float Max => _modifiableValue.Value;
@@ -35,7 +35,7 @@ public class BoundedModifiableValue :
         ValueChanged?.Invoke();
     }
 
-    public BoundedModifiableValue(BoundedValue value,
+    public ModifiableBoundedValue(BoundedValue value,
         ModifiableValue modifiableValue)
     {
         _boundedValue = value;
@@ -57,7 +57,7 @@ public class BoundedModifiableValue :
 
     public object Clone()
     {
-        return new BoundedModifiableValue(
+        return new ModifiableBoundedValue(
             _boundedValue.Clone() as BoundedValue,
             _modifiableValue.Clone() as ModifiableValue);
     }

@@ -35,7 +35,7 @@ public class Stats :
         {
             ModifiableValue modifiableValue = new(initialValue);
             return new KeyValuePair<StatType, IModifiableValue>(type,
-                new BoundedModifiableValue(
+                new ModifiableBoundedValue(
                     new BoundedValue(
                         new ReadOnlyValue(initialLowerBoundValue),
                         modifiableValue
