@@ -1,7 +1,7 @@
 using UnityEditor;
 
 [CustomEditor(typeof(BasicInventory))]
-public class BasicInventoryEditor : ReorderEditor
+public class BasicInventoryEditor : ReorderEditorBase
 {
     protected override void OnEnable()
     {

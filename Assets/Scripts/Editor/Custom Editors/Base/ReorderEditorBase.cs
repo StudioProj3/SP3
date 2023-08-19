@@ -4,7 +4,7 @@ using UnityEditor;
 
 using static DebugUtils;
 
-public abstract class ReorderEditor : Editor
+public abstract class ReorderEditorBase : Editor
 {
     public enum Type
     {
