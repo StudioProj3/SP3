@@ -29,7 +29,7 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
 
     public void Shoot(ArrowController projectileToFire, Vector3 direction, Transform source)
     {
-        projectileToFire.Init(direction, WeaponDamageType, source, Projectile.Sprite);
+        projectileToFire.Init(direction, WeaponDamageType, WeaponStatusEffect, source, Projectile.Sprite);
         projectileToFire.transform.position = source.position;
         projectileToFire.transform.SetParent(null);
     }

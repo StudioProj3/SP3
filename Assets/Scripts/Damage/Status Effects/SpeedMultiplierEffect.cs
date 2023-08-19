@@ -47,7 +47,6 @@ public class SpeedMultiplierEffect : StatusEffectBase
 
     public override void OnApply(IEffectable effectable)
     {
-        Debug.Log(_movementModifier);
         var stats = effectable.EntityStats;
         stats.GetStat("MoveSpeed").AddModifier(_movementModifier);
         

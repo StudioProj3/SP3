@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ArrowController : MonoBehaviour
@@ -15,17 +14,20 @@ public class ArrowController : MonoBehaviour
     private float _currentLifetime;
     private Vector3 _direction;
     private Damage _damage;
+    private StatusEffectBase _statusEffect;
     private Transform _source;
     private Rigidbody _rigidbody;
     private SpriteRenderer _spriteRenderer;
 
     public void Init(Vector3 direction, Damage damage, 
+        StatusEffectBase statusEffect, 
         Transform source, Sprite sprite)
     {
         gameObject.SetActive(true);
         _direction = direction;
         _damage = damage;
         _source = source;
+        _statusEffect = statusEffect;
 
         _rigidbody.velocity = _direction * _speed;
 
@@ -42,12 +44,14 @@ public class ArrowController : MonoBehaviour
         transform.rotation = Quaternion.Euler(90, angle, 0);
     }
     public void Init(Vector3 direction, Damage damage, 
+        StatusEffectBase statusEffect, 
         Transform source)
     {
         gameObject.SetActive(true);
         _direction = direction;
         _damage = damage;
         _source = source;
+        _statusEffect = statusEffect;
 
         _rigidbody.velocity = _direction * _speed;
 
@@ -78,13 +82,15 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log(collider);
         if (collider.TryGetComponent<IEffectable>(out var effectable) &&
             (targetLayer.value & 1 << collider.gameObject.layer) != 0)
         {
-            Debug.Log("Hit:" + effectable);
             Vector3 knockbackForce = _direction * 1.5f;
             effectable.TakeDamage(_damage, knockbackForce);
+            if (_statusEffect)
+            {
+                effectable.ApplyEffect(_statusEffect.Clone());
+            }
             RemoveProjectile();
         }
         else if (collider.gameObject.CompareTag("Scene Object"))

@@ -8,6 +8,9 @@ public class ArcherController :
     [SerializeField]
     private Stats _archerStats;
 
+    [SerializeField]
+    private StatusEffectBase _arrowStatusEffect;
+
     private GameObject _pooledArrows;
     private List<ArrowController> _pooledArrowList;
 
@@ -94,6 +97,7 @@ public class ArcherController :
                         if (!(_pooledArrowList[i].gameObject.activeSelf))
                         {
                             _pooledArrowList[i].Init(_direction, _phyDamage
+                                ,_arrowStatusEffect
                                 ,_pooledArrows.transform);
                             _pooledArrowList[i].transform.position =
                                 transform.position;
