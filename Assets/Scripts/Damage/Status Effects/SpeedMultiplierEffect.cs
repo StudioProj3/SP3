@@ -15,14 +15,17 @@ public class SpeedMultiplierEffect : StatusEffectBase
         // with the movement modifier.
     }
 
-    public static SpeedMultiplierEffect Create(float duration = 0, float movementPenalty = 0)
+    public static SpeedMultiplierEffect Create(float duration = 0,
+        float movementPenalty = 0)
     {
-        return CreateInstance<SpeedMultiplierEffect>().Init(duration, movementPenalty);
+        return CreateInstance<SpeedMultiplierEffect>().
+            Init(duration, movementPenalty);
     }
 
     public static SpeedMultiplierEffect Create(SpeedMultiplierEffect effect)
     {
-        return CreateInstance<SpeedMultiplierEffect>().Init(effect._duration, effect._movementPenalty);
+        return CreateInstance<SpeedMultiplierEffect>().
+            Init(effect._duration, effect._movementPenalty);
     }
 
     public override StatusEffectBase Clone()
@@ -30,12 +33,15 @@ public class SpeedMultiplierEffect : StatusEffectBase
         return Create(this);
     }
 
-    private SpeedMultiplierEffect Init(float duration, float movementPenalty)
+    private SpeedMultiplierEffect Init(float duration,
+        float movementPenalty)
     {
         IsDone = false;
+
         _duration = duration;
         _movementPenalty = movementPenalty; 
         _movementModifier = Modifier.Multiply(movementPenalty, 25);
+
         return this;
     }
 
@@ -58,7 +64,6 @@ public class SpeedMultiplierEffect : StatusEffectBase
 
     public override void OnExit(IEffectable effectable) 
     {
-
         var stats = effectable.EntityStats;
         stats.GetStat("MoveSpeed").RemoveModifier(_movementModifier);
     }
