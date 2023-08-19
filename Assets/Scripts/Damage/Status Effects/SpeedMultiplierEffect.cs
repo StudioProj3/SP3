@@ -4,7 +4,8 @@ using UnityEngine;
     menuName = "Scriptable Objects/Status Effect/SpeedMultiplierEffect")]
 public class SpeedMultiplierEffect : StatusEffectBase
 {
-    public float movementPenalty;
+    [SerializeField]
+    protected float _movementPenalty;
 
     private Modifier _movementModifier;
 
@@ -21,7 +22,7 @@ public class SpeedMultiplierEffect : StatusEffectBase
 
     public static SpeedMultiplierEffect Create(SpeedMultiplierEffect effect)
     {
-        return CreateInstance<SpeedMultiplierEffect>().Init(effect.duration, effect.movementPenalty);
+        return CreateInstance<SpeedMultiplierEffect>().Init(effect._duration, effect._movementPenalty);
     }
 
     public override StatusEffectBase Clone()
@@ -32,8 +33,8 @@ public class SpeedMultiplierEffect : StatusEffectBase
     private SpeedMultiplierEffect Init(float duration, float movementPenalty)
     {
         IsDone = false;
-        this.duration = duration;
-        this.movementPenalty = movementPenalty; 
+        _duration = duration;
+        _movementPenalty = movementPenalty; 
         _movementModifier = Modifier.Multiply(movementPenalty, 25);
         return this;
     }
@@ -52,7 +53,7 @@ public class SpeedMultiplierEffect : StatusEffectBase
         _ = Delay.Execute(() =>
         {
             IsDone = true;
-        }, duration);
+        }, _duration);
     }
 
     public override void OnExit(IEffectable effectable) 
