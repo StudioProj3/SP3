@@ -15,7 +15,7 @@ public class MagicDamage : Damage
         return this;
     }
 
-    // `OnApply` is in 'TakeDamage' implemented from `IDamageable`
+    // `OnApply` is in `TakeDamage` implemented from `IDamageable`
     // `damage.OnApply(_playerStats)`
     public override void OnApply(IEffectable effectable)
     {
