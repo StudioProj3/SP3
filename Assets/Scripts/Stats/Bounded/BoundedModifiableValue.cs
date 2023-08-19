@@ -3,9 +3,7 @@ using System;
 public class BoundedModifiableValue :
     IModifiableValue
 {
-    public float Max => _modifiableValue.Value;
     public float Value => _boundedValue.Value;
-
     public event Action ValueChanged;
 
     private readonly BoundedValue _boundedValue;

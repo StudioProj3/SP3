@@ -24,8 +24,6 @@ public class ModifiableValue : IModifiableValue
         }
     }
 
-    public float Max => Value;
-
     public event Action ValueChanged;
 
     // TODO (Chris): Change to a sorted number
