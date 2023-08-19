@@ -33,6 +33,11 @@ public abstract class InventoryBase :
         _nonStackableIndexToNewValueMap.Clear();
     }
 
+    public virtual ItemBase GetItem(int index)
+    {
+        return _allItems[index].Key;
+    }
+
     // Function returns whether the modification request is valid
     // and caches the data needed for the modification
     protected virtual bool RequestModify(ItemBase item, int number)

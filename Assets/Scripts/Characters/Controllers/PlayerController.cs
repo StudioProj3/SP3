@@ -8,10 +8,6 @@ using UnityEngine;
 public class PlayerController :
     CharacterControllerBase, IEffectable
 {
-
-    [field: SerializeField]
-    private GameObject CurrentWeaponSlot;
-
     [HorizontalDivider]
     [Header("Character Data")]
 
@@ -20,10 +16,6 @@ public class PlayerController :
 
     [SerializeField]
     private Stats _playerStats;
-
-    //For debug
-    [SerializeField]
-    private BowWeaponItem _weaponItemTest;
 
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
@@ -72,8 +64,8 @@ public class PlayerController :
     {
         base.Start();
 
-        _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
-        _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
+        _weaponAnimator = transform.GetChild(0).GetComponent<Animator>();
+        _weaponDisplay = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         _pooledArrows = transform.GetChild(1).gameObject;
         _pooledArrowList = new List<ArrowController>();
@@ -84,12 +76,8 @@ public class PlayerController :
         }
 
         _detectionPlane = new Plane(Vector3.up, 0);
-        
-        // For debug
-        Equip(_weaponItemTest);
 
         SetupStateMachine();
-
 
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
@@ -209,7 +197,7 @@ public class PlayerController :
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 _weaponAnimator.Play(swordWeapon.AnimationName);
-                _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
+                _rigidbody.AddForce(2 * transform.right , ForceMode.Impulse);
             }
             if (_currentlyHolding is IBowWeapon bowWeapon)
             {
@@ -239,7 +227,7 @@ public class PlayerController :
         _stateMachine.FixedUpdate();
 
         // Replace when item pickup is integrated with player
-        Equip(_weaponItemTest);
+        Equip(_playerData.HandInventory.GetItem(0));
     }
 
     private void UpdateInputs()
@@ -254,21 +242,27 @@ public class PlayerController :
 
     private void DealDamage(IEffectable effectable, Vector3 hitPos)
     {
-        Vector3 knockbackForce = 
-                (hitPos - transform.position).normalized *
-                _playerStats.GetStat("Knockback").Value;
-        effectable.TakeDamage(_weaponItemTest.WeaponDamageType, knockbackForce);
-
-        if (_weaponItemTest.WeaponStatusEffect)
+        if (_currentlyHolding is WeaponBase weapon)
         {
-            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect.Clone());
+            Vector3 knockbackForce = 
+                    (hitPos - transform.position).normalized *
+                    weapon.WeaponStats.GetStat("Knockback").Value;
+            effectable.TakeDamage(weapon.WeaponDamageType, knockbackForce);
+
+            if (weapon.WeaponStatusEffect)
+            {
+                effectable.ApplyEffect(weapon.WeaponStatusEffect.Clone());
+            }
         }
     }
 
-    private void Equip(WeaponBase itemToEquip)
+    private void Equip(ItemBase itemToEquip)
     {
-        _weaponDisplay.sprite = itemToEquip.Sprite;
-        _currentlyHolding = itemToEquip;
+        if (itemToEquip)
+        {
+            _weaponDisplay.sprite = itemToEquip.Sprite;
+            _currentlyHolding = itemToEquip;   
+        }
     }
 
     private void CalculateMousePos()
