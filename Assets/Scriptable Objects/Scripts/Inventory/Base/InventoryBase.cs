@@ -35,7 +35,7 @@ public abstract class InventoryBase :
 
     public virtual ItemBase GetItem(int index)
     {
-        return _allItems[index].Key;
+        return _allItems[index]?.Key;
     }
 
     // Function returns whether the modification request is valid
