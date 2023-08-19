@@ -10222,7 +10222,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -45185,6 +45185,7 @@ GameObject:
   - component: {fileID: 2057886507}
   - component: {fileID: 2057886506}
   - component: {fileID: 2057886508}
+  - component: {fileID: 2057886509}
   m_Layer: 5
   m_Name: Health Header Background
   m_TagString: Untagged
@@ -45261,7 +45262,7 @@ Animator:
   m_GameObject: {fileID: 2057886504}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9691c8577e20cfb41aa3eaaa9fcbcaa7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -45272,6 +45273,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2057886509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057886504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a82cadd08dd72c4cb2c900d94f910fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2059013000
 PrefabInstance:
   m_ObjectHideFlags: 0
