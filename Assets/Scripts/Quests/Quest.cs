@@ -20,4 +20,6 @@ public class Quest
     {
         return _currentQuestStepIndex < Info.QuestSteps.Length;
     }
+    
+
 }
