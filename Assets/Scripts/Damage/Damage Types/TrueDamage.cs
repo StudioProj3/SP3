@@ -15,12 +15,15 @@ public class TrueDamage : Damage
         return this;
     }
 
-    // OnApply is in 'TakeDamage()' implemented from IDamageable
-    // damage.OnApply(_playerStats);
+    // `OnApply` is in `TakeDamage` implemented from `IDamageable`
+    // `damage.OnApply(_playerStats)`
     public override void OnApply(IEffectable effectable)
     {
         var entityStats = effectable.EntityStats;
-        // True damage deals damage directly to health, no way to reduce it
-        entityStats.GetStat("Health").Subtract(Mathf.Round(_damage));
+
+        // True damage deals damage directly to health,
+        // no way to reduce it
+        entityStats.GetStat("Health").Subtract(
+            Mathf.Round(_damage));
     }
 }

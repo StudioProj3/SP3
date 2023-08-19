@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statInitializerList:
   - rid: 988901163390468096
+  - rid: 988901199663071232
   _instancedStatInitializerList: []
   references:
     version: 2
@@ -23,3 +24,8 @@ MonoBehaviour:
       data:
         type: {fileID: 11400000, guid: 4460aab1993e61847a4faf96f92e2f46, type: 2}
         initialValue: 1
+    - rid: 988901199663071232
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: e15db4b0babfeb54c924dbcd088966bd, type: 2}
+        initialValue: 0.5

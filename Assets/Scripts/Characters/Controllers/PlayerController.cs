@@ -8,10 +8,6 @@ using UnityEngine;
 public class PlayerController :
     CharacterControllerBase, IEffectable
 {
-
-    [field: SerializeField]
-    private GameObject CurrentWeaponSlot;
-
     [HorizontalDivider]
     [Header("Character Data")]
 
@@ -21,17 +17,17 @@ public class PlayerController :
     [SerializeField]
     private Stats _playerStats;
 
-    //For debug
-    [SerializeField]
-    private SwordWeaponItem _weaponItemTest;
-
     private ItemBase _currentlyHolding;
     private Animator _weaponAnimator;
     private SpriteRenderer _weaponDisplay;
-    private List<StatusEffectBase> _statusEffects = new();
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyPressed;
+    private GameObject _pooledArrows;
+    private List<ArrowController> _pooledArrowList;
+    private List<StatusEffectBase> _statusEffects = new();
+    private Vector3 _mousePositon;
+    private Plane _detectionPlane;
 
     public IStatContainer EntityStats => _playerStats;
 
@@ -68,14 +64,20 @@ public class PlayerController :
     {
         base.Start();
 
-        _weaponAnimator = CurrentWeaponSlot.GetComponent<Animator>();
-        _weaponDisplay = CurrentWeaponSlot.GetComponent<SpriteRenderer>();
-        
-        // For debug
-        Equip(_weaponItemTest);
+        _weaponAnimator = transform.GetChild(0).GetComponent<Animator>();
+        _weaponDisplay = transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        _pooledArrows = transform.GetChild(1).gameObject;
+        _pooledArrowList = new List<ArrowController>();
+
+        foreach (Transform child in _pooledArrows.transform)
+        {
+            _pooledArrowList.Add(child.GetComponent<ArrowController>());
+        }
+
+        _detectionPlane = new Plane(Vector3.up, 0);
 
         SetupStateMachine();
-
 
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
@@ -164,6 +166,7 @@ public class PlayerController :
     private void Update()
     {
         UpdateInputs();
+        CalculateMousePos();
 
         _animator.SetBool("isRunning", 
             _stateMachine.CurrentState.StateID == "Walk");
@@ -186,7 +189,7 @@ public class PlayerController :
 
         if (_horizontalInput != 0)
         {
-            transform.localScale = new(_horizontalInput, transform.localScale.y, transform.localScale.z);
+            transform.rotation = Quaternion.Euler(0, _horizontalInput < 0 ? 180 : 0, 0);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -194,13 +197,24 @@ public class PlayerController :
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 _weaponAnimator.Play(swordWeapon.AnimationName);
-                _rigidbody.AddForce(2 * transform.localScale.x * transform.right , ForceMode.Impulse);
+                _rigidbody.AddForce(2 * transform.right , ForceMode.Impulse);
             }
             if (_currentlyHolding is IBowWeapon bowWeapon)
             {
                 _weaponAnimator.Play(bowWeapon.AnimationName);
                 _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
-            }
+
+                Vector3 aimDirection = _mousePositon - _rigidbody.position;
+                Vector3 shootDirection = new(aimDirection.x, 0, aimDirection.z);
+                for (int i = 0; i < _pooledArrowList.Count; i++)
+                    {
+                        if (!_pooledArrowList[i].gameObject.activeSelf)
+                        {
+                            bowWeapon.Shoot(_pooledArrowList[i], shootDirection.normalized, _pooledArrows.transform);
+                            break;
+                        }
+                    }
+                }
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
@@ -213,7 +227,7 @@ public class PlayerController :
         _stateMachine.FixedUpdate();
 
         // Replace when item pickup is integrated with player
-        Equip(_weaponItemTest);
+        Equip(_playerData.HandInventory.GetItem(0));
     }
 
     private void UpdateInputs()
@@ -228,21 +242,36 @@ public class PlayerController :
 
     private void DealDamage(IEffectable effectable, Vector3 hitPos)
     {
-        Vector3 knockbackForce = 
-                (hitPos - transform.position).normalized *
-                _playerStats.GetStat("Knockback").Value;
-                
-        effectable.TakeDamage(_weaponItemTest.WeaponDamageType, knockbackForce);
-
-        if (_weaponItemTest.WeaponStatusEffect)
+        if (_currentlyHolding is WeaponBase weapon)
         {
-            effectable.ApplyEffect(_weaponItemTest.WeaponStatusEffect.Clone());
+            Vector3 knockbackForce = 
+                    (hitPos - transform.position).normalized *
+                    weapon.WeaponStats.GetStat("Knockback").Value;
+            effectable.TakeDamage(weapon.WeaponDamageType, knockbackForce);
+
+            if (weapon.WeaponStatusEffect)
+            {
+                effectable.ApplyEffect(weapon.WeaponStatusEffect.Clone());
+            }
         }
     }
 
-    private void Equip(WeaponBase itemToEquip)
+    private void Equip(ItemBase itemToEquip)
     {
-        _weaponDisplay.sprite = itemToEquip.Sprite;
-        _currentlyHolding = itemToEquip;
+        if (itemToEquip)
+        {
+            _weaponDisplay.sprite = itemToEquip.Sprite;
+            _currentlyHolding = itemToEquip;   
+        }
+    }
+
+    private void CalculateMousePos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (_detectionPlane.Raycast(ray, out float distance))
+        {
+            _mousePositon = ray.GetPoint(distance);
+        }
     }
 }

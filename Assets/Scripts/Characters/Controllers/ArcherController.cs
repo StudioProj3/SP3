@@ -8,6 +8,9 @@ public class ArcherController :
     [SerializeField]
     private Stats _archerStats;
 
+    [SerializeField]
+    private StatusEffectBase _arrowStatusEffect;
+
     private GameObject _pooledArrows;
     private List<ArrowController> _pooledArrowList;
 
@@ -17,14 +20,12 @@ public class ArcherController :
     private PlayerController _playerController;
 
     private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
 
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _archerStats;
+    IStatContainer IEffectable.EntityStats => _archerStatsContainer;
 
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -32,7 +33,6 @@ public class ArcherController :
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
-
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -97,6 +97,7 @@ public class ArcherController :
                         if (!(_pooledArrowList[i].gameObject.activeSelf))
                         {
                             _pooledArrowList[i].Init(_direction, _phyDamage
+                                ,_arrowStatusEffect
                                 ,_pooledArrows.transform);
                             _pooledArrowList[i].transform.position =
                                 transform.position;
@@ -203,7 +204,7 @@ public class ArcherController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()

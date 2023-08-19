@@ -1,7 +1,5 @@
 using System;
 
-using UnityEngine;
-
 // Transition that will happen after a random amount of
 // seconds where the range will be new each time between
 // [minDuration, maxDuration]

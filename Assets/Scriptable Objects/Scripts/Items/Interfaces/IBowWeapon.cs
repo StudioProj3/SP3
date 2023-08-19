@@ -5,5 +5,7 @@ public interface IBowWeapon :
 {
     string AnimationName { get; }
 
-    GameObject Projectile {get;}
+    ItemBase Projectile {get;}
+
+    void Shoot(ArrowController projectile, Vector3 direction, Transform source);
 }
