@@ -16,7 +16,15 @@ public class QuestInfo : ScriptableObject, INameable
 
     private QuestInfo[] _prequisiteQuests;
 
-    [HorizontalDivider]
-    [SerializeField]
-    private GameObject[] _questSteps;
+    [field: HorizontalDivider]
+    [field: SerializeField]
+    public GameObject[] QuestSteps { get; protected set; }
+
+    private void OnValidate()
+    {
+#if UNITY_EDITOR 
+        ID = name;
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
+    }
 }

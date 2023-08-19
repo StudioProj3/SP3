@@ -10,4 +10,14 @@ public class Quest
         state = QuestState.RequirementsNotMet;
         _currentQuestStepIndex = 0;
     }
+
+    public void MoveToNextStep()
+    {
+        _currentQuestStepIndex++;
+    }
+
+    public bool CurrentStepExists()
+    {
+        return _currentQuestStepIndex < Info.QuestSteps.Length;
+    }
 }
