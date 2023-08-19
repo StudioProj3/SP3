@@ -14051,6 +14051,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 966389379}
+  - component: {fileID: 966389381}
   - component: {fileID: 966389380}
   m_Layer: 5
   m_Name: Sanity Bar
@@ -14098,6 +14099,20 @@ MonoBehaviour:
   _direction: 3
   _magnitude: 30
   _duration: 0.5
+--- !u!114 &966389381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966389378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a82cadd08dd72c4cb2c900d94f910fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
+  _statType: {fileID: 11400000, guid: ae32616fa6e751f4e85f7639dfe65e40, type: 2}
 --- !u!1 &972132557
 GameObject:
   m_ObjectHideFlags: 0
@@ -36105,6 +36120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1418330637}
+  - component: {fileID: 1418330639}
   - component: {fileID: 1418330638}
   m_Layer: 5
   m_Name: Health Bar
@@ -36152,6 +36168,20 @@ MonoBehaviour:
   _direction: 2
   _magnitude: 30
   _duration: 0.5
+--- !u!114 &1418330639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418330636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a82cadd08dd72c4cb2c900d94f910fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
+  _statType: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
 --- !u!1 &1422617834
 GameObject:
   m_ObjectHideFlags: 0
@@ -45377,7 +45407,6 @@ GameObject:
   - component: {fileID: 2057886505}
   - component: {fileID: 2057886507}
   - component: {fileID: 2057886506}
-  - component: {fileID: 2057886509}
   m_Layer: 5
   m_Name: Health Header Background
   m_TagString: Untagged
@@ -45444,18 +45473,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057886504}
   m_CullTransparentMesh: 1
---- !u!114 &2057886509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057886504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a82cadd08dd72c4cb2c900d94f910fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2059013000
 PrefabInstance:
   m_ObjectHideFlags: 0
