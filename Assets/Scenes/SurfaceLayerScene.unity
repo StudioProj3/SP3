@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13974,6 +13974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 966389379}
+  - component: {fileID: 966389380}
   m_Layer: 5
   m_Name: Sanity Bar
   m_TagString: Untagged
@@ -14003,6 +14004,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -92}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &966389380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966389378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c078ffea692ba65469d68e477f339060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSelf: 0
+  _otherRectTransform: {fileID: 1705549134}
+  _direction: 3
+  _magnitude: 30
+  _duration: 0.5
 --- !u!1 &972132557
 GameObject:
   m_ObjectHideFlags: 0
@@ -36010,6 +36028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1418330637}
+  - component: {fileID: 1418330638}
   m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
@@ -36039,6 +36058,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -40}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1418330638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418330636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c078ffea692ba65469d68e477f339060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSelf: 0
+  _otherRectTransform: {fileID: 2057886505}
+  _direction: 2
+  _magnitude: 30
+  _duration: 0.5
 --- !u!1 &1422617834
 GameObject:
   m_ObjectHideFlags: 0
@@ -40709,7 +40745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -403.9, y: 456.7}
+  m_AnchoredPosition: {x: -376.7, y: 456.7}
   m_SizeDelta: {x: 85, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1705549135
@@ -45264,7 +45300,6 @@ GameObject:
   - component: {fileID: 2057886505}
   - component: {fileID: 2057886507}
   - component: {fileID: 2057886506}
-  - component: {fileID: 2057886508}
   - component: {fileID: 2057886509}
   m_Layer: 5
   m_Name: Health Header Background
@@ -45332,27 +45367,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057886504}
   m_CullTransparentMesh: 1
---- !u!95 &2057886508
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057886504}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9691c8577e20cfb41aa3eaaa9fcbcaa7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2057886509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47089,12 +47103,6 @@ PrefabInstance:
       propertyPath: _rottenWood
       value: 
       objectReference: {fileID: 11400000, guid: 29695865e6ac1954286d4dbf6e8148a5,
-        type: 2}
-    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
-        type: 3}
-      propertyPath: _weaponItemTest
-      value: 
-      objectReference: {fileID: 11400000, guid: 4cad33885d1bd544fbc98f85dcbb8d5b,
         type: 2}
     - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
