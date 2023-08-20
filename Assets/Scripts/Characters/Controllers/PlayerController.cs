@@ -1,9 +1,7 @@
 using System.Collections.Generic;
+
 using UnityEngine;
 
-// Player controller class for movement
-// TODO (Chris): We should probably separate movement and other mechanics,
-// so a PlayerMovement script and maybe a PlayerInventoryController script
 [DisallowMultipleComponent]
 public class PlayerController :
     CharacterControllerBase, IEffectable
@@ -32,7 +30,8 @@ public class PlayerController :
     private Plane _detectionPlane;
     private Quaternion _weaponFlipAngle;
 
-    public IStatContainer EntityStats => _playerStats;
+    public IStatContainer EntityStats =>
+        _playerStats;
 
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -57,7 +56,8 @@ public class PlayerController :
         RemoveEffectImpl(statusEffect, index);
     }
     
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
+    private void RemoveEffectImpl(StatusEffectBase statusEffect,
+        int index)
     {
         statusEffect.OnExit(this);
         _statusEffects.RemoveAt(index);
@@ -72,15 +72,16 @@ public class PlayerController :
 
         foreach (Transform child in _pooledArrows.transform)
         {
-            _pooledArrowList.Add(child.GetComponent<ArrowController>());
+            _pooledArrowList.Add(child.
+                GetComponent<ArrowController>());
         }
 
-        _detectionPlane = new Plane(Vector3.up, 0);
+        _detectionPlane = new Plane(Vector3.up, 0f);
 
         SetupStateMachine();
 
         _heldItemContainer = transform.GetChild(0);
-        _weaponFlipAngle = Quaternion.Euler(0, -360, 0);
+        _weaponFlipAngle = Quaternion.Euler(0f, -360f, 0f);
 
         // TODO (Cheng Jun): This should be updated to try
         // and fetch the player's local save instead of performing
@@ -117,8 +118,7 @@ public class PlayerController :
                     _rigidbody.AddForce(
                         _playerStats.GetStat("MoveSpeed").Value *
                         2 * direction.normalized,
-                        ForceMode.Impulse
-                        );
+                        ForceMode.Impulse);
                 }),
 
                 new ActionEntry("Exit", () =>
@@ -128,6 +128,7 @@ public class PlayerController :
             ),
 
             // Transitions
+
             // Idle > Walk
             new EagerGenericTransition("Idle", "Walk", () =>
             {
@@ -192,17 +193,14 @@ public class PlayerController :
 
         if (_horizontalInput != 0)
         {
-            transform.rotation = Quaternion.Euler(0, _horizontalInput < 0 ? 180 : 0, 0);
-            _heldItemContainer.transform.localScale = new(_horizontalInput, 1, 1);
+            transform.rotation = Quaternion.Euler(0f,
+                _horizontalInput < 0f ? 180f : 0f, 0f);
+            _heldItemContainer.transform.localScale =
+                new(_horizontalInput, 1f, 1f);
 
-            if (_horizontalInput < 0)
-            {
-                _heldItemContainer.transform.rotation = _weaponFlipAngle;
-            }
-            else
-            {
-                _heldItemContainer.transform.rotation = Quaternion.identity;
-            }
+            _heldItemContainer.transform.rotation =
+                _horizontalInput < 0f ? _weaponFlipAngle :
+                Quaternion.identity;
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -210,24 +208,34 @@ public class PlayerController :
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 _animator.Play(swordWeapon.AnimationName);
-                _rigidbody.AddForce(2 * transform.right , ForceMode.Impulse);
+                _rigidbody.AddForce(2 * transform.right, ForceMode.Impulse);
             }
+
             if (_currentlyHolding is IBowWeapon bowWeapon)
             {
                 _animator.Play(bowWeapon.AnimationName);
-                _rigidbody.AddForce(2 * -transform.localScale.x * transform.right , ForceMode.Impulse);
+                _rigidbody.AddForce(2f * -transform.localScale.x *
+                    transform.right, ForceMode.Impulse);
 
-                Vector3 aimDirection = _mousePositon - _rigidbody.position;
-                Vector3 shootDirection = new(aimDirection.x, 0, aimDirection.z);
-                for (int i = 0; i < _pooledArrowList.Count; i++)
+                Vector3 aimDirection = _mousePositon -
+                    _rigidbody.position;
+                Vector3 shootDirection =
+                    new(aimDirection.x, 0f, aimDirection.z);
+
+                for (int i = 0; i < _pooledArrowList.Count; ++i)
+                {
+                    if (_pooledArrowList[i].gameObject.activeSelf)
                     {
-                        if (!_pooledArrowList[i].gameObject.activeSelf)
-                        {
-                            bowWeapon.Shoot(_pooledArrowList[i], shootDirection.normalized, _pooledArrows.transform);
-                            break;
-                        }
+                        continue;
                     }
+
+                    bowWeapon.Shoot(_pooledArrowList[i],
+                        shootDirection.normalized, _pooledArrows.transform);
+
+                    break;
                 }
+            }
+
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
@@ -249,6 +257,7 @@ public class PlayerController :
         {
             _rollKeyPressed = Input.GetKeyDown(KeyCode.LeftShift);
         }
+
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
@@ -258,8 +267,8 @@ public class PlayerController :
         if (_currentlyHolding is WeaponBase weapon)
         {
             Vector3 knockbackForce = 
-                    (hitPos - transform.position).normalized *
-                    weapon.WeaponStats.GetStat("Knockback").Value;
+                (hitPos - transform.position).normalized *
+                weapon.WeaponStats.GetStat("Knockback").Value;
             effectable.TakeDamage(weapon.WeaponDamageType, knockbackForce);
 
             if (weapon.WeaponStatusEffect)
