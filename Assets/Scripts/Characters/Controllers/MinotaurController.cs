@@ -22,48 +22,14 @@ public class MinotaurController :
     private GameObject _player;
     private PlayerController _playerController;
 
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats =>
-        _minotaurStats;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect,
-        int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
     protected override void Start()
     {
         base.Start();
+        EntityStats = _minotaurStats;
 
         _pooledEarth = transform.GetChild(0).gameObject;
         _pooledEarthList = new List<ArrowController>();

@@ -25,47 +25,14 @@ public class PlayerController :
     private GameObject _pooledArrows;
     private Transform _heldItemContainer;
     private List<ArrowController> _pooledArrowList;
-    private List<StatusEffectBase> _statusEffects = new();
     private Vector3 _mousePositon;
     private Plane _detectionPlane;
     private Quaternion _weaponFlipAngle;
 
-    public IStatContainer EntityStats =>
-        _playerStats;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        damage.OnApply(this);
-
-        if (_playerStats.GetStat("Health").Value <= 0)
-        {
-            GameManager.Instance.ChangeGameState(GameState.Lose);
-        }
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-    
-    private void RemoveEffectImpl(StatusEffectBase statusEffect,
-        int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
     protected override void Start()
     {
         base.Start();
+        EntityStats = _playerStats;
 
         _pooledArrows = transform.GetChild(1).gameObject;
         _pooledArrowList = new List<ArrowController>();
@@ -77,7 +44,7 @@ public class PlayerController :
         }
 
         _detectionPlane = new Plane(Vector3.up, 0f);
-
+        
         SetupStateMachine();
 
         _heldItemContainer = transform.GetChild(0);
