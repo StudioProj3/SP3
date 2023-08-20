@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 6696665779751592124}
   - component: {fileID: 6696665779751592125}
   - component: {fileID: 3902993932949154097}
+  - component: {fileID: 1161239569}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -352,8 +353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
-  _playerStats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
-  _weaponDisplay: {fileID: 1428265301}
 --- !u!95 &6696665779751592124
 Animator:
   serializedVersion: 5
@@ -389,6 +388,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
   _pickupInventory: 1
+  <OnPlayerPickup>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &3902993932949154097
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -402,6 +404,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.23700696, y: 0.39447278, z: 0.2}
   m_Center: {x: -0.014328897, y: -0.026726991, z: 0}
+--- !u!114 &1161239569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696665778595085503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ab394eb877c794ba57f2ec89597737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponDisplay: {fileID: 1428265301}
+  _playerData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
 --- !u!1001 &4869063663483587227
 PrefabInstance:
   m_ObjectHideFlags: 0
