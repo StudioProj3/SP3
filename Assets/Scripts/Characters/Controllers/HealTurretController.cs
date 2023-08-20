@@ -30,7 +30,8 @@ public class HealTurretController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _healTurretStats;
+    IStatContainer IEffectable.EntityStats =>
+        _healTurretStats;
 
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -50,7 +51,8 @@ public class HealTurretController :
         RemoveEffectImpl(statusEffect, index);
     }
 
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
+    private void RemoveEffectImpl(StatusEffectBase statusEffect,
+        int index)
     {
         statusEffect.OnExit(this);
         _statusEffects.RemoveAt(index);
@@ -142,19 +144,24 @@ public class HealTurretController :
             }
         }
 
-        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
     {
-        _distance = Vector3.Distance(_player.transform.position, transform.position);
+        _distance = Vector3.Distance(_player.transform.position,
+            transform.position);
+
         if (_healTurretStatsContainer.
             GetStat("Health").Value <= 0)
         {
             _animator.SetBool("isDead", true);
         }
         else
+        {
             _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)
