@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -23,7 +24,8 @@ public class CacodaemonController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _cacodaemonStatsContainer;
+    IStatContainer IEffectable.EntityStats =>
+        _cacodaemonStatsContainer;
 
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -45,7 +47,8 @@ public class CacodaemonController :
         RemoveEffectImpl(statusEffect, index);
     }
 
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
+    private void RemoveEffectImpl(StatusEffectBase statusEffect,
+        int index)
     {
         statusEffect.OnExit(this);
         _statusEffects.RemoveAt(index);
@@ -56,7 +59,8 @@ public class CacodaemonController :
         base.Start();
 
         _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
-        _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
+        _cacodaemonStatsContainer = _cacodaemonStats.
+            GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -150,7 +154,7 @@ public class CacodaemonController :
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
         _animator.SetBool("isGoingCharge",
-           _stateMachine.CurrentState.StateID == "GoingToCharge");
+            _stateMachine.CurrentState.StateID == "GoingToCharge");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -166,7 +170,8 @@ public class CacodaemonController :
             }
         }
 
-        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
 
     }
 
@@ -181,7 +186,9 @@ public class CacodaemonController :
             _animator.SetBool("isDead", true);
         }
         else
+        {
             _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)

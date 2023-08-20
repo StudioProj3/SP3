@@ -25,7 +25,8 @@ public class ArcherController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _archerStatsContainer;
+    IStatContainer IEffectable.EntityStats =>
+        _archerStatsContainer;
 
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -47,7 +48,8 @@ public class ArcherController :
         RemoveEffectImpl(statusEffect, index);
     }
 
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
+    private void RemoveEffectImpl(StatusEffectBase statusEffect,
+        int index)
     {
         statusEffect.OnExit(this);
         _statusEffects.RemoveAt(index);
@@ -96,9 +98,8 @@ public class ArcherController :
                     {
                         if (!(_pooledArrowList[i].gameObject.activeSelf))
                         {
-                            _pooledArrowList[i].Init(_direction, _phyDamage
-                                ,_arrowStatusEffect
-                                ,_pooledArrows.transform);
+                            _pooledArrowList[i].Init(_direction, _phyDamage,
+                                _arrowStatusEffect, _pooledArrows.transform);
                             _pooledArrowList[i].transform.position =
                                 transform.position;
                             _pooledArrowList[i].transform.SetParent(null);
@@ -124,7 +125,8 @@ public class ArcherController :
             new GenericState("GoingToShoot",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 })
             ),
@@ -204,7 +206,8 @@ public class ArcherController :
             }
         }
 
-        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
