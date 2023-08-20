@@ -26,6 +26,15 @@ public class Quest
         return _currentQuestStepIndex < Info.QuestSteps.Length;
     }
 
+    public void InstantiateCurrentQuestStep(Transform parentTransform)
+    {
+        GameObject prefab = GetCurrentQuestStepPrefab();
+        if (prefab != null)
+        {
+            Object.Instantiate(prefab, parentTransform);
+        }
+    }
+
     private GameObject GetCurrentQuestStepPrefab()
     {
         Assert(CurrentStepExists(), 
@@ -34,12 +43,4 @@ public class Quest
         return Info.QuestSteps[_currentQuestStepIndex];
     }
 
-    private void InstantiateCurrentQuestStep(Transform parentTransform)
-    {
-        GameObject prefab = GetCurrentQuestStepPrefab();
-        if (prefab != null)
-        {
-            Object.Instantiate(prefab, parentTransform);
-        }
-    }
 }

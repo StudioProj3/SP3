@@ -9,12 +9,11 @@ public class QuestInfo : ScriptableObject, INameable
     [field: SerializeField]
     public string Name { get; protected set; }
 
-    [HorizontalDivider]
-    [Header("Prerequisites")]
+    [field: HorizontalDivider]
+    [field: Header("Prerequisites")]
+    [field: SerializeField]
 
-    [SerializeField]
-
-    private QuestInfo[] _prequisiteQuests;
+    public QuestInfo[] PrerequisiteQuests { get; protected set; }
 
     [field: HorizontalDivider]
     [field: SerializeField]

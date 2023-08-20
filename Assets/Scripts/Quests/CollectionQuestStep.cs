@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public class CollectionQuestStep : QuestStep
 {
+    [field: HorizontalDivider]
+    [field: Header("Quest step data")]
     [field: SerializeField]
     public ItemBase ItemBase { get; private set; }
 
