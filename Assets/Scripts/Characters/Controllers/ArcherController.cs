@@ -19,41 +19,9 @@ public class ArcherController :
     private GameObject _player;
     private PlayerController _playerController;
 
-    private List<StatusEffectBase> _statusEffects = new();
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
-
-    IStatContainer IEffectable.EntityStats =>
-        _archerStatsContainer;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect,
-        int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
 
     protected override void Start()
     {
@@ -67,6 +35,8 @@ public class ArcherController :
         }
 
         _archerStatsContainer = _archerStats.GetInstancedStatContainer();
+        
+        EntityStats = _archerStatsContainer;
         _phyDamage = PhysicalDamage.Create(_archerStatsContainer.
             GetStat("AttackDamage").Value);
 
