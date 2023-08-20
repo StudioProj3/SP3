@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +6,8 @@ public class SceneLoader : MonoBehaviour
     // Load new independent scene
     public void LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncLoad = 
+            SceneManager.LoadSceneAsync(sceneName);
     }
 
     // Load new additive scene, if forceLoad is true,
@@ -19,7 +18,8 @@ public class SceneLoader : MonoBehaviour
         AsyncOperation asyncLoad;
         if (forceLoad)
         {
-            asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            asyncLoad = SceneManager.LoadSceneAsync
+                (sceneName, LoadSceneMode.Additive);
             return;
         }
 
@@ -32,7 +32,8 @@ public class SceneLoader : MonoBehaviour
             }
         }
 
-        asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        asyncLoad = SceneManager.LoadSceneAsync
+            (sceneName, LoadSceneMode.Additive);
 
     }
 
@@ -43,7 +44,8 @@ public class SceneLoader : MonoBehaviour
         {
             if (SceneManager.GetSceneAt(i).name == sceneName)
             {
-                AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(sceneName);
+                AsyncOperation asyncLoad = 
+                    SceneManager.UnloadSceneAsync(sceneName);
                 return;
             }
         }
@@ -64,7 +66,8 @@ public class SceneLoader : MonoBehaviour
                 return;
             }
         }
-        asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        asyncLoad = SceneManager.LoadSceneAsync
+            (sceneName, LoadSceneMode.Additive);
 
     }
 
