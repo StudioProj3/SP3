@@ -12,47 +12,16 @@ public class PlayerController :
     [SerializeField]
     private PlayerData _playerData;
 
-    [SerializeField]
-    private Stats _playerStats;
-
-    [SerializeField]
-    private SpriteRenderer _weaponDisplay;
-
-    private ItemBase _currentlyHolding;
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyPressed;
-    private GameObject _pooledArrows;
-    private Transform _heldItemContainer;
-    private List<ArrowController> _pooledArrowList;
-    private Vector3 _mousePositon;
-    private Plane _detectionPlane;
-    private Quaternion _weaponFlipAngle;
 
     protected override void Start()
     {
         base.Start();
-        EntityStats = _playerStats;
-
-        _pooledArrows = transform.GetChild(1).gameObject;
-        _pooledArrowList = new List<ArrowController>();
-
-        foreach (Transform child in _pooledArrows.transform)
-        {
-            _pooledArrowList.Add(child.
-                GetComponent<ArrowController>());
-        }
-
-        _detectionPlane = new Plane(Vector3.up, 0f);
+        EntityStats = _playerData.CharacterStats;
         
         SetupStateMachine();
-
-        _heldItemContainer = transform.GetChild(0);
-        _weaponFlipAngle = Quaternion.Euler(0f, -360f, 0f);
-
-        // TODO (Cheng Jun): This should be updated to try
-        // and fetch the player's local save instead of performing
-        // a reset once the save system is ready
         _playerData.Reset();
     }
 
@@ -65,7 +34,7 @@ public class PlayerController :
             new GenericState("Walk",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _rigidbody.velocity = _playerStats.
+                    _rigidbody.velocity = _playerData.CharacterStats.
                         GetStat("MoveSpeed").Value * new Vector3(
                         _horizontalInput, 0, _verticalInput).normalized;
                 })
@@ -83,7 +52,7 @@ public class PlayerController :
                         new(_horizontalInput, 0, _verticalInput);
 
                     _rigidbody.AddForce(
-                        _playerStats.GetStat("MoveSpeed").Value *
+                        _playerData.CharacterStats.GetStat("MoveSpeed").Value *
                         2 * direction.normalized,
                         ForceMode.Impulse);
                 }),
@@ -129,15 +98,10 @@ public class PlayerController :
         _stateMachine.Enter();
     }
 
-    private void Awake()
-    {
-        WeaponDamage.OnWeaponHit += DealDamage;
-    }
 
     private void Update()
     {
         UpdateInputs();
-        CalculateMousePos();
 
         _animator.SetBool("isRunning", 
             _stateMachine.CurrentState.StateID == "Walk");
@@ -162,60 +126,14 @@ public class PlayerController :
         {
             transform.rotation = Quaternion.Euler(0f,
                 _horizontalInput < 0f ? 180f : 0f, 0f);
-            _heldItemContainer.transform.localScale =
-                new(_horizontalInput, 1f, 1f);
-
-            _heldItemContainer.transform.rotation =
-                _horizontalInput < 0f ? _weaponFlipAngle :
-                Quaternion.identity;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (_currentlyHolding is ISwordWeapon swordWeapon)
-            {
-                _animator.Play(swordWeapon.AnimationName);
-                _rigidbody.AddForce(2 * transform.right, ForceMode.Impulse);
-            }
-
-            if (_currentlyHolding is IBowWeapon bowWeapon)
-            {
-                _animator.Play(bowWeapon.AnimationName);
-                _rigidbody.AddForce(2f * -transform.localScale.x *
-                    transform.right, ForceMode.Impulse);
-
-                Vector3 aimDirection = _mousePositon -
-                    _rigidbody.position;
-                Vector3 shootDirection =
-                    new(aimDirection.x, 0f, aimDirection.z);
-
-                for (int i = 0; i < _pooledArrowList.Count; ++i)
-                {
-                    if (_pooledArrowList[i].gameObject.activeSelf)
-                    {
-                        continue;
-                    }
-
-                    bowWeapon.Shoot(_pooledArrowList[i],
-                        shootDirection.normalized, _pooledArrows.transform);
-
-                    break;
-                }
-            }
-
-            if (_currentlyHolding is IBeginUseHandler beginUseHandler)
-            {
-                beginUseHandler.OnUseEnter();
-            }
-        }
+        
     }
 
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
-
-        // Replace when item pickup is integrated with player
-        Equip(_playerData.HandInventory.GetItem(0));
     }
 
     private void UpdateInputs()
@@ -229,38 +147,5 @@ public class PlayerController :
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
 
-    private void DealDamage(IEffectable effectable, Vector3 hitPos)
-    {
-        if (_currentlyHolding is WeaponBase weapon)
-        {
-            Vector3 knockbackForce = 
-                (hitPos - transform.position).normalized *
-                weapon.WeaponStats.GetStat("Knockback").Value;
-            effectable.TakeDamage(weapon.WeaponDamageType, knockbackForce);
-
-            if (weapon.WeaponStatusEffect)
-            {
-                effectable.ApplyEffect(weapon.WeaponStatusEffect.Clone());
-            }
-        }
-    }
-
-    private void Equip(ItemBase itemToEquip)
-    {
-        if (itemToEquip)
-        {
-            _weaponDisplay.sprite = itemToEquip.Sprite;
-            _currentlyHolding = itemToEquip;   
-        }
-    }
-
-    private void CalculateMousePos()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (_detectionPlane.Raycast(ray, out float distance))
-        {
-            _mousePositon = ray.GetPoint(distance);
-        }
-    }
+    
 }
