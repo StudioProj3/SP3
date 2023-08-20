@@ -22,40 +22,9 @@ public class HealTurretController :
     private GameObject _player;
     private PlayerController _playerController;
 
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
-
-    IStatContainer IEffectable.EntityStats => _healTurretStats;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        damage.OnApply(this);
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -63,6 +32,7 @@ public class HealTurretController :
         _healTurretParticles = GetComponentInChildren<ParticleSystem>();
         _healTurretStatsContainer = _healTurretStats.
             GetInstancedStatContainer();
+        EntityStats = _healTurretStatsContainer;
         _phyDamage = PhysicalDamage.Create(_healTurretStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -142,19 +112,24 @@ public class HealTurretController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
     {
-        _distance = Vector3.Distance(_player.transform.position, transform.position);
+        _distance = Vector3.Distance(_player.transform.position,
+            transform.position);
+
         if (_healTurretStatsContainer.
             GetStat("Health").Value <= 0)
         {
             _animator.SetBool("isDead", true);
         }
         else
+        {
             _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)

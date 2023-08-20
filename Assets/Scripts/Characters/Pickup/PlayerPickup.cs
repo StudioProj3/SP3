@@ -1,10 +1,22 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 using static DebugUtils;
 
 public class PlayerPickup :
     CharacterPickupBase
 {
+    [field: HorizontalDivider]
+    [field: Header("Events")]
+
+    [field: SerializeField]
+    public UnityEvent<ItemBase, uint> OnPlayerPickup { get; private set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Collectible"))
@@ -52,6 +64,7 @@ public class PlayerPickup :
                 other.gameObject.SetActive(false);
 
                 TryNotificationCollect(_notification, sprite, name);
+                OnPlayerPickup?.Invoke(item, quantity);
 
                 return;
             }
@@ -67,6 +80,7 @@ public class PlayerPickup :
                 if (tryInventory)
                 {
                     other.gameObject.SetActive(false);
+                    OnPlayerPickup?.Invoke(item, quantity);
 
                     TryNotificationCollect(_notification, sprite, name);
 
@@ -79,11 +93,6 @@ public class PlayerPickup :
                 _notification.Error("All inventory slots full");
             }
         }
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
     }
 
     private void TryNotificationCollect(UINotification notification,

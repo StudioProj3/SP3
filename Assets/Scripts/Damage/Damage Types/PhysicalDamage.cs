@@ -4,14 +4,14 @@ using UnityEngine;
     menuName = "Scriptable Objects/Damage/PhysicalDamage")]
 public class PhysicalDamage : Damage
 {
-    public static PhysicalDamage Create(float damage)
+    public static PhysicalDamage Create(float initialDamage)
     {
-        return CreateInstance<PhysicalDamage>().Init(damage);
+        return CreateInstance<PhysicalDamage>().Init(initialDamage);
     }
 
-    private PhysicalDamage Init(float damage)
+    private PhysicalDamage Init(float initialDamage)
     {
-        _damage = damage;
+        _damage = new ModifiableValue(initialDamage);
         return this;
     }
 
@@ -28,14 +28,14 @@ public class PhysicalDamage : Damage
         {
             float resistance = (1 - (100 / (100 + entityStats.
                 GetStat("Armor").Value))) * 100;
-            float damage = Mathf.Round(_damage *
+            float damage = Mathf.Round(_damage.Value *
                 ((100 - resistance) / 100));
             entityStats.GetStat("Health").Subtract(damage);
         }
         else
         {
             entityStats.GetStat("Health").Subtract(
-                Mathf.Round(_damage));
+                Mathf.Round(_damage.Value));
         }
     }
 }

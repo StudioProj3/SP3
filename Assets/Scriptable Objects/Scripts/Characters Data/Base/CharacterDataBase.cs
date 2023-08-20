@@ -15,6 +15,9 @@ public abstract class CharacterDataBase :
     [field: SerializeField]
     public bool IsDead { get; set; }
 
+    [field: SerializeField]
+    public Stats CharacterStats {get; set;}
+
     public virtual void Reset()
     {
         Inventory = null;
