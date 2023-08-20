@@ -110,7 +110,7 @@ public class PlayerAttack : MonoBehaviour
             Vector3 knockbackForce = 
                 (hitPos - transform.position).normalized *
                 weapon.WeaponStats.GetStat("Knockback").Value;
-            effectable.TakeDamage(weapon.WeaponDamageType.AddModifier(Modifier.Multiply(_playerData.CharacterStats.GetStat("DamageMultipler").Value,3)), knockbackForce);
+            effectable.TakeDamage(weapon.WeaponDamageType.AddModifier(Modifier.Multiply(_playerData.CharacterStats.GetStat("DamageMultiplier").Value,3)), knockbackForce);
 
             if (weapon.WeaponStatusEffect)
             {
