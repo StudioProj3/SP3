@@ -19,11 +19,6 @@ public abstract class CharacterControllerBase :
     {
         _rigidbody.AddForce(knockback, ForceMode.Impulse);
         damage.OnApply(this);
-
-        if (EntityStats.GetStat("Health").Value <= 0)
-        {
-            GameManager.Instance.ChangeGameState(GameState.Lose);
-        }
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)

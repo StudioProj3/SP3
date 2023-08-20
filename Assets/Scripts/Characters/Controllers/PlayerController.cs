@@ -128,6 +128,12 @@ public class PlayerController :
                 _horizontalInput < 0f ? 180f : 0f, 0f);
         }
 
+        // Temporary bandaid solution
+        // Ideally only check when damage is taken
+        if (_playerData.CharacterStats.GetStat("Health").Value <= 0)
+        {
+            GameManager.Instance.ChangeGameState(GameState.Lose);
+        }
         
     }
 
