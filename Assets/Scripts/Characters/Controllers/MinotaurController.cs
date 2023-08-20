@@ -15,7 +15,7 @@ public class MinotaurController :
     private StatusEffectBase _earthStatusEffect;
 
     private GameObject _pooledEarth;
-    private List<ArrowController> _pooledEarthList;
+    private List<EarthController> _pooledEarthList;
 
     private StatContainer _minotaurStatsContainer;
 
@@ -32,7 +32,12 @@ public class MinotaurController :
         EntityStats = _minotaurStats;
 
         _pooledEarth = transform.GetChild(0).gameObject;
-        _pooledEarthList = new List<ArrowController>();
+        _pooledEarthList = new List<EarthController>();
+
+        foreach (Transform child in _pooledEarth.transform)
+        {
+            _pooledEarthList.Add(child.GetComponent<EarthController>());
+        }
 
         SetupStateMachine();
     }
@@ -57,13 +62,18 @@ public class MinotaurController :
             ),
 
             new GenericState("Spin",
-                new ActionEntry("Enter", () =>
+                new ActionEntry("FixedUpdate", () =>
                 {
+
+                    _direction = _player.transform.position -
+                       transform.position;
+
+                    Debug.Log(_direction.normalized * 0.15f);
+                    _rigidbody.AddForce(_direction.normalized * 0.15f, ForceMode.Impulse);
+
                     Collider[] attackTarget;
-                    attackTarget = Physics.OverlapCapsule(transform.position,
-                        new Vector3(transform.position.x + _direction.x * 0.5f,
-                        transform.position.y, transform.position.z),
-                        0.35f, _playerLayer, 0);
+                    attackTarget = Physics.OverlapSphere(transform.position,
+                        0.4f, _playerLayer, 0);
 
 
                     for (int i = 0; i < attackTarget.Length; i++)
@@ -86,55 +96,37 @@ public class MinotaurController :
                 })
             ),
 
-            new GenericState("GoingToSpin",
-                new ActionEntry("Enter", () =>
-                {
-                    _direction = _player.transform.position -
-                        transform.position;
-                    _direction.y = 0;
-                })
-            ),
+            new GenericState("GoingToSpin"),
 
             new GenericState("Quake",
                 new ActionEntry("Enter", () =>
                 {
-                    Collider[] attackTarget;
-                    attackTarget = Physics.OverlapCapsule(transform.position,
-                        new Vector3(transform.position.x + _direction.x * 0.5f,
-                        transform.position.y, transform.position.z),
-                        0.35f, _playerLayer, 0);
-
-                    for (int i = 0; i < attackTarget.Length; i++)
+                    
+                    _ = Delay.Execute(() =>
                     {
-                        if (!attackTarget[i].CompareTag("Player"))
-                        {
-                            continue;
-                        }
+                        EarthSpell(_direction * 0.5f);
+                    }, 0.25f);
 
-                        Vector3 knockbackForce =
-                            (_player.transform.position - transform.position).
-                            normalized * _minotaurStatsContainer.
-                            GetStat("Knockback").Value;
-
-                        _playerController.TakeDamage(_phyDamage,
-                            knockbackForce);
-
-                        break;
-                    }
-
-                    for (int i = 0; i < _pooledEarthList.Count; i++)
+                    _ = Delay.Execute(() =>
                     {
-                        if (!(_pooledEarthList[i].gameObject.activeSelf))
-                        {
-                            _pooledEarthList[i].Init(_direction, _phyDamage,
-                                _earthStatusEffect, _pooledEarth.transform);
-                            _pooledEarthList[i].transform.position =
-                                transform.position;
-                            _pooledEarthList[i].transform.SetParent(null);
+                        EarthSpell(_direction);
+                    }, 0.75f);
 
-                            break;
-                        }
-                    }
+                    _ = Delay.Execute(() =>
+                    {
+                        EarthSpell(_direction * 1.5f);
+                    }, 1.25f);
+
+                    _ = Delay.Execute(() =>
+                    {
+                        EarthSpell(_direction * 2.0f);
+                    }, 1.75f);
+
+                    _ = Delay.Execute(() =>
+                    {
+                        EarthSpell(_direction * 2.5f);
+                    }, 2.25f);
+
 
                 })
             ),
@@ -158,6 +150,18 @@ public class MinotaurController :
             // Walk > Idle
             new FixedTimedTransition("Walk", "Idle", 0.7f),
 
+            // Idle > GoingToSpin
+            new GenericTransition("Idle", "GoingToSpin", () =>
+            {
+                return _distance < 1.0f;
+            }),
+
+            // Walk > GoingToSpin
+            new GenericTransition("Walk", "GoingToSpin", () =>
+            {
+                return _distance < 1.0f;
+            }),
+
             // Idle > GoingToAttack
             new GenericTransition("Idle", "GoingToQuake", () =>
             {
@@ -171,34 +175,19 @@ public class MinotaurController :
             }),
 
             //  GoingToQuake > Quake
-            new FixedTimedTransition("GoingToQuake", "Quake", 0.4f),
+            new FixedTimedTransition("GoingToQuake", "Quake", 0.8f),
 
             // Quake > Cooldown
-            new FixedTimedTransition("Quake", "Cooldown", 0.4f),
-
-            // Idle > GoingToSpin
-            new GenericTransition("Idle", "GoingToSpin", () =>
-            {
-                return _distance < 0.5f;
-            }),
-
-            // Walk > GoingToSpin
-            new GenericTransition("Walk", "GoingToSpin", () =>
-            {
-                return _distance < 0.5f;
-            }),
+            new FixedTimedTransition("Quake", "Cooldown", 0.5f),
 
             //  GoingToSpin > Spin
             new FixedTimedTransition("GoingToSpin", "Spin", 0.4f),
 
             //  Spin > Idle
-            new FixedTimedTransition("Spin", "Idle", 2f),
-
-            // Attack > Cooldown
-            new FixedTimedTransition("Spin", "Cooldown", 0.4f),
+            new FixedTimedTransition("Spin", "Cooldown", 2f),
 
             // Cooldown > Idle
-            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
+            new FixedTimedTransition("Cooldown", "Idle", 3.0f)
         );
 
         _stateMachine.SetStartState("Idle");
@@ -269,6 +258,24 @@ public class MinotaurController :
                 (col.transform.position - transform.position).normalized *
                 _minotaurStatsContainer.GetStat("Knockback").Value;
             _playerController.TakeDamage(_phyDamage, knockbackForce);
+        }
+    }
+
+    private void EarthSpell(Vector3 direction)
+    {
+        for (int i = 0; i < _pooledEarthList.Count; i++)
+        {
+
+            if (!(_pooledEarthList[i].gameObject.activeSelf))
+            {
+                _pooledEarthList[i].Init(direction, _phyDamage,
+                    _earthStatusEffect, _pooledEarth.transform);
+                _pooledEarthList[i].transform.position =
+                    transform.position + direction;
+                _pooledEarthList[i].transform.SetParent(null);
+                break;
+
+            }
         }
     }
 }

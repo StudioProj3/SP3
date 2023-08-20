@@ -36,6 +36,8 @@ Transform:
   - {fileID: 8706371952450886015}
   - {fileID: 5122889221925822767}
   - {fileID: 4978938049835603537}
+  - {fileID: 8116968475725594349}
+  - {fileID: 8984835821729848946}
   m_Father: {fileID: 8130153164828319794}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -195,6 +197,7 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  _earthStatusEffect: {fileID: 0}
 --- !u!1001 &285748640126084864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,7 +265,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
 --- !u!4 &4409669009271857368 stripped
 Transform:
@@ -270,6 +279,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 285748640126084864}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5878626154004273098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 285748640126084864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9051568646883442525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5878626154004273098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1001 &2201299051077161482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -337,7 +368,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
 --- !u!4 &2326656303032522194 stripped
 Transform:
@@ -345,6 +382,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2201299051077161482}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5543553296354058944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 2201299051077161482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1298939476896617051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543553296354058944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1001 &2924233516558916237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -412,13 +471,144 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
 --- !u!4 &1608227782230252885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
     type: 3}
   m_PrefabInstance: {fileID: 2924233516558916237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8860492978053179975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 2924233516558916237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2957642689675072781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860492978053179975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!1001 &4788989780440324522
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2826627642673234926}
+    m_Modifications:
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_Name
+      value: Earth Spell (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &1159630028664072544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 4788989780440324522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4616435039782789915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159630028664072544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!4 &8984835821729848946 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 4788989780440324522}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5050324568253980327
 PrefabInstance:
@@ -487,13 +677,144 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &1473916120687586925 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 5050324568253980327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &396365930572533780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473916120687586925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &8706371952450886015 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
     type: 3}
   m_PrefabInstance: {fileID: 5050324568253980327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5647557452818577717
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2826627642673234926}
+    m_Modifications:
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_Name
+      value: Earth Spell (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &2018204291627911679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 5647557452818577717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5758417668142478225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018204291627911679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!4 &8116968475725594349 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 5647557452818577717}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8390167524209938237
 PrefabInstance:
@@ -562,8 +883,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &2742095559026786295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 8390167524209938237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1102945004390584832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742095559026786295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &5380315768518592741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
@@ -637,8 +986,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (6)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &3152362871629583933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 8781259358901528311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1792862899456273219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152362871629583933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &5122889221925822767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
@@ -712,8 +1089,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (7)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &3008373800680874307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 8925529183188554121}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6480690634954192273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3008373800680874307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &4978938049835603537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
@@ -787,8 +1192,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Earth Spell (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6830210338699289698, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79d7c83c2736b424eaf5a3c466855e23, type: 3}
+--- !u!1 &3244136661533646484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936374917203947722, guid: 79d7c83c2736b424eaf5a3c466855e23,
+    type: 3}
+  m_PrefabInstance: {fileID: 9180377369564819038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6138901377814794385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3244136661533646484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e044b07e30ba22d4a98d8ee8f99d912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1.3
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &4729383058212694406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4523131654578276312, guid: 79d7c83c2736b424eaf5a3c466855e23,
