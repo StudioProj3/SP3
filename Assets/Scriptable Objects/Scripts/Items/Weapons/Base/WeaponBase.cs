@@ -2,6 +2,9 @@ using UnityEngine;
 
 public abstract class WeaponBase : ItemBase
 {
+    [field: HorizontalDivider]
+    [field: Header("Weapon Parameters")]
+
     [field: SerializeField]
     public Damage WeaponDamageType {get; protected set;}
 
