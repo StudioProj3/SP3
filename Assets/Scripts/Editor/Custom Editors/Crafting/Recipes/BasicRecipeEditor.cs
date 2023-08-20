@@ -13,8 +13,10 @@ public class BasicRecipeEditor : Editor
         BasicRecipe recipe = (BasicRecipe)target;
 
         DrawProperty(serializedObject, "Name");
+        DrawProperty(serializedObject, "Target");
 
-        TextCenter("Target", FontStyle.Bold);
+        DrawBoxCenter(recipe.Target.Sprite, 100f,
+            recipe.Material, new Color(0.169f, 0.169f, 0.169f));
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -39,6 +39,29 @@ public static class EditorUtils
         });
     }
 
+    public static void DrawBox(Sprite sprite, float length)
+    {
+        GUILayout.Box(sprite.texture, GUILayout.Width(length),
+            GUILayout.Height(length), GUILayout.ExpandHeight(true));
+    }
+
+    public static void DrawBoxCenter(Sprite sprite, float length,
+        Material material, Color background)
+    {
+        Horizontal(() =>
+        {
+            FlexibleSpace(() =>
+            {
+                Rect rect = EditorGUILayout.GetControlRect(
+                    GUILayout.Width(length), GUILayout.Height(length));
+
+                EditorGUI.DrawRect(rect, background);
+                EditorGUI.DrawPreviewTexture(rect, sprite.texture,
+                    material);
+            });
+        });
+    }
+
     public static void Horizontal(Action action)
     {
         EditorGUILayout.BeginHorizontal();
@@ -46,6 +69,15 @@ public static class EditorUtils
         action();
 
         EditorGUILayout.EndHorizontal();
+    }
+
+    public static void Vertical(Action action)
+    {
+        EditorGUILayout.BeginVertical();
+
+        action();
+
+        EditorGUILayout.EndVertical();
     }
 
     public static void FlexibleSpace(Action action)
