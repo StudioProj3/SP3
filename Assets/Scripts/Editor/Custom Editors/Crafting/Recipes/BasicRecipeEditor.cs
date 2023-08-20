@@ -1,4 +1,7 @@
+using UnityEngine;
 using UnityEditor;
+
+using static EditorUtils;
 
 [CustomEditor(typeof(BasicRecipe))]
 public class BasicRecipeEditor : Editor
@@ -7,7 +10,11 @@ public class BasicRecipeEditor : Editor
     {
         serializedObject.Update();
 
+        BasicRecipe recipe = (BasicRecipe)target;
 
+        DrawProperty(serializedObject, "Name");
+
+        TextCenter("Target", FontStyle.Bold);
 
         serializedObject.ApplyModifiedProperties();
     }
