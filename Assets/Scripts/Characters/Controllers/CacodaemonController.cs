@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -15,48 +16,18 @@ public class CacodaemonController :
     private GameObject _player;
     private PlayerController _playerController;
 
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
-
-    IStatContainer IEffectable.EntityStats => _cacodaemonStatsContainer;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
+    
     protected override void Start()
     {
         base.Start();
 
         _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
-        _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
+        _cacodaemonStatsContainer = _cacodaemonStats.
+            GetInstancedStatContainer();
+        EntityStats = _cacodaemonStatsContainer;
         _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -150,7 +121,7 @@ public class CacodaemonController :
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
         _animator.SetBool("isGoingCharge",
-           _stateMachine.CurrentState.StateID == "GoingToCharge");
+            _stateMachine.CurrentState.StateID == "GoingToCharge");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -166,7 +137,9 @@ public class CacodaemonController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0f;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
+
     }
 
     private void FixedUpdate()
@@ -180,7 +153,9 @@ public class CacodaemonController :
             _animator.SetBool("isDead", true);
         }
         else
+        {
             _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)

@@ -10,19 +10,18 @@ public abstract class CharacterDataBase :
     public InventoryBase Inventory { get; set; }
 
     [field: SerializeField]
-    public ItemBase LeftHandItem { get; set; }
-
-    [field: SerializeField]
-    public ItemBase RightHandItem { get; set; }
+    public HandInventory HandInventory { get; set; }
 
     [field: SerializeField]
     public bool IsDead { get; set; }
 
+    [field: SerializeField]
+    public Stats CharacterStats {get; set;}
+
     public virtual void Reset()
     {
         Inventory = null;
-        LeftHandItem = null;
-        RightHandItem = null;
+        HandInventory.Reset();
         IsDead = false;
     }
 }

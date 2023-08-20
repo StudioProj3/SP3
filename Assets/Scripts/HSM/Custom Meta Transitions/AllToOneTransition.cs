@@ -15,7 +15,7 @@ public class AllToOneTransition<TStateID> :
 
     public AllToOneTransition(TStateID toStateID,
         params Func<bool>[] initConditions) :
-        base(default, toStateID, initConditions)
+        base(default, toStateID, true, initConditions)
     {
         Assert(initConditions.Length > 0,
             "There must be at least 1 condition in this transition");
@@ -23,7 +23,7 @@ public class AllToOneTransition<TStateID> :
 
     public AllToOneTransition(TStateID toStateID, Action callback,
         params Func<bool>[] initConditions) :
-        base(default, toStateID, callback, initConditions)
+        base(default, toStateID, callback, true, initConditions)
     {
         SetCallback(callback);
     }

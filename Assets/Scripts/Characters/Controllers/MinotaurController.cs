@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class MinotaurController : 
@@ -7,6 +7,7 @@ public class MinotaurController :
 {
     [SerializeField]
     private Stats _minotaurStats;
+
     [SerializeField]
     private LayerMask _playerLayer;
 
@@ -15,48 +16,14 @@ public class MinotaurController :
     private GameObject _player;
     private PlayerController _playerController;
 
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _minotaurStats;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
     protected override void Start()
     {
         base.Start();
-
-
+        EntityStats = _minotaurStats;
 
         SetupStateMachine();
     }
@@ -69,7 +36,8 @@ public class MinotaurController :
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 }),
                 new ActionEntry("FixedUpdate", () =>
@@ -84,22 +52,27 @@ public class MinotaurController :
                 {
                     Collider[] attackTarget;
                     attackTarget = Physics.OverlapCapsule(transform.position,
-                        new Vector3(transform.position.x + _direction.x * 0.5f, transform.position.y, transform.position.z),
+                        new Vector3(transform.position.x + _direction.x * 0.5f,
+                        transform.position.y, transform.position.z),
                         0.35f, _playerLayer, 0);
 
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-
-                        if (attackTarget[i].CompareTag("Player"))
+                        if (!attackTarget[i].CompareTag("Player"))
                         {
-
-                            Vector3 knockbackForce =
-                                (_player.transform.position - transform.position).normalized *
-                                _minotaurStatsContainer.GetStat("Knockback").Value;
-                            _playerController.TakeDamage(_phyDamage, knockbackForce);
-                            break;
+                            continue;
                         }
+
+                        Vector3 knockbackForce =
+                            (_player.transform.position - transform.position).
+                            normalized * _minotaurStatsContainer.
+                            GetStat("Knockback").Value;
+
+                        _playerController.TakeDamage(_phyDamage,
+                            knockbackForce);
+
+                        break;
                     }
                 })
             ),
@@ -107,7 +80,8 @@ public class MinotaurController :
             new GenericState("GoingToSpin",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 })
             ),
@@ -117,22 +91,26 @@ public class MinotaurController :
                 {
                     Collider[] attackTarget;
                     attackTarget = Physics.OverlapCapsule(transform.position,
-                        new Vector3(transform.position.x + _direction.x * 0.5f, transform.position.y, transform.position.z),
+                        new Vector3(transform.position.x + _direction.x * 0.5f,
+                        transform.position.y, transform.position.z),
                         0.35f, _playerLayer, 0);
-
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-
-                        if (attackTarget[i].CompareTag("Player"))
+                        if (!attackTarget[i].CompareTag("Player"))
                         {
-
-                            Vector3 knockbackForce =
-                                (_player.transform.position - transform.position).normalized *
-                                _minotaurStatsContainer.GetStat("Knockback").Value;
-                            _playerController.TakeDamage(_phyDamage, knockbackForce);
-                            break;
+                            continue;
                         }
+
+                        Vector3 knockbackForce =
+                            (_player.transform.position - transform.position).
+                            normalized * _minotaurStatsContainer.
+                            GetStat("Knockback").Value;
+
+                        _playerController.TakeDamage(_phyDamage,
+                            knockbackForce);
+
+                        break;
                     }
                 })
             ),
@@ -140,11 +118,11 @@ public class MinotaurController :
             new GenericState("GoingToQuake",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 })
             ),
-
 
             new GenericState("Cooldown"),
 
@@ -190,14 +168,13 @@ public class MinotaurController :
             new FixedTimedTransition("GoingToSpin", "Spin", 0.4f),
 
             //  Spin > Idle
-            new FixedTimedTransition("Spin", "Idle", 2.0f),
+            new FixedTimedTransition("Spin", "Idle", 2f),
 
             // Attack > Cooldown
             new FixedTimedTransition("Spin", "Cooldown", 0.4f),
 
             // Cooldown > Idle
             new FixedTimedTransition("Cooldown", "Idle", 0.2f)
-
         );
 
         _stateMachine.SetStartState("Idle");
@@ -209,15 +186,14 @@ public class MinotaurController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _minotaurStatsContainer = _minotaurStats.GetInstancedStatContainer();
+        _minotaurStatsContainer = _minotaurStats.
+            GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
             GetStat("AttackDamage").Value);
     }
 
     private void Update()
     {
-
-
         //_animator.SetBool("isCharging",
         //    _stateMachine.CurrentState.StateID == "GoingToSpin");
         //_animator.SetBool("isSpinning",
@@ -226,7 +202,6 @@ public class MinotaurController :
         //    _stateMachine.CurrentState.StateID == "Quake");
         //_animator.SetBool("isMoving",
         //   _stateMachine.CurrentState.StateID == "Walk");
-
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -242,7 +217,8 @@ public class MinotaurController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
@@ -256,20 +232,19 @@ public class MinotaurController :
             _animator.SetBool("isDead", true);
         }
         else
+        {
             _stateMachine.FixedUpdate();
+        }
     }
-
 
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject == _player)
         {
-
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _minotaurStatsContainer.GetStat("Knockback").Value;
             _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }
-
 }

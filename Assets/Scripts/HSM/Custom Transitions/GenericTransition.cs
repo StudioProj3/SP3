@@ -10,7 +10,7 @@ public class GenericTransition<TStateID> :
 {
     public GenericTransition(TStateID fromStateID, TStateID toStateID,
         params Func<bool>[] initConditions) :
-        base(fromStateID, toStateID, initConditions)
+        base(fromStateID, toStateID, false, initConditions)
     {
         Assert(initConditions.Length > 0,
             "There must be at least 1 condition in this transition");

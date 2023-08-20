@@ -351,6 +351,9 @@ public class StateMachine<TSelfID, TStateID> :
                     _allAllToOneTransitionData[allToOneTransition].
                     Contains(CurrentState.StateID))
                 {
+                    HandleTransitionCallback(allToOneTransition);
+                    HandleTransitionDebugLogs(allToOneTransition);
+
                     return new(allToOneTransition.ToStateID,
                         allToOneTransition is IEagerTransition &&
                         (allToOneTransition as IEagerTransition).

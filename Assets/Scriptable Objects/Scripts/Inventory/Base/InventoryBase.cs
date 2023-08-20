@@ -7,25 +7,9 @@ using static DebugUtils;
 public abstract class InventoryBase :
     ScriptableObject
 {
-    public uint MaxNumSlots
-    {
-        get => _maxNumSlots;
-        protected set => _maxNumSlots = value;
-    }
+    public abstract uint MaxNumSlots { get; protected set; }
 
-    public uint MaxPerSlot
-    {
-        get => _maxPerSlot;
-        protected set => _maxPerSlot = value;
-    }
-
-    [SerializeField]
-    [Tooltip("Number of slots in the inventory")]
-    protected uint _maxNumSlots;
-
-    [SerializeField]
-    [Tooltip("Max number of items in 1 slot")]
-    protected uint _maxPerSlot;
+    public abstract uint MaxPerSlot { get; protected set; }
 
     [SerializeField]
     protected List<Pair<ItemBase, uint>> _itemInitializerList = new();
@@ -49,6 +33,11 @@ public abstract class InventoryBase :
         _nonStackableIndexToNewValueMap.Clear();
     }
 
+    public virtual ItemBase GetItem(int index)
+    {
+        return _allItems[index]?.Key;
+    }
+
     // Function returns whether the modification request is valid
     // and caches the data needed for the modification
     protected virtual bool RequestModify(ItemBase item, int number)
@@ -63,7 +52,7 @@ public abstract class InventoryBase :
         }
 
         // Loop through all the slots available
-        for (int i = 0; i < _maxNumSlots; ++i)
+        for (int i = 0; i < MaxNumSlots; ++i)
         {
             // If all adding or removing was done
             if (CannotAddOrRemove())
@@ -96,13 +85,13 @@ public abstract class InventoryBase :
 
                         // If the current slot is already full move
                         // to the next iteration
-                        if (quantity >= _maxPerSlot)
+                        if (quantity >= MaxPerSlot)
                         {
                             continue;
                         }
 
                         // Get the difference that we are able to fill up
-                        int difference = (int)(_maxPerSlot - quantity);
+                        int difference = (int)(MaxPerSlot - quantity);
                         
                         // If there is more than the difference, it will use the
                         // difference. If there is less than the difference, it
@@ -118,7 +107,7 @@ public abstract class InventoryBase :
                     else
                     {
                         // Either get the max per slot or remainder
-                        int newValue = Mathf.Min((int)_maxPerSlot, numberLeft);
+                        int newValue = Mathf.Min((int)MaxPerSlot, numberLeft);
 
                         // Use the new value obtained
                         _indexToQuantityMap.Add(
@@ -165,7 +154,7 @@ public abstract class InventoryBase :
                     // Cache the result.
                     _indexToQuantityMap.Add(new Pair<int, uint>(i,
                         (uint)newQuantity));
-                    numberLeft += (int)_maxPerSlot - newQuantity;
+                    numberLeft += (int)MaxPerSlot - newQuantity;
                 }
                 else
                 {
@@ -303,16 +292,16 @@ public abstract class InventoryBase :
         //
         // NOTE (Chris): By adding null, you are just adding a new pair with
         // null values
-        if (_maxNumSlots < _itemInitializerList.Count)
+        if (MaxNumSlots < _itemInitializerList.Count)
         {
-            while (_itemInitializerList.Count > _maxNumSlots)
+            while (_itemInitializerList.Count > MaxNumSlots)
             {
                 _itemInitializerList.RemoveAt(_itemInitializerList.Count - 1);
             }
         }
         else
         {
-            while (_itemInitializerList.Count < _maxNumSlots)
+            while (_itemInitializerList.Count < MaxNumSlots)
             {
                 _itemInitializerList.Add(null);
             }
@@ -330,7 +319,7 @@ public abstract class InventoryBase :
             }
         }
 
-        _itemInitializerList.Capacity = (int)_maxNumSlots;
+        _itemInitializerList.Capacity = (int)MaxNumSlots;
         
         // Clear the internal item list
         _allItems.Clear();
