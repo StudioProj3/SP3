@@ -11,6 +11,12 @@ public class MinotaurController :
     [SerializeField]
     private LayerMask _playerLayer;
 
+    [SerializeField]
+    private StatusEffectBase _earthStatusEffect;
+
+    private GameObject _pooledEarth;
+    private List<ArrowController> _pooledEarthList;
+
     private StatContainer _minotaurStatsContainer;
 
     private GameObject _player;
@@ -58,6 +64,9 @@ public class MinotaurController :
     protected override void Start()
     {
         base.Start();
+
+        _pooledEarth = transform.GetChild(0).gameObject;
+        _pooledEarthList = new List<ArrowController>();
 
         SetupStateMachine();
     }
@@ -146,6 +155,21 @@ public class MinotaurController :
 
                         break;
                     }
+
+                    for (int i = 0; i < _pooledEarthList.Count; i++)
+                    {
+                        if (!(_pooledEarthList[i].gameObject.activeSelf))
+                        {
+                            _pooledEarthList[i].Init(_direction, _phyDamage,
+                                _earthStatusEffect, _pooledEarth.transform);
+                            _pooledEarthList[i].transform.position =
+                                transform.position;
+                            _pooledEarthList[i].transform.SetParent(null);
+
+                            break;
+                        }
+                    }
+
                 })
             ),
 
@@ -171,13 +195,13 @@ public class MinotaurController :
             // Idle > GoingToAttack
             new GenericTransition("Idle", "GoingToQuake", () =>
             {
-                return _distance < 0.8f;
+                return _distance < 1.5f;
             }),
 
             // Walk > GoingToAttack
             new GenericTransition("Walk", "GoingToQuake", () =>
             {
-                return _distance < 0.8f;
+                return _distance < 1.5f;
             }),
 
             //  GoingToQuake > Quake
@@ -189,13 +213,13 @@ public class MinotaurController :
             // Idle > GoingToSpin
             new GenericTransition("Idle", "GoingToSpin", () =>
             {
-                return _distance < 0.8f;
+                return _distance < 0.5f;
             }),
 
             // Walk > GoingToSpin
             new GenericTransition("Walk", "GoingToSpin", () =>
             {
-                return _distance < 0.8f;
+                return _distance < 0.5f;
             }),
 
             //  GoingToSpin > Spin
@@ -228,14 +252,14 @@ public class MinotaurController :
 
     private void Update()
     {
-        //_animator.SetBool("isCharging",
-        //    _stateMachine.CurrentState.StateID == "GoingToSpin");
-        //_animator.SetBool("isSpinning",
-        //    _stateMachine.CurrentState.StateID == "Spin");
-        //_animator.SetBool("isQuaking",
-        //    _stateMachine.CurrentState.StateID == "Quake");
-        //_animator.SetBool("isMoving",
-        //   _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isCharging",
+            _stateMachine.CurrentState.StateID == "GoingToSpin");
+        _animator.SetBool("isSpinning",
+            _stateMachine.CurrentState.StateID == "Spin");
+        _animator.SetBool("isQuaking",
+            _stateMachine.CurrentState.StateID == "Quake");
+        _animator.SetBool("isMoving",
+           _stateMachine.CurrentState.StateID == "Walk");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
