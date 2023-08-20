@@ -140,6 +140,9 @@ public class CacodaemonController :
         transform.rotation = Quaternion.Euler(0,
             _direction.x < 0 ? 180 : 0, 0);
 
+        Debug.Log(_cacodaemonStatsContainer.
+             GetStat("Health").Value );
+
     }
 
     private void FixedUpdate()
