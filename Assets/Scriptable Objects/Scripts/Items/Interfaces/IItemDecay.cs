@@ -6,6 +6,8 @@ public interface IItemDecay
         Random,
     }
 
+    bool Disable { get; }
+
     DecayDuration DurationType { get; }
 
     float FixedDuration { get; }
