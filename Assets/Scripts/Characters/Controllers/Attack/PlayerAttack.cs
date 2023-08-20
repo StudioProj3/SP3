@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -18,7 +20,6 @@ public class PlayerAttack : MonoBehaviour
     private Plane _detectionPlane;
     private Quaternion _weaponFlipAngle;
     private Vector3 _flipVector;
-    private Stats _playerStats;
     private Animator _animator;
     private Rigidbody _rigidbody;
 
@@ -28,7 +29,6 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Start()
     {
-        _playerStats = _playerData.CharacterStats;
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
 
@@ -103,12 +103,6 @@ public class PlayerAttack : MonoBehaviour
                 Quaternion.identity;
     }
 
-    private void FixedUpdate()
-    {
-        // Replace when item pickup is integrated with player
-        Equip(_playerData.HandInventory.GetItem(0));
-    }
-
     private void DealDamage(IEffectable effectable, Vector3 hitPos)
     {
         if (_currentlyHolding is WeaponBase weapon)
@@ -125,9 +119,9 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void Equip(ItemBase itemToEquip)
+    public void Equip(ItemBase itemToEquip, uint quantity)
     {
-        if (itemToEquip)
+        if (itemToEquip is WeaponBase)
         {
             _weaponDisplay.sprite = itemToEquip.Sprite;
             _currentlyHolding = itemToEquip;   

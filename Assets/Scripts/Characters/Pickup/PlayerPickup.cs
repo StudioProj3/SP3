@@ -14,8 +14,6 @@ public class PlayerPickup :
     protected override void Awake()
     {
         base.Awake();
-
-        OnPlayerPickup = new UnityEvent<ItemBase, uint>();
     }
 
     protected override void OnTriggerEnter(Collider other)
