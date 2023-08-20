@@ -27,7 +27,8 @@ public class NecromancerController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _necromancerStats;
+    IStatContainer IEffectable.EntityStats =>
+        _necromancerStats;
 
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -35,7 +36,6 @@ public class NecromancerController :
         _animator.SetBool("isHurt", true);
         damage.OnApply(this);
         _animator.SetBool("isHurt", false);
-
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
@@ -50,7 +50,8 @@ public class NecromancerController :
         RemoveEffectImpl(statusEffect, index);
     }
 
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
+    private void RemoveEffectImpl(StatusEffectBase statusEffect,
+        int index)
     {
         statusEffect.OnExit(this);
         _statusEffects.RemoveAt(index);
@@ -59,6 +60,7 @@ public class NecromancerController :
     protected override void Start()
     {
         base.Start();
+
         _pooledSkeletons = transform.GetChild(0).gameObject;
         _pooledSkeletonList = new List<SkeletonController>();
         _pooledSkulls = transform.GetChild(1).gameObject;
@@ -66,15 +68,18 @@ public class NecromancerController :
 
         foreach (Transform child in _pooledSkulls.transform)
         {
-            _pooledSkullList.Add(child.GetComponent<RedSkullController>());
+            _pooledSkullList.Add(child.
+                GetComponent<RedSkullController>());
         }
 
         foreach (Transform child in _pooledSkeletons.transform)
         {
-            _pooledSkeletonList.Add(child.GetComponent<SkeletonController>());
+            _pooledSkeletonList.Add(child.
+                GetComponent<SkeletonController>());
         }
 
-        _necromancerStatsContainer = _necromancerStats.GetInstancedStatContainer();
+        _necromancerStatsContainer = _necromancerStats.
+            GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_necromancerStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -149,7 +154,8 @@ public class NecromancerController :
             new GenericState("GoingToShoot",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 })
             ),
@@ -208,10 +214,9 @@ public class NecromancerController :
         _animator.SetBool("isShooting",
             _stateMachine.CurrentState.StateID == "GoingToShoot");
         _animator.SetBool("isMoving",
-           _stateMachine.CurrentState.StateID == "Walk");
+            _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isSummoning",
-         _stateMachine.CurrentState.StateID == "GoingToSummon");
-
+            _stateMachine.CurrentState.StateID == "GoingToSummon");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -227,7 +232,8 @@ public class NecromancerController :
             }
         }
 
-        transform.rotation = Quaternion.Euler(0, _direction.x < 0 ? 180 : 0, 0);
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
@@ -241,20 +247,19 @@ public class NecromancerController :
             _animator.SetBool("isDead", true);
         }
         else
+        {
             _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject == _player)
         {
-
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _necromancerStatsContainer.GetStat("Knockback").Value;
             _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
     }
-
-
 }
