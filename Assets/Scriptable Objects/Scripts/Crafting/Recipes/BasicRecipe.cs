@@ -9,4 +9,9 @@ public class BasicRecipe : RecipeBase
 
     [field: SerializeField]
     public ItemBase[] Row2 { get; protected set; }
+
+    public BasicRecipe()
+    {
+        Name = "Basic Recipe";
+    }
 }

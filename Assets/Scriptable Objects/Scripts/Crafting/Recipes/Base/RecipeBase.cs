@@ -17,5 +17,5 @@ public abstract class RecipeBase :
 
     [field: SerializeField]
     [field: Range(1, 10)]
-    public uint TargetQuantity { get; protected set; }
+    public uint TargetQuantity { get; protected set; } = 1;
 }
