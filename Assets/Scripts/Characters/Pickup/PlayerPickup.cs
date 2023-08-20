@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
+
 using static DebugUtils;
 
 public class PlayerPickup :
@@ -8,6 +8,7 @@ public class PlayerPickup :
 {
     [field: HorizontalDivider]
     [field: Header("Events")]
+
     [field: SerializeField]
     public UnityEvent<ItemBase, uint> OnPlayerPickup { get; private set; }
 
@@ -95,7 +96,6 @@ public class PlayerPickup :
             }
         }
     }
-
 
     private void TryNotificationCollect(UINotification notification,
         Sprite sprite, string name)
