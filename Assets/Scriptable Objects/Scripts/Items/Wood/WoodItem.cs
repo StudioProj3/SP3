@@ -18,18 +18,22 @@ public class WoodItem :
     [field: Header("Decay Parameters")]
 
     [field: SerializeField]
-    public IItemDecay.DecayDuration DurationType { get; protected set; }
+    public IItemDecay.DecayDuration DurationType
+        { get; protected set; }
 
     [field: SerializeField]
-    [ShowIf("DurationType", IItemDecay.DecayDuration.Fixed)]
+    [field: ShowIf("DurationType", IItemDecay.DecayDuration.Fixed,
+        true)]
     public float FixedDuration { get; protected set; }
 
     [field: SerializeField]
-    [ShowIf("DurationType", IItemDecay.DecayDuration.Random)]
+    [field: ShowIf("DurationType", IItemDecay.DecayDuration.Random,
+        true)]
     public float MinDuration { get; protected set; }
 
     [field: SerializeField]
-    [ShowIf("DurationType", IItemDecay.DecayDuration.Random)]
+    [field: ShowIf("DurationType", IItemDecay.DecayDuration.Random,
+        true)]
     public float MaxDuration { get; protected set; }
 
     [field: SerializeField]
