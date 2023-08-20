@@ -24,7 +24,7 @@ public class UIHUDStatBar : MonoBehaviour
     [SerializeField]
     [Range(50, 100)]
     [Tooltip("Update frequency in number of times a second")]
-    private uint frequency = 60;
+    private uint _frequency = 60;
 
     private RectMask2D _statBarLeft;
     private RectMask2D _statBarRight;
@@ -41,7 +41,7 @@ public class UIHUDStatBar : MonoBehaviour
 
         // Perform 1 or more cycles depending on the time
         // stored in the `_accumulator`
-        while (_accumulator >= (1f / frequency))
+        while (_accumulator >= (1f / _frequency))
         {
             float ratio = _value.Value / _value.Max;
 
@@ -51,7 +51,7 @@ public class UIHUDStatBar : MonoBehaviour
             SetBothPadding(Mathf.Lerp(padding, newPadding, _lerpFactor));
 
             // Decrease `_accumulator` after 1 iteration
-            _accumulator -= 1f / frequency;
+            _accumulator -= 1f / _frequency;
         }
     }
 
