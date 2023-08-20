@@ -113,7 +113,8 @@ public class ArcherController :
             new GenericState("Roll",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = transform.position - _player.transform.position;
+                    _direction = transform.position -
+                        _player.transform.position;
                     _direction.y = 0;
 
                     _rigidbody.AddForce( _archerStatsContainer.

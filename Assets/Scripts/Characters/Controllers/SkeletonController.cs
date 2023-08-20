@@ -111,14 +111,20 @@ public class SkeletonController :
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        if (attackTarget[i].CompareTag("Player"))
+                        if (!attackTarget[i].CompareTag("Player"))
                         {
-                            Vector3 knockbackForce =
-                                (_player.transform.position - transform.position).normalized *
-                                _skeletonStatsContainer.GetStat("Knockback").Value;
-                            _playerController.TakeDamage(_phyDamage, knockbackForce);
-                            break;
+                            continue;
                         }
+
+                        Vector3 knockbackForce =
+                            (_player.transform.position - transform.position).
+                            normalized * _skeletonStatsContainer.
+                            GetStat("Knockback").Value;
+
+                        _playerController.TakeDamage(_phyDamage,
+                            knockbackForce);
+
+                        break;
                     }
                 })
             ),

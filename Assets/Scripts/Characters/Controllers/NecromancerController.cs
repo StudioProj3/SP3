@@ -110,14 +110,17 @@ public class NecromancerController :
                     for (int i = 0; i < _pooledSkullList.Count; i++)
                     {
                         if (!(_pooledSkullList[i].gameObject.activeSelf))
-                        {                       
+                        {
+                            float xRand = Random.Range(-0.5f, 0.5f);
+                            float zRand = Random.Range(-0.5f, 0.5f);
+
                             _pooledSkullList[i].transform.position =
-                                new Vector3(transform.position.x + Random.Range(-0.5f, 0.5f),
-                                            transform.position.y - 0.4f,
-                                            transform.position.z + Random.Range(-0.5f, 0.5f));
+                                new Vector3(transform.position.x + xRand,
+                                transform.position.y - 0.4f,
+                                transform.position.z + zRand);
 
                             _direction = _player.transform.position -
-                                        _pooledSkullList[i].transform.position;
+                                _pooledSkullList[i].transform.position;
 
                             _pooledSkullList[i].Init(_direction, _phyDamage,
                                 _playerController, _pooledSkulls.transform);
@@ -136,11 +139,15 @@ public class NecromancerController :
                     {
                         if (!(_pooledSkeletonList[i].gameObject.activeSelf))
                         {
-                            _pooledSkeletonList[i].Init( _pooledSkeletons.transform);
+                            float xRand = Random.Range(-0.75f, 0.75f);
+                            float zRand = Random.Range(-0.75f, 0.75f);
+
+                            _pooledSkeletonList[i].Init(_pooledSkeletons.
+                                transform);
                             _pooledSkeletonList[i].transform.position =
-                                new Vector3(transform.position.x + Random.Range(-0.75f,0.75f),
-                                            transform.position.y - 0.4f,
-                                            transform.position.z + Random.Range(-0.75f,0.75f));
+                                new Vector3(transform.position.x + xRand,
+                                transform.position.y - 0.4f,
+                                transform.position.z + zRand);
                             _pooledSkeletonList[i].transform.SetParent(null);
 
                             break;

@@ -93,14 +93,20 @@ public class MinotaurController :
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        if (attackTarget[i].CompareTag("Player"))
+                        if (!attackTarget[i].CompareTag("Player"))
                         {
-                            Vector3 knockbackForce =
-                                (_player.transform.position - transform.position).normalized *
-                                _minotaurStatsContainer.GetStat("Knockback").Value;
-                            _playerController.TakeDamage(_phyDamage, knockbackForce);
-                            break;
+                            continue;
                         }
+
+                        Vector3 knockbackForce =
+                            (_player.transform.position - transform.position).
+                            normalized * _minotaurStatsContainer.
+                            GetStat("Knockback").Value;
+
+                        _playerController.TakeDamage(_phyDamage,
+                            knockbackForce);
+
+                        break;
                     }
                 })
             ),
@@ -125,14 +131,20 @@ public class MinotaurController :
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        if (attackTarget[i].CompareTag("Player"))
+                        if (!attackTarget[i].CompareTag("Player"))
                         {
-                            Vector3 knockbackForce =
-                                (_player.transform.position - transform.position).normalized *
-                                _minotaurStatsContainer.GetStat("Knockback").Value;
-                            _playerController.TakeDamage(_phyDamage, knockbackForce);
-                            break;
+                            continue;
                         }
+
+                        Vector3 knockbackForce =
+                            (_player.transform.position - transform.position).
+                            normalized * _minotaurStatsContainer.
+                            GetStat("Knockback").Value;
+
+                        _playerController.TakeDamage(_phyDamage,
+                            knockbackForce);
+
+                        break;
                     }
                 })
             ),
@@ -208,7 +220,8 @@ public class MinotaurController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _minotaurStatsContainer = _minotaurStats.GetInstancedStatContainer();
+        _minotaurStatsContainer = _minotaurStats.
+            GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
             GetStat("AttackDamage").Value);
     }
