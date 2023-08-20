@@ -1,3 +1,8 @@
+using UnityEngine;
+using UnityEngine.Assertions;
+
+using static DebugUtils;
+
 public class Quest
 {
     public QuestInfo Info { get; private set; }
@@ -20,6 +25,21 @@ public class Quest
     {
         return _currentQuestStepIndex < Info.QuestSteps.Length;
     }
-    
 
+    private GameObject GetCurrentQuestStepPrefab()
+    {
+        Assert(CurrentStepExists(), 
+            $"Step index out of range. Quest ID = {Info.name}");
+
+        return Info.QuestSteps[_currentQuestStepIndex];
+    }
+
+    private void InstantiateCurrentQuestStep(Transform parentTransform)
+    {
+        GameObject prefab = GetCurrentQuestStepPrefab();
+        if (prefab != null)
+        {
+            Object.Instantiate(prefab, parentTransform);
+        }
+    }
 }
