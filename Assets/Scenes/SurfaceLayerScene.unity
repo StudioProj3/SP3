@@ -14298,6 +14298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
   _statType: {fileID: 11400000, guid: ae32616fa6e751f4e85f7639dfe65e40, type: 2}
+  _lerpFactor: 0.2
+  frequency: 60
 --- !u!114 &966389382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36691,6 +36693,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
   _statType: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
+  _lerpFactor: 0.2
+  frequency: 60
 --- !u!114 &1418330640
 MonoBehaviour:
   m_ObjectHideFlags: 0
