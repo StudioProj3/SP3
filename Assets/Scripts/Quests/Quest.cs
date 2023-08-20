@@ -31,7 +31,8 @@ public class Quest
         GameObject prefab = GetCurrentQuestStepPrefab();
         if (prefab != null)
         {
-            Object.Instantiate(prefab, parentTransform);
+            Object.Instantiate(prefab, parentTransform)
+                .GetComponent<QuestStep>().Initialize(Info.ID);
         }
     }
 

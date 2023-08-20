@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEditor;
+using UnityEngine;
 
 using static DebugUtils;
 
@@ -83,6 +84,18 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private void AdvanceQuestCallback(string id)
     {
+        Quest quest = GetQuest(id);
+        quest.MoveToNextStep();
+
+        // If there are any more steps, instantiate the new one
+        if (quest.CurrentStepExists())
+        {
+            quest.InstantiateCurrentQuestStep(transform);
+        }
+        else
+        {
+            ChangeQuestState(quest.Info.ID, QuestState.CanFinish);
+        }
     }
 
     private void FinishQuestCallback(string id)
@@ -92,6 +105,23 @@ public sealed class QuestManager : Singleton<QuestManager>
     private void QuestStateChangeCallback(Quest quest)
     {
 
+    }
+
+    private void Update()
+    {
+        // TODO (Chris): If posssible, we should make this event based
+        foreach (Quest quest in _allQuests.Values)
+        {
+            if (quest.state == QuestState.RequirementsNotMet &&
+                IsRequirementsMet(quest))
+            {
+                ChangeQuestState(quest.Info.ID, QuestState.CanStart);
+            }
+        }
+        // if (_allQuests.Values.Any(x => x.state == QuestState.CanFinish))
+        // {
+        //     Debug.Log("Test");
+        // }
     }
 
     private void InitializeDictionary() 
@@ -109,7 +139,7 @@ public sealed class QuestManager : Singleton<QuestManager>
         }
     }
 
-    public Quest GetQuest(string id)
+    private Quest GetQuest(string id)
     {
         if (_allQuests.TryGetValue(id, out var quest))
         {
@@ -118,6 +148,4 @@ public sealed class QuestManager : Singleton<QuestManager>
         Fatal("Query quest failed.");
         return null;
     }
-
-    
 }   
