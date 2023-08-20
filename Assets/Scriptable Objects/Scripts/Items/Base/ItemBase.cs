@@ -3,6 +3,9 @@ using UnityEngine;
 public abstract class ItemBase :
     ScriptableObject, INameable
 {
+    [field: HorizontalDivider]
+    [field: Header("Basic Parameters")]
+
     [field: SerializeField]
     public string Name { get; protected set; }
 
