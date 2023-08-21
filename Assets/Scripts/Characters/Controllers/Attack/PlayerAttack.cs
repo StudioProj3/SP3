@@ -55,18 +55,14 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         CalculateMousePos();
-
-        if (_currentlyHolding is WeaponBase weapontest)
-            {
-                Debug.Log(weapontest.CanAttack);
-            }
-
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (_currentlyHolding is WeaponBase weapon && !weapon.CanAttack)
             {
                 return;
             }
+             
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 _animator.Play(swordWeapon.AnimationName);

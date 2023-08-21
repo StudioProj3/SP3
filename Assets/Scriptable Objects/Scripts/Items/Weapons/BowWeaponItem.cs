@@ -14,7 +14,15 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
     public ItemBase Projectile => _projectile;
     public void OnUseEnter()
     {
-        
+        if (CanAttack)
+        {
+            return;
+        }
+
+        _ = Delay.Execute(() =>
+        {
+            CanAttack = true;
+        }, WeaponStats.GetStat("AttackCooldown").Value);
     }
 
     public void OnUse()
@@ -24,17 +32,12 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
 
     public void OnUseExit()
     {
-        _ = Delay.Execute(() =>
-        {
-            CanAttack = true;
-        }, WeaponStats.GetStat("AttackSpeed").Value);
     }
 
     public void Shoot(ArrowController projectileToFire, Vector3 direction, Transform source)
     {
         if (CanAttack)
         {
-            Debug.Log("Shoot");
             projectileToFire.Init(direction, WeaponDamageType, WeaponStatusEffect, source, Projectile.Sprite);
             projectileToFire.transform.position = source.position;
             projectileToFire.transform.SetParent(null);
