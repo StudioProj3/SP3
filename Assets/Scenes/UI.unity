@@ -709,6 +709,7 @@ GameObject:
   - component: {fileID: 1541058176}
   - component: {fileID: 1541058177}
   - component: {fileID: 1541058178}
+  - component: {fileID: 1541058179}
   m_Layer: 5
   m_Name: Hands
   m_TagString: Untagged
@@ -778,6 +779,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 0
+--- !u!114 &1541058179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541058175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f4cd968891edf4a8d102fb2ed27861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: {fileID: 11400000, guid: 1501cf6f6ec7f3f45bfef246206ca028, type: 2}
 --- !u!1001 &1672861554
 PrefabInstance:
   m_ObjectHideFlags: 0
