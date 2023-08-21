@@ -12,9 +12,9 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
     public string AnimationName => _animationName;
 
     public ItemBase Projectile => _projectile;
-
     public void OnUseEnter()
     {
+        
     }
 
     public void OnUse()
@@ -24,13 +24,21 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
 
     public void OnUseExit()
     {
-        
+        _ = Delay.Execute(() =>
+        {
+            CanAttack = true;
+        }, WeaponStats.GetStat("AttackSpeed").Value);
     }
 
     public void Shoot(ArrowController projectileToFire, Vector3 direction, Transform source)
     {
-        projectileToFire.Init(direction, WeaponDamageType, WeaponStatusEffect, source, Projectile.Sprite);
-        projectileToFire.transform.position = source.position;
-        projectileToFire.transform.SetParent(null);
+        if (CanAttack)
+        {
+            Debug.Log("Shoot");
+            projectileToFire.Init(direction, WeaponDamageType, WeaponStatusEffect, source, Projectile.Sprite);
+            projectileToFire.transform.position = source.position;
+            projectileToFire.transform.SetParent(null);
+            CanAttack = false;
+        }
     }
 }

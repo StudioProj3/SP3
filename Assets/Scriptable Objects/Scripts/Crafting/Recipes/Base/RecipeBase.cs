@@ -13,11 +13,11 @@ public abstract class RecipeBase :
     [field: Header("Recipe Parameters")]
 
     [field: SerializeField]
-    public ItemBase Target { get; protected set; }
-
-    [field: SerializeField]
     [field: Range(1, 10)]
     public uint TargetQuantity { get; protected set; } = 1;
+
+    [field: SerializeField]
+    public ItemBase Target { get; protected set; }
 
     public Material Material { get; protected set; }
 

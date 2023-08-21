@@ -13,6 +13,9 @@ public abstract class ItemBase :
     public Sprite Sprite { get; protected set; }
 
     [field: SerializeField]
+    public bool Atlas { get; protected set; }
+
+    [field: SerializeField]
     public bool Stackable { get; protected set; }
 
     [field: SerializeField]
