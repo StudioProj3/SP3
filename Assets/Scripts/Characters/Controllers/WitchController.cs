@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class WitchController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
 
     [SerializeField]

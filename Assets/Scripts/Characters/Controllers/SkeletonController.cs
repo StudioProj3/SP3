@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public class SkeletonController : 
-    CharacterControllerBase, IEffectable
+public class SkeletonController :
+    EnemyControllerBase, IEffectable
 {
 
     [SerializeField]

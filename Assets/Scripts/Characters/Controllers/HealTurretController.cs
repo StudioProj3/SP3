@@ -2,7 +2,7 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 public class HealTurretController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
     [SerializeField]
     private LayerMask _enemyLayer;

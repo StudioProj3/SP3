@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NecromancerController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
 
     private GameObject _pooledSkeletons;

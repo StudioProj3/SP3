@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class MinotaurController : 
-    CharacterControllerBase, IEffectable
+public class MinotaurController :
+    EnemyControllerBase, IEffectable
 {
 
     [SerializeField]
@@ -72,7 +72,6 @@ public class MinotaurController :
                     _direction = _player.transform.position -
                        transform.position;
 
-                    Debug.Log(_direction.normalized * 0.15f);
                     _rigidbody.AddForce(_direction.normalized * 0.15f, ForceMode.Impulse);
 
                     Collider[] attackTarget;

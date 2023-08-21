@@ -2,7 +2,7 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 public class CacodaemonController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
     private StatContainer _cacodaemonStatsContainer;
 
