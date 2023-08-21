@@ -352,7 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c6b04b3770eb874fa4260b06ad2b5dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: 71cf11ac1946eb94d94d1db99e42b3fa,
+    type: 2}
 --- !u!95 &6696665779751592124
 Animator:
   serializedVersion: 5
@@ -386,11 +387,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc5312d217a4c64b96223f85553fcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
+  _characterData: {fileID: 11400000, guid: 71cf11ac1946eb94d94d1db99e42b3fa, type: 2}
   _pickupInventory: 1
   <OnPlayerPickup>k__BackingField:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1161239569}
+        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
+        m_MethodName: Equip
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &3902993932949154097
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -417,7 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponDisplay: {fileID: 1428265301}
-  _playerData: {fileID: 11400000, guid: f4430e0925a58d349a3bab3ad5e9ce00, type: 2}
+  _playerData: {fileID: 11400000, guid: 71cf11ac1946eb94d94d1db99e42b3fa, type: 2}
 --- !u!1001 &4869063663483587227
 PrefabInstance:
   m_ObjectHideFlags: 0

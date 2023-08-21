@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
     private SpriteRenderer _weaponDisplay;
     
     [SerializeField]
-    private PlayerData _playerData;
+    private CharacterData _playerData;
 
     private ItemBase _currentlyHolding;
     private GameObject _pooledArrows;
@@ -41,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
                 GetComponent<ArrowController>());
         }
 
-        _detectionPlane = new Plane(Vector3.up, 0f);
+        _detectionPlane = new Plane(Vector3.up, -0.7f);
 
         _heldItemContainer = transform.GetChild(0);
         _weaponFlipAngle = Quaternion.Euler(0f, -360f, 0f);
@@ -55,18 +55,14 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         CalculateMousePos();
-
-        if (_currentlyHolding is WeaponBase weapontest)
-            {
-                Debug.Log(weapontest.CanAttack);
-            }
-
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (_currentlyHolding is WeaponBase weapon && !weapon.CanAttack)
             {
                 return;
             }
+             
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 _animator.Play(swordWeapon.AnimationName);

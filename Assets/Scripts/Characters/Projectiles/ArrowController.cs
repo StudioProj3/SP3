@@ -11,6 +11,9 @@ public class ArrowController : MonoBehaviour
     [field: SerializeField]
     private LayerMask targetLayer;
 
+    [SerializeField]
+    private ArrowItem _arrowInfo;
+
     private float _currentLifetime;
     private Vector3 _direction;
     private Damage _damage;

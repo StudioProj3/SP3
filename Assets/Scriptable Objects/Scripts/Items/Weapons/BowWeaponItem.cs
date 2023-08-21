@@ -8,13 +8,28 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
     private string _animationName = "Shoot";
 
     [field: SerializeField]
-    private ItemBase _projectile;
+    private ArrowItem _projectile;
     public string AnimationName => _animationName;
 
-    public ItemBase Projectile => _projectile;
+    public ArrowItem Projectile => _projectile;
     public void OnUseEnter()
     {
-        
+        if (WeaponDamageType != _projectile.WeaponDamageType ||
+            WeaponStatusEffect != _projectile.WeaponStatusEffect)
+        {
+            WeaponDamageType = _projectile.WeaponDamageType;
+            WeaponStatusEffect = _projectile.WeaponStatusEffect;
+        }
+
+        if (CanAttack)
+        {
+            return;
+        }
+
+        _ = Delay.Execute(() =>
+        {
+            CanAttack = true;
+        }, WeaponStats.GetStat("AttackCooldown").Value);
     }
 
     public void OnUse()
@@ -24,21 +39,22 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
 
     public void OnUseExit()
     {
-        _ = Delay.Execute(() =>
-        {
-            CanAttack = true;
-        }, WeaponStats.GetStat("AttackSpeed").Value);
     }
 
     public void Shoot(ArrowController projectileToFire, Vector3 direction, Transform source)
     {
         if (CanAttack)
         {
-            Debug.Log("Shoot");
             projectileToFire.Init(direction, WeaponDamageType, WeaponStatusEffect, source, Projectile.Sprite);
             projectileToFire.transform.position = source.position;
             projectileToFire.transform.SetParent(null);
             CanAttack = false;
         }
+    }
+
+    public override void OnEnable()
+    {
+        WeaponDamageType = _projectile.WeaponDamageType;
+        WeaponStatusEffect = _projectile.WeaponStatusEffect;
     }
 }
