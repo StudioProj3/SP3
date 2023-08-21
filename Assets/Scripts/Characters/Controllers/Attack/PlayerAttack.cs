@@ -56,8 +56,17 @@ public class PlayerAttack : MonoBehaviour
     {
         CalculateMousePos();
 
+        if (_currentlyHolding is WeaponBase weapontest)
+            {
+                Debug.Log(weapontest.CanAttack);
+            }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            if (_currentlyHolding is WeaponBase weapon && !weapon.CanAttack)
+            {
+                return;
+            }
             if (_currentlyHolding is ISwordWeapon swordWeapon)
             {
                 _animator.Play(swordWeapon.AnimationName);
@@ -67,13 +76,11 @@ public class PlayerAttack : MonoBehaviour
             if (_currentlyHolding is IBowWeapon bowWeapon)
             {
                 _animator.Play(bowWeapon.AnimationName);
-                _rigidbody.AddForce(2f * -transform.localScale.x *
-                    transform.right, ForceMode.Impulse);
+                _rigidbody.AddForce(2f * transform.right, ForceMode.Impulse);
 
-                Vector3 aimDirection = _mousePositon -
-                    _rigidbody.position;
+                Vector3 aimDirection = _mousePositon - _rigidbody.position;
                 Vector3 shootDirection =
-                    new(aimDirection.x, 0f, aimDirection.z);
+                     new(aimDirection.x, 0f, aimDirection.z);
 
                 for (int i = 0; i < _pooledArrowList.Count; ++i)
                 {
@@ -94,6 +101,15 @@ public class PlayerAttack : MonoBehaviour
                 beginUseHandler.OnUseEnter();
             }
         }
+            
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            if (_currentlyHolding is IEndUseHandler endUseHandler)
+            {
+                endUseHandler.OnUseExit();
+            }
+        }  
+            
             _heldItemContainer.transform.localScale =
                 transform.rotation.eulerAngles.y < 180f ? Vector3.one :
                 _flipVector;
