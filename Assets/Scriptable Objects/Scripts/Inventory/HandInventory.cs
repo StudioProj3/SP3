@@ -14,6 +14,18 @@ public class HandInventory :
         base.Reset();
     }
 
+    // Convenience helper function for readability
+    public ItemBase LeftHand()
+    {
+        return GetItem(0);
+    }
+
+    // Convenience helper function for readability
+    public ItemBase RightHand()
+    {
+        return GetItem(1);
+    }
+
     protected override void OnValidate()
     {
         MaxNumSlots = 2;
