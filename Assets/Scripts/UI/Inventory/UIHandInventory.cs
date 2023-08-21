@@ -11,14 +11,17 @@ public class UIHandInventory : MonoBehaviour
 
     private void Update()
     {
-        if (inventory.GetItem(0))
+        ItemBase leftHand = inventory.LeftHand();
+        ItemBase rightHand = inventory.RightHand();
+
+        if (leftHand)
         {
-            leftItem.sprite = inventory.GetItem(0).Sprite;
+            leftItem.sprite = leftHand.Sprite;
         }
 
-        if (inventory.GetItem(1))
+        if (rightHand)
         {
-            rightItem.sprite = inventory.GetItem(1).Sprite;
+            rightItem.sprite = rightHand.Sprite;
         }
     }
 
