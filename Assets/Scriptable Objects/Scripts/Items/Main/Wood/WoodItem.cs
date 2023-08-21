@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Wood",
     menuName = "Scriptable Objects/Items/Wood")]
 public class WoodItem :
-    ItemBase, IItemDecay
+    ItemBase, IItemDecay, ISellable
 {
     [field: HorizontalDivider]
     [field: Header("Item Parameters")]

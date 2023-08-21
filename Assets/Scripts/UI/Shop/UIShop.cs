@@ -59,10 +59,12 @@ public class UIShop : MonoBehaviour
 
     private void Start()
     {
-        var notNullMaterials = _materials.Where(m => m is not null);
+        var notNullMaterials = _materials.Where(m => m.SellableItem is object);
         var distinctMaterials = notNullMaterials.Distinct();
         Assert(notNullMaterials.Count() == distinctMaterials.Count(),
             "There is a duplicate in the materials.");
+        // Debug.Log("Not null materials: " + notNullMaterials.Count());
+        // Debug.Log("Distinct materials: " + distinctMaterials.Count());
         GeneratePrefabs(_materials, _materialsTransform);
     }
 
@@ -71,7 +73,6 @@ public class UIShop : MonoBehaviour
     {
         // NOTE (Chris): Hard-coded 3 value 
         // since we have only 3 coins right now.
-        int[] itemCosts = new int[3];
         ItemBase[] coinItems = new ItemBase[3]
         {
             _bronzeCoin, _silverCoin, _goldCoin
@@ -79,6 +80,7 @@ public class UIShop : MonoBehaviour
 
         foreach (ShopItem item in items)
         {
+            int[] itemCosts = new int[3];
             Assert(item.SellableItem != null, "Invalid item found in " +
             "shop prefab instantation.");
 
@@ -96,10 +98,9 @@ public class UIShop : MonoBehaviour
                         itemCosts[i] = pair.Second;
                     }
                 }
-
-                uiItem.Initialize(item.Item, itemCosts[CoinType.Bronze],
-                    itemCosts[CoinType.Silver], itemCosts[CoinType.Gold]);
             }
+            uiItem.Initialize(item.Item, itemCosts[CoinType.Bronze],
+                itemCosts[CoinType.Silver], itemCosts[CoinType.Gold]);
 
         }
     }
