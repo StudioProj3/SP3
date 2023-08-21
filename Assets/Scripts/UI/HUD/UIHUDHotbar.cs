@@ -24,9 +24,9 @@ public class UIHUDHotbar : MonoBehaviour
 
     private void Awake()
     {
-        leftItem = transform.GetChild(0).GetChild(0).
+        leftItem = transform.GetChild(0, 0).
             GetComponent<Image>();
-        rightItem = transform.GetChild(1).GetChild(0).
+        rightItem = transform.GetChild(1, 0).
             GetComponent<Image>();
     }
 }
