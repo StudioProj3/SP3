@@ -24,7 +24,7 @@ public class TalkNPCQuestStep : QuestStep
         _dialogueIndex = 0;
 
         _targetNPCObject = GameObject.FindWithTag(_NPCtag);
-        _dialogue = _targetNPCObject.GetComponent<Dialogue>();
+        _targetDialogue = _targetNPCObject.GetComponent<Dialogue>();
     }
 
 }
