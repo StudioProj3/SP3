@@ -42,7 +42,7 @@ public class UIShop : MonoBehaviour
     [HorizontalDivider]
     [Header("Player Data")]
     [SerializeField]
-    private Inventory _playerInventory;
+    private InventoryBase _playerInventory;
 
     private void OnValidate()
     {
