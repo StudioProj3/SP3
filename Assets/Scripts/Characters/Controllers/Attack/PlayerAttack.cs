@@ -72,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
             if (_currentlyHolding is IBowWeapon bowWeapon)
             {
                 _animator.Play(bowWeapon.AnimationName);
-                _rigidbody.AddForce(2f * transform.right, ForceMode.Impulse);
+                _rigidbody.AddForce(1f * transform.right, ForceMode.Impulse);
 
                 Vector3 aimDirection = _mousePositon - _rigidbody.position;
                 Vector3 shootDirection =
@@ -92,10 +92,41 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
 
+            if (_currentlyHolding is IMagicWeapon magicWeapon)
+            {
+                _animator.Play(magicWeapon.AnimationName);
+                _rigidbody.AddForce(2f * transform.right, ForceMode.Impulse);
+
+                Vector3 aimDirection = _mousePositon - _rigidbody.position;
+                Vector3 shootDirection =
+                     new(aimDirection.x, 0f, aimDirection.z);
+
+                for (int i = 0; i < _pooledArrowList.Count; ++i)
+                {
+                    if (_pooledArrowList[i].gameObject.activeSelf)
+                    {
+                        continue;
+                    }
+
+                    magicWeapon.Shoot(_pooledArrowList[i],
+                        shootDirection.normalized, _pooledArrows.transform);
+
+                    _playerData.CharacterStats.GetStat("Sanity")
+                        .Subtract(magicWeapon.SanityCost);
+
+                    break;
+                }
+            }
+
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
             }
+        }
+
+        if (_currentlyHolding is IUseHandler useHandler)
+        {
+            useHandler.OnUse();
         }
             
         if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -125,7 +156,7 @@ public class PlayerAttack : MonoBehaviour
             
             effectable.TakeDamage(weapon.WeaponDamageType.
                 AddModifier(Modifier.Multiply(
-                _playerData.CharacterStats.GetStat("DamageMultipler").Value,3)
+                _playerData.CharacterStats.GetStat("DamageMultiplier").Value,3)
                 ), knockbackForce);
 
             if (weapon.WeaponStatusEffect)

@@ -1,17 +1,19 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Bow",
-    menuName = "Scriptable Objects/Items/Weapons/Bow")]
-public class BowWeaponItem : WeaponBase, IBowWeapon
+[CreateAssetMenu(fileName = "Wand",
+    menuName = "Scriptable Objects/Items/Weapons/Wand")]
+public class WandWeaponItem : WeaponBase, IMagicWeapon
 {
-    [field: SerializeField]
+    [SerializeField]
     private string _animationName = "Shoot";
 
-    [field: SerializeField]
+    [SerializeField]
     private ArrowItem _projectile;
     public string AnimationName => _animationName;
 
     public ArrowItem Projectile => _projectile;
+
+    public float SanityCost => WeaponStats.GetStat("SanityCost").Value;
     public void OnUseEnter()
     {
         if (WeaponDamageType != _projectile.WeaponDamageType ||
