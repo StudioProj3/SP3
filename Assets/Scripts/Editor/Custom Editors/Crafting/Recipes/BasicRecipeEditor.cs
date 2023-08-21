@@ -13,8 +13,9 @@ public class BasicRecipeEditor : Editor
         BasicRecipe recipe = (BasicRecipe)target;
         ItemBase itemTarget = recipe.Target;
 
+        float width = 100f;
+
         DrawProperty(serializedObject, "Name");
-        DrawProperty(serializedObject, "Target");
         DrawProperty(serializedObject, "TargetQuantity");
 
         if (itemTarget)
@@ -25,14 +26,23 @@ public class BasicRecipeEditor : Editor
             if (itemTarget.Atlas)
             {
                 DrawSpriteFromSheetCenter(recipe.Target.Sprite,
-                    100f, material, backgroundColor);
+                    width, material, backgroundColor);
             }
             else
             {
-                DrawSpriteCenter(recipe.Target.Sprite, 100f,
+                DrawSpriteCenter(recipe.Target.Sprite, width,
                     material, backgroundColor);
             }
         }
+
+        Horizontal(() =>
+        {
+            FlexibleSpace(() =>
+            {
+                DrawPropertyRaw(serializedObject, "Target",
+                    GUILayout.Width(width));
+            });
+        });
 
         serializedObject.ApplyModifiedProperties();
     }

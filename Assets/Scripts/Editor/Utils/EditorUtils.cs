@@ -6,16 +6,31 @@ using UnityEngine;
 public static class EditorUtils
 {
     public static void DrawProperty(SerializedObject serializedObject,
-        string name)
+        string name, params GUILayoutOption[] options)
     {
-        DrawField(serializedObject, name.BackingField());
+        DrawField(serializedObject, name.BackingField(),
+            options);
+    }
+
+    public static void DrawPropertyRaw(SerializedObject serializedObject,
+        string name, params GUILayoutOption[] options)
+    {
+        DrawFieldRaw(serializedObject, name.BackingField(),
+            options);
     }
 
     public static void DrawField(SerializedObject serializedObject,
-        string name)
+        string name, params GUILayoutOption[] options)
     {
         EditorGUILayout.PropertyField(serializedObject.
-            FindProperty(name));
+            FindProperty(name), options);
+    }
+
+    public static void DrawFieldRaw(SerializedObject serializedObject,
+        string name, params GUILayoutOption[] options)
+    {
+        EditorGUILayout.PropertyField(serializedObject.
+            FindProperty(name), new GUIContent(""), options);
     }
 
     public static void Label(string text,
