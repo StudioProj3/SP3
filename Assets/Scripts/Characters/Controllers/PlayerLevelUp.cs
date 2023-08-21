@@ -8,7 +8,7 @@ public class PlayerLevelUp : MonoBehaviour
 
     private IModifiableValue _experiencePoints;
     private IModifiableValue _currentLevel;
-
+    
     private void Start()
     {
         _experiencePoints = _playerData.CharacterStats.GetStat("ExperiencePoints");
@@ -28,7 +28,7 @@ public class PlayerLevelUp : MonoBehaviour
     private void GainExperience(float experience)
     {
         _experiencePoints.Add(experience);
-        
+
         if (_experiencePoints.Value == _experiencePoints.Max)
         {
             LevelUp();
