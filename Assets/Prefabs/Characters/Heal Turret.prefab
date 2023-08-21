@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4006552540739520325}
   - component: {fileID: 8766476603139674778}
   - component: {fileID: 4085421146401120967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Heal Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4832,7 +4832,7 @@ GameObject:
   - component: {fileID: 9151773176543140596}
   - component: {fileID: 1269696861292016595}
   - component: {fileID: 495960977546146781}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Heal Turret Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4932,7 +4932,7 @@ GameObject:
   - component: {fileID: 8130153164828319792}
   - component: {fileID: 8130153164828319795}
   - component: {fileID: 3225408142898867159}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Heal Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4976,7 +4976,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 78529e3ab42406d4fa1de9b3d71db845, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5058,7 +5058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healTurretStats: {fileID: 11400000, guid: c11af08300aabbd4a8a294e923378e9a, type: 2}
-  enemyLayer:
+  _enemyLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 512
   healAmount: 0

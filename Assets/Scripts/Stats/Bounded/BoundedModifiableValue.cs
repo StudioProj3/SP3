@@ -3,7 +3,9 @@ using System;
 public class BoundedModifiableValue :
     IModifiableValue
 {
+    public float Max => _modifiableValue.Value;
     public float Value => _boundedValue.Value;
+
     public event Action ValueChanged;
 
     private readonly BoundedValue _boundedValue;
@@ -30,6 +32,12 @@ public class BoundedModifiableValue :
     public void Divide(float toDivide)
     {
         _boundedValue.Value /= toDivide;
+        ValueChanged?.Invoke();
+    }
+
+    public void Set(float toSet)
+    {
+        _boundedValue.Value = toSet;
         ValueChanged?.Invoke();
     }
 

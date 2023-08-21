@@ -14,13 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statInitializerList:
   - rid: 1976639655321272360
+  - rid: 789197994644209664
   - rid: 4735661783682383872
   - rid: 4735661783682383877
   - rid: 4735661783682383878
+  - rid: 4735661862413402115
+  - rid: 988901220977475584
+  - rid: 4735661929376251909
+  - rid: 4735661929376251910
   _instancedStatInitializerList: []
   references:
     version: 2
     RefIds:
+    - rid: 789197994644209664
+      type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: ae32616fa6e751f4e85f7639dfe65e40, type: 2}
+        initialValue: 100
+        initialLowerBoundValue: 0
+    - rid: 988901220977475584
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 626c8f81eaec15e4da9a4a57c08b67c3, type: 2}
+        initialValue: 1
     - rid: 1976639655321272360
       type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
       data:
@@ -44,3 +60,20 @@ MonoBehaviour:
         type: {fileID: 11400000, guid: 7a5862a2e73e150429d02e59c59bb71f, type: 2}
         initialValue: 50
         initialLowerBoundValue: 0
+    - rid: 4735661862413402115
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: e15db4b0babfeb54c924dbcd088966bd, type: 2}
+        initialValue: 5
+    - rid: 4735661929376251909
+      type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 49d43816455df97429f76dc86bb1b237, type: 2}
+        initialValue: 100
+        initialLowerBoundValue: 0
+    - rid: 4735661929376251910
+      type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 60da7b91ca23f6745a8904220292339b, type: 2}
+        initialValue: 100
+        initialLowerBoundValue: 1

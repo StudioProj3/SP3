@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b950526454f02db4a9c11f8e4ef15c6c, type: 3}
+  m_Script: {fileID: 11500000, guid: d9d563cadc25c39488bf929de6ade308, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Player
+  <Name>k__BackingField: PlayerData
   <Inventory>k__BackingField: {fileID: 0}
-  <LeftHandItem>k__BackingField: {fileID: 0}
-  <RightHandItem>k__BackingField: {fileID: 0}
+  <HandInventory>k__BackingField: {fileID: 11400000, guid: 1501cf6f6ec7f3f45bfef246206ca028,
+    type: 2}
+  <IsDead>k__BackingField: 0
+  <CharacterStats>k__BackingField: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429,
+    type: 2}

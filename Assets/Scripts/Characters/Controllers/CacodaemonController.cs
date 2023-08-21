@@ -6,7 +6,6 @@ using UnityEngine;
 public class CacodaemonController :
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
     private Stats _cacodaemonStats;
 
     private StatContainer _cacodaemonStatsContainer;
@@ -16,47 +15,18 @@ public class CacodaemonController :
     private GameObject _player;
     private PlayerController _playerController;
 
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
-
-    IStatContainer IEffectable.EntityStats => _cacodaemonStatsContainer;
-
-    public void TakeDamage(Damage damage)
-    {
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
+    
     protected override void Start()
     {
         base.Start();
 
         _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
-        _cacodaemonStatsContainer = _cacodaemonStats.GetInstancedStatContainer();
+        _cacodaemonStatsContainer = Data.CharacterStats.
+            GetInstancedStatContainer();
+        EntityStats = _cacodaemonStatsContainer;
         _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -87,11 +57,6 @@ public class CacodaemonController :
                     _direction = _player.transform.position -
                         transform.position;
                     _direction.y = 0f;
-
-                    // FIXME (Aquila): Bug where rotation of particles is
-                    // not accurate, likely due to Vector3.Angle() giving
-                    // the smallest angle possible between the source and
-                    // target.
 
                     float angle = -Mathf.Atan2(_direction.z, _direction.x) *
                         Mathf.Rad2Deg;
@@ -150,7 +115,7 @@ public class CacodaemonController :
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charge");
         _animator.SetBool("isGoingCharge",
-           _stateMachine.CurrentState.StateID == "GoingToCharge");
+            _stateMachine.CurrentState.StateID == "GoingToCharge");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -166,7 +131,9 @@ public class CacodaemonController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0f;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
+
     }
 
     private void FixedUpdate()
@@ -174,14 +141,28 @@ public class CacodaemonController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        _stateMachine.FixedUpdate();
+        if (_cacodaemonStatsContainer.
+             GetStat("Health").Value <= 0)
+        {
+            _animator.SetBool("isDead", true);
+        }
+        else
+        {
+            _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject == _player)
         {
-            _playerController.TakeDamage(_phyDamage);
+            Vector3 knockbackForce = 
+                (col.transform.position - transform.position).normalized *
+                _cacodaemonStatsContainer.GetStat("Knockback").Value;
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_cacodaemonStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), 
+                knockbackForce);
         }
     }
 }

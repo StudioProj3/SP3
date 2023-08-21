@@ -1,7 +1,8 @@
-using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Timeline;
 
+[CreateAssetMenu(fileName = "Sword",
+    menuName = "Scriptable Objects/Items/Weapons/Sword")]
 public class SwordWeaponItem : WeaponBase, ISwordWeapon
 {
     [field: SerializeField]
@@ -10,11 +11,19 @@ public class SwordWeaponItem : WeaponBase, ISwordWeapon
 
     public void OnUseEnter()
     {
+        if (CanAttack)
+        {
+            CanAttack = false;
+            
+            _ = Delay.Execute(() =>
+            {
+                CanAttack = true;
+            }, WeaponStats.GetStat("AttackCooldown").Value);
+        }
         
     }
 
     public void OnUseExit()
     {
-        
     }
 }

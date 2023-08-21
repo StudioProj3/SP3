@@ -7,7 +7,7 @@ public abstract class Singleton<T> :
     protected bool _persistent = true;
 
     private static T _instance;
-    private static readonly object Lock = new();
+    private static readonly object _Lock = new();
 
     public static T Instance
     {
@@ -22,7 +22,7 @@ public abstract class Singleton<T> :
                 return _instance;
             }
 
-            lock (Lock)
+            lock (_Lock)
             {
                 if (_instance != null)
                 {

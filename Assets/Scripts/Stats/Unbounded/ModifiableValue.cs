@@ -24,6 +24,8 @@ public class ModifiableValue : IModifiableValue
         }
     }
 
+    public float Max => Value;
+
     public event Action ValueChanged;
 
     // TODO (Chris): Change to a sorted number
@@ -58,6 +60,12 @@ public class ModifiableValue : IModifiableValue
     public void Divide(float toDivide)
     {
         _value /= toDivide;
+        ValueChanged?.Invoke();
+    }
+
+    public void Set(float toSet)
+    {
+        _value = toSet;
         ValueChanged?.Invoke();
     }
 
