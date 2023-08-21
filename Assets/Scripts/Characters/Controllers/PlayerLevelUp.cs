@@ -23,16 +23,16 @@ public class PlayerLevelUp : MonoBehaviour
         {
             GainExperience(5);
         }
-
-        if (_experiencePoints.Value == _experiencePoints.Max)
-        {
-            LevelUp();
-        }
     }
 
     private void GainExperience(float experience)
     {
         _experiencePoints.Add(experience);
+        
+        if (_experiencePoints.Value == _experiencePoints.Max)
+        {
+            LevelUp();
+        }
     }
     private void LevelUp()
     {
