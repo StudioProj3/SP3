@@ -1,8 +1,8 @@
 public interface IEffectable : IDamageable
 {
-    public IStatContainer EntityStats { get; }
+    IStatContainer EntityStats { get; }
 
-    public void ApplyEffect(StatusEffectBase statusEffect);
+    void ApplyEffect(StatusEffectBase statusEffect);
 
-    public void RemoveEffect(StatusEffectBase statusEffect);
+    void RemoveEffect(StatusEffectBase statusEffect);
 }

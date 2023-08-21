@@ -20,6 +20,19 @@ public abstract class InventoryBase :
     protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap =
         new();
 
+    public int GetAmount(ItemBase itemBase)
+    {
+        int amount = 0;
+        for (int i = 0; i < _allItems.Count; ++i)
+        {
+            if (_allItems[i].Key == itemBase)
+            {
+                amount += (int)_allItems[i].Value;
+            }
+        }
+        return amount;
+    }
+
     public virtual void Reset()
     {
         // Clear any items that might still be in there

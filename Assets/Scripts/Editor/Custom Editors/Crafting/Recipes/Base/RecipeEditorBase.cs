@@ -5,11 +5,11 @@ using static EditorUtils;
 
 public abstract class RecipeEditorBase : Editor
 {
-    protected float width = 100f;
-    protected Material material;
-    protected Color backgroundColor = new(0.169f, 0.169f, 0.169f);
-    protected ItemBase[][] items;
-    protected string[][] itemsName;
+    protected float _width = 100f;
+    protected Material _material;
+    protected Color _backgroundColor = new(0.169f, 0.169f, 0.169f);
+    protected ItemBase[][] _items;
+    protected string[][] _itemsName;
 
     public override void OnInspectorGUI()
     {
@@ -32,7 +32,7 @@ public abstract class RecipeEditorBase : Editor
 
         DrawProperty(serializedObject, "TargetQuantity");
 
-        material = recipe.Material;
+        _material = recipe.Material;
 
         DrawItemCenter(itemTarget);
 
@@ -41,23 +41,23 @@ public abstract class RecipeEditorBase : Editor
             FlexibleSpace(() =>
             {
                 DrawPropertyRaw(serializedObject, "Target",
-                    GUILayout.Width(width));
+                    GUILayout.Width(_width));
             });
         });
 
-        for (int i = 0; i < items.Length; ++i)
+        for (int i = 0; i < _items.Length; ++i)
         {
             Horizontal(() =>
             {
-                for (int j = 0; j < items[i].Length; ++j)
+                for (int j = 0; j < _items[i].Length; ++j)
                 {
                     FlexibleSpace(() =>
                     {
                         Vertical(() =>
                         {
-                            DrawItem(items[i][j]);
+                            DrawItem(_items[i][j]);
                             DrawPropertyRaw(serializedObject,
-                                itemsName[i][j], GUILayout.Width(width));
+                                _itemsName[i][j], GUILayout.Width(_width));
                         });
                     });
                 }
@@ -74,17 +74,17 @@ public abstract class RecipeEditorBase : Editor
             if (item.Atlas)
             {
                 DrawSpriteFromSheetCenter(item.Sprite,
-                    width, material, backgroundColor);
+                    _width, _material, _backgroundColor);
             }
             else
             {
-                DrawSpriteCenter(item.Sprite, width,
-                    material, backgroundColor);
+                DrawSpriteCenter(item.Sprite, _width,
+                    _material, _backgroundColor);
             }
         }
         else
         {
-            DrawBoxCenter(width, backgroundColor);
+            DrawBoxCenter(_width, _backgroundColor);
         }
     }
 
@@ -94,18 +94,18 @@ public abstract class RecipeEditorBase : Editor
         {
             if (item.Atlas)
             {
-                DrawSpriteFromSheet(item.Sprite, width,
-                    material, backgroundColor);
+                DrawSpriteFromSheet(item.Sprite, _width,
+                    _material, _backgroundColor);
             }
             else
             {
-                DrawSprite(item.Sprite, width, material,
-                    backgroundColor);
+                DrawSprite(item.Sprite, _width, _material,
+                    _backgroundColor);
             }
         }
         else
         {
-            DrawBox(width, backgroundColor);
+            DrawBox(_width, _backgroundColor);
         }
     }
 }

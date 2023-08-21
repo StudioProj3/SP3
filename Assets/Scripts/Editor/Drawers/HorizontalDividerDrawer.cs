@@ -19,7 +19,7 @@ public class HorizontalDividerDrawer : DecoratorDrawer
         get => Attr.Target;
     }
 
-    private readonly float halfLineHeight =
+    private readonly float _halfLineHeight =
         EditorGUIUtility.singleLineHeight / 2f;
 
     public override float GetHeight()
@@ -28,7 +28,7 @@ public class HorizontalDividerDrawer : DecoratorDrawer
         float multiplier =
             Target == HorizontalDividerAttribute.Type.Normal ? 2f : 1f;
 
-        return (halfLineHeight * multiplier) + Height;
+        return (_halfLineHeight * multiplier) + Height;
     }
 
     public override void OnGUI(Rect position)
@@ -37,7 +37,7 @@ public class HorizontalDividerDrawer : DecoratorDrawer
 
         // Create the horizontal line rectangle
         Rect rect = EditorGUI.IndentedRect(position);
-        rect.y += halfLineHeight;
+        rect.y += _halfLineHeight;
         rect.height = Height;
 
         // Draw the actual divider as grey

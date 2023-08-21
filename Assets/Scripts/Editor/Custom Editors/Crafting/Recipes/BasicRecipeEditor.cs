@@ -7,11 +7,11 @@ public class BasicRecipeEditor :
     public override void OnInspectorGUI()
     {
         BasicRecipe recipe = (BasicRecipe)target;
-        items = new[] {
+        _items = new[] {
             new[] { recipe.Row1Col1, recipe.Row1Col2 },
             new[] { recipe.Row2Col1, recipe.Row2Col2 }
         };
-        itemsName = new[] {
+        _itemsName = new[] {
             new[] { "Row1Col1", "Row1Col2" },
             new[] { "Row2Col1", "Row2Col2" },
         };
