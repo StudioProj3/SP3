@@ -18,22 +18,10 @@ public class BasicRecipeEditor : Editor
         DrawProperty(serializedObject, "Name");
         DrawProperty(serializedObject, "TargetQuantity");
 
-        if (itemTarget)
-        {
-            Color backgroundColor = new(0.169f, 0.169f, 0.169f);
-            Material material = recipe.Material;
+        Color backgroundColor = new(0.169f, 0.169f, 0.169f);
+        Material material = recipe.Material;
 
-            if (itemTarget.Atlas)
-            {
-                DrawSpriteFromSheetCenter(recipe.Target.Sprite,
-                    width, material, backgroundColor);
-            }
-            else
-            {
-                DrawSpriteCenter(recipe.Target.Sprite, width,
-                    material, backgroundColor);
-            }
-        }
+        DrawSprite(itemTarget);
 
         Horizontal(() =>
         {
@@ -45,5 +33,22 @@ public class BasicRecipeEditor : Editor
         });
 
         serializedObject.ApplyModifiedProperties();
+
+        void DrawSprite(ItemBase item)
+        {
+            if (item)
+            {
+                if (itemTarget.Atlas)
+                {
+                    DrawSpriteFromSheetCenter(recipe.Target.Sprite,
+                        width, material, backgroundColor);
+                }
+                else
+                {
+                    DrawSpriteCenter(recipe.Target.Sprite, width,
+                        material, backgroundColor);
+                }
+            }
+        }
     }
 }
