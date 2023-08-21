@@ -9,6 +9,8 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemy()
     {
         int randomNum = Random.Range(0, _pooledEnemyList.Count);
+        Debug.Log(randomNum);
+
         _pooledEnemyList[randomNum].gameObject.SetActive(true);
         _pooledEnemyList[randomNum].transform.position =
                                transform.position;
@@ -22,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
         {
             _pooledEnemyList.Add(child.GetComponent<CharacterControllerBase>());
         }
+        SpawnEnemy();
     }
 
     // Update is called once per frame

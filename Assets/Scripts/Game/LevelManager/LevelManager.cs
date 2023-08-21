@@ -8,17 +8,24 @@ public class LevelManager : SceneLoader
     [SerializeField]
     private SceneList _sceneList;
 
-    private GameObject[] _spawners;
-    private EnemySpawner[] _enemySpawners;
+    private GameObject _spawnerGroup;
+    private List<EnemySpawner> _enemySpawners;
 
     private void Awake()
     {
-        _spawners = GameObject.FindGameObjectsWithTag("EnemySpawner");
-        _enemySpawners = new EnemySpawner[_spawners.Length];
-        for(int i = 0; i < _spawners.Length; ++i)
+        LoadSceneAdditive(_sceneList.HUDScene, false);
+
+        _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
+        _enemySpawners = new List<EnemySpawner>();
+
+        foreach (Transform child in _spawnerGroup.transform)
         {
-            _enemySpawners[i] = _spawners[i].GetComponent<EnemySpawner>();
-            _enemySpawners[i].SpawnEnemy();
+            _enemySpawners.Add(child.GetComponent<EnemySpawner>());
+        }
+
+        for (int i = 0; i < _enemySpawners.Count; ++i)
+        {
+            _enemySpawners[i].gameObject.SetActive(true);
         }
     }
 
