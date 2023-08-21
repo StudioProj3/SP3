@@ -6,13 +6,13 @@ using static DebugUtils;
 [CustomPropertyDrawer(typeof(ShowIfAttribute))]
 public class ShowIfDrawer : PropertyDrawer
 {
-    private ShowIfAttribute showIfAttribute;
-    private SerializedProperty comparedField;
+    private ShowIfAttribute _showIfAttribute;
+    private SerializedProperty _comparedField;
 
     public override float GetPropertyHeight(SerializedProperty property,
         GUIContent label)
     {
-        if (!CheckShow(property) && showIfAttribute.DisableType ==
+        if (!CheckShow(property) && _showIfAttribute.DisableType ==
             ShowIfAttribute.Type.Hide)
         {
             return 0f;
@@ -23,21 +23,21 @@ public class ShowIfDrawer : PropertyDrawer
 
     private bool CheckShow(SerializedProperty property)
     {
-        showIfAttribute = attribute as ShowIfAttribute;
+        _showIfAttribute = attribute as ShowIfAttribute;
 
-        string name = showIfAttribute.Name;
-        object value = showIfAttribute.Value;
+        string name = _showIfAttribute.Name;
+        object value = _showIfAttribute.Value;
 
-        comparedField = property.serializedObject.FindProperty(name);
-        Assert(comparedField != null, "Cannot find property name");
+        _comparedField = property.serializedObject.FindProperty(name);
+        Assert(_comparedField != null, "Cannot find property name");
 
-        switch (comparedField.type)
+        switch (_comparedField.type)
         {
             case "bool":
-                return comparedField.boolValue.Equals(value);
+                return _comparedField.boolValue.Equals(value);
 
             case "Enum":
-                return comparedField.enumValueIndex.Equals((int)value);
+                return _comparedField.enumValueIndex.Equals((int)value);
 
             default:
                 Fatal("Unhandled type");
@@ -52,7 +52,7 @@ public class ShowIfDrawer : PropertyDrawer
         {
             EditorGUI.PropertyField(position, property, label);
         }
-        else if (showIfAttribute.DisableType ==
+        else if (_showIfAttribute.DisableType ==
             ShowIfAttribute.Type.Hide)
         {
             // HACK (Cheng Jun): To remove the circle of the object

@@ -12,9 +12,9 @@ public class PlayerPickup :
     [field: SerializeField]
     public UnityEvent<ItemBase, uint> OnPlayerPickup { get; private set; }
 
-    protected override void Awake()
+    protected override void Update()
     {
-        base.Awake();
+        base.Update();
     }
 
     protected override void OnTriggerEnter(Collider other)

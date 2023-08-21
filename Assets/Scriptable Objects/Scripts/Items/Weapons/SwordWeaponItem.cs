@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Sword",
@@ -10,11 +11,19 @@ public class SwordWeaponItem : WeaponBase, ISwordWeapon
 
     public void OnUseEnter()
     {
+        if (CanAttack)
+        {
+            CanAttack = false;
+            
+            _ = Delay.Execute(() =>
+            {
+                CanAttack = true;
+            }, WeaponStats.GetStat("AttackCooldown").Value);
+        }
         
     }
 
     public void OnUseExit()
     {
-        
     }
 }

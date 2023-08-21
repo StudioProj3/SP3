@@ -2,6 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Arrow",
     menuName = "Scriptable Objects/Items/Arrow")]
-public class ArrowItem : ItemBase
+public class ArrowItem : WeaponBase
 {
+
 }

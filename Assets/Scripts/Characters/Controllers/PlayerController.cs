@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -9,9 +7,6 @@ public class PlayerController :
     [HorizontalDivider]
     [Header("Character Data")]
 
-    [SerializeField]
-    private PlayerData _playerData;
-
     private float _horizontalInput;
     private float _verticalInput;
     private bool _rollKeyPressed;
@@ -19,10 +14,10 @@ public class PlayerController :
     protected override void Start()
     {
         base.Start();
-        EntityStats = _playerData.CharacterStats;
+        EntityStats = Data.CharacterStats;
         
         SetupStateMachine();
-        _playerData.Reset();
+        Data.Reset();
     }
 
     protected override void SetupStateMachine()
@@ -34,7 +29,7 @@ public class PlayerController :
             new GenericState("Walk",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _rigidbody.velocity = _playerData.CharacterStats.
+                    _rigidbody.velocity = Data.CharacterStats.
                         GetStat("MoveSpeed").Value * new Vector3(
                         _horizontalInput, 0, _verticalInput).normalized;
                 })
@@ -52,7 +47,7 @@ public class PlayerController :
                         new(_horizontalInput, 0, _verticalInput);
 
                     _rigidbody.AddForce(
-                        _playerData.CharacterStats.GetStat("MoveSpeed").Value *
+                        Data.CharacterStats.GetStat("MoveSpeed").Value *
                         2 * direction.normalized,
                         ForceMode.Impulse);
                 }),
@@ -130,7 +125,7 @@ public class PlayerController :
 
         // Temporary bandaid solution
         // Ideally only check when damage is taken
-        if (_playerData.CharacterStats.GetStat("Health").Value <= 0)
+        if (Data.CharacterStats.GetStat("Health").Value <= 0)
         {
             GameManager.Instance.ChangeGameState(GameState.Lose);
         }

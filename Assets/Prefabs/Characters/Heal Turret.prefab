@@ -4831,10 +4831,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9151773176543140596}
   - component: {fileID: 1269696861292016595}
-  - component: {fileID: 495960977546146781}
   m_Layer: 9
   m_Name: Heal Turret Base
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4906,19 +4905,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &495960977546146781
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7795239903437448866}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.71875, z: 0.4}
-  m_Center: {x: 0, y: 0.000000059604645, z: 0}
 --- !u!1 &8130153164828319798
 GameObject:
   m_ObjectHideFlags: 0
@@ -4932,6 +4918,7 @@ GameObject:
   - component: {fileID: 8130153164828319792}
   - component: {fileID: 8130153164828319795}
   - component: {fileID: 3225408142898867159}
+  - component: {fileID: 1228140399924168178}
   m_Layer: 9
   m_Name: Heal Turret
   m_TagString: Enemy
@@ -5022,7 +5009,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!95 &8130153164828319795
 Animator:
@@ -5057,8 +5044,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36321662de690af45bf3ec221ee239fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healTurretStats: {fileID: 11400000, guid: c11af08300aabbd4a8a294e923378e9a, type: 2}
-  enemyLayer:
+  <Data>k__BackingField: {fileID: 11400000, guid: c723710f51e597e4bbdaa1dcc57b338e,
+    type: 2}
+  <Weight>k__BackingField: 0
+  <ExpAmount>k__BackingField: 0
+  _enemyLayer:
     serializedVersion: 2
-    m_Bits: 1
-  healAmount: 0
+    m_Bits: 512
+  healAmount: 5
+--- !u!65 &1228140399924168178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130153164828319798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.71875, z: 0.4}
+  m_Center: {x: 0, y: -0.325, z: 0}

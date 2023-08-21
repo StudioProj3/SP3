@@ -2,11 +2,9 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class MinotaurController : 
-    CharacterControllerBase, IEffectable
+public class MinotaurController :
+    EnemyControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _minotaurStats;
 
     [SerializeField]
     private LayerMask _playerLayer;
@@ -29,7 +27,6 @@ public class MinotaurController :
     protected override void Start()
     {
         base.Start();
-        EntityStats = _minotaurStats;
 
         _pooledEarth = transform.GetChild(0).gameObject;
         _pooledEarthList = new List<EarthController>();
@@ -38,6 +35,13 @@ public class MinotaurController :
         {
             _pooledEarthList.Add(child.GetComponent<EarthController>());
         }
+
+        _minotaurStatsContainer = Data.CharacterStats.
+          GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
+            GetStat("AttackDamage").Value);
+
+        EntityStats = _minotaurStatsContainer;
 
         SetupStateMachine();
     }
@@ -68,7 +72,6 @@ public class MinotaurController :
                     _direction = _player.transform.position -
                        transform.position;
 
-                    Debug.Log(_direction.normalized * 0.15f);
                     _rigidbody.AddForce(_direction.normalized * 0.15f, ForceMode.Impulse);
 
                     Collider[] attackTarget;
@@ -142,7 +145,15 @@ public class MinotaurController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _minotaurStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 0.2f, 0.5f),
@@ -199,10 +210,6 @@ public class MinotaurController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _minotaurStatsContainer = _minotaurStats.
-            GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
-            GetStat("AttackDamage").Value);
     }
 
     private void Update()
@@ -215,6 +222,8 @@ public class MinotaurController :
             _stateMachine.CurrentState.StateID == "Quake");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -239,15 +248,8 @@ public class MinotaurController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_minotaurStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
+        
     }
 
     private void OnCollisionEnter(Collision col)

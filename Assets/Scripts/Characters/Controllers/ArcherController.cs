@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _archerStats;
 
     [SerializeField]
     private StatusEffectBase _arrowStatusEffect;
@@ -34,8 +32,9 @@ public class ArcherController :
             _pooledArrowList.Add(child.GetComponent<ArrowController>());
         }
 
-        _archerStatsContainer = _archerStats.GetInstancedStatContainer();
-        
+        _archerStatsContainer = Data.CharacterStats.
+            GetInstancedStatContainer();
+
         EntityStats = _archerStatsContainer;
         _phyDamage = PhysicalDamage.Create(_archerStatsContainer.
             GetStat("AttackDamage").Value);
@@ -104,7 +103,15 @@ public class ArcherController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _archerStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
@@ -158,9 +165,11 @@ public class ArcherController :
         _animator.SetBool("isShooting",
             _stateMachine.CurrentState.StateID == "GoingToShoot");
         _animator.SetBool("isMoving",
-           _stateMachine.CurrentState.StateID == "Walk");
+            _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isRolling",
-         _stateMachine.CurrentState.StateID == "Roll");
+            _stateMachine.CurrentState.StateID == "Roll");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
 
         if (!_statusEffects.IsNullOrEmpty())
@@ -186,13 +195,7 @@ public class ArcherController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_archerStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-            _stateMachine.FixedUpdate();
+        _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)
