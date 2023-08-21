@@ -11,7 +11,6 @@ public class WeaponDamage : MonoBehaviour
         if (collider.TryGetComponent<IEffectable>(out var effectable) &&
             collider.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy hit");
             OnWeaponHit(effectable, collider.transform.position);
         }
     }

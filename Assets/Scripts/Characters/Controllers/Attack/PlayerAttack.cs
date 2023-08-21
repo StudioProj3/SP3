@@ -55,8 +55,6 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         CalculateMousePos();
-
-        Debug.Log("Sanity: " + _playerData.CharacterStats.GetStat("Sanity").Value);
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
