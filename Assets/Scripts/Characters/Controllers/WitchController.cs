@@ -111,7 +111,7 @@ public class WitchController :
                             IEffectable container = buffTargets[i].
                                 GetComponent<IEffectable>();
 
-                            container.ApplyEffect(_attackBuff);
+                            container.ApplyEffect(_attackBuff.Clone());
                         }
                     }
                     var particleMain = _witchParticles.main;
@@ -141,7 +141,7 @@ public class WitchController :
                             IEffectable container = buffTargets[i].
                                 GetComponent<IEffectable>();
 
-                            container.ApplyEffect(_defenseBuff);
+                            container.ApplyEffect(_defenseBuff.Clone());
                         }
                     }
 
@@ -210,10 +210,6 @@ public class WitchController :
 
     private void Update()
     {
-        if (Input.GetKeyDown("f"))
-        {
-            ApplyEffect(_attackBuff);
-        }
         _animator.SetBool("isMoving",
             _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isCharging",

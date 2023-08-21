@@ -59,11 +59,6 @@ public class CacodaemonController :
                         transform.position;
                     _direction.y = 0f;
 
-                    // FIXME (Aquila): Bug where rotation of particles is
-                    // not accurate, likely due to Vector3.Angle() giving
-                    // the smallest angle possible between the source and
-                    // target.
-
                     float angle = -Mathf.Atan2(_direction.z, _direction.x) *
                         Mathf.Rad2Deg;
 
