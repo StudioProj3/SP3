@@ -9,4 +9,6 @@ public interface IModifiableValue : IValue
     void Subtract(float toSubtract);
     void Multiply(float toMultiply);
     void Divide(float toDivide);
+
+    void Set(float toSet);
 }

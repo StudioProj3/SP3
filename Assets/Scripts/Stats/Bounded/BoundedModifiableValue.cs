@@ -35,6 +35,12 @@ public class BoundedModifiableValue :
         ValueChanged?.Invoke();
     }
 
+    public void Set(float toSet)
+    {
+        _boundedValue.Value = toSet;
+        ValueChanged?.Invoke();
+    }
+
     public BoundedModifiableValue(BoundedValue value,
         ModifiableValue modifiableValue)
     {
