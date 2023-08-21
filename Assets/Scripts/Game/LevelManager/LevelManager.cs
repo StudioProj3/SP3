@@ -18,14 +18,17 @@ public class LevelManager : SceneLoader
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
 
-        foreach (Transform child in _spawnerGroup.transform)
+        if (_spawnerGroup)
         {
-            _enemySpawners.Add(child.GetComponent<EnemySpawner>());
-        }
+            foreach (Transform child in _spawnerGroup.transform)
+            {
+                _enemySpawners.Add(child.GetComponent<EnemySpawner>());
+            }
 
-        for (int i = 0; i < _enemySpawners.Count; ++i)
-        {
-            _enemySpawners[i].gameObject.SetActive(true);
+            for (int i = 0; i < _enemySpawners.Count; ++i)
+            {
+                _enemySpawners[i].gameObject.SetActive(true);
+            }
         }
     }
 
