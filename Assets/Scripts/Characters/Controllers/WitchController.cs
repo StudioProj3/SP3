@@ -89,7 +89,7 @@ public class WitchController :
 
             new GenericState("Charging"),
 
-             new GenericState("Buff"),
+            new GenericState("Buff"),
 
             new GenericState("BuffAttack",
                 new ActionEntry("Enter", () =>
@@ -155,7 +155,15 @@ public class WitchController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _witchStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 0.5f, 1f),
@@ -211,6 +219,8 @@ public class WitchController :
             _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charging");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -244,15 +254,7 @@ public class WitchController :
             _distance = 99.0f;
         }
 
-        if (_witchStatsContainer.
-             GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)

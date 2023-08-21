@@ -105,7 +105,15 @@ public class SkeletonController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _skeletonStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Init > Idle
             new FixedTimedTransition("Init", "Idle", 2.0f),
@@ -161,6 +169,8 @@ public class SkeletonController :
             _stateMachine.CurrentState.StateID == "GoingToAttack");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -187,15 +197,7 @@ public class SkeletonController :
 
         _currentLifetime -= Time.deltaTime;
 
-        if (_currentLifetime < 0f || _skeletonStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
     }
 
     private void OnDisable()

@@ -134,7 +134,15 @@ public class NecromancerController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _necromancerStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
@@ -189,6 +197,8 @@ public class NecromancerController :
             _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isSummoning",
             _stateMachine.CurrentState.StateID == "GoingToSummon");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -213,15 +223,8 @@ public class NecromancerController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_necromancerStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+
+        _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)

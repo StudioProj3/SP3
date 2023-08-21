@@ -64,7 +64,15 @@ public class HealTurretController :
 
             new GenericState("GoingToHeal"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _healTurretStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > GoingToHeal
             new FixedTimedTransition("Idle", "GoingToHeal", 0.7f),
@@ -91,6 +99,8 @@ public class HealTurretController :
     {
         _animator.SetBool("isHealing",
            _stateMachine.CurrentState.StateID == "GoingToHeal");
+        _animator.SetBool("isDead",
+         _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -115,15 +125,9 @@ public class HealTurretController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_healTurretStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+
+        _stateMachine.FixedUpdate();
+
     }
 
     private void OnCollisionEnter(Collision col)

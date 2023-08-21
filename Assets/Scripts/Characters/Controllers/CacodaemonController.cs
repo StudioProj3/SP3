@@ -71,7 +71,15 @@ public class CacodaemonController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _cacodaemonStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 1f, 2f),
@@ -112,6 +120,8 @@ public class CacodaemonController :
             _stateMachine.CurrentState.StateID == "Charge");
         _animator.SetBool("isGoingCharge",
             _stateMachine.CurrentState.StateID == "GoingToCharge");
+        _animator.SetBool("isDead",
+         _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -137,15 +147,8 @@ public class CacodaemonController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_cacodaemonStatsContainer.
-             GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
+
     }
 
     private void OnCollisionEnter(Collision col)

@@ -145,7 +145,15 @@ public class MinotaurController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _minotaurStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 0.2f, 0.5f),
@@ -214,6 +222,8 @@ public class MinotaurController :
             _stateMachine.CurrentState.StateID == "Quake");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -238,15 +248,8 @@ public class MinotaurController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_minotaurStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
+        
     }
 
     private void OnCollisionEnter(Collision col)

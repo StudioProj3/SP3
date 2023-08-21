@@ -5022,7 +5022,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!95 &8130153164828319795
 Animator:
@@ -5059,6 +5059,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: c723710f51e597e4bbdaa1dcc57b338e,
     type: 2}
+  <Weight>k__BackingField: 0
+  <ExpAmount>k__BackingField: 0
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 512
