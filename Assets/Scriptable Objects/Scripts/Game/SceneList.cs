@@ -13,4 +13,5 @@ public class SceneList : ScriptableObject
     public string layer2Scene;
     public string layer3Scene;
     public string layer4Scene;
+    public string layer4Scene2;
 }
