@@ -54,10 +54,21 @@ public static class EditorUtils
         });
     }
 
-    public static void DrawBox(Sprite sprite, float length)
+    public static void DrawBox(float length)
     {
-        GUILayout.Box(sprite.texture, GUILayout.Width(length),
-            GUILayout.Height(length), GUILayout.ExpandHeight(true));
+        GUILayout.Box(GUIContent.none, GUILayout.Width(length),
+            GUILayout.Height(length));
+    }
+
+    public static void DrawBoxCenter(float length)
+    {
+        Horizontal(() =>
+        {
+            FlexibleSpace(() =>
+            {
+                DrawBox(length);
+            });
+        });
     }
 
     public static void DrawTextureCenter(Texture2D texture2d,
