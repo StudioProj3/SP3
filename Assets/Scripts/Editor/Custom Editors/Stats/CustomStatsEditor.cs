@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 
 using UnityEditor;
@@ -144,3 +146,5 @@ public class CustomStatsEditor : Editor
         }
     }
 }
+
+#endif
