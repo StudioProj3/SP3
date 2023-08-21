@@ -132,13 +132,11 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private void InitializeDictionary() 
     {
-        string[] assetNames = AssetDatabase.FindAssets("t:QuestInfo");
+        QuestInfo[] questInformation = 
+            Resources.LoadAll<QuestInfo>("Scriptable Objects/Quests");
 
-        foreach (string assetName in assetNames)
+        foreach (QuestInfo questInfo in questInformation)
         {
-            var path = AssetDatabase.GUIDToAssetPath(assetName);
-            var questInfo = AssetDatabase.LoadAssetAtPath<QuestInfo>(path);
-
             Assert(!_allQuests.ContainsKey(questInfo.ID), 
                 "Duplicate quest ID found."); 
             _allQuests.Add(questInfo.ID, new Quest(questInfo));
