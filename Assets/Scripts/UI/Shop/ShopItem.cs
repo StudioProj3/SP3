@@ -2,7 +2,8 @@ using System;
 
 using UnityEngine;
 
-// [CreateAssetMenu(fileName = "ShopItem", menuName = "Scriptable Objects/Shop Item")]
+//[CreateAssetMenu(fileName = "ShopItem",
+//    menuName = "Scriptable Objects/Shop Item")]
 [Serializable]
 public class ShopItem : ISerializationCallbackReceiver
 {
@@ -20,6 +21,7 @@ public class ShopItem : ISerializationCallbackReceiver
 
     public void OnBeforeSerialize()
     {
+
     }
 
     public override bool Equals(object obj)
@@ -33,6 +35,7 @@ public class ShopItem : ISerializationCallbackReceiver
         {
             return false;
         }
+
         return SellableItem == other.SellableItem;
     }
 

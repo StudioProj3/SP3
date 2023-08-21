@@ -4,6 +4,7 @@ public class UIHUDPlayerStatsBook : MonoBehaviour
 {
     private Animator _animator;
     private bool _isOpen = false;
+
     private void Start()
     {
         _animator = GetComponent<Animator>();

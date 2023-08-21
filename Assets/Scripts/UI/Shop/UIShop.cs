@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -16,10 +16,12 @@ public class UIShop : MonoBehaviour
 
     [HorizontalDivider]
     [Header("Content Holders")]
+
     [SerializeField]
     private Transform _materialsTransform;
 
     [HorizontalDivider]
+
     [SerializeField]
     private List<ShopItem> _materials = new();
 
@@ -28,6 +30,7 @@ public class UIShop : MonoBehaviour
 
     [HorizontalDivider]
     [Header("Currencies in use")]
+
     [SerializeField]
     private ItemBase _bronzeCoin;
 
@@ -41,11 +44,13 @@ public class UIShop : MonoBehaviour
 
     [HorizontalDivider]
     [Header("Player Data")]
+
     [SerializeField]
     private InventoryBase _playerInventory;
 
     private void OnValidate()
     {
+
     }
 
     private int[] GetPlayerWealth()
@@ -54,6 +59,7 @@ public class UIShop : MonoBehaviour
         wealth[CoinType.Bronze] = _playerInventory.GetAmount(_bronzeCoin);
         wealth[CoinType.Silver] = _playerInventory.GetAmount(_silverCoin);
         wealth[CoinType.Gold] = _playerInventory.GetAmount(_goldCoin);
+
         return wealth;
     }
 
@@ -91,6 +97,7 @@ public class UIShop : MonoBehaviour
                 {
                     continue;
                 }
+
                 for (int i = 0; i < itemCosts.Length; ++i)
                 {
                     if (pair.First.Equals(coinItems[i]))

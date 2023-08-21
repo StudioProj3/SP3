@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class UIShopItem : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class UIShopItem : MonoBehaviour
 
     [HorizontalDivider]
     [Header("Coin Count Text")]
+
     [SerializeField]
     private TMP_Text _bronzeCountText;
 
@@ -42,7 +43,7 @@ public class UIShopItem : MonoBehaviour
     }
 
     public void Initialize(ItemBase item, int bronzeCount,
-       int silverCount, int goldCount) 
+        int silverCount, int goldCount) 
     {
         Item = item;
         _itemIcon.sprite = item.Sprite;

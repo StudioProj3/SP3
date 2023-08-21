@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +14,12 @@ public class UIHUDStatIncrease : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; ++i)
         {
-            _upgradeButtons.Add(transform.GetChild(i).GetComponent<Button>());
-            _statText.Add(transform.GetChild(i).GetChild(0).GetComponent<TMP_Text>());
+            _upgradeButtons.Add(transform.GetChild(i).
+                GetComponent<Button>());
+            _statText.Add(transform.GetChild(i).GetChild(0).
+                GetComponent<TMP_Text>());
         }
 
         UpdateStatText();
