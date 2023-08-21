@@ -82,7 +82,7 @@ public class BasicRecipeEditor : Editor
             }
             else
             {
-                DrawBoxCenter(width);
+                DrawBoxCenter(width, backgroundColor);
             }
         }
 
@@ -103,7 +103,7 @@ public class BasicRecipeEditor : Editor
             }
             else
             {
-                DrawBox(width);
+                DrawBox(width, backgroundColor);
             }
         }
     }
