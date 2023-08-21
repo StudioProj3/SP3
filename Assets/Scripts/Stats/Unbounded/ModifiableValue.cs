@@ -63,6 +63,12 @@ public class ModifiableValue : IModifiableValue
         ValueChanged?.Invoke();
     }
 
+    public void Set(float toSet)
+    {
+        _value = toSet;
+        ValueChanged?.Invoke();
+    }
+
     public ModifiableValue(float baseValue)
     {
         _initialValue = baseValue;
