@@ -5,7 +5,7 @@ public abstract class QuestStep : MonoBehaviour
     private bool _isFinished = false;
     private string _questID;
 
-    public void Initialize(string questID)
+    public virtual void Initialize(string questID)
     {
         _questID = questID;
     }

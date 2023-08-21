@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfec061039242fb40be7ce62d0e15ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ItemBase>k__BackingField: {fileID: 11400000, guid: b1bd6da47c952504ea66d7bea8b14ac3,
-    type: 2}
-  <Quantity>k__BackingField: 1
+  _itemsToCollectInitializer:
+  - <First>k__BackingField: {fileID: 11400000, guid: b1bd6da47c952504ea66d7bea8b14ac3,
+      type: 2}
+    <Second>k__BackingField: 1
+  - <First>k__BackingField: {fileID: 11400000, guid: 29695865e6ac1954286d4dbf6e8148a5,
+      type: 2}
+    <Second>k__BackingField: 1
