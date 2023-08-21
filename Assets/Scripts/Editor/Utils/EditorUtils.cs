@@ -3,6 +3,8 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
+using static TextureUtils;
+
 public static class EditorUtils
 {
     public static void DrawProperty(SerializedObject serializedObject,
@@ -54,10 +56,25 @@ public static class EditorUtils
         });
     }
 
-    public static void DrawBox(Sprite sprite, float length)
+    public static void DrawBox(float length, Color backgroundColor)
     {
-        GUILayout.Box(sprite.texture, GUILayout.Width(length),
-            GUILayout.Height(length), GUILayout.ExpandHeight(true));
+        GUIStyle style = new();
+        style.normal.background = GenPixel(backgroundColor);
+
+        GUILayout.Box(GUIContent.none, style,
+            GUILayout.Width(length), GUILayout.Height(length));
+    }
+
+    public static void DrawBoxCenter(float length,
+        Color backgroundColor)
+    {
+        Horizontal(() =>
+        {
+            FlexibleSpace(() =>
+            {
+                DrawBox(length, backgroundColor);
+            });
+        });
     }
 
     public static void DrawTextureCenter(Texture2D texture2d,
