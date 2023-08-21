@@ -5,9 +5,6 @@ public class HealTurretController :
     CharacterControllerBase, IEffectable
 {
     [SerializeField]
-    private Stats _healTurretStats;
-
-    [SerializeField]
     private LayerMask _enemyLayer;
 
     [SerializeField]
@@ -29,7 +26,7 @@ public class HealTurretController :
         base.Start();
 
         _healTurretParticles = GetComponentInChildren<ParticleSystem>();
-        _healTurretStatsContainer = _healTurretStats.
+        _healTurretStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _healTurretStatsContainer;
         _phyDamage = PhysicalDamage.Create(_healTurretStatsContainer.

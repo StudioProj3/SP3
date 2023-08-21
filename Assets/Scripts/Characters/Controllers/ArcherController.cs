@@ -5,8 +5,6 @@ using UnityEngine;
 public class ArcherController :
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _archerStats;
 
     [SerializeField]
     private StatusEffectBase _arrowStatusEffect;
@@ -34,8 +32,9 @@ public class ArcherController :
             _pooledArrowList.Add(child.GetComponent<ArrowController>());
         }
 
-        _archerStatsContainer = _archerStats.GetInstancedStatContainer();
-        
+        _archerStatsContainer = Data.CharacterStats.
+            GetInstancedStatContainer();
+
         EntityStats = _archerStatsContainer;
         _phyDamage = PhysicalDamage.Create(_archerStatsContainer.
             GetStat("AttackDamage").Value);

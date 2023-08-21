@@ -5,8 +5,6 @@ using UnityEngine;
 public class NecromancerController :
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _necromancerStats;
 
     private GameObject _pooledSkeletons;
     private List<SkeletonController> _pooledSkeletonList;
@@ -44,7 +42,7 @@ public class NecromancerController :
                 GetComponent<SkeletonController>());
         }
 
-        _necromancerStatsContainer = _necromancerStats.
+        _necromancerStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _necromancerStatsContainer;
         _phyDamage = PhysicalDamage.Create(_necromancerStatsContainer.

@@ -4,8 +4,6 @@ using UnityEngine;
 public class CacodaemonController :
     CharacterControllerBase, IEffectable
 {
-    private Stats _cacodaemonStats;
-
     private StatContainer _cacodaemonStatsContainer;
 
     private ParticleSystem _cacodaemonParticles;

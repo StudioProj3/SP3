@@ -3,8 +3,6 @@ using UnityEngine;
 public class SkeletonController : 
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _skeletonStats;
 
     [SerializeField]
     private LayerMask _playerLayer;
@@ -25,7 +23,7 @@ public class SkeletonController :
     private PhysicalDamage _phyDamage;
 
     IStatContainer IEffectable.EntityStats =>
-        _skeletonStats;
+        _skeletonStatsContainer;
 
     public void Init(Transform source)
     {
@@ -37,7 +35,7 @@ public class SkeletonController :
     protected override void Start()
     {
         base.Start();
-        EntityStats = _skeletonStats;
+        
         SetupStateMachine();
     }
 
@@ -149,10 +147,12 @@ public class SkeletonController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _skeletonStatsContainer = _skeletonStats.
+        _skeletonStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
             GetStat("AttackDamage").Value);
+
+        EntityStats = _skeletonStatsContainer;
     }
 
     private void Update()

@@ -5,8 +5,6 @@ using UnityEngine;
 public class MinotaurController : 
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _minotaurStats;
 
     [SerializeField]
     private LayerMask _playerLayer;
@@ -29,7 +27,6 @@ public class MinotaurController :
     protected override void Start()
     {
         base.Start();
-        EntityStats = _minotaurStats;
 
         _pooledEarth = transform.GetChild(0).gameObject;
         _pooledEarthList = new List<EarthController>();
@@ -38,6 +35,13 @@ public class MinotaurController :
         {
             _pooledEarthList.Add(child.GetComponent<EarthController>());
         }
+
+        _minotaurStatsContainer = Data.CharacterStats.
+          GetInstancedStatContainer();
+        _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
+            GetStat("AttackDamage").Value);
+
+        EntityStats = _minotaurStatsContainer;
 
         SetupStateMachine();
     }
@@ -199,10 +203,6 @@ public class MinotaurController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _minotaurStatsContainer = _minotaurStats.
-            GetInstancedStatContainer();
-        _phyDamage = PhysicalDamage.Create(_minotaurStatsContainer.
-            GetStat("AttackDamage").Value);
     }
 
     private void Update()

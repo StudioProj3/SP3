@@ -3,8 +3,6 @@ using UnityEngine;
 public class WitchController :
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _witchStats;
 
     [SerializeField]
     private LayerMask _enemyLayer;
@@ -34,7 +32,7 @@ public class WitchController :
         base.Start();
 
         _witchParticles = GetComponentInChildren<ParticleSystem>();
-        _witchStatsContainer = _witchStats.
+        _witchStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _witchStatsContainer;
         _phyDamage = PhysicalDamage.Create(_witchStatsContainer.
