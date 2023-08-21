@@ -13,7 +13,7 @@ public abstract class RecipeEditorBase : Editor
     {
         serializedObject.Update();
 
-        BasicRecipe recipe = (BasicRecipe)target;
+        RecipeBase recipe = (RecipeBase)target;
         ItemBase itemTarget = recipe.Target;
 
         // Basic parameters
@@ -22,7 +22,8 @@ public abstract class RecipeEditorBase : Editor
         // Success parameters
         DrawProperty(serializedObject, "AlwaysSuccess");
         
-        if (!recipe.AlwaysSuccess)
+        if (recipe is ISuccessRate successRate &&
+            !successRate.AlwaysSuccess)
         {
             DrawProperty(serializedObject, "SuccessRate");
         }

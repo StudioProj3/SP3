@@ -4,44 +4,14 @@ using UnityEditor;
 using static EditorUtils;
 
 [CustomEditor(typeof(BasicRecipe))]
-public class BasicRecipeEditor : Editor
+public class BasicRecipeEditor :
+    RecipeEditorBase
 {
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
+        base.OnInspectorGUI();
 
         BasicRecipe recipe = (BasicRecipe)target;
-        ItemBase itemTarget = recipe.Target;
-
-        float width = 100f;
-        
-        // Basic parameters
-        DrawProperty(serializedObject, "Name");
-
-        // Success parameters
-        DrawProperty(serializedObject, "AlwaysSuccess");
-        
-        if (!recipe.AlwaysSuccess)
-        {
-            DrawProperty(serializedObject, "SuccessRate");
-        }
-
-        DrawProperty(serializedObject, "TargetQuantity");
-
-
-        Color backgroundColor = new(0.169f, 0.169f, 0.169f);
-        Material material = recipe.Material;
-
-        DrawItemCenter(itemTarget);
-
-        Horizontal(() =>
-        {
-            FlexibleSpace(() =>
-            {
-                DrawPropertyRaw(serializedObject, "Target",
-                    GUILayout.Width(width));
-            });
-        });
 
         ItemBase[][] items = { new []{ recipe.Row1Col1, recipe.Row1Col2 },
             new []{ recipe.Row2Col1, recipe.Row2Col2 } };
@@ -75,47 +45,5 @@ public class BasicRecipeEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
-
-        void DrawItemCenter(ItemBase item)
-        {
-            if (item)
-            {
-                if (item.Atlas)
-                {
-                    DrawSpriteFromSheetCenter(item.Sprite,
-                        width, material, backgroundColor);
-                }
-                else
-                {
-                    DrawSpriteCenter(item.Sprite, width,
-                        material, backgroundColor);
-                }
-            }
-            else
-            {
-                DrawBoxCenter(width, backgroundColor);
-            }
-        }
-
-        void DrawItem(ItemBase item)
-        {
-            if (item)
-            {
-                if (item.Atlas)
-                {
-                    DrawSpriteFromSheet(item.Sprite, width,
-                        material, backgroundColor);
-                }
-                else
-                {
-                    DrawSprite(item.Sprite, width, material,
-                        backgroundColor);
-                }
-            }
-            else
-            {
-                DrawBox(width, backgroundColor);
-            }
-        }
     }
 }
