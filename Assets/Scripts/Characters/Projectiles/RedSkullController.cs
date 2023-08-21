@@ -16,18 +16,18 @@ public class RedSkullController : MonoBehaviour
     private float _currentLifetime;
 
     private Vector3 _direction;
-    private PhysicalDamage _phyDamage;
+    private Damage _damage;
     private PlayerController _playerController;
     private Transform _source;
 
     private Rigidbody _rigidbody;
 
-    public void Init(Vector3 direction, PhysicalDamage phyDamage,
+    public void Init(Vector3 direction, Damage damage,
         PlayerController playerController, Transform source)
     {
         gameObject.SetActive(true);
         _direction = direction;
-        _phyDamage = phyDamage;
+        _damage = damage;
         _playerController = playerController;
         _source = source;
 
@@ -62,7 +62,7 @@ public class RedSkullController : MonoBehaviour
         {
             Vector3 knockbackForce = _direction * _knockback;
 
-            _playerController.TakeDamage(_phyDamage,knockbackForce);
+            _playerController.TakeDamage(_damage,knockbackForce);
             RemoveProjectile();
         }
         

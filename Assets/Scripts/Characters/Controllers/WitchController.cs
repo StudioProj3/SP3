@@ -24,7 +24,7 @@ public class WitchController :
 
     private Vector3 _direction;
     private float _distance;
-    private PhysicalDamage _phyDamage;
+    private MagicDamage _magicDamage;
     private float buffCooldown;
 
     protected override void Start()
@@ -35,8 +35,8 @@ public class WitchController :
         _witchStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _witchStatsContainer;
-        _phyDamage = PhysicalDamage.Create(_witchStatsContainer.
-            GetStat("AttackDamage").Value);
+        _magicDamage = MagicDamage.Create(_witchStatsContainer.
+            GetStat("AbilityPower").Value);
 
         SetupStateMachine();
     }
@@ -264,7 +264,7 @@ public class WitchController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _witchStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage.AddModifier(
+            _playerController.TakeDamage(_magicDamage.AddModifier(
                 Modifier.Multiply(_witchStatsContainer.
                 GetStat("DamageMultiplier").Value, 3)),
                 knockbackForce);

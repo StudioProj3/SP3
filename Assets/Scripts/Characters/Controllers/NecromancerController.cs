@@ -19,7 +19,7 @@ public class NecromancerController :
 
     private Vector3 _direction;
     private float _distance;
-    private PhysicalDamage _phyDamage;
+    private MagicDamage _magicDamage;
 
     protected override void Start()
     {
@@ -45,8 +45,8 @@ public class NecromancerController :
         _necromancerStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _necromancerStatsContainer;
-        _phyDamage = PhysicalDamage.Create(_necromancerStatsContainer.
-            GetStat("AttackDamage").Value);
+        _magicDamage = MagicDamage.Create(_necromancerStatsContainer.
+            GetStat("AbilityPower").Value);
 
         SetupStateMachine();
     }
@@ -87,7 +87,7 @@ public class NecromancerController :
                             _direction = _player.transform.position -
                                 _pooledSkullList[i].transform.position;
 
-                            _pooledSkullList[i].Init(_direction, _phyDamage,
+                            _pooledSkullList[i].Init(_direction, _magicDamage,
                                 _playerController, _pooledSkulls.transform);
                             _pooledSkullList[i].transform.SetParent(null);
 
@@ -234,7 +234,7 @@ public class NecromancerController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _necromancerStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_magicDamage, knockbackForce);
         }
     }
 }
