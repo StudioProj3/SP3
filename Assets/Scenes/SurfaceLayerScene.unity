@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -45207,30 +45207,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
-        type: 3}
-      propertyPath: _wood
-      value: 
-      objectReference: {fileID: 11400000, guid: b1bd6da47c952504ea66d7bea8b14ac3,
-        type: 2}
-    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
-        type: 3}
-      propertyPath: _inventory
-      value: 
-      objectReference: {fileID: 11400000, guid: bc16ff1a8faa3bf4fb15625a970c048c,
-        type: 2}
-    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
-        type: 3}
-      propertyPath: _rottenWood
-      value: 
-      objectReference: {fileID: 11400000, guid: 29695865e6ac1954286d4dbf6e8148a5,
-        type: 2}
-    - target: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
-        type: 3}
-      propertyPath: speedEffectTest
-      value: 
-      objectReference: {fileID: 11400000, guid: d696b9baef2bf2b4db158b4ba73142ad,
-        type: 2}
     - target: {fileID: 6696665778595085491, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
       propertyPath: m_RootOrder
@@ -45289,11 +45265,6 @@ PrefabInstance:
     - target: {fileID: 6696665778595085503, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6696665778595085503, guid: 7c1c33b2c02e3674cb69453aca66ede0,
-        type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
