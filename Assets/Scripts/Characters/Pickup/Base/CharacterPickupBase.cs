@@ -7,7 +7,7 @@ public abstract class CharacterPickupBase :
     [Header("Character Data")]
 
     [SerializeField]
-    protected CharacterDataBase _characterData;
+    protected CharacterData _characterData;
 
     [HorizontalDivider]
     [Header("Allowed pickups")]

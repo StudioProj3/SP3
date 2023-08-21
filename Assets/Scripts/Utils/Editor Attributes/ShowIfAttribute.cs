@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+[AttributeUsage(AttributeTargets.Field)]
 public class ShowIfAttribute : PropertyAttribute
 {
     public enum Type
@@ -18,9 +18,10 @@ public class ShowIfAttribute : PropertyAttribute
     public Type DisableType { get; private set; }
 
     public ShowIfAttribute(string name, object value,
-        Type disableType = Type.Hide)
+        bool property = false, Type disableType = Type.Hide)
     {
-        Name = name;
+        Name = property ? name.BackingField() : name;
+
         Value = value;
         DisableType = disableType;
     }

@@ -1,7 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public abstract class WeaponBase : ItemBase
 {
+    [field: HorizontalDivider]
+    [field: Header("Weapon Parameters")]
+
     [field: SerializeField]
     public Damage WeaponDamageType {get; protected set;}
 
@@ -10,4 +14,11 @@ public abstract class WeaponBase : ItemBase
     
     [field: SerializeField]
     public Stats WeaponStats { get; protected set; }
+
+    public bool CanAttack { get; protected set; }
+
+    public void OnEnable()
+    {
+        CanAttack = true;
+    }
 }

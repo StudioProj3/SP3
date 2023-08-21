@@ -4,14 +4,14 @@ using UnityEngine;
     menuName = "Scriptable Objects/Damage/MagicDamage")]
 public class MagicDamage : Damage
 {
-    public static MagicDamage Create(float damage)
+    public static MagicDamage Create(float initialDamage)
     {
-        return CreateInstance<MagicDamage>().Init(damage);
+        return CreateInstance<MagicDamage>().Init(initialDamage);
     }
 
-    private MagicDamage Init(float damage)
+    private MagicDamage Init(float initialDamage)
     {
-        _damage = damage;
+        _damage = new ModifiableValue(initialDamage);
         return this;
     }
 
@@ -28,14 +28,14 @@ public class MagicDamage : Damage
         {
             float resistance = (1 - (100 / (100 + entityStats.
                 GetStat("MagicResistance").Value))) * 100;
-            float damage = Mathf.Round(_damage *
+            float damage = Mathf.Round(_damage.Value *
                 ((100 - resistance) / 100));
             entityStats.GetStat("Health").Subtract(damage);
         }
         else
         {
             entityStats.GetStat("Health").Subtract(
-                Mathf.Round(_damage));
+                Mathf.Round(_damage.Value));
         }
     }
 }

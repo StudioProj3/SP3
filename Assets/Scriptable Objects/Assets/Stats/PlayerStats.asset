@@ -19,6 +19,7 @@ MonoBehaviour:
   - rid: 4735661783682383877
   - rid: 4735661783682383878
   - rid: 4735661862413402115
+  - rid: 988901220977475584
   _instancedStatInitializerList: []
   references:
     version: 2
@@ -29,6 +30,11 @@ MonoBehaviour:
         type: {fileID: 11400000, guid: ae32616fa6e751f4e85f7639dfe65e40, type: 2}
         initialValue: 100
         initialLowerBoundValue: 0
+    - rid: 988901220977475584
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 626c8f81eaec15e4da9a4a57c08b67c3, type: 2}
+        initialValue: 1
     - rid: 1976639655321272360
       type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
       data:

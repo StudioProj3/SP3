@@ -4,14 +4,14 @@ using UnityEngine;
     menuName = "Scriptable Objects/Damage/TrueDamage")]
 public class TrueDamage : Damage
 {
-    public static TrueDamage Create(float damage)
+    public static TrueDamage Create(float initialDamage)
     {
-        return CreateInstance<TrueDamage>().Init(damage);
+        return CreateInstance<TrueDamage>().Init(initialDamage);
     }
 
-    private TrueDamage Init(float damage)
+    private TrueDamage Init(float initialDamage)
     {
-        _damage = damage;
+        _damage = new ModifiableValue(initialDamage);
         return this;
     }
 
@@ -24,6 +24,6 @@ public class TrueDamage : Damage
         // True damage deals damage directly to health,
         // no way to reduce it
         entityStats.GetStat("Health").Subtract(
-            Mathf.Round(_damage));
+            Mathf.Round(_damage.Value));
     }
 }
