@@ -4,32 +4,32 @@ using UnityEngine.UI;
 public class UIHandInventory : MonoBehaviour
 {
     [SerializeField]
-    private HandInventory inventory;
+    private HandInventory _inventory;
 
-    private Image leftItem;
-    private Image rightItem;
+    private Image _leftItem;
+    private Image _rightItem;
 
     private void Update()
     {
-        ItemBase leftHand = inventory.LeftHand();
-        ItemBase rightHand = inventory.RightHand();
+        ItemBase leftHand = _inventory.LeftHand();
+        ItemBase rightHand = _inventory.RightHand();
 
         if (leftHand)
         {
-            leftItem.sprite = leftHand.Sprite;
+            _leftItem.sprite = leftHand.Sprite;
         }
 
         if (rightHand)
         {
-            rightItem.sprite = rightHand.Sprite;
+            _rightItem.sprite = rightHand.Sprite;
         }
     }
 
     private void Awake()
     {
-        leftItem = transform.GetChild(0, 0).
+        _leftItem = transform.GetChild(0, 0).
             GetComponent<Image>();
-        rightItem = transform.GetChild(1, 0).
+        _rightItem = transform.GetChild(1, 0).
             GetComponent<Image>();
     }
 }
