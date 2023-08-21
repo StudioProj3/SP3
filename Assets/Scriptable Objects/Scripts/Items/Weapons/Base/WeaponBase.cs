@@ -13,4 +13,6 @@ public abstract class WeaponBase : ItemBase
     
     [field: SerializeField]
     public Stats WeaponStats { get; protected set; }
+
+    public bool CanAttack { get; protected set; }
 }
