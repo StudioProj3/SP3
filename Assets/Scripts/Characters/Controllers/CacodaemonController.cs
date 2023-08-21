@@ -6,7 +6,6 @@ using UnityEngine;
 public class CacodaemonController :
     CharacterControllerBase, IEffectable
 {
-    [SerializeField]
     private Stats _cacodaemonStats;
 
     private StatContainer _cacodaemonStatsContainer;
@@ -25,7 +24,7 @@ public class CacodaemonController :
         base.Start();
 
         _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
-        _cacodaemonStatsContainer = _cacodaemonStats.
+        _cacodaemonStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _cacodaemonStatsContainer;
         _phyDamage = PhysicalDamage.Create(_cacodaemonStatsContainer.
@@ -146,6 +145,7 @@ public class CacodaemonController :
              GetStat("Health").Value <= 0)
         {
             _animator.SetBool("isDead", true);
+            QuestManager.Instance.EnemyKilled(Data);
         }
         else
         {

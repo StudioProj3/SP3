@@ -4,7 +4,7 @@ using System.Linq;
 
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.TextCore.Text;
 using static DebugUtils;
 
 public sealed class QuestManager : Singleton<QuestManager> 
@@ -13,6 +13,7 @@ public sealed class QuestManager : Singleton<QuestManager>
     public event Action<string> OnAdvanceQuest; 
     public event Action<string> OnFinishQuest; 
     public event Action<Quest> OnQuestStateChange;
+    public event Action<CharacterData> OnEnemyKilled;
 
     private Dictionary<string, Quest> _allQuests = new();
 
@@ -34,6 +35,11 @@ public sealed class QuestManager : Singleton<QuestManager>
     public void QuestStateChange(Quest quest)
     {
         OnQuestStateChange?.Invoke(quest);
+    }
+
+    public void EnemyKilled(CharacterData data)
+    {
+        OnEnemyKilled?.Invoke(data);
     }
 
     protected override void OnAwake()

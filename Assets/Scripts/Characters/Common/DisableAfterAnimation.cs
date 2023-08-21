@@ -17,10 +17,12 @@ public class DisableAfterAnimation : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(animator.gameObject.activeSelf)
+        if (animator.gameObject.activeSelf)
+        {
             animator.gameObject.SetActive(false);
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
