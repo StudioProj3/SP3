@@ -11,12 +11,28 @@ public class BasicRecipeEditor : Editor
         serializedObject.Update();
 
         BasicRecipe recipe = (BasicRecipe)target;
+        ItemBase itemTarget = recipe.Target;
 
         DrawProperty(serializedObject, "Name");
         DrawProperty(serializedObject, "Target");
+        DrawProperty(serializedObject, "TargetQuantity");
 
-        DrawBoxCenter(recipe.Target.Sprite, 100f,
-            recipe.Material, new Color(0.169f, 0.169f, 0.169f));
+        if (itemTarget)
+        {
+            Color backgroundColor = new(0.169f, 0.169f, 0.169f);
+            Material material = recipe.Material;
+
+            if (itemTarget.Atlas)
+            {
+                DrawSpriteFromSheetCenter(recipe.Target.Sprite,
+                    100f, material, backgroundColor);
+            }
+            else
+            {
+                DrawSpriteCenter(recipe.Target.Sprite, 100f,
+                    material, backgroundColor);
+            }
+        }
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -45,7 +45,7 @@ public static class EditorUtils
             GUILayout.Height(length), GUILayout.ExpandHeight(true));
     }
 
-    public static void DrawBoxCenter(Sprite sprite, float length,
+    public static void DrawTextureCenter(Texture2D texture2d, float length,
         Material material, Color background)
     {
         Horizontal(() =>
@@ -56,10 +56,24 @@ public static class EditorUtils
                     GUILayout.Width(length), GUILayout.Height(length));
 
                 EditorGUI.DrawRect(rect, background);
-                EditorGUI.DrawPreviewTexture(rect, sprite.texture,
+                EditorGUI.DrawPreviewTexture(rect, texture2d,
                     material);
             });
         });
+    }
+
+    public static void DrawSpriteCenter(Sprite sprite,
+        float length, Material material, Color background)
+    {
+        DrawTextureCenter(sprite.texture, length, material,
+            background);
+    }
+
+    public static void DrawSpriteFromSheetCenter(Sprite sprite,
+        float length, Material material, Color background)
+    {
+        DrawTextureCenter(sprite.GenTexture(), length, material,
+            background);
     }
 
     public static void Horizontal(Action action)
