@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIHUDHotbar : MonoBehaviour
+public class UIHandInventory : MonoBehaviour
 {
     [SerializeField]
     private HandInventory inventory;
