@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -25,6 +23,7 @@ public class HealTurretController :
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
+
     protected override void Start()
     {
         base.Start();

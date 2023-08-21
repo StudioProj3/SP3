@@ -1,4 +1,3 @@
-using TMPro.Examples;
 using UnityEngine;
 
 public class PlayerLevelUp : MonoBehaviour
@@ -11,8 +10,11 @@ public class PlayerLevelUp : MonoBehaviour
     
     private void Start()
     {
-        _experiencePoints = _playerData.CharacterStats.GetStat("ExperiencePoints");
-        _currentLevel = _playerData.CharacterStats.GetStat("Level");
+        _experiencePoints = _playerData.CharacterStats.
+            GetStat("ExperiencePoints");
+        _currentLevel = _playerData.CharacterStats.
+            GetStat("Level");
+
         _experiencePoints.Set(0);
         _currentLevel.Set(1);
     }
