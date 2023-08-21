@@ -4,4 +4,5 @@ using UnityEngine;
     menuName = "Scriptable Objects/Items/Arrow")]
 public class ArrowItem : WeaponBase
 {
+
 }
