@@ -10,7 +10,7 @@ public class HealTurretController :
     private Stats _healTurretStats;
 
     [SerializeField]
-    private LayerMask enemyLayer;
+    private LayerMask _enemyLayer;
 
     [SerializeField]
     private float healAmount;
@@ -49,7 +49,7 @@ public class HealTurretController :
                 {
                     Collider[] healTargets;
                     healTargets = Physics.OverlapSphere(transform.position,
-                        4f, enemyLayer, 0);
+                        4f, _enemyLayer, 0);
 
                     for (int i = 0; i < healTargets.Length; ++i)
                     {
@@ -57,12 +57,10 @@ public class HealTurretController :
                         {
                             IStatContainer container = healTargets[i].
                                 GetComponent<IEffectable>().EntityStats;
+
                             container.GetStat("Health").Add(healAmount);
                         }
                     }
-
-                    float angle = -Mathf.Atan2(_direction.z, _direction.x) *
-                        Mathf.Rad2Deg;
 
                     _healTurretParticles.Play();
                 })

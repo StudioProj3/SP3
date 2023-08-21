@@ -59,11 +59,6 @@ public class CacodaemonController :
                         transform.position;
                     _direction.y = 0f;
 
-                    // FIXME (Aquila): Bug where rotation of particles is
-                    // not accurate, likely due to Vector3.Angle() giving
-                    // the smallest angle possible between the source and
-                    // target.
-
                     float angle = -Mathf.Atan2(_direction.z, _direction.x) *
                         Mathf.Rad2Deg;
 
@@ -140,9 +135,6 @@ public class CacodaemonController :
         transform.rotation = Quaternion.Euler(0,
             _direction.x < 0 ? 180 : 0, 0);
 
-        Debug.Log(_cacodaemonStatsContainer.
-             GetStat("Health").Value );
-
     }
 
     private void FixedUpdate()
@@ -168,7 +160,10 @@ public class CacodaemonController :
             Vector3 knockbackForce = 
                 (col.transform.position - transform.position).normalized *
                 _cacodaemonStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_cacodaemonStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), 
+                knockbackForce);
         }
     }
 }

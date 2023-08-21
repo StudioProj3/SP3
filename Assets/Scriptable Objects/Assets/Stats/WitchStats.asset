@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b9d827f34ee9b742aafd78b26b2054c, type: 3}
-  m_Name: ArcherStats
+  m_Name: WitchStats
   m_EditorClassIdentifier: 
   _statInitializerList: []
   _instancedStatInitializerList:
@@ -28,32 +28,32 @@ MonoBehaviour:
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: e15db4b0babfeb54c924dbcd088966bd, type: 2}
-        initialValue: 3
+        initialValue: 1
     - rid: 8269461383876968449
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: e1ee6d50190725b49ab694749b2744d2, type: 2}
-        initialValue: 1
+        initialValue: 0.7
     - rid: 8269461383876968450
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: a1536f4c9d0ad7d489785c8e46b8e540, type: 2}
-        initialValue: 3
+        initialValue: 2.5
     - rid: 8269461383876968451
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 7a5862a2e73e150429d02e59c59bb71f, type: 2}
-        initialValue: 200
+        initialValue: 175
     - rid: 8269461383876968452
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 54790303e6a70064c9d0bdc5056fd391, type: 2}
-        initialValue: 10
+        initialValue: 5
     - rid: 8269461446570541059
       type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
-        initialValue: 50
+        initialValue: 60
         initialLowerBoundValue: 0
     - rid: 8269461502578130944
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
