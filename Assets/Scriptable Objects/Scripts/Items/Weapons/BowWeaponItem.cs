@@ -54,6 +54,7 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
 
     public override void OnEnable()
     {
+        CanAttack = true;
         WeaponDamageType = _projectile.WeaponDamageType;
         WeaponStatusEffect = _projectile.WeaponStatusEffect;
     }

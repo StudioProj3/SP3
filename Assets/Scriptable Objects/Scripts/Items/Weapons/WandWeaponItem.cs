@@ -56,6 +56,7 @@ public class WandWeaponItem : WeaponBase, IMagicWeapon
 
     public override void OnEnable()
     {
+        CanAttack = true;
         WeaponDamageType = _projectile.WeaponDamageType;
         WeaponStatusEffect = _projectile.WeaponStatusEffect;
     }
