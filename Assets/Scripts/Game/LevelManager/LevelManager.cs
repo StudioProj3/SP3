@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-public class LevelManager : SceneLoader
+public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField]
     private SceneList _sceneList;
+
+    private LoadingManager _loadingManager;
 
     //[SerializeField]
     //private GameObject _grid;
@@ -17,8 +18,10 @@ public class LevelManager : SceneLoader
 
     private void Awake()
     {
+        _loadingManager = LoadingManager.Instance;
+
         _player = GameObject.FindGameObjectWithTag("Player");
-        LoadSceneAdditive(_sceneList.HUDScene, false);
+        _loadingManager.LoadSceneAdditive(_sceneList.HUDScene, false);
 
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
@@ -42,7 +45,7 @@ public class LevelManager : SceneLoader
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            LoadScene(_sceneList.layer2Scene);
+            _loadingManager.LoadScene(_sceneList.layer2Scene);
         }
 
 

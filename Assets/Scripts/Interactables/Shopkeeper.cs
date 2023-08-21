@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Shopkeeper : SceneLoader, IInteractable
+public class Shopkeeper : LoadingManager, IInteractable
 {
     public string interactText { get; } = "~ Shop ~";
 
