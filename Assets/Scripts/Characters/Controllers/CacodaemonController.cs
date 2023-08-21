@@ -145,7 +145,6 @@ public class CacodaemonController :
              GetStat("Health").Value <= 0)
         {
             _animator.SetBool("isDead", true);
-            QuestManager.Instance.EnemyKilled(Data);
         }
         else
         {

@@ -23,6 +23,8 @@ public class DisableAfterAnimation : StateMachineBehaviour
         {
             animator.gameObject.SetActive(false);
         }
+        QuestManager.Instance.EnemyKilled(
+            animator.GetComponent<CharacterControllerBase>().Data);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
