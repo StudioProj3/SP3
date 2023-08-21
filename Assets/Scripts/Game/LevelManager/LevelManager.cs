@@ -40,11 +40,6 @@ public class LevelManager : SceneLoader
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ToggleScene(_sceneList.shopScene);
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             LoadScene(_sceneList.layer2Scene);
