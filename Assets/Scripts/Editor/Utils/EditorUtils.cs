@@ -60,35 +60,56 @@ public static class EditorUtils
             GUILayout.Height(length), GUILayout.ExpandHeight(true));
     }
 
-    public static void DrawTextureCenter(Texture2D texture2d, float length,
-        Material material, Color background)
+    public static void DrawTextureCenter(Texture2D texture2d,
+        float length, Material material, Color backgroundColor)
     {
         Horizontal(() =>
         {
             FlexibleSpace(() =>
             {
-                Rect rect = EditorGUILayout.GetControlRect(
-                    GUILayout.Width(length), GUILayout.Height(length));
-
-                EditorGUI.DrawRect(rect, background);
-                EditorGUI.DrawPreviewTexture(rect, texture2d,
-                    material);
+                DrawTexture(texture2d, length, material,
+                    backgroundColor);
             });
         });
     }
 
     public static void DrawSpriteCenter(Sprite sprite,
-        float length, Material material, Color background)
+        float length, Material material, Color backgroundColor)
     {
         DrawTextureCenter(sprite.texture, length, material,
-            background);
+            backgroundColor);
+    }
+
+    public static void DrawTexture(Texture2D texture2d, float length,
+        Material material, Color backgroundColor)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(
+            GUILayout.Width(length), GUILayout.Height(length));
+
+        EditorGUI.DrawRect(rect, backgroundColor);
+        EditorGUI.DrawPreviewTexture(rect, texture2d,
+            material);
+    }
+
+    public static void DrawSprite(Sprite sprite, float length,
+        Material material, Color backgroundColor)
+    {
+        DrawTexture(sprite.texture, length, material,
+            backgroundColor);
     }
 
     public static void DrawSpriteFromSheetCenter(Sprite sprite,
-        float length, Material material, Color background)
+        float length, Material material, Color backgroundColor)
     {
         DrawTextureCenter(sprite.GenTexture(), length, material,
-            background);
+            backgroundColor);
+    }
+
+    public static void DrawSpriteFromSheet(Sprite sprite,
+        float length, Material material, Color backgroundColor)
+    {
+        DrawTexture(sprite.GenTexture(), length, material,
+            backgroundColor);
     }
 
     public static void Horizontal(Action action)

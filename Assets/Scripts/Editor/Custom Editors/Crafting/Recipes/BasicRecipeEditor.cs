@@ -21,7 +21,7 @@ public class BasicRecipeEditor : Editor
         Color backgroundColor = new(0.169f, 0.169f, 0.169f);
         Material material = recipe.Material;
 
-        DrawSprite(itemTarget);
+        DrawItemCenter(itemTarget);
 
         Horizontal(() =>
         {
@@ -32,21 +32,69 @@ public class BasicRecipeEditor : Editor
             });
         });
 
+        ItemBase[][] items = { new []{ recipe.Row1Col1, recipe.Row1Col2 },
+            new []{ recipe.Row2Col1, recipe.Row2Col2 } };
+        string[][] itemsName = { new []{ "Row1Col1", "Row1Col2" },
+            new []{ "Row2Col1", "Row2Col2" } };
+
+        for (int i = 0; i < items.Length; ++i)
+        {
+            Horizontal(() =>
+            {
+                FlexibleSpace(() =>
+                {
+                    Vertical(() =>
+                    {
+                        DrawItem(items[i][0]);
+                        DrawPropertyRaw(serializedObject, itemsName[i][0],
+                            GUILayout.Width(width));
+                    });
+                });
+
+                FlexibleSpace(() =>
+                {
+                    Vertical(() =>
+                    {
+                        DrawItem(items[i][1]);
+                        DrawPropertyRaw(serializedObject, itemsName[i][1],
+                            GUILayout.Width(width));
+                    });
+                });
+            });
+        }
+
         serializedObject.ApplyModifiedProperties();
 
-        void DrawSprite(ItemBase item)
+        void DrawItemCenter(ItemBase item)
         {
             if (item)
             {
-                if (itemTarget.Atlas)
+                if (item.Atlas)
                 {
-                    DrawSpriteFromSheetCenter(recipe.Target.Sprite,
+                    DrawSpriteFromSheetCenter(item.Sprite,
                         width, material, backgroundColor);
                 }
                 else
                 {
-                    DrawSpriteCenter(recipe.Target.Sprite, width,
+                    DrawSpriteCenter(item.Sprite, width,
                         material, backgroundColor);
+                }
+            }
+        }
+
+        void DrawItem(ItemBase item)
+        {
+            if (item)
+            {
+                if (item.Atlas)
+                {
+                    DrawSpriteFromSheet(item.Sprite, width,
+                        material, backgroundColor);
+                }
+                else
+                {
+                    DrawSprite(item.Sprite, width, material,
+                        backgroundColor);
                 }
             }
         }
