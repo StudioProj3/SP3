@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class LoadingManager : Singleton<LoadingManager>
 {
+    [SerializeField]
+    public SceneList sceneList;
+
     // Load new independent scene
     public void LoadScene(string sceneName)
     {

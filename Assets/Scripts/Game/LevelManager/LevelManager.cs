@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    [SerializeField]
-    private SceneList _sceneList;
+  
 
     private LoadingManager _loadingManager;
 
-    //[SerializeField]
-    //private GameObject _grid;
+    [SerializeField]
+    private List<string> _initScenes;
 
     private GameObject _spawnerGroup;
     private List<EnemySpawner> _enemySpawners;
@@ -18,10 +17,16 @@ public class LevelManager : Singleton<LevelManager>
 
     private void Awake()
     {
+
         _loadingManager = LoadingManager.Instance;
 
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _loadingManager.LoadSceneAdditive(_sceneList.HUDScene, false);
+        for (int i = 0; i < _initScenes.Count; i++)
+        {
+            _loadingManager.LoadSceneAdditive(_initScenes[i], false);
+        }
+
+        //_player = GameObject.FindGameObjectWithTag("Player");
+        //_loadingManager.LoadSceneAdditive(_loadingManager.sceneList.HUDScene, false);
 
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
@@ -45,15 +50,8 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _loadingManager.LoadScene(_sceneList.layer2Scene);
+            _loadingManager.LoadScene(_loadingManager.sceneList.layer2Scene);
         }
-
-
-        //if (_player.transform.position.x < _grid.GetComponent<Tilemap>().localBounds.min.x * 0.5f)
-        //    Debug.Log("lmao");
-
-        //if (_player.transform.position.x > _grid.GetComponent<Tilemap>().localBounds.max.x * 0.5f)
-        //    LoadSceneAdditive(_sceneList.layer4Scene2, false);
 
     }
 }

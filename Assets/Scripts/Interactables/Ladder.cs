@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Shopkeeper : MonoBehaviour, IInteractable
+public class Ladder : MonoBehaviour, IInteractable
 {
-    public string interactText { get; } = "~ Shop ~";
+    public string interactText { get; } = "~ Enter ~";
 
     [SerializeField]
     private LayerMask _playerLayer;
 
-  
+    [SerializeField]
+    private string _nextScene;
+
 
     private GameObject _toggleText;
-    private GameObject _shopUI;
-    
+    private LoadingManager _loadingManager;
+
     public void Interact()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            _shopUI.SetActive(!_shopUI.activeSelf);
+            _loadingManager.LoadScene(_nextScene);
         }
     }
 
@@ -42,6 +44,8 @@ public class Shopkeeper : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        _loadingManager = LoadingManager.Instance;
+
         _toggleText = transform.GetChild(0).gameObject;
         _toggleText.GetComponent<TextMeshPro>().text = interactText;
         _toggleText.SetActive(false);
@@ -50,12 +54,8 @@ public class Shopkeeper : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (!_shopUI)
-        {
-            _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
-            _shopUI.SetActive(false);
-        }
-        if(CheckPlayer())
+
+        if (CheckPlayer())
         {
             Interact();
         }
