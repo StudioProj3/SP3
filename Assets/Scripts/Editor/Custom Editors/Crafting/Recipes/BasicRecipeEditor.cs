@@ -14,9 +14,20 @@ public class BasicRecipeEditor : Editor
         ItemBase itemTarget = recipe.Target;
 
         float width = 100f;
-
+        
+        // Basic parameters
         DrawProperty(serializedObject, "Name");
+
+        // Success parameters
+        DrawProperty(serializedObject, "AlwaysSuccess");
+        
+        if (!recipe.AlwaysSuccess)
+        {
+            DrawProperty(serializedObject, "SuccessRate");
+        }
+
         DrawProperty(serializedObject, "TargetQuantity");
+
 
         Color backgroundColor = new(0.169f, 0.169f, 0.169f);
         Material material = recipe.Material;
