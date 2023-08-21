@@ -8,13 +8,17 @@ using UnityEngine;
 public abstract class CharacterControllerBase :
     MonoBehaviour, IEffectable
 {
-    public IStatContainer EntityStats {get; protected set;}
+    [field: SerializeField] 
+    public CharacterData Data { get; protected set; }
+
+    public IStatContainer EntityStats { get; protected set; }
 
     protected Rigidbody _rigidbody;
     protected StateMachine _stateMachine;
     protected Animator _animator;
     protected SpriteRenderer _spriteRenderer;
     protected List<StatusEffectBase> _statusEffects = new();
+
     public void TakeDamage(Damage damage, Vector3 knockback)
     {
         _rigidbody.AddForce(knockback, ForceMode.Impulse);

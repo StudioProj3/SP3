@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public abstract class CharacterDataBase :
+[CreateAssetMenu(fileName = "CharacterData",
+    menuName = "Scriptable Objects/Character Data")]
+public class CharacterData :
     ScriptableObject, INameable
 {
     [field: SerializeField]
@@ -21,7 +23,18 @@ public abstract class CharacterDataBase :
     public virtual void Reset()
     {
         Inventory = null;
-        HandInventory.Reset();
+        if (HandInventory != null)
+        {
+            HandInventory.Reset();
+        }
         IsDead = false;
+    }
+
+    protected virtual void OnValidate()
+    {
+#if UNITY_EDITOR
+        Name = name;
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 }

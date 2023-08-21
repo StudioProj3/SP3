@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
     private SpriteRenderer _weaponDisplay;
     
     [SerializeField]
-    private PlayerData _playerData;
+    private CharacterData _playerData;
 
     private ItemBase _currentlyHolding;
     private GameObject _pooledArrows;
