@@ -8,6 +8,8 @@ public abstract class RecipeEditorBase : Editor
     protected float width = 100f;
     protected Material material;
     protected Color backgroundColor = new(0.169f, 0.169f, 0.169f);
+    protected ItemBase[][] items;
+    protected string[][] itemsName;
 
     public override void OnInspectorGUI()
     {
@@ -42,6 +44,27 @@ public abstract class RecipeEditorBase : Editor
                     GUILayout.Width(width));
             });
         });
+
+        for (int i = 0; i < items.Length; ++i)
+        {
+            Horizontal(() =>
+            {
+                for (int j = 0; j < items[i].Length; ++j)
+                {
+                    FlexibleSpace(() =>
+                    {
+                        Vertical(() =>
+                        {
+                            DrawItem(items[i][j]);
+                            DrawPropertyRaw(serializedObject,
+                                itemsName[i][j], GUILayout.Width(width));
+                        });
+                    });
+                }
+            });
+        }
+
+        serializedObject.ApplyModifiedProperties();
     }
 
     protected void DrawItemCenter(ItemBase item)
