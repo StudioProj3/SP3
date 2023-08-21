@@ -80,6 +80,10 @@ public class BasicRecipeEditor : Editor
                         material, backgroundColor);
                 }
             }
+            else
+            {
+                DrawBoxCenter(width, backgroundColor);
+            }
         }
 
         void DrawItem(ItemBase item)
@@ -96,6 +100,10 @@ public class BasicRecipeEditor : Editor
                     DrawSprite(item.Sprite, width, material,
                         backgroundColor);
                 }
+            }
+            else
+            {
+                DrawBox(width, backgroundColor);
             }
         }
     }

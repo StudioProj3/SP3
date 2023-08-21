@@ -8,12 +8,19 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
     private string _animationName = "Shoot";
 
     [field: SerializeField]
-    private ItemBase _projectile;
+    private ArrowItem _projectile;
     public string AnimationName => _animationName;
 
-    public ItemBase Projectile => _projectile;
+    public ArrowItem Projectile => _projectile;
     public void OnUseEnter()
     {
+        if (WeaponDamageType != _projectile.WeaponDamageType ||
+            WeaponStatusEffect != _projectile.WeaponStatusEffect)
+        {
+            WeaponDamageType = _projectile.WeaponDamageType;
+            WeaponStatusEffect = _projectile.WeaponStatusEffect;
+        }
+
         if (CanAttack)
         {
             return;
@@ -43,5 +50,11 @@ public class BowWeaponItem : WeaponBase, IBowWeapon
             projectileToFire.transform.SetParent(null);
             CanAttack = false;
         }
+    }
+
+    public override void OnEnable()
+    {
+        WeaponDamageType = _projectile.WeaponDamageType;
+        WeaponStatusEffect = _projectile.WeaponStatusEffect;
     }
 }

@@ -17,7 +17,6 @@ public class SwordWeaponItem : WeaponBase, ISwordWeapon
             
             _ = Delay.Execute(() =>
             {
-                Debug.Log("CAN ATTACK AGAIN");
                 CanAttack = true;
             }, WeaponStats.GetStat("AttackCooldown").Value);
         }
@@ -26,6 +25,5 @@ public class SwordWeaponItem : WeaponBase, ISwordWeapon
 
     public void OnUseExit()
     {
-        Debug.Log("EXITING");
     }
 }

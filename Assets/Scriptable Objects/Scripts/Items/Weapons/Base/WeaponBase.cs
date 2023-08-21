@@ -17,7 +17,7 @@ public abstract class WeaponBase : ItemBase
 
     public bool CanAttack { get; protected set; }
 
-    public void OnEnable()
+    public virtual void OnEnable()
     {
         CanAttack = true;
     }

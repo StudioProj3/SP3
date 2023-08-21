@@ -41,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
                 GetComponent<ArrowController>());
         }
 
-        _detectionPlane = new Plane(Vector3.up, 0f);
+        _detectionPlane = new Plane(Vector3.up, -0.7f);
 
         _heldItemContainer = transform.GetChild(0);
         _weaponFlipAngle = Quaternion.Euler(0f, -360f, 0f);
