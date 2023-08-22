@@ -54,6 +54,8 @@ public class UIMainInventory : MonoBehaviour
             if (item)
             {
                 _slots[i].sprite = item.Sprite;
+                _slots[i].color = _slots[i].color.
+                    Set(a: _slots[i].sprite ? 1f : 0f);
             }
         }
     }
