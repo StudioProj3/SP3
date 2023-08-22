@@ -1,13 +1,22 @@
 using UnityEngine;
+using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    [SerializeField]
+    private TMP_Text _dialogueTitle;
+
+    [SerializeField]
+    private TMP_Text _dialogueTextbox;
+
     private DialogueInstance _dialogueInstance; 
     private int _dialogueIndex; 
+
     public void Initialize(DialogueInstance dialogue)
     {
         _dialogueInstance = dialogue;
         _dialogueIndex = 0;
+        _dialogueTitle.text = dialogue.Data.SpeakerName;
     }
 
     public void StartDialogue()
@@ -28,5 +37,10 @@ public class Dialogue : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void SetText(string text)
+    {
+        _dialogueTextbox.text = text;
     }
 }

@@ -13,7 +13,14 @@ public class DialoguePoint : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        Assert(_dialogueInstance is not null, "Dialogue is null");
-        DialogueManager.Instance.StartNewDialogue(_dialogueInstance, transform);
+        // TODO (Chris): Might need to make an interface to store 'triggers'
+        // of dialogues in the dialogue manager.
+        if (_dialogueInstance is not null && 
+            DialogueManager.Instance.CanStartDialogue)
+        {
+            DialogueManager.Instance.StartNewDialogue(this,
+                _dialogueInstance, transform);
+        }
+        
     }
 }
