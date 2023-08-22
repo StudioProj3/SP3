@@ -11,6 +11,23 @@ public class UIHUDStatIncrease : MonoBehaviour
 
     private List<Button> _upgradeButtons = new();
     private List<TMP_Text> _statText = new();
+    private float _speed, _attack, _health,
+                  _sanity, _armor, _magicRes,
+                  _currentLevel, _prevLevel;
+
+    public void IncreaseStat(string statName, float amount)
+    {
+        Modifier statIncrease = Modifier.Plus(amount, 999);
+        _playerData.CharacterStats.GetStat(statName).AddModifier(statIncrease);
+        UpdateStatText();
+    }
+
+    private void OnEnable()
+    {
+        _currentLevel = _playerData.CharacterStats.GetStat("Level").Value;
+        Debug.Log(_prevLevel + " < prev || curr >  "+ _currentLevel);
+        DisplayButtons(_prevLevel < _currentLevel);
+    }
 
     private void Start()
     {
@@ -21,8 +38,6 @@ public class UIHUDStatIncrease : MonoBehaviour
             _statText.Add(transform.GetChild(i).GetChild(0).
                 GetComponent<TMP_Text>());
         }
-
-        UpdateStatText();
 
         _upgradeButtons[0].onClick.AddListener
             (delegate { IncreaseStat("MoveSpeed", 0.25f); } );
@@ -36,28 +51,36 @@ public class UIHUDStatIncrease : MonoBehaviour
             (delegate { IncreaseStat("Armor", 25); } );
         _upgradeButtons[5].onClick.AddListener
             (delegate { IncreaseStat("MagicResistance", 25); } );
-    }
-    public void IncreaseStat(string statName, float amount)
-    {
-        Modifier statIncrease = Modifier.Plus(amount, 999);
-        _playerData.CharacterStats.GetStat(statName).AddModifier(statIncrease);
-        Debug.Log("Stat: " + _playerData.CharacterStats.GetStat(statName) + " Value: " + _playerData.CharacterStats.GetStat(statName).Value);
-        UpdateStatText();
-    }
 
+        UpdateStatText();
+        _prevLevel = 1;
+    }
+    
     private void UpdateStatText()
     {
         _statText[0].text = "Speed: " + 
-            _playerData.CharacterStats.GetStat("MoveSpeed").Value;
+            _playerData.CharacterStats.GetStat("MoveSpeed").Max;
         _statText[1].text = "Attack: " + 
-            _playerData.CharacterStats.GetStat("DamageMultiplier").Value;
+            _playerData.CharacterStats.GetStat("DamageMultiplier").Max;
         _statText[2].text = "Health: " + 
-            _playerData.CharacterStats.GetStat("Health").Value;
+            _playerData.CharacterStats.GetStat("Health").Max;
         _statText[3].text = "Sanity: " + 
-            _playerData.CharacterStats.GetStat("Sanity").Value;
+            _playerData.CharacterStats.GetStat("Sanity").Max;
         _statText[4].text = "Armor: " + 
-            _playerData.CharacterStats.GetStat("Armor").Value;
+            _playerData.CharacterStats.GetStat("Armor").Max;
         _statText[5].text = "Magic Res: " + 
-            _playerData.CharacterStats.GetStat("MagicResistance").Value;
+            _playerData.CharacterStats.GetStat("MagicResistance").Max;
+        
+        DisplayButtons(false);
+    }
+
+    public void DisplayButtons(bool displayButtons)
+    {
+        _prevLevel = _currentLevel;
+        foreach(Button button in _upgradeButtons)
+        {
+            button.enabled = displayButtons;
+            button.image.enabled = displayButtons;
+        }
     }
 }

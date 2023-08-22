@@ -18,7 +18,7 @@ public class CharacterData :
     public bool IsDead { get; set; }
 
     [field: SerializeField]
-    public Stats CharacterStats {get; set;}
+    public Stats CharacterStats { get; set; }
 
     public virtual void Reset()
     {
