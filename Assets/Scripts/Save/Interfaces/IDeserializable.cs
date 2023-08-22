@@ -1,4 +1,4 @@
 public interface IDeserializable<T>
 {
-    T Deserialize();
+    T Deserialize(string data);
 }
