@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 using static DebugUtils;
 
-public class UIInventory : MonoBehaviour
+public class UIMainInventory : MonoBehaviour
 {
     [SerializeField]
     private CharacterData _character;
