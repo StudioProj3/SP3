@@ -103,7 +103,17 @@ public class ArcherController :
 
             new GenericState("Cooldown"),
 
-            new GenericState("Death"),
+            new GenericState("Death",
+                new ActionEntry("Enter", () =>
+                {
+                    var playerLevelling = 
+                        _playerController.gameObject.
+                        GetComponent<PlayerLevelUp>();
+                    
+                    playerLevelling.GainExperience(ExpAmount);
+                })
+            
+            ),
 
             // Transitions
 

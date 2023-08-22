@@ -8,7 +8,15 @@ public class PlayerLevelUp : MonoBehaviour
 
     private IModifiableValue _experiencePoints;
     private IModifiableValue _currentLevel;
+    public void GainExperience(float experience)
+    {
+        _experiencePoints.Add(experience);
 
+        if (_experiencePoints.Value == _experiencePoints.Max)
+        {
+            LevelUp();
+        }
+    }
     
     private void Start()
     {
@@ -20,29 +28,9 @@ public class PlayerLevelUp : MonoBehaviour
         _currentLevel.Set(1);
         Debug.Log("Level: " + _currentLevel.Value);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log(_experiencePoints.Value);
-            GainExperience(5);
-        }
-    }
-
-    private void GainExperience(float experience)
-    {
-        _experiencePoints.Add(experience);
-
-        if (_experiencePoints.Value == _experiencePoints.Max)
-        {
-            LevelUp();
-        }
-    }
+    
     private void LevelUp()
     {
-        
-        Debug.Log("Level: " + _currentLevel.Value);
         Modifier experienceLimitModifier = 
             Modifier.Plus(100 * _currentLevel.Value, 2);
 
