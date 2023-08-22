@@ -68,7 +68,6 @@ public class ArrowController : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);  
         _rigidbody = GetComponent<Rigidbody>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }

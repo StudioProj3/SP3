@@ -196,7 +196,7 @@ public class BossController :
             // Idle > Walk
             //new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
 
-            new FixedTimedTransition("Idle", "ShootLaser", 0.7f),
+            new FixedTimedTransition("Idle", "ShootLaser", 2.0f),
 
              new FixedTimedTransition("ShootLaser", "Idle", 5.0f),
 
