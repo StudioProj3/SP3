@@ -7,8 +7,17 @@ using UnityEngine;
 public class CharacterData : ScriptableObject,
     INameable, ISavable<CharacterData>
 {
+    [field: HorizontalDivider]
+    [field: Header("Basic Parameters")]
+
     [field: SerializeField]
     public string Name { get; protected set; }
+
+    [field: SerializeField]
+    public bool IsDead { get; set; }
+
+    [field: HorizontalDivider]
+    [field: Header("Inventory Parameters")]
 
     [field: SerializeField]
     public InventoryBase Inventory { get; set; }
@@ -16,8 +25,8 @@ public class CharacterData : ScriptableObject,
     [field: SerializeField]
     public HandInventory HandInventory { get; set; }
 
-    [field: SerializeField]
-    public bool IsDead { get; set; }
+    [field: HorizontalDivider]
+    [field: Header("Stats Parameters")]
 
     [field: SerializeField]
     public Stats CharacterStats { get; set; }
