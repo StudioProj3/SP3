@@ -12,6 +12,11 @@ public class DialogueManager : Singleton<DialogueManager>
         _dialogue.StartDialogue();
     }
 
+    public void NextIndex()
+    {
+        // _dialogue.
+    }
+
     protected override void OnAwake()
     {
         _dialogue = GetComponentInChildren<Dialogue>(); 
