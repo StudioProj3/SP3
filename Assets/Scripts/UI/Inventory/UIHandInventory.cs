@@ -17,11 +17,15 @@ public class UIHandInventory : MonoBehaviour
         if (leftHand)
         {
             _leftItem.sprite = leftHand.Sprite;
+            _leftItem.color = _leftItem.color.
+                Set(a: _leftItem.sprite ? 1f : 0f);
         }
 
         if (rightHand)
         {
             _rightItem.sprite = rightHand.Sprite;
+            _rightItem.color = _rightItem.color.
+                Set(a: _rightItem.sprite ? 1f : 0f);
         }
     }
 
