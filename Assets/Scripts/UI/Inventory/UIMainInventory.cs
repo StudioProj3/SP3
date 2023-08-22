@@ -70,7 +70,7 @@ public class UIMainInventory : MonoBehaviour
 
     private void Awake()
     {
-        _viewport = transform.GetChild(0).gameObject;
+        _viewport = transform.ChildGO(0);
         _contentItems = _viewport.transform.GetChild(1);
 
         for (int i = 0; i < _contentItems.childCount; ++i)
@@ -78,7 +78,7 @@ public class UIMainInventory : MonoBehaviour
             AddSlot(_contentItems.GetChild(i));
         }
 
-        _noMainInventory = transform.GetChild(1).gameObject;
+        _noMainInventory = transform.ChildGO(1);
     }
 
     // Add slots needed and setup the references
