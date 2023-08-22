@@ -15,7 +15,7 @@ public class LevelManager : Singleton<LevelManager>
     private List<EnemySpawner> _enemySpawners;
     private GameObject _player;
 
-    protected override void OnAwake()
+    protected override void OnStart()
     {
 
         _loadingManager = LoadingManager.Instance;
