@@ -20,6 +20,7 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 _flipVector;
     private Animator _animator;
     private Rigidbody _rigidbody;
+    private PlayerController _player;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _player = GetComponent<PlayerController>();
 
         _pooledArrows = transform.GetChild(1).gameObject;
         _pooledArrowList = new List<ArrowController>();
@@ -58,7 +60,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (_currentlyHolding is IConsumable consumable)
             {
-                consumable.ApplyConsumptionEffect(_playerData.CharacterStats);
+                consumable.ApplyConsumptionEffect(_playerData.CharacterStats, _player);
                 _playerData.HandInventory.Remove(_currentlyHolding, 1);
             }
 

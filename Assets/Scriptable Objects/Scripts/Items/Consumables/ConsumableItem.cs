@@ -30,6 +30,9 @@ public class ConsumableItem : ItemBase, IConsumable
     [SerializeField]
     private List<ConsumptionEffect> _effectsThatAdd;
 
+    [SerializeField]
+    private List<StatusEffectBase> _statusEffects;
+
     private Dictionary<Pair<StatType, Modifier>, float> _statsToModify;
     private Dictionary<StatType, float> _statsToAdd;
 
@@ -38,7 +41,7 @@ public class ConsumableItem : ItemBase, IConsumable
         _effectsThatModify = new List<ConsumptionEffectModifier>();
     }
 
-    public void ApplyConsumptionEffect(Stats entityStats)
+    public void ApplyConsumptionEffect(Stats entityStats, IEffectable effectable)
     {
         foreach (KeyValuePair<Pair<StatType, Modifier>, float> statToModify
              in _statsToModify)
@@ -59,6 +62,11 @@ public class ConsumableItem : ItemBase, IConsumable
         foreach (KeyValuePair<StatType, float> statToAdd in _statsToAdd)
         {
             entityStats.GetStat(statToAdd.Key).Add(statToAdd.Value);
+        }
+
+        foreach (StatusEffectBase statusEffect in _statusEffects)
+        {
+            effectable.ApplyEffect(statusEffect.Clone());
         }
     }
 
