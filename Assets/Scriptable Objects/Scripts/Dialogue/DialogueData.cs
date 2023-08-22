@@ -15,4 +15,8 @@ public class DialogueData : ScriptableObject
     [field: TextArea]
     [field: SerializeField]    
     public List<string> Dialogue { get; private set; }
+
+    [field: SerializeField]
+    public Vector3 DialogueBoxOffset { get; private set; }
+        = new Vector3(0, 40 , 0);
 }

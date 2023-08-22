@@ -16,7 +16,6 @@ public class TalkNPCQuestStep : QuestStep
     private GameObject _targetNPCObject;
     private DialoguePoint _targetDialogue;
 
-    private int _dialogueIndex; 
 
     private void Start()
     {
@@ -24,7 +23,6 @@ public class TalkNPCQuestStep : QuestStep
             "Dialogue or tag is null in Quest step. ID:" + _questID);
         
         // Reset the dialogue index to 0.
-        _dialogueIndex = 0;
         _isDialogueComplete = true;
 
         _targetNPCObject = GameObject.FindWithTag(_NPCtag);

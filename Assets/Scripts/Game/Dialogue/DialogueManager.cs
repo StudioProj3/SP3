@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DialogueManager : Singleton<DialogueManager>
@@ -10,6 +9,7 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         _dialogue.transform.parent.position = talkingTransform.position;
         _dialogue.Initialize(dialogueInstance);
+        _dialogue.StartDialogue();
     }
 
     protected override void OnAwake()
