@@ -9,13 +9,13 @@ public class LevelManager : Singleton<LevelManager>
     private LoadingManager _loadingManager;
 
     [SerializeField]
-    private List<string> _initScenes;
+    public List<string> _initScenes;
 
     private GameObject _spawnerGroup;
     private List<EnemySpawner> _enemySpawners;
     private GameObject _player;
 
-    private void Awake()
+    protected override void OnAwake()
     {
 
         _loadingManager = LoadingManager.Instance;

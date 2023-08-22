@@ -11,6 +11,49 @@ public class LoadingManager : Singleton<LoadingManager>
     {
         AsyncOperation asyncLoad =
             SceneManager.LoadSceneAsync(sceneName);
+
+        // TODO (Aquila) Demon Code
+
+        //SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+
+
+        //Scene sceneToLoad =
+        //    SceneManager.GetSceneByName(sceneName);
+
+        //Debug.Log(sceneToLoad.name);
+
+        //Debug.Log(sceneToLoad);
+
+
+        //GameObject[] objects = sceneToLoad.GetRootGameObjects();
+
+        //Debug.Log(sceneToLoad.GetRootGameObjects().Length);
+
+        //LevelManager level = null;
+
+        //for (int i = 0; i < objects.Length; i++)
+        //{
+        //    if (objects[i].TryGetComponent<LevelManager>(out level))
+        //        break;
+        //}
+
+
+        //if (level == null)
+        //    return;
+
+        //Debug.Log("1");
+        //for (int i = 0; i < level._initScenes.Count; i++)
+        //{
+        //    Debug.Log("2");
+
+        //    if (level._initScenes[i] == "UIHUD")
+        //    {
+        //        Debug.Log("3");
+
+        //        UnloadScene(SceneManager.GetActiveScene().name);
+                
+        //    }
+        //}
     }
 
     // Load new additive scene, if forceLoad is true,
@@ -72,5 +115,10 @@ public class LoadingManager : Singleton<LoadingManager>
         asyncLoad = SceneManager.LoadSceneAsync
             (sceneName, LoadSceneMode.Additive);
 
+    }
+
+    public bool CheckForAllObjects(string tag)
+    {
+        return false;
     }
 }
