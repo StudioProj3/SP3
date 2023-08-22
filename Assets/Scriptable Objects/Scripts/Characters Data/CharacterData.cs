@@ -37,7 +37,7 @@ public class CharacterData : ScriptableObject,
         return "";
     }
 
-    public CharacterData Deserialize()
+    public CharacterData Deserialize(string data)
     {
         return new();
     }
