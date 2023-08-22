@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 using static DebugUtils;
@@ -10,8 +11,10 @@ public class TalkNPCQuestStep : QuestStep
     [field: SerializeField]
     public DialogueInstance Dialogue { get; private set; }
 
+    private bool _isDialogueComplete = false;
+
     private GameObject _targetNPCObject;
-    private Dialogue _targetDialogue;
+    private DialoguePoint _targetDialogue;
 
     private int _dialogueIndex; 
 
@@ -22,9 +25,10 @@ public class TalkNPCQuestStep : QuestStep
         
         // Reset the dialogue index to 0.
         _dialogueIndex = 0;
+        _isDialogueComplete = true;
 
         _targetNPCObject = GameObject.FindWithTag(_NPCtag);
-        _targetDialogue = _targetNPCObject.GetComponent<Dialogue>();
+        _targetDialogue = _targetNPCObject.GetComponent<DialoguePoint>();
     }
 
 }
