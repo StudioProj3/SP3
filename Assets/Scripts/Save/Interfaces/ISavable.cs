@@ -1,6 +1,7 @@
 using System;
 
-public interface ISavable
+public interface ISavable<T> :
+    ISerializable, IDeserializable<T>
 {
     bool EnableSave { get; }
 
