@@ -51,6 +51,24 @@ public abstract class InventoryBase :
         return _allItems[index]?.Key;
     }
 
+    public virtual void RemoveItemByAmount(ItemBase item, uint amount)
+    {
+        for (int i = 0; i < _allItems.Count; ++i)
+        {
+            if (_allItems[i].Key == item)
+            {
+                _allItems[i].Value -= amount;
+
+                if (_allItems[i].Value <= 0)
+                {
+                    _allItems[i].Key = null;
+                }
+
+                break;
+            }
+        }
+    }
+
     // Function returns whether the modification request is valid
     // and caches the data needed for the modification
     protected virtual bool RequestModify(ItemBase item, int number)

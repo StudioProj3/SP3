@@ -20,6 +20,8 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 _flipVector;
     private Animator _animator;
     private Rigidbody _rigidbody;
+    private PlayerController _player;
+    private bool _usingLeftHand;
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _player = GetComponent<PlayerController>();
 
         _pooledArrows = transform.GetChild(1).gameObject;
         _pooledArrowList = new List<ArrowController>();
@@ -54,12 +57,19 @@ public class PlayerAttack : MonoBehaviour
     {
         CalculateMousePos();
         
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _usingLeftHand = !_usingLeftHand;
+            UpdateHands();
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (_currentlyHolding is IConsumable consumable)
             {
-                consumable.ApplyConsumptionEffect(_playerData.CharacterStats);
-                _playerData.HandInventory.Remove(_currentlyHolding, 1);
+                consumable.ApplyConsumptionEffect(_playerData.CharacterStats, _player);
+                _playerData.HandInventory.RemoveItemByAmount(_currentlyHolding, 1);
+                UpdateHands();
             }
 
             if (_currentlyHolding is WeaponBase weapon && !weapon.CanAttack)
@@ -187,6 +197,18 @@ public class PlayerAttack : MonoBehaviour
         if (_detectionPlane.Raycast(ray, out float distance))
         {
             _mousePositon = ray.GetPoint(distance);
+        }
+    }
+
+    private void UpdateHands()
+    {
+        if (_usingLeftHand)
+        {
+            _currentlyHolding = _playerData.HandInventory.LeftHand();
+        }
+        else
+        {
+            _currentlyHolding = _playerData.HandInventory.RightHand();
         }
     }
 }
