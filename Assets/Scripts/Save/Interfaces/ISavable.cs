@@ -1,5 +1,3 @@
-using System;
-
 public interface ISavable<T> :
     ISerializable, IDeserializable<T>
 {
@@ -9,7 +7,7 @@ public interface ISavable<T> :
 
     void HookEvents();
 
-    void Save(object send, EventArgs args);
+    string Save();
 
-    void Load(object send, EventArgs args);
+    void Load(string data);
 }

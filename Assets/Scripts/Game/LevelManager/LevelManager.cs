@@ -25,9 +25,6 @@ public class LevelManager : Singleton<LevelManager>
             _loadingManager.LoadSceneAdditive(_initScenes[i], false);
         }
 
-        //_player = GameObject.FindGameObjectWithTag("Player");
-        //_loadingManager.LoadSceneAdditive(_loadingManager.sceneList.HUDScene, false);
-
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
 
@@ -45,13 +42,8 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _loadingManager.LoadScene(_loadingManager.sceneList.layer2Scene);
-        }
 
     }
 }

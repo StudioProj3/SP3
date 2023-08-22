@@ -49,6 +49,11 @@ public abstract class CharacterControllerBase :
             new IdleState("Idle")
         );
     }
+
+    protected virtual void Awake()
+    {
+        Data.HookEvents();
+    }
     
     protected void RemoveEffectImpl(StatusEffectBase statusEffect,
         int index)
