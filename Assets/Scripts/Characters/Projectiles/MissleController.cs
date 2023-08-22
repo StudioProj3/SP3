@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class EarthController : MonoBehaviour
+public class MissleController : MonoBehaviour
 {
+    [field: SerializeField]
+    private float _speed;
 
     [field: SerializeField]
     private float _lifetime;
@@ -9,15 +11,20 @@ public class EarthController : MonoBehaviour
     [field: SerializeField]
     private LayerMask targetLayer;
 
+    [SerializeField]
+    private ArrowItem _arrowInfo;
+
     private float _currentLifetime;
     private Vector3 _direction;
     private Damage _damage;
     private StatusEffectBase _statusEffect;
     private Transform _source;
+    private Rigidbody _rigidbody;
     private SpriteRenderer _spriteRenderer;
+    private GameObject _player;
 
-    public void Init(Vector3 direction, Damage damage, 
-        StatusEffectBase statusEffect, 
+    public void Init(Vector3 direction, Damage damage,
+        StatusEffectBase statusEffect,
         Transform source, Sprite sprite)
     {
         gameObject.SetActive(true);
@@ -26,6 +33,8 @@ public class EarthController : MonoBehaviour
         _source = source;
         _statusEffect = statusEffect;
 
+        _rigidbody.velocity = _direction * _speed;
+
         _currentLifetime = _lifetime;
 
         if (_spriteRenderer.sprite != sprite)
@@ -33,20 +42,23 @@ public class EarthController : MonoBehaviour
             _spriteRenderer.sprite = sprite;
         }
 
-        float angle = -Mathf.Atan2(direction.z, direction.x) *
-            Mathf.Rad2Deg;
+        //float angle = -Mathf.Atan2(direction.z, direction.x) *
+        //    Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(90, angle, 0);
+        //transform.rotation = Quaternion.Euler(90, angle, 0);
     }
-    public void Init(Vector3 direction, Damage damage, 
-        StatusEffectBase statusEffect, 
-        Transform source)
+    public void Init(Vector3 direction, Damage damage,
+        StatusEffectBase statusEffect,
+        Transform source, GameObject player)
     {
         gameObject.SetActive(true);
         _direction = direction;
         _damage = damage;
         _source = source;
         _statusEffect = statusEffect;
+        _player = player;
+
+        //_rigidbody.velocity = _direction * _speed;
 
         _currentLifetime = _lifetime;
 
@@ -58,6 +70,7 @@ public class EarthController : MonoBehaviour
 
     private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -71,6 +84,19 @@ public class EarthController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (gameObject.activeSelf)
+        {
+            _direction = _player.transform.position -
+                           transform.position;
+
+            _rigidbody.AddForce(_direction.normalized * 0.15f, ForceMode.Impulse);
+        }
+
+      
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.TryGetComponent<IEffectable>(out var effectable) &&
@@ -82,6 +108,11 @@ public class EarthController : MonoBehaviour
             {
                 effectable.ApplyEffect(_statusEffect.Clone());
             }
+            RemoveProjectile();
+        }
+        else if (collider.gameObject.CompareTag("Scene Object"))
+        {
+            RemoveProjectile();
         }
     }
 
