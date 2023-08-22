@@ -19,8 +19,13 @@ MonoBehaviour:
   <Stackable>k__BackingField: 1
   <Weight>k__BackingField: 0
   Description: 
-  _statInitializerList:
+  _effectsThatModify:
+  - statToChange: {fileID: 11400000, guid: e1ee6d50190725b49ab694749b2744d2, type: 2}
+    modifierType: 1
+    modifierValue: 1.5
+    priority: 10
+    duration: 3
+  _effectsThatAdd:
   - statToChange: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
     modifierType: 0
-    modifierValue: 1000
-    priority: 10
+    modifierValue: 50

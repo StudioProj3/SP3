@@ -56,6 +56,12 @@ public class PlayerAttack : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            if (_currentlyHolding is IConsumable consumable)
+            {
+                consumable.ApplyConsumptionEffect(_playerData.CharacterStats);
+                _playerData.HandInventory.Remove(_currentlyHolding, 1);
+            }
+
             if (_currentlyHolding is WeaponBase weapon && !weapon.CanAttack)
             {
                 return;
@@ -116,11 +122,6 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
 
-            if (_currentlyHolding is IConsumable consumable)
-            {
-                consumable.ApplyConsumptionEffect(_playerData.CharacterStats);
-            }
-
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
@@ -174,8 +175,9 @@ public class PlayerAttack : MonoBehaviour
         if (itemToEquip is WeaponBase)
         {
             _weaponDisplay.sprite = itemToEquip.Sprite;
-            _currentlyHolding = itemToEquip;   
         }
+        
+        _currentlyHolding = itemToEquip;   
     }
 
     private void CalculateMousePos()

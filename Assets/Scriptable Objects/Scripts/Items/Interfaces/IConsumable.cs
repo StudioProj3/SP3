@@ -4,5 +4,8 @@ using UnityEngine;
 
 public interface IConsumable
 {
-    void ApplyConsumptionEffect(Stats _entityStats);
+    void ApplyConsumptionEffect(Stats entityStats);
+
+    void RemoveConsumptionEffect(Stats entityStats, 
+        Pair<StatType, Modifier> statTypePair);
 }
