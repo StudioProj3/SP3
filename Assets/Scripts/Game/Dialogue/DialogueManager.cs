@@ -14,7 +14,7 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         Assert(CanStartDialogue, "Dialogue attempted to start.");
         _currentPoint = point;
-        _dialogue.transform.parent.position = talkingTransform.position
+        transform.position = talkingTransform.position
             + dialogueInstance.Data.DialogueBoxOffset;
         _dialogue.Initialize(dialogueInstance);
         _dialogue.StartDialogue();
@@ -30,6 +30,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     protected override void OnAwake()
     {
-        _dialogue = GetComponentInChildren<Dialogue>(); 
+        _dialogue = GetComponentInChildren<Dialogue>(true); 
     }
 }
