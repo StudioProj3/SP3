@@ -48,7 +48,8 @@ public class CharacterData : ScriptableObject,
 
     public string Serialize()
     {
-        return "";
+        return JsonUtility.ToJson(this,
+            Format == ISerializable.SerializeFormat.Pretty);
     }
 
     public CharacterData Deserialize(string data)
@@ -58,15 +59,18 @@ public class CharacterData : ScriptableObject,
 
     public void HookEvents()
     {
-
+        if (EnableSave)
+        {
+            SaveManager.Instance.Hook(SaveID, Save, Load);
+        }
     }
 
-    public void Load(object send, EventArgs args)
+    public string Save()
     {
-
+        return Serialize();
     }
 
-    public void Save(object send, EventArgs args)
+    public void Load(string data)
     {
 
     }

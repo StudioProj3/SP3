@@ -93,6 +93,10 @@ public class PlayerController :
         _stateMachine.Enter();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     private void Update()
     {
@@ -147,6 +151,4 @@ public class PlayerController :
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
-
-    
 }
