@@ -116,6 +116,11 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
 
+            if (_currentlyHolding is IConsumable consumable)
+            {
+                consumable.ApplyConsumptionEffect(_playerData.CharacterStats);
+            }
+
             if (_currentlyHolding is IBeginUseHandler beginUseHandler)
             {
                 beginUseHandler.OnUseEnter();
