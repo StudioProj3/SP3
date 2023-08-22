@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a07a4a3c9d5b03c43b3554959d3a94b8
+guid: 8c4c2a69162f27a4bad2b147b7aa910f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss missle_0
+      name: boss bullet idle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,41 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a88b1fce1e70c854a8c43fdce11a3c4c
-      internalID: -1479270729
+      spriteID: fe14650faf9d5b84e951f3203555c5ab
+      internalID: -1193022452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss missle_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10606bde61e924b4a9480da2712617a6
-      internalID: -507329386
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boss missle_2
+      name: boss bullet idle_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,29 +164,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 741a54a665d407d479d15b379f473f95
-      internalID: -266877665
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boss missle_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e19005689b5c07c4f95c92ea15cfb95d
-      internalID: -461866387
+      spriteID: 680f765bfb02cef48a806f50205e168c
+      internalID: -683668461
       vertices: []
       indices: 
       edges: []
@@ -215,7 +173,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e9485aa6358932e49b0a7aea8b2e8d92
+    spriteID: f01aec04d18128742beedcba0823fcc6
     internalID: 0
     vertices: []
     indices: 
@@ -223,10 +181,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      boss missle_0: -1479270729
-      boss missle_1: -507329386
-      boss missle_2: -266877665
-      boss missle_3: -461866387
+      boss bullet idle_0: -1193022452
+      boss bullet idle_1: -683668461
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

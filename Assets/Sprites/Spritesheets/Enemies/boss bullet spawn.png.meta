@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a07a4a3c9d5b03c43b3554959d3a94b8
+guid: fb45f80895f3e924da3b3aa95a3a6ec3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss missle_0
+      name: boss bullet spawn_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,41 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a88b1fce1e70c854a8c43fdce11a3c4c
-      internalID: -1479270729
+      spriteID: f3018f1da01999c4eb7bdd93b1c0df89
+      internalID: 1878789636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss missle_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10606bde61e924b4a9480da2712617a6
-      internalID: -507329386
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boss missle_2
+      name: boss bullet spawn_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 741a54a665d407d479d15b379f473f95
-      internalID: -266877665
+      spriteID: b66ea2a3339a8d146b7c7a11d2fb060f
+      internalID: 981275135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss missle_3
+      name: boss bullet spawn_2
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,8 +185,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e19005689b5c07c4f95c92ea15cfb95d
-      internalID: -461866387
+      spriteID: fca8bf8f09d50b442a155f754bbf531d
+      internalID: 1152032869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss bullet spawn_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5061dddcc4036dd4a93d3c59df02ac6c
+      internalID: -497514518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss bullet spawn_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16c5c359046297745a132414db732689
+      internalID: -1594959679
       vertices: []
       indices: 
       edges: []
@@ -215,7 +236,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e9485aa6358932e49b0a7aea8b2e8d92
+    spriteID: 30dc410ed6f4f144b9624f0eb1683963
     internalID: 0
     vertices: []
     indices: 
@@ -223,10 +244,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      boss missle_0: -1479270729
-      boss missle_1: -507329386
-      boss missle_2: -266877665
-      boss missle_3: -461866387
+      boss bullet spawn_0: 1878789636
+      boss bullet spawn_1: 981275135
+      boss bullet spawn_2: 1152032869
+      boss bullet spawn_3: -497514518
+      boss bullet spawn_4: -1594959679
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

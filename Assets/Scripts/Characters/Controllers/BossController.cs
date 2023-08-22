@@ -12,7 +12,7 @@ public class BossController :
     private StatusEffectBase _arrowStatusEffect;
 
     private GameObject _pooledMissles;
-    private List<ArrowController> _pooledMissleList;
+    private List<MissleController> _pooledMissleList;
 
     private GameObject _pooledBullets;
     private List<ArrowController> _pooledBulletList;
@@ -34,7 +34,7 @@ public class BossController :
     {
         base.Start();
         _pooledMissles = transform.GetChild(0).gameObject;
-        _pooledMissleList = new List<ArrowController>();
+        _pooledMissleList = new List<MissleController>();
 
         _pooledBullets = transform.GetChild(1).gameObject;
         _pooledBulletList = new List<ArrowController>();
@@ -43,7 +43,7 @@ public class BossController :
 
         foreach (Transform child in _pooledMissles.transform)
         {
-            _pooledMissleList.Add(child.GetComponent<ArrowController>());
+            _pooledMissleList.Add(child.GetComponent<MissleController>());
         }
 
         foreach (Transform child in _pooledBullets.transform)
@@ -89,7 +89,7 @@ public class BossController :
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
                             _pooledMissleList[i].Init(_direction, _phyDamage,
-                                _arrowStatusEffect, _pooledMissles.transform);
+                                _arrowStatusEffect, _pooledMissles.transform, _player);
                             _pooledMissleList[i].transform.position =
                                 transform.position;
                             _pooledMissleList[i].transform.SetParent(null);
@@ -196,9 +196,9 @@ public class BossController :
             // Idle > Walk
             //new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
 
-            new FixedTimedTransition("Idle", "ShootLaser", 2.0f),
+            new FixedTimedTransition("Idle", "ShootMissle", 2.0f),
 
-             new FixedTimedTransition("ShootLaser", "Idle", 5.0f),
+             new FixedTimedTransition("ShootMissle", "Idle", 5.0f),
 
             // Walk > Idle
             new FixedTimedTransition("Walk", "Idle", 0.7f),
