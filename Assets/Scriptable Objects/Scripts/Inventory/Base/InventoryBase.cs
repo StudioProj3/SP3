@@ -23,6 +23,7 @@ public abstract class InventoryBase :
     public int GetAmount(ItemBase itemBase)
     {
         int amount = 0;
+
         for (int i = 0; i < _allItems.Count; ++i)
         {
             if (_allItems[i].Key == itemBase)
@@ -30,6 +31,7 @@ public abstract class InventoryBase :
                 amount += (int)_allItems[i].Value;
             }
         }
+
         return amount;
     }
 
