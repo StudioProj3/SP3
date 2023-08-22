@@ -11,9 +11,7 @@ public class UIHUDStatIncrease : MonoBehaviour
 
     private List<Button> _upgradeButtons = new();
     private List<TMP_Text> _statText = new();
-    private float _speed, _attack, _health,
-                  _sanity, _armor, _magicRes,
-                  _currentLevel, _prevLevel;
+    private float _currentLevel, _prevLevel;
 
     public void IncreaseStat(string statName, float amount)
     {
@@ -25,7 +23,6 @@ public class UIHUDStatIncrease : MonoBehaviour
     private void OnEnable()
     {
         _currentLevel = _playerData.CharacterStats.GetStat("Level").Value;
-        Debug.Log(_prevLevel + " < prev || curr >  "+ _currentLevel);
         DisplayButtons(_prevLevel < _currentLevel);
     }
 
