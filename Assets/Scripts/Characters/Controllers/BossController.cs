@@ -17,6 +17,9 @@ public class BossController :
     private GameObject _pooledBullets;
     private List<ArrowController> _pooledBulletList;
 
+    private LaserController _pooledLasers;
+
+
     private StatContainer _bossStatsContainer;
 
     private GameObject _player;
@@ -35,6 +38,8 @@ public class BossController :
 
         _pooledBullets = transform.GetChild(1).gameObject;
         _pooledBulletList = new List<ArrowController>();
+
+        _pooledLasers = transform.GetChild(2).GetComponent<LaserController>();
 
         foreach (Transform child in _pooledMissles.transform)
         {
@@ -112,19 +117,13 @@ public class BossController :
             new GenericState("ShootLaser",
                 new ActionEntry("Enter", () =>
                 {
-                    for (int i = 0; i < _pooledMissleList.Count; i++)
-                    {
-                        if (!(_pooledMissleList[i].gameObject.activeSelf))
-                        {
-                            _pooledMissleList[i].Init(_direction, _phyDamage,
-                                _arrowStatusEffect, _pooledMissles.transform);
-                            _pooledMissleList[i].transform.position =
-                                transform.position;
-                            _pooledMissleList[i].transform.SetParent(null);
+                    _pooledLasers.Init(_direction, _magicDamage,
+                               _playerController);
+                }),
 
-                            break;
-                        }
-                    }
+                new ActionEntry("FixedUpdate", () =>
+                {
+                    _pooledLasers.transform.Rotate(0.0f, 2.0f, 0.0f);
                 })
             ),
 
@@ -197,9 +196,9 @@ public class BossController :
             // Idle > Walk
             //new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
 
-            new FixedTimedTransition("Idle", "ShootRapid", 0.7f),
+            new FixedTimedTransition("Idle", "ShootLaser", 0.7f),
 
-              new FixedTimedTransition("ShootRapid", "Idle", 0.7f),
+             new FixedTimedTransition("ShootLaser", "Idle", 5.0f),
 
             // Walk > Idle
             new FixedTimedTransition("Walk", "Idle", 0.7f),
