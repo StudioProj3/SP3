@@ -61,7 +61,7 @@ public abstract class InventoryBase :
 
                 if (_allItems[i].Value <= 0)
                 {
-                    _allItems[i].Key = null;
+                    _allItems[i] = null;
                 }
 
                 break;

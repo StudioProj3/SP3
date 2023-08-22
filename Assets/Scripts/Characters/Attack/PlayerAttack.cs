@@ -210,5 +210,6 @@ public class PlayerAttack : MonoBehaviour
         {
             _currentlyHolding = _playerData.HandInventory.RightHand();
         }
+        Equip(_currentlyHolding, 1);
     }
 }
