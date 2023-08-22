@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731707, g: 0.13414727, b: 0.12107861, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4387,7 +4387,6 @@ GameObject:
   - component: {fileID: 1953647708}
   - component: {fileID: 1953647710}
   - component: {fileID: 1953647709}
-  - component: {fileID: 1953647711}
   m_Layer: 5
   m_Name: Level Bar
   m_TagString: Untagged
@@ -4453,22 +4452,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953647707}
   m_CullTransparentMesh: 1
---- !u!114 &1953647711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953647707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a82cadd08dd72c4cb2c900d94f910fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stats: {fileID: 11400000, guid: 97eb89e84f103fe419734b379902d429, type: 2}
-  _statType: {fileID: 11400000, guid: 49d43816455df97429f76dc86bb1b237, type: 2}
-  _lerpFactor: 0.2
-  _frequency: 60
 --- !u!1 &1960953969
 GameObject:
   m_ObjectHideFlags: 0
