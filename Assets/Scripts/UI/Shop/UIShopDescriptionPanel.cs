@@ -5,6 +5,7 @@ public class UIShopDescriptionPanel : MonoBehaviour
 {
     [HorizontalDivider]
     [Header("Coin Count Text")]
+
     [SerializeField]
     private TMP_Text _bronzeCountText;
 
@@ -15,6 +16,4 @@ public class UIShopDescriptionPanel : MonoBehaviour
     private TMP_Text _goldCountText;
 
     private UIShopItem _hoveredShopitem;
-
-    
 }

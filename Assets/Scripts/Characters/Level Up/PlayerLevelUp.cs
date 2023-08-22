@@ -1,4 +1,3 @@
-using TMPro.Examples;
 using UnityEngine;
 
 public class PlayerLevelUp : MonoBehaviour
@@ -8,11 +7,14 @@ public class PlayerLevelUp : MonoBehaviour
 
     private IModifiableValue _experiencePoints;
     private IModifiableValue _currentLevel;
-
+    
     private void Start()
     {
-        _experiencePoints = _playerData.CharacterStats.GetStat("ExperiencePoints");
-        _currentLevel = _playerData.CharacterStats.GetStat("Level");
+        _experiencePoints = _playerData.CharacterStats.
+            GetStat("ExperiencePoints");
+        _currentLevel = _playerData.CharacterStats.
+            GetStat("Level");
+
         _experiencePoints.Set(0);
         _currentLevel.Set(1);
     }
@@ -28,7 +30,7 @@ public class PlayerLevelUp : MonoBehaviour
     private void GainExperience(float experience)
     {
         _experiencePoints.Add(experience);
-        
+
         if (_experiencePoints.Value == _experiencePoints.Max)
         {
             LevelUp();

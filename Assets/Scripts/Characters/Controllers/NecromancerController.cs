@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NecromancerController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _necromancerStats;
 
     private GameObject _pooledSkeletons;
     private List<SkeletonController> _pooledSkeletonList;
@@ -21,7 +19,7 @@ public class NecromancerController :
 
     private Vector3 _direction;
     private float _distance;
-    private PhysicalDamage _phyDamage;
+    private MagicDamage _magicDamage;
 
     protected override void Start()
     {
@@ -44,11 +42,11 @@ public class NecromancerController :
                 GetComponent<SkeletonController>());
         }
 
-        _necromancerStatsContainer = _necromancerStats.
+        _necromancerStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _necromancerStatsContainer;
-        _phyDamage = PhysicalDamage.Create(_necromancerStatsContainer.
-            GetStat("AttackDamage").Value);
+        _magicDamage = MagicDamage.Create(_necromancerStatsContainer.
+            GetStat("AbilityPower").Value);
 
         SetupStateMachine();
     }
@@ -89,7 +87,7 @@ public class NecromancerController :
                             _direction = _player.transform.position -
                                 _pooledSkullList[i].transform.position;
 
-                            _pooledSkullList[i].Init(_direction, _phyDamage,
+                            _pooledSkullList[i].Init(_direction, _magicDamage,
                                 _playerController, _pooledSkulls.transform);
                             _pooledSkullList[i].transform.SetParent(null);
 
@@ -136,7 +134,15 @@ public class NecromancerController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _necromancerStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
@@ -191,6 +197,8 @@ public class NecromancerController :
             _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isSummoning",
             _stateMachine.CurrentState.StateID == "GoingToSummon");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -215,15 +223,8 @@ public class NecromancerController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_necromancerStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+
+        _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)
@@ -233,7 +234,7 @@ public class NecromancerController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _necromancerStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_magicDamage, knockbackForce);
         }
     }
 }

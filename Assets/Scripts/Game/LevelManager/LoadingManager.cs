@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class LoadingManager : Singleton<LoadingManager>
 {
+    [SerializeField]
+    public SceneList sceneList;
+
     // Load new independent scene
     public void LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad = 
+        AsyncOperation asyncLoad =
             SceneManager.LoadSceneAsync(sceneName);
     }
 
@@ -44,7 +47,7 @@ public class SceneLoader : MonoBehaviour
         {
             if (SceneManager.GetSceneAt(i).name == sceneName)
             {
-                AsyncOperation asyncLoad = 
+                AsyncOperation asyncLoad =
                     SceneManager.UnloadSceneAsync(sceneName);
                 return;
             }
@@ -70,5 +73,4 @@ public class SceneLoader : MonoBehaviour
             (sceneName, LoadSceneMode.Additive);
 
     }
-
 }

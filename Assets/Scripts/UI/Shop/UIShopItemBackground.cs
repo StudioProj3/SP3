@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class UIShopItemBackground : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UIShopItemBackground : MonoBehaviour,
+    IPointerEnterHandler, IPointerExitHandler
 {
     public UnityEvent<bool> _pointerEvent;
 

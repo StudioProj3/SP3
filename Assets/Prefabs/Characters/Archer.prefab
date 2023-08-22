@@ -186,7 +186,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f3688708e9e844db9c6e8c202325ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _archerStats: {fileID: 11400000, guid: d19d6066634da884694329930acf78b1, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: 29b3d4c4719315e4d863b641ae37f456,
+    type: 2}
+  <Weight>k__BackingField: 0
+  <ExpAmount>k__BackingField: 0
+  _arrowStatusEffect: {fileID: 0}
 --- !u!1001 &30021576087752529
 PrefabInstance:
   m_ObjectHideFlags: 0

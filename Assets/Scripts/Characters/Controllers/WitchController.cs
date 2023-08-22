@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WitchController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _witchStats;
 
     [SerializeField]
     private LayerMask _enemyLayer;
@@ -27,7 +24,7 @@ public class WitchController :
 
     private Vector3 _direction;
     private float _distance;
-    private PhysicalDamage _phyDamage;
+    private MagicDamage _magicDamage;
     private float buffCooldown;
 
     protected override void Start()
@@ -35,11 +32,11 @@ public class WitchController :
         base.Start();
 
         _witchParticles = GetComponentInChildren<ParticleSystem>();
-        _witchStatsContainer = _witchStats.
+        _witchStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         EntityStats = _witchStatsContainer;
-        _phyDamage = PhysicalDamage.Create(_witchStatsContainer.
-            GetStat("AttackDamage").Value);
+        _magicDamage = MagicDamage.Create(_witchStatsContainer.
+            GetStat("AbilityPower").Value);
 
         SetupStateMachine();
     }
@@ -92,7 +89,7 @@ public class WitchController :
 
             new GenericState("Charging"),
 
-             new GenericState("Buff"),
+            new GenericState("Buff"),
 
             new GenericState("BuffAttack",
                 new ActionEntry("Enter", () =>
@@ -158,7 +155,15 @@ public class WitchController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _witchStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 0.5f, 1f),
@@ -214,6 +219,8 @@ public class WitchController :
             _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isCharging",
             _stateMachine.CurrentState.StateID == "Charging");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -247,15 +254,7 @@ public class WitchController :
             _distance = 99.0f;
         }
 
-        if (_witchStatsContainer.
-             GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)
@@ -265,7 +264,7 @@ public class WitchController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _witchStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage.AddModifier(
+            _playerController.TakeDamage(_magicDamage.AddModifier(
                 Modifier.Multiply(_witchStatsContainer.
                 GetStat("DamageMultiplier").Value, 3)),
                 knockbackForce);

@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 
-public class SkeletonController : 
-    CharacterControllerBase, IEffectable
+public class SkeletonController :
+    EnemyControllerBase, IEffectable
 {
-    [SerializeField]
-    private Stats _skeletonStats;
 
     [SerializeField]
     private LayerMask _playerLayer;
@@ -27,7 +23,7 @@ public class SkeletonController :
     private PhysicalDamage _phyDamage;
 
     IStatContainer IEffectable.EntityStats =>
-        _skeletonStats;
+        _skeletonStatsContainer;
 
     public void Init(Transform source)
     {
@@ -39,7 +35,7 @@ public class SkeletonController :
     protected override void Start()
     {
         base.Start();
-        EntityStats = _skeletonStats;
+        
         SetupStateMachine();
     }
 
@@ -109,7 +105,15 @@ public class SkeletonController :
 
             new GenericState("Cooldown"),
 
+            new GenericState("Death"),
+
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _skeletonStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Init > Idle
             new FixedTimedTransition("Init", "Idle", 2.0f),
@@ -151,10 +155,12 @@ public class SkeletonController :
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _skeletonStatsContainer = _skeletonStats.
+        _skeletonStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
             GetStat("AttackDamage").Value);
+
+        EntityStats = _skeletonStatsContainer;
     }
 
     private void Update()
@@ -163,6 +169,8 @@ public class SkeletonController :
             _stateMachine.CurrentState.StateID == "GoingToAttack");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -189,15 +197,7 @@ public class SkeletonController :
 
         _currentLifetime -= Time.deltaTime;
 
-        if (_currentLifetime < 0f || _skeletonStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-        {
-            _stateMachine.FixedUpdate();
-        }
+        _stateMachine.FixedUpdate();
     }
 
     private void OnDisable()
