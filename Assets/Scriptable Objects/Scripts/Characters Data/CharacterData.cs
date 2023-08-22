@@ -32,6 +32,11 @@ public class CharacterData : ScriptableObject,
     [field: ShowIf("EnableSave", true, true)]
     public string SaveID { get; protected set; }
 
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public ISerializable.SerializeFormat Format
+        { get; protected set; }
+
     public string Serialize()
     {
         return "";
