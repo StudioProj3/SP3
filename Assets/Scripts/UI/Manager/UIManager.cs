@@ -1,4 +1,3 @@
-public class UIManager
+public class UIManager : Singleton<UIManager>
 {
-
 }

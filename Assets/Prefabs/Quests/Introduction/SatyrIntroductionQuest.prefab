@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8178923569415499579}
-  - component: {fileID: 8381699913787220293}
+  - component: {fileID: 2577051737035653823}
   m_Layer: 0
-  m_Name: Wood Collection Quest Step
+  m_Name: SatyrIntroductionQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8381699913787220293
+--- !u!114 &2577051737035653823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,13 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4340083950903752537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfec061039242fb40be7ce62d0e15ebf, type: 3}
+  m_Script: {fileID: 11500000, guid: 417e7307fbd1a91478ee90173a1d17c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemsToCollectInitializer:
-  - <First>k__BackingField: {fileID: 11400000, guid: b1bd6da47c952504ea66d7bea8b14ac3,
+  _npcTag: Satyr
+  <Dialogue>k__BackingField:
+    <Data>k__BackingField: {fileID: 11400000, guid: c93c6770ef792fe4eaea110e9e759c48,
       type: 2}
-    <Second>k__BackingField: 1
-  - <First>k__BackingField: {fileID: 11400000, guid: 29695865e6ac1954286d4dbf6e8148a5,
-      type: 2}
-    <Second>k__BackingField: 1
+    <CameraStateName>k__BackingField: Satyr Camera

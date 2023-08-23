@@ -50,6 +50,9 @@ public class GameManager : Singleton<GameManager>
             case GameState.Lose:
                 HandleLoseState();
                 break;
+            
+            case GameState.Dialogue:
+                break;
 
             default:
                 Fatal("Unhandled `GameState` type");

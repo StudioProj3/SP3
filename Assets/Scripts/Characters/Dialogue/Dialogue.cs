@@ -1,18 +1,33 @@
 using UnityEngine;
+using TMPro;
+
+using static DebugUtils;
 
 public class Dialogue : MonoBehaviour
 {
+    [SerializeField]
+    private TMP_Text _dialogueTitle;
+
+    [SerializeField]
+    private TMP_Text _dialogueTextbox;
+
     private DialogueInstance _dialogueInstance; 
     private int _dialogueIndex; 
+
     public void Initialize(DialogueInstance dialogue)
     {
+        Assert(dialogue.Data.Dialogue.Count > 0, "There is no dialogue data.");
+
         _dialogueInstance = dialogue;
         _dialogueIndex = 0;
+        _dialogueTitle.text = dialogue.Data.SpeakerName;
     }
 
     public void StartDialogue()
     {
         gameObject.SetActive(true);
+        GameManager.Instance.CurrentState = GameState.Dialogue;
+        SetText(_dialogueInstance.Data.Dialogue[0]);
     }
 
     public bool NextText(out string text)
@@ -28,5 +43,10 @@ public class Dialogue : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void SetText(string text)
+    {
+        _dialogueTextbox.text = text;
     }
 }
