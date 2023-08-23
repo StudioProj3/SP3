@@ -15,4 +15,14 @@ public class UIHUDQuestInformation : MonoBehaviour
         _questDisplays = new ObjectPool<UIHUDQuestDisplay>(() => 
             Instantiate(_questDisplayPrefab));
     }
+
+    private void Start()
+    {
+        // Call these bindings at start because it is in an additive scene
+    }
+
+    private void StartQuestHandler()
+    {
+
+    }
 }
