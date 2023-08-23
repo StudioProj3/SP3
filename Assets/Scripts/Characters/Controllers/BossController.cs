@@ -240,7 +240,7 @@ public class BossController :
         _stateMachine.Enter();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         
         _player = GameObject.FindWithTag("Player");

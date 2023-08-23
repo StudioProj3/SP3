@@ -89,7 +89,7 @@ public class HealTurretController :
         _stateMachine.Enter();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
