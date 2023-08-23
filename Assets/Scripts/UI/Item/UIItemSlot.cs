@@ -25,7 +25,7 @@ public class UIItemSlot : MonoBehaviour
         SetQuantity(quantity);
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _itemIcon = transform.GetChild(0).
             GetComponent<Image>();

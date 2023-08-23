@@ -63,6 +63,7 @@ public class UIHoverPanel :
     public void OnPointerExit(PointerEventData eventData)
     {
         _lock = false;
+        //Debug.Log("locl");
     }
 
     private void Awake()
