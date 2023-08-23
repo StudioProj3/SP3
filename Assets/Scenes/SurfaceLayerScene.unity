@@ -4848,7 +4848,7 @@ GameObject:
   - component: {fileID: 396164164}
   m_Layer: 0
   m_Name: LevelManager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4865,11 +4865,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641fc6ffad2e2354ba24f7b0d787e78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistent: 1
+  WeightLimit: 0
   _initScenes:
   - UIHUD
   - SurfaceLayerUIScene
   - UI
+  CurrentWeight: 0
 --- !u!4 &396164165
 Transform:
   m_ObjectHideFlags: 0
