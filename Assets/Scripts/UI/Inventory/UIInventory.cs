@@ -16,6 +16,6 @@ public class UIInventory : MonoBehaviour
 
     private void Awake()
     {
-        _content = transform.GetChild(0).gameObject;
+        _content = transform.ChildGO(0);
     }
 }
