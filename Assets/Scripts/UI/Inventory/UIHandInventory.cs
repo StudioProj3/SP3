@@ -1,13 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIHandInventory : MonoBehaviour
 {
     [SerializeField]
     private HandInventory _inventory;
 
-    private Image _leftItem;
-    private Image _rightItem;
+    private UIItemSlot _leftHandSlot;
+    private UIItemSlot _rightHandSlot;
 
     private void Update()
     {
@@ -16,24 +15,30 @@ public class UIHandInventory : MonoBehaviour
 
         if (leftHand)
         {
-            _leftItem.sprite = leftHand.Sprite;
-            _leftItem.color = _leftItem.color.
-                Set(a: _leftItem.sprite ? 1f : 0f);
+            _leftHandSlot.SetIconAndQuantity(leftHand.Sprite,
+                _inventory.GetAmount(0));
+        }
+        else
+        {
+            _leftHandSlot.SetIconAndQuantity(null, 0);
         }
 
         if (rightHand)
         {
-            _rightItem.sprite = rightHand.Sprite;
-            _rightItem.color = _rightItem.color.
-                Set(a: _rightItem.sprite ? 1f : 0f);
+            _rightHandSlot.SetIconAndQuantity(rightHand.Sprite,
+                _inventory.GetAmount(1));
+        }
+        else
+        {
+            _rightHandSlot.SetIconAndQuantity(null, 0);    
         }
     }
 
     private void Awake()
     {
-        _leftItem = transform.GetChild(0, 0).
-            GetComponent<Image>();
-        _rightItem = transform.GetChild(1, 0).
-            GetComponent<Image>();
+        _leftHandSlot = transform.GetChild(0).
+            GetComponent<UIItemSlot>();
+        _rightHandSlot = transform.GetChild(1).
+            GetComponent<UIItemSlot>();
     }
 }

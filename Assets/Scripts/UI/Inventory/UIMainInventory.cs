@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 using static DebugUtils;
 
@@ -17,7 +15,7 @@ public class UIMainInventory : MonoBehaviour
     private GameObject _viewport;
     private Transform _contentItems;
     private GameObject _noMainInventory;
-    private List<Pair<Image, TMP_Text>> _slots = new();
+    private List<UIItemSlot> _slots = new();
 
     private void Update()
     {
@@ -35,35 +33,30 @@ public class UIMainInventory : MonoBehaviour
 
         for (int i = 0; i < _slots.Count; ++i)
         {
-            Image image = _slots[i].First;
-            TMP_Text text = _slots[i].Second;
-
-            GameObject parent = image.transform.parent.gameObject;
+            UIItemSlot slot = _slots[i];
 
             // There are more `_slots` than `MaxNumSlots`
             if (i >= inventory.MaxNumSlots)
             {
                 // Hide this slot
-                parent.SetActive(false);
+                slot.gameObject.SetActive(false);
 
                 continue;
             }
 
             // Show this slot
-            parent.SetActive(true);
+            slot.gameObject.SetActive(true);
 
             ItemBase item = inventory.GetItem(i);
 
             if (item)
             {
-                // Update item icon
-                image.sprite = item.Sprite;
-                image.color = image.color.
-                    Set(a: image.sprite ? 1f : 0f);
-
-                // Update item quantity
-                // TODO (Cheng Jun): Complete item
-                // quantity implementation
+                slot.SetIconAndQuantity(item.Sprite,
+                    inventory.GetAmount(i));
+            }
+            else
+            {
+                slot.SetIconAndQuantity(null, 0);
             }
         }
     }
@@ -73,9 +66,11 @@ public class UIMainInventory : MonoBehaviour
         _viewport = transform.ChildGO(0);
         _contentItems = _viewport.transform.GetChild(1);
 
+        _slots.Capacity = _contentItems.childCount;
         for (int i = 0; i < _contentItems.childCount; ++i)
         {
-            AddSlot(_contentItems.GetChild(i));
+            _slots.Add(_contentItems.GetChild(i).
+                GetComponent<UIItemSlot>());
         }
 
         _noMainInventory = transform.ChildGO(1);
@@ -92,17 +87,7 @@ public class UIMainInventory : MonoBehaviour
             GameObject newObject =
                 Instantiate(_slotPrefab, _contentItems.transform);
 
-            AddSlot(newObject.transform);
+            _slots.Add(newObject.GetComponent<UIItemSlot>());
         }
-    }
-
-    private void AddSlot(Transform slot)
-    {
-        Image image = slot.GetChild(0).
-            GetComponent<Image>();
-        TMP_Text text = slot.GetChild(1).
-            GetComponent<TMP_Text>();
-
-        _slots.Add(new(image, text));
     }
 }
