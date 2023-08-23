@@ -28,7 +28,12 @@ public class PlayerLevelUp : MonoBehaviour
             GetStat("Level");
         _experiencePoints.Set(0);
         _currentLevel.Set(1);
-        Log("Level: " + _currentLevel.Value);
+    }
+
+    private void Update()
+    {
+        Debug.Log(_playerData.CharacterStats.
+            GetStat("Level").Value);
     }
     
     private void LevelUp()
