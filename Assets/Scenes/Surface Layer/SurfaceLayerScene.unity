@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 97894259}
   - component: {fileID: 97894261}
   - component: {fileID: 97894260}
+  - component: {fileID: 97894262}
   m_Layer: 5
   m_Name: BottomBlackBar
   m_TagString: Untagged
@@ -889,6 +890,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97894258}
   m_CullTransparentMesh: 1
+--- !u!114 &97894262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97894258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140a2d365620abd419f36112b8089f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollSpeed: {x: 0.005, y: 0}
 --- !u!4 &100182709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6114176376506045732, guid: 0b0858ded62eb8042b790518f8d4860f,
@@ -1032,6 +1046,7 @@ GameObject:
   - component: {fileID: 142555808}
   - component: {fileID: 142555810}
   - component: {fileID: 142555809}
+  - component: {fileID: 142555811}
   m_Layer: 5
   m_Name: TopBlackBar
   m_TagString: Untagged
@@ -1097,6 +1112,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142555807}
   m_CullTransparentMesh: 1
+--- !u!114 &142555811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142555807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140a2d365620abd419f36112b8089f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollSpeed: {x: 0.005, y: 0}
 --- !u!1 &143225039
 GameObject:
   m_ObjectHideFlags: 0
