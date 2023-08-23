@@ -3,20 +3,36 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
 
-    public GameState CurrentState;
+    public GameState CurrentState
+    {
+        get => _currentState;
+        set
+        {
+            if (_currentState == value)
+            {
+                return;
+            }
+
+            _currentState = value;
+            OnGameStateChanged?.Invoke(_currentState);
+        }
+    }
+    private GameState _currentState;
 
     public event Action<GameState> OnGameStateChanged;
 
-    private void Start()
+    protected override void OnStart()
     {
-        ChangeGameState(GameState.MainMenu);
+        OnGameStateChanged += GameStateChangeHandler;
+
+        // NOTE (Chris): For debugging purposes, game state will be play.
+        CurrentState = GameState.Play;
+        // ChangeGameState(GameState.MainMenu);
     }
 
-    public void ChangeGameState(GameState nextState)
+    private void GameStateChangeHandler(GameState newState)
     {
-        CurrentState = nextState;
-
-        switch (nextState)
+        switch (newState)
         {
             case GameState.MainMenu:
                 break;
@@ -30,9 +46,6 @@ public class GameManager : Singleton<GameManager>
                 HandleLoseState();
                 break;
         }
-
-
-        OnGameStateChanged?.Invoke(nextState);
     }
 
     private void HandleLoseState()

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    public string interactText { get; }
+    public string InteractText { get; }
     public void Interact();
-    public bool CheckPlayer();
 }
