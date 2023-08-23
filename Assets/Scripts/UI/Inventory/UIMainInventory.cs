@@ -61,6 +61,12 @@ public class UIMainInventory : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _viewport.SetActive(_character.Inventory);
+        _noMainInventory.SetActive(!_character.Inventory);
+    }
+
     private void Awake()
     {
         _viewport = transform.ChildGO(0);

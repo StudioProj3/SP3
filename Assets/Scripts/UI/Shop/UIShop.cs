@@ -69,8 +69,8 @@ public class UIShop : MonoBehaviour
         var distinctMaterials = notNullMaterials.Distinct();
         Assert(notNullMaterials.Count() == distinctMaterials.Count(),
             "There is a duplicate in the materials.");
-        // Debug.Log("Not null materials: " + notNullMaterials.Count());
-        // Debug.Log("Distinct materials: " + distinctMaterials.Count());
+        // Log("Not null materials: " + notNullMaterials.Count());
+        // Log("Distinct materials: " + distinctMaterials.Count());
         GeneratePrefabs(_materials, _materialsTransform);
     }
 

@@ -21,7 +21,8 @@ public class PlayerAttack : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rigidbody;
     private PlayerController _player;
-    private bool _usingLeftHand;
+    private bool _usingLeftHand = true;
+    protected UINotification _notification;
 
     private void Awake()
     {
@@ -55,6 +56,16 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        if (!_notification)
+        {
+            GameObject notifUI = GameObject.FindWithTag("UINotification");
+
+            if (notifUI)
+            {
+                _notification = notifUI.GetComponent<UINotification>();
+            }
+        }
+        
         CalculateMousePos();
         
         if (Input.GetKeyDown(KeyCode.F))
@@ -67,8 +78,14 @@ public class PlayerAttack : MonoBehaviour
         {
             if (_currentlyHolding is IConsumable consumable)
             {
-                consumable.ApplyConsumptionEffect(_playerData.CharacterStats, _player);
-                _playerData.HandInventory.RemoveItemByAmount(_currentlyHolding, 1);
+                if ((_usingLeftHand &&
+                    _playerData.HandInventory.RemoveItemByIndex(0, 1)) ||
+                    (!_usingLeftHand &&
+                    _playerData.HandInventory.RemoveItemByIndex(1, 1)))
+                {
+                    consumable.ApplyConsumptionEffect(_playerData.CharacterStats, _player);
+                }
+
                 UpdateHands();
             }
 
@@ -108,6 +125,11 @@ public class PlayerAttack : MonoBehaviour
 
             if (_currentlyHolding is IMagicWeapon magicWeapon)
             {
+                if (_playerData.CharacterStats.GetStat("Sanity").Value <= 0)
+                {
+                    _notification.Error("Not enough Sanity!");
+                    return;
+                }
                 _animator.Play(magicWeapon.AnimationName);
                 _rigidbody.AddForce(2f * transform.right, ForceMode.Impulse);
 
@@ -182,6 +204,11 @@ public class PlayerAttack : MonoBehaviour
 
     public void Equip(ItemBase itemToEquip, uint quantity)
     {
+        if (_currentlyHolding != null)
+        {
+            _usingLeftHand = !_usingLeftHand;
+        }
+
         if (itemToEquip is WeaponBase)
         {
             _weaponDisplay.sprite = itemToEquip.Sprite;
@@ -209,6 +236,11 @@ public class PlayerAttack : MonoBehaviour
         else
         {
             _currentlyHolding = _playerData.HandInventory.RightHand();
+        }
+
+        if (_currentlyHolding != null)
+        {
+            _usingLeftHand = !_usingLeftHand;
         }
         Equip(_currentlyHolding, 1);
     }

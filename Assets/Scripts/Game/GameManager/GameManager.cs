@@ -1,8 +1,8 @@
 using System;
-using UnityEngine;
+using static DebugUtils;
+
 public class GameManager : Singleton<GameManager>
 {
-
     public GameState CurrentState
     {
         get => _currentState;
@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
             OnGameStateChanged?.Invoke(_currentState);
         }
     }
+
     private GameState _currentState;
 
     public event Action<GameState> OnGameStateChanged;
@@ -36,20 +37,28 @@ public class GameManager : Singleton<GameManager>
         {
             case GameState.MainMenu:
                 break;
+
             case GameState.Play:
                 break;
+
             case GameState.Pause:
                 break;
+
             case GameState.Win:
                 break;
+
             case GameState.Lose:
                 HandleLoseState();
+                break;
+
+            default:
+                Fatal("Unhandled `GameState` type");
                 break;
         }
     }
 
     private void HandleLoseState()
     {
-        Debug.Log("Respawn");
+        Log("Respawn");
     }
 }

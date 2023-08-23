@@ -43,19 +43,22 @@ public class ConsumableItem : ItemBase, IConsumable
 
     public void ApplyConsumptionEffect(Stats entityStats, IEffectable effectable)
     {
-        foreach (KeyValuePair<Pair<StatType, Modifier>, float> statToModify
-             in _statsToModify)
+        if (_statsToModify != null)
         {
-            entityStats.GetStat(statToModify.Key.First)
-                .AddModifier(statToModify.Key.Second);
-
-            if (statToModify.Value > 0)
+            foreach (KeyValuePair<Pair<StatType, Modifier>, float> statToModify
+                in _statsToModify)
             {
-                _ = Delay.Execute(() =>
+                entityStats.GetStat(statToModify.Key.First)
+                    .AddModifier(statToModify.Key.Second);
+
+                if (statToModify.Value > 0)
                 {
-                    RemoveConsumptionEffect
-                        (entityStats, statToModify.Key);
-                }, statToModify.Value);
+                    _ = Delay.Execute(() =>
+                    {
+                        RemoveConsumptionEffect
+                            (entityStats, statToModify.Key);
+                    }, statToModify.Value);
+                }
             }
         }
 
@@ -64,9 +67,12 @@ public class ConsumableItem : ItemBase, IConsumable
             entityStats.GetStat(statToAdd.Key).Add(statToAdd.Value);
         }
 
-        foreach (StatusEffectBase statusEffect in _statusEffects)
+        if (_statusEffects != null)
         {
-            effectable.ApplyEffect(statusEffect.Clone());
+            foreach (StatusEffectBase statusEffect in _statusEffects)
+            {
+                effectable.ApplyEffect(statusEffect.Clone());
+            }
         }
     }
 

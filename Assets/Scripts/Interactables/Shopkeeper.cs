@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class Shopkeeper : MonoBehaviour, IInteractable
 {
     public string InteractText { get; } = "~ Shop ~";
-
-    [SerializeField]
-    private LayerMask _playerLayer;
-
-  
 
     private GameObject _toggleText;
     private GameObject _shopUI;
@@ -41,7 +34,7 @@ public class Shopkeeper : MonoBehaviour, IInteractable
                 _shopUI.SetActive(false);
             }
         }
-        if(_toggleText.activeSelf)
+        if(_toggleText.activeSelf && _shopUI)
         {
             Interact();
         }
