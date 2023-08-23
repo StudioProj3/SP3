@@ -9,7 +9,9 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        ChangeGameState(GameState.MainMenu);
+        // NOTE (Chris): For debugging purposes, game state will be play.
+        ChangeGameState(GameState.Play);
+        // ChangeGameState(GameState.MainMenu);
     }
 
     public void ChangeGameState(GameState nextState)
