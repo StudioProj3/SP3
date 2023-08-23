@@ -23,6 +23,14 @@ public abstract class CharacterControllerBase :
     {
         _rigidbody.AddForce(knockback, ForceMode.Impulse);
         damage.OnApply(this);
+
+        Color originalColor = _spriteRenderer.color;
+
+        _spriteRenderer.color = new Color(1, 0, 0,0.5f);
+        _ = Delay.Execute(() =>
+        {
+            _spriteRenderer.color = originalColor;
+        }, 0.15f);
     }
 
     public void ApplyEffect(StatusEffectBase statusEffect)
