@@ -1,51 +1,33 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIInventory : MonoBehaviour
 {
-    [SerializeField]
-    private CharacterData _character;
-
     private GameObject _content;
-    private Transform _contentItems;
-    private Image[] _slots;
-    private GameObject _noMainInventory;
+    private bool _disabled = false;
+
+    public void ShowInventory()
+    {
+        gameObject.SetActive(true);
+        _content.SetActive(true);
+    }
+
+    public void HideInventory()
+    {
+        gameObject.SetActive(false);
+        _content.SetActive(false);
+    }
 
     private void Update()
     {
-        InventoryBase inventory = _character.Inventory;
-
-        _content.SetActive(inventory);
-        _noMainInventory.SetActive(!inventory);
-
-        if (!inventory)
+        if (!_disabled)
         {
-            return;
-        }
-
-        for (int i = 0; i < _slots.Length; ++i)
-        {
-            ItemBase item = inventory.GetItem(i);
-
-            if (item)
-            {
-                _slots[i].sprite = item.Sprite;
-            }
+            gameObject.SetActive(false);
+            _disabled = true;
         }
     }
 
     private void Awake()
     {
-        _content = transform.GetChild(0).gameObject;
-        _contentItems = _content.transform.GetChild(1);
-
-        _slots = new Image[_contentItems.childCount];
-        for (int i = 0; i < _contentItems.childCount; ++i)
-        {
-            _slots[i] = _contentItems.GetChild(i, 0).
-                GetComponent<Image>();
-        }
-
-        _noMainInventory = transform.GetChild(1).gameObject;
+        _content = transform.ChildGO(0);
     }
 }

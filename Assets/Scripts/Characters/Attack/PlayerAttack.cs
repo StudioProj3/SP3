@@ -20,6 +20,9 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 _flipVector;
     private Animator _animator;
     private Rigidbody _rigidbody;
+    private PlayerController _player;
+    private bool _usingLeftHand = true;
+    protected UINotification _notification;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _player = GetComponent<PlayerController>();
 
         _pooledArrows = transform.GetChild(1).gameObject;
         _pooledArrowList = new List<ArrowController>();
@@ -52,10 +56,39 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        if (!_notification)
+        {
+            GameObject notifUI = GameObject.FindWithTag("UINotification");
+
+            if (notifUI)
+            {
+                _notification = notifUI.GetComponent<UINotification>();
+            }
+        }
+        
         CalculateMousePos();
         
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _usingLeftHand = !_usingLeftHand;
+            UpdateHands();
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            if (_currentlyHolding is IConsumable consumable)
+            {
+                if ((_usingLeftHand &&
+                    _playerData.HandInventory.RemoveItemByIndex(0, 1)) ||
+                    (!_usingLeftHand &&
+                    _playerData.HandInventory.RemoveItemByIndex(1, 1)))
+                {
+                    consumable.ApplyConsumptionEffect(_playerData.CharacterStats, _player);
+                }
+
+                UpdateHands();
+            }
+
             if (_currentlyHolding is WeaponBase weapon && !weapon.CanAttack)
             {
                 return;
@@ -92,6 +125,11 @@ public class PlayerAttack : MonoBehaviour
 
             if (_currentlyHolding is IMagicWeapon magicWeapon)
             {
+                if (_playerData.CharacterStats.GetStat("Sanity").Value <= 0)
+                {
+                    _notification.Error("Not enough Sanity!");
+                    return;
+                }
                 _animator.Play(magicWeapon.AnimationName);
                 _rigidbody.AddForce(2f * transform.right, ForceMode.Impulse);
 
@@ -166,11 +204,17 @@ public class PlayerAttack : MonoBehaviour
 
     public void Equip(ItemBase itemToEquip, uint quantity)
     {
+        if (_currentlyHolding != null)
+        {
+            _usingLeftHand = !_usingLeftHand;
+        }
+
         if (itemToEquip is WeaponBase)
         {
             _weaponDisplay.sprite = itemToEquip.Sprite;
-            _currentlyHolding = itemToEquip;   
         }
+        
+        _currentlyHolding = itemToEquip;   
     }
 
     private void CalculateMousePos()
@@ -181,5 +225,23 @@ public class PlayerAttack : MonoBehaviour
         {
             _mousePositon = ray.GetPoint(distance);
         }
+    }
+
+    private void UpdateHands()
+    {
+        if (_usingLeftHand)
+        {
+            _currentlyHolding = _playerData.HandInventory.LeftHand();
+        }
+        else
+        {
+            _currentlyHolding = _playerData.HandInventory.RightHand();
+        }
+
+        if (_currentlyHolding != null)
+        {
+            _usingLeftHand = !_usingLeftHand;
+        }
+        Equip(_currentlyHolding, 1);
     }
 }

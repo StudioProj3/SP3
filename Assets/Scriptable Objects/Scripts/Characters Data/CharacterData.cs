@@ -1,12 +1,23 @@
+using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CharacterData",
     menuName = "Scriptable Objects/Character Data")]
-public class CharacterData :
-    ScriptableObject, INameable
+public class CharacterData : ScriptableObject,
+    INameable, ISavable<CharacterData>
 {
+    [field: HorizontalDivider]
+    [field: Header("Basic Parameters")]
+
     [field: SerializeField]
     public string Name { get; protected set; }
+
+    [field: SerializeField]
+    public bool IsDead { get; set; }
+
+    [field: HorizontalDivider]
+    [field: Header("Inventory Parameters")]
 
     [field: SerializeField]
     public InventoryBase Inventory { get; set; }
@@ -14,11 +25,55 @@ public class CharacterData :
     [field: SerializeField]
     public HandInventory HandInventory { get; set; }
 
-    [field: SerializeField]
-    public bool IsDead { get; set; }
+    [field: HorizontalDivider]
+    [field: Header("Stats Parameters")]
 
     [field: SerializeField]
-    public Stats CharacterStats {get; set;}
+    public Stats CharacterStats { get; set; }
+
+    [field: HorizontalDivider]
+    [field: Header("Save Parameters")]
+
+    [field: SerializeField]
+    public bool EnableSave { get; protected set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public string SaveID { get; protected set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public ISerializable.SerializeFormat Format
+        { get; protected set; }
+
+    public string Serialize()
+    {
+        return JsonUtility.ToJson(this,
+            Format == ISerializable.SerializeFormat.Pretty);
+    }
+
+    public CharacterData Deserialize(string data)
+    {
+        return new();
+    }
+
+    public void HookEvents()
+    {
+        if (EnableSave)
+        {
+            SaveManager.Instance.Hook(SaveID, Save, Load);
+        }
+    }
+
+    public string Save()
+    {
+        return Serialize();
+    }
+
+    public void Load(string data)
+    {
+
+    }
 
     public virtual void Reset()
     {

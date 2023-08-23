@@ -19,4 +19,17 @@ public static class TransformUtils
 
         return transform;
     }
+
+    public static GameObject ChildGO(this Transform transform,
+        params int[] indices)
+    {
+        Transform result = GetChild(transform, indices);
+
+        return result.gameObject;
+    }
+
+    public static GameObject Parent(this Transform transform)
+    {
+        return transform.parent.gameObject;
+    }
 }

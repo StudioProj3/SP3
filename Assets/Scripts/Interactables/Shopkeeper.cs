@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class Shopkeeper : MonoBehaviour, IInteractable
 {
-    public string interactText { get; } = "~ Shop ~";
-
-    [SerializeField]
-    private LayerMask _playerLayer;
-
-  
+    public string InteractText { get; } = "~ Shop ~";
 
     private GameObject _toggleText;
     private GameObject _shopUI;
@@ -23,27 +16,10 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         }
     }
 
-    public bool CheckPlayer()
-    {
-        Collider[] hitTarget = Physics.OverlapSphere(transform.position, 1.0f
-                                , _playerLayer, 0);
-
-        if (hitTarget.Length > 0)
-        {
-            _toggleText.SetActive(true);
-            return true;
-        }
-        else
-        {
-            _toggleText.SetActive(false);
-        }
-        return false;
-    }
-
     private void Start()
     {
         _toggleText = transform.GetChild(0).gameObject;
-        _toggleText.GetComponent<TextMeshPro>().text = interactText;
+        _toggleText.GetComponent<TextMeshPro>().text = InteractText;
         _toggleText.SetActive(false);
 
     }
@@ -53,11 +29,36 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         if (!_shopUI)
         {
             _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
-            _shopUI.SetActive(false);
+            if(_shopUI)
+            {
+                _shopUI.SetActive(false);
+            }
         }
-        if(CheckPlayer())
+        if(_toggleText.activeSelf && _shopUI)
         {
             Interact();
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            _toggleText.SetActive(true);
+        }
+
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            _toggleText.SetActive(false);
+            if (_shopUI)
+            {
+                _shopUI.SetActive(false);
+            }
         }
 
     }

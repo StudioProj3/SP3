@@ -1,33 +1,16 @@
 using UnityEngine;
 
+using static DebugUtils;
+
 public class PlayerLevelUp : MonoBehaviour
 {
+
     [SerializeField]
     private CharacterData _playerData;
 
     private IModifiableValue _experiencePoints;
     private IModifiableValue _currentLevel;
-    
-    private void Start()
-    {
-        _experiencePoints = _playerData.CharacterStats.
-            GetStat("ExperiencePoints");
-        _currentLevel = _playerData.CharacterStats.
-            GetStat("Level");
-
-        _experiencePoints.Set(0);
-        _currentLevel.Set(1);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            GainExperience(5);
-        }
-    }
-
-    private void GainExperience(float experience)
+    public void GainExperience(float experience)
     {
         _experiencePoints.Add(experience);
 
@@ -36,6 +19,18 @@ public class PlayerLevelUp : MonoBehaviour
             LevelUp();
         }
     }
+    
+    private void Start()
+    {
+        _experiencePoints = _playerData.CharacterStats.
+            GetStat("ExperiencePoints");
+        _currentLevel = _playerData.CharacterStats.
+            GetStat("Level");
+        _experiencePoints.Set(0);
+        _currentLevel.Set(1);
+        Log("Level: " + _currentLevel.Value);
+    }
+    
     private void LevelUp()
     {
         Modifier experienceLimitModifier = 

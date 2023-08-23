@@ -2,56 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : Singleton<LevelManager>
+public class LevelManager : MonoBehaviour
 {
-  
-
-    private LoadingManager _loadingManager;
-
+    [SerializeField]
+    public int WeightLimit;
     [SerializeField]
     private List<string> _initScenes;
+   
+    [HideInInspector]
+    public int CurrentWeight;
 
-    private GameObject _spawnerGroup;
-    private List<EnemySpawner> _enemySpawners;
-    private GameObject _player;
+    private LoadingManager _loadingManager;
+    private string _currentScene;
+    private bool _enemiesLoaded;
 
-    private void Awake()
+    private void OnEnable()
     {
-
         _loadingManager = LoadingManager.Instance;
+        _currentScene = _loadingManager.GetCurrentSceneName();
+        _enemiesLoaded = false;
+        CurrentWeight = 0;
 
         for (int i = 0; i < _initScenes.Count; i++)
         {
             _loadingManager.LoadSceneAdditive(_initScenes[i], false);
         }
 
-        //_player = GameObject.FindGameObjectWithTag("Player");
-        //_loadingManager.LoadSceneAdditive(_loadingManager.sceneList.HUDScene, false);
-
-        _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
-        _enemySpawners = new List<EnemySpawner>();
-
-        if (_spawnerGroup)
-        {
-            foreach (Transform child in _spawnerGroup.transform)
-            {
-                _enemySpawners.Add(child.GetComponent<EnemySpawner>());
-            }
-
-            for (int i = 0; i < _enemySpawners.Count; ++i)
-            {
-                _enemySpawners[i].gameObject.SetActive(true);
-            }
-        }
+        
     }
 
-    // Update is called once per frame
+    private void OnDisable()
+    {
+        _enemiesLoaded = false;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (_loadingManager.asyncLoad == null)
         {
-            _loadingManager.LoadScene(_loadingManager.sceneList.layer2Scene);
+            return;
         }
 
+        if (!_enemiesLoaded && _loadingManager.asyncLoad.isDone)
+        {
+            _enemiesLoaded = true;
+            EnemyManager.Instance.SpawnEnemiesInScene();
+        }
     }
 }

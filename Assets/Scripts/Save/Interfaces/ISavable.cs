@@ -1,6 +1,5 @@
-using System;
-
-public interface ISavable
+public interface ISavable<T> :
+    ISerializable, IDeserializable<T>
 {
     bool EnableSave { get; }
 
@@ -8,7 +7,7 @@ public interface ISavable
 
     void HookEvents();
 
-    void Save(object send, EventArgs args);
+    string Save();
 
-    void Load(object send, EventArgs args);
+    void Load(string data);
 }

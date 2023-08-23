@@ -93,6 +93,10 @@ public class PlayerController :
         _stateMachine.Enter();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     private void Update()
     {
@@ -127,7 +131,7 @@ public class PlayerController :
         // Ideally only check when damage is taken
         if (Data.CharacterStats.GetStat("Health").Value <= 0)
         {
-            GameManager.Instance.ChangeGameState(GameState.Lose);
+            GameManager.Instance.CurrentState = GameState.Lose;
         }
         
     }
@@ -147,6 +151,4 @@ public class PlayerController :
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
-
-    
 }

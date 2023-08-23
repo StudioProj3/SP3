@@ -103,7 +103,17 @@ public class ArcherController :
 
             new GenericState("Cooldown"),
 
-            new GenericState("Death"),
+            new GenericState("Death",
+                new ActionEntry("Enter", () =>
+                {
+                    var playerLevelling = 
+                        _playerController.gameObject.
+                        GetComponent<PlayerLevelUp>();
+                    
+                    playerLevelling.GainExperience(ExpAmount);
+                })
+            
+            ),
 
             // Transitions
 
@@ -154,7 +164,7 @@ public class ArcherController :
         _stateMachine.Enter();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
