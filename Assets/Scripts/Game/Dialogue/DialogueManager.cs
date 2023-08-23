@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -5,12 +7,20 @@ using static DebugUtils;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
+    [SerializeField] 
+    private string _playerCameraStateName = "Player Camera";
+
     private Dialogue _dialogue;
+
+    // TODO (Chris): Might need to make an interface to store 'triggers'
+    // of dialogues in the dialogue manager.
     private DialoguePoint _currentPoint = null;
 
     private Animator _stateDrivenCameraAnimator = null; 
 
     public bool CanStartDialogue => _currentPoint == null;
+
+    public event Action<DialoguePoint> OnDialogueEnd;
 
     public void StartNewDialogue(DialoguePoint point, 
         DialogueInstance dialogueInstance, Transform talkingTransform)
@@ -33,6 +43,13 @@ public class DialogueManager : Singleton<DialogueManager>
         if (_dialogue.NextText(out var text))
         {
             _dialogue.SetText(text);
+        }
+        else
+        {
+            _stateDrivenCameraAnimator.Play(_playerCameraStateName);
+            _dialogue.EndDialogue();
+            OnDialogueEnd?.Invoke(_currentPoint);
+            _currentPoint = null;
         }
     }
 
@@ -66,6 +83,11 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             transform.rotation = 
                 Quaternion.Inverse(Camera.main.transform.rotation);
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Iterate();
+            }
         }
     }
 }
