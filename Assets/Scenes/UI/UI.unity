@@ -1269,6 +1269,7 @@ GameObject:
   - component: {fileID: 261043988}
   - component: {fileID: 261043990}
   - component: {fileID: 261043991}
+  - component: {fileID: 261043992}
   m_Layer: 5
   m_Name: Main Inventory
   m_TagString: Untagged
@@ -1381,6 +1382,27 @@ MonoBehaviour:
   _character: {fileID: 11400000, guid: 71cf11ac1946eb94d94d1db99e42b3fa, type: 2}
   _slotPrefab: {fileID: 4932527108230891132, guid: 6a7794f169f2ea1459c5912141eb745e,
     type: 3}
+--- !u!95 &261043992
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261043986}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &341063993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6563,7 +6585,7 @@ Animator:
   m_GameObject: {fileID: 2049149375}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 064f4ebde6335624ea33f08ea4074b70, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
