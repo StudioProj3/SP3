@@ -5,7 +5,7 @@ using TMPro;
 
 public class Shopkeeper : MonoBehaviour, IInteractable
 {
-    public string interactText { get; } = "~ Shop ~";
+    public string InteractText { get; } = "~ Shop ~";
 
     [SerializeField]
     private LayerMask _playerLayer;
@@ -23,31 +23,10 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         }
     }
 
-    public bool CheckPlayer()
-    {
-        Collider[] hitTarget = Physics.OverlapSphere(transform.position, 1.0f
-                                , _playerLayer, 0);
-
-        if (hitTarget.Length > 0)
-        {
-            _toggleText.SetActive(true);
-            return true;
-        }
-        else
-        {
-            _toggleText.SetActive(false);
-            if (_shopUI)
-            {
-                _shopUI.SetActive(false);
-            }
-        }
-        return false;
-    }
-
     private void Start()
     {
         _toggleText = transform.GetChild(0).gameObject;
-        _toggleText.GetComponent<TextMeshPro>().text = interactText;
+        _toggleText.GetComponent<TextMeshPro>().text = InteractText;
         _toggleText.SetActive(false);
 
     }
@@ -58,9 +37,31 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         {
             _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
         }
-        if(CheckPlayer())
+        if(_toggleText.activeSelf)
         {
             Interact();
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            _toggleText.SetActive(true);
+        }
+
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            _toggleText.SetActive(false);
+            if (_shopUI)
+            {
+                _shopUI.SetActive(false);
+            }
         }
 
     }
