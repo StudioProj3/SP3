@@ -2,22 +2,19 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-// This class should only contain static modifiers
-// It caches the internal value to prevent extra calculation
+// Only use this class when needed, since it calculates
+// values every get operation.
 [Serializable]
-public class ModifiableValue : IModifiableValue 
+public class DynamicModifiableValue : IModifiableValue 
 {
     public float Value
     {
         get
         {
             float v = _initialValue;
-            if (_isDirty)
+            foreach (var modifier in _modifiers)
             {
-                _modifiers.OrderByDescending(m => m.Priority)
-                    .ToList()
-                    .ForEach(m => m.Modify(v));
-                _isDirty = false;
+                v = modifier.Modify(v);
             }
             _value = v;
 
@@ -31,7 +28,6 @@ public class ModifiableValue : IModifiableValue
 
     // List of modifiers sorted on add adn remove
     private List<Modifier> _modifiers;
-    private bool _isDirty = true;
 
     // Store the initial value for cloning
     private readonly float _initialValue;
@@ -42,56 +38,48 @@ public class ModifiableValue : IModifiableValue
     public void Add(float toAdd)
     {
         _value += toAdd;
-        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Subtract(float toSubtract)
     {
         _value -= toSubtract;
-        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Multiply(float toMultiply)
     {
         _value *= toMultiply;
-        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Divide(float toDivide)
     {
         _value /= toDivide;
-        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Set(float toSet)
     {
         _value = toSet;
-        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
-    public ModifiableValue(float baseValue)
+    public DynamicModifiableValue(float baseValue)
     {
         _initialValue = baseValue;
         _modifiers = new();
-        _isDirty = true;
     }
 
-    public ModifiableValue(float baseValue, List<Modifier> modifiers)
+    public DynamicModifiableValue(float baseValue, List<Modifier> modifiers)
     {
         _initialValue = baseValue;
         _modifiers = new(modifiers);
-        _isDirty = true;
     }
 
     public void AddModifier(Modifier modifier)
     {
         _modifiers.Add(modifier);
-        _isDirty = true;
         _modifiers = _modifiers.OrderByDescending(m => m.Priority).ToList();
 
         ValueChanged?.Invoke();
@@ -99,7 +87,6 @@ public class ModifiableValue : IModifiableValue
     public void RemoveModifier(Modifier modifier)
     {
         _modifiers.Remove(modifier);
-        _isDirty = true;
         _modifiers = _modifiers.OrderByDescending(m => m.Priority).ToList();
 
         ValueChanged?.Invoke();
@@ -107,6 +94,6 @@ public class ModifiableValue : IModifiableValue
 
     public object Clone()
     {
-        return new ModifiableValue(_initialValue, _modifiers);
+        return new DynamicModifiableValue(_initialValue, _modifiers);
     }
 }
