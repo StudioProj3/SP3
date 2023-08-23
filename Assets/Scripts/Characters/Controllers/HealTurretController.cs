@@ -14,9 +14,6 @@ public class HealTurretController :
 
     private ParticleSystem _healTurretParticles;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
@@ -63,8 +60,6 @@ public class HealTurretController :
             ),
 
             new GenericState("GoingToHeal"),
-
-            new GenericState("Death"),
 
             // Transitions
 

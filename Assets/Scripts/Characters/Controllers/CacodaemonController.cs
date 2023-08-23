@@ -4,12 +4,11 @@ using UnityEngine;
 public class CacodaemonController :
     EnemyControllerBase, IEffectable
 {
+   
+
     private StatContainer _cacodaemonStatsContainer;
 
     private ParticleSystem _cacodaemonParticles;
-
-    private GameObject _player;
-    private PlayerController _playerController;
 
     private Vector3 _direction;
     private float _distance;
@@ -37,8 +36,8 @@ public class CacodaemonController :
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = new Vector3(Random.Range(-1f, 1f),
-                        0f, Random.Range(-1f, 1f));
+                    _direction = new Vector3(UnityEngine.Random.Range(-1f, 1f),
+                        0f, UnityEngine.Random.Range(-1f, 1f));
                 }),
                 new ActionEntry("FixedUpdate", () =>
                 {
@@ -63,15 +62,13 @@ public class CacodaemonController :
 
                     _rigidbody.AddForce(_cacodaemonStatsContainer.
                         GetStat("MoveSpeed").Value * 3f * _direction.
-                        normalized,ForceMode.Impulse);
+                        normalized, ForceMode.Impulse);
                 })
             ),
 
             new GenericState("GoingToCharge"),
 
             new GenericState("Cooldown"),
-
-            new GenericState("Death"),
 
             // Transitions
 

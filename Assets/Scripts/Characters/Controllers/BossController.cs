@@ -183,8 +183,6 @@ public class BossController :
 
             new GenericState("Cooldown"),
 
-            new GenericState("Death"),
-
             // Transitions
 
             new AllToOneTransition("Death", () =>
