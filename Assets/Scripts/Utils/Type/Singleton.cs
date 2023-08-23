@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 using static DebugUtils;
@@ -47,7 +45,6 @@ public abstract class Singleton<T> :
         {
             if (count == 1)
             {
-                Log("Count is one.");
                 return _instance = instances[0];
             }
 
