@@ -22,6 +22,7 @@ public class PlayerAttack : MonoBehaviour
     private Rigidbody _rigidbody;
     private PlayerController _player;
     private bool _usingLeftHand = true;
+    protected UINotification _notification;
 
     private void Awake()
     {
@@ -55,6 +56,16 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        if (!_notification)
+        {
+            GameObject notifUI = GameObject.FindWithTag("UINotification");
+
+            if (notifUI)
+            {
+                _notification = notifUI.GetComponent<UINotification>();
+            }
+        }
+        
         CalculateMousePos();
         
         if (Input.GetKeyDown(KeyCode.F))
@@ -114,6 +125,11 @@ public class PlayerAttack : MonoBehaviour
 
             if (_currentlyHolding is IMagicWeapon magicWeapon)
             {
+                if (_playerData.CharacterStats.GetStat("Sanity").Value <= 0)
+                {
+                    _notification.Error("Not enough Sanity!");
+                    return;
+                }
                 _animator.Play(magicWeapon.AnimationName);
                 _rigidbody.AddForce(2f * transform.right, ForceMode.Impulse);
 
