@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 
+using static DebugUtils;
+
 public class Dialogue : MonoBehaviour
 {
     [SerializeField]
@@ -14,6 +16,8 @@ public class Dialogue : MonoBehaviour
 
     public void Initialize(DialogueInstance dialogue)
     {
+        Assert(dialogue.Data.Dialogue.Count > 0, "There is no dialogue data.");
+
         _dialogueInstance = dialogue;
         _dialogueIndex = 0;
         _dialogueTitle.text = dialogue.Data.SpeakerName;
@@ -23,6 +27,7 @@ public class Dialogue : MonoBehaviour
     {
         gameObject.SetActive(true);
         GameManager.Instance.CurrentState = GameState.Dialogue;
+        SetText(_dialogueInstance.Data.Dialogue[0]);
     }
 
     public bool NextText(out string text)

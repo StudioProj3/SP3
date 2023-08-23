@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -640,8 +640,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37120364}
-  m_LocalRotation: {x: 0.2067746, y: 3.8389545e-17, z: -7.6783695e-17, w: 0.9783886}
-  m_LocalPosition: {x: -15.5451765, y: 13.050998, z: -27.753967}
+  m_LocalRotation: {x: 0.16685458, y: -2.4901814e-17, z: -7.434869e-17, w: 0.9859815}
+  m_LocalPosition: {x: -15.5451765, y: 12.820998, z: -27.843967}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17159,8 +17159,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116973533}
-  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 0.774, y: 2.25, z: -1.96}
+  m_LocalRotation: {x: 0.16685458, y: -2.4901814e-17, z: -7.434869e-17, w: 0.9859815}
+  m_LocalPosition: {x: -12.302, y: 1.779, z: -2.715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37524,7 +37524,7 @@ GameObject:
   - component: {fileID: 1541491693}
   m_Layer: 0
   m_Name: State Driven Camera
-  m_TagString: Untagged
+  m_TagString: StateDrivenCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37593,7 +37593,15 @@ MonoBehaviour:
   m_ChildCameras:
   - {fileID: 1864077195}
   - {fileID: 37120366}
-  m_Instructions: []
+  m_Instructions:
+  - m_FullHash: -1473256424
+    m_VirtualCamera: {fileID: 1864077195}
+    m_ActivateAfter: 0
+    m_MinDuration: 0
+  - m_FullHash: 141624005
+    m_VirtualCamera: {fileID: 37120366}
+    m_ActivateAfter: 0
+    m_MinDuration: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 0.5
@@ -37606,6 +37614,8 @@ MonoBehaviour:
   m_CustomBlends: {fileID: 0}
   m_ParentHash:
   - m_Hash: -1473256424
+    m_ParentHash: 756556552
+  - m_Hash: 141624005
     m_ParentHash: 756556552
 --- !u!1 &1544345205
 GameObject:
@@ -44985,7 +44995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 1.23, z: -2.78}
+  m_FollowOffset: {x: 0, y: 1, z: -2.87}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -46672,6 +46682,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d696b9baef2bf2b4db158b4ba73142ad,
         type: 2}
+    - target: {fileID: 6696665778595085490, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6696665778595085491, guid: 7c1c33b2c02e3674cb69453aca66ede0,
         type: 3}
       propertyPath: m_RootOrder
