@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static DebugUtils;
+
 public class EnemySpawner : MonoBehaviour
 {
     private List<CharacterControllerBase> _pooledEnemyList;
@@ -9,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemy()
     {
         int randomNum = Random.Range(0, _pooledEnemyList.Count);
-        Debug.Log(randomNum);
+        Log(randomNum);
 
         _pooledEnemyList[randomNum].gameObject.SetActive(true);
         _pooledEnemyList[randomNum].transform.position =

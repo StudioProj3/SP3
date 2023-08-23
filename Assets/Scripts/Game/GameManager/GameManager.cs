@@ -1,5 +1,8 @@
 using System;
 using UnityEngine;
+
+using static DebugUtils;
+
 public class GameManager : Singleton<GameManager>
 {
 
@@ -50,6 +53,6 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLoseState()
     {
-        Debug.Log("Respawn");
+        Log("Respawn");
     }
 }

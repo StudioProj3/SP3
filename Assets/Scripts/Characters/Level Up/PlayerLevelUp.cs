@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using static DebugUtils;
+
 public class PlayerLevelUp : MonoBehaviour
 {
 
@@ -26,7 +28,7 @@ public class PlayerLevelUp : MonoBehaviour
             GetStat("Level");
         _experiencePoints.Set(0);
         _currentLevel.Set(1);
-        Debug.Log("Level: " + _currentLevel.Value);
+        Log("Level: " + _currentLevel.Value);
     }
     
     private void LevelUp()

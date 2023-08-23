@@ -2,6 +2,8 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+using static DebugUtils;
+
 public abstract class Singleton<T> :
     Singleton where T : MonoBehaviour
 {
@@ -45,7 +47,7 @@ public abstract class Singleton<T> :
         {
             if (count == 1)
             {
-                Debug.Log("Count is one.");
+                Log("Count is one.");
                 return _instance = instances[0];
             }
 
@@ -57,14 +59,14 @@ public abstract class Singleton<T> :
 
             for (var i = 1; i < instances.Length; ++i)
             {
-                Debug.Log("Destroying object.");
+                Log("Destroying object.");
                 Destroy(instances[i].gameObject);
             }
 
             return _instance = instances[0];
         }
 
-        Debug.Log($"[{nameof(Singleton)}<{typeof(T)}>] An instance " +
+        Log($"[{nameof(Singleton)}<{typeof(T)}>] An instance " +
             "is needed in the scene and no existing instances were " +
             "found, so a new instance will be created.");
 

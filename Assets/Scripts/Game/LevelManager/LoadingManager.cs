@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using static DebugUtils;
+
 public class LoadingManager : Singleton<LoadingManager>
 {
     [SerializeField]
@@ -20,14 +22,14 @@ public class LoadingManager : Singleton<LoadingManager>
         //Scene sceneToLoad =
         //    SceneManager.GetSceneByName(sceneName);
 
-        //Debug.Log(sceneToLoad.name);
+        //Log(sceneToLoad.name);
 
-        //Debug.Log(sceneToLoad);
+        //Log(sceneToLoad);
 
 
         //GameObject[] objects = sceneToLoad.GetRootGameObjects();
 
-        //Debug.Log(sceneToLoad.GetRootGameObjects().Length);
+        //Log(sceneToLoad.GetRootGameObjects().Length);
 
         //LevelManager level = null;
 
@@ -41,14 +43,14 @@ public class LoadingManager : Singleton<LoadingManager>
         //if (level == null)
         //    return;
 
-        //Debug.Log("1");
+        //Log("1");
         //for (int i = 0; i < level._initScenes.Count; i++)
         //{
-        //    Debug.Log("2");
+        //    Log("2");
 
         //    if (level._initScenes[i] == "UIHUD")
         //    {
-        //        Debug.Log("3");
+        //        Log("3");
 
         //        UnloadScene(SceneManager.GetActiveScene().name);
                 
@@ -73,7 +75,7 @@ public class LoadingManager : Singleton<LoadingManager>
         {
             if (SceneManager.GetSceneAt(i).name == sceneName)
             {
-                Debug.Log("Scene already exists.");
+                Log("Scene already exists.");
                 return;
             }
         }
@@ -95,7 +97,7 @@ public class LoadingManager : Singleton<LoadingManager>
                 return;
             }
         }
-        Debug.Log("Scene does not exist.");
+        Log("Scene does not exist.");
 
     }
 

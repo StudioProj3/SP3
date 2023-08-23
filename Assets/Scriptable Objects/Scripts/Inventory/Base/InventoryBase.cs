@@ -308,13 +308,13 @@ public abstract class InventoryBase :
     // For debugging
     public void Print()
     {
-        Debug.Log("Inventory size: "  + _allItems.Count.ToString());
+        Log("Inventory size: "  + _allItems.Count.ToString());
 
         for (int i = 0; i < _allItems.Count; ++i)
         {
             if (_allItems[i] != null) 
             {
-                Debug.Log("Index " + i.ToString() + " : " +
+                Log("Index " + i.ToString() + " : " +
                     _allItems[i].First.Name + 
                     " : " + _allItems[i].Second.ToString()); 
             }

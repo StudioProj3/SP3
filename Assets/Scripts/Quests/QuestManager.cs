@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+
 using static DebugUtils;
 
 public sealed class QuestManager : Singleton<QuestManager> 
@@ -123,7 +124,7 @@ public sealed class QuestManager : Singleton<QuestManager>
         }
         // if (_allQuests.Values.Any(x => x.state == QuestState.CanFinish))
         // {
-        //     Debug.Log("Test");
+        //     Log("Test");
         // }
     }
 
