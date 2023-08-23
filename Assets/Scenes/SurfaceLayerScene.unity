@@ -8928,9 +8928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b368aa97878949746b2a008a4256695e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &633062474
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37970,91 +37967,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &1588293996
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2022164378}
-    m_Modifications:
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.053
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.541
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.041
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288771, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_Name
-      value: Shrine Statue
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288771, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5368978804529288771, guid: ad114669e04cd054fa8daf4345e5a6b4,
-        type: 3}
-      propertyPath: m_TagString
-      value: Scene Object
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ad114669e04cd054fa8daf4345e5a6b4, type: 3}
---- !u!4 &1588293997 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5368978804529288770, guid: ad114669e04cd054fa8daf4345e5a6b4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1588293996}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1614697317
 GameObject:
   m_ObjectHideFlags: 0
@@ -43746,7 +43658,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1588293997}
+  - {fileID: 5368978803349169966}
   - {fileID: 438428698}
   - {fileID: 914823807}
   - {fileID: 538874941}
@@ -46183,6 +46095,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02416c0d95b7ad240a20dc73a1d42cc7, type: 3}
+--- !u!4 &5368978803349169966 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5782799269194845006}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5368978803590613881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46262,6 +46180,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad114669e04cd054fa8daf4345e5a6b4, type: 3}
+--- !u!1001 &5782799269194845006
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2022164378}
+    m_Modifications:
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.053
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.541
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.041
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334112, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928332896549334113, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: m_Name
+      value: Shrine Statue
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68bfda4921374e34eacccf08ab8f35eb, type: 3}
 --- !u!1001 &6114176375881938403
 PrefabInstance:
   m_ObjectHideFlags: 0

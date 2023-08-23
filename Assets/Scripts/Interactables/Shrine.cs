@@ -1,18 +1,18 @@
 using UnityEngine;
 using TMPro;
 
-public class Shopkeeper : MonoBehaviour, IInteractable
+public class Shrine : MonoBehaviour, IInteractable
 {
-    public string InteractText { get; } = "~ Shop ~";
+    public string InteractText { get; } = "~ Pray ~";
 
     private GameObject _toggleText;
-    private GameObject _shopUI;
-    
+    private GameObject _shrineUI;
+
     public void Interact()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            _shopUI.SetActive(!_shopUI.activeSelf);
+            _shrineUI.SetActive(!_shrineUI.activeSelf);
         }
     }
 
@@ -26,15 +26,15 @@ public class Shopkeeper : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (!_shopUI)
+        if (!_shrineUI)
         {
-            _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
-            if(_shopUI)
+            _shrineUI = GameObject.FindGameObjectWithTag("ShrineUI");
+            if (_shrineUI)
             {
-                _shopUI.SetActive(false);
+                _shrineUI.SetActive(false);
             }
         }
-        if(_toggleText.activeSelf && _shopUI)
+        if (_toggleText.activeSelf && _shrineUI)
         {
             Interact();
         }
@@ -55,9 +55,9 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         if (col.gameObject.CompareTag("Player"))
         {
             _toggleText.SetActive(false);
-            if (_shopUI)
+            if (_shrineUI)
             {
-                _shopUI.SetActive(false);
+                _shrineUI.SetActive(false);
             }
         }
 
