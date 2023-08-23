@@ -30,6 +30,5 @@ public class EnemyManager : Singleton<EnemyManager>
 
     protected override void OnStart()
     {
-        SpawnEnemiesInScene();
     }
 }
