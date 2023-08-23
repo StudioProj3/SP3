@@ -57,9 +57,9 @@ public class UIHUDStatBar : MonoBehaviour
 
     private void Awake()
     {
-        _statBarLeft = transform.GetChild(0).
+        _statBarLeft = transform.GetChild(4).
             GetComponent<RectMask2D>();
-        _statBarRight = transform.GetChild(1).
+        _statBarRight = transform.GetChild(5).
             GetComponent<RectMask2D>();
 
         _length = _statBarLeft.rectTransform.sizeDelta.x;
