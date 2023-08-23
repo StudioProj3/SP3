@@ -24,7 +24,6 @@ public class EnemySpawner : MonoBehaviour
         {
             _pooledEnemyList.Add(child.GetComponent<CharacterControllerBase>());
         }
-        SpawnEnemy();
     }
 
     // Update is called once per frame

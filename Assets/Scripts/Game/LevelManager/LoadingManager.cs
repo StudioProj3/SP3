@@ -121,4 +121,9 @@ public class LoadingManager : Singleton<LoadingManager>
     {
         return false;
     }
+
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
 }
