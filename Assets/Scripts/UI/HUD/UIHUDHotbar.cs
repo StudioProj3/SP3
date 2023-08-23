@@ -9,10 +9,18 @@ public class UIHUDHotbar : MonoBehaviour
 
     private void Start()
     {
-        //_leftSlot.onClick.AddListener(
-        //    _uiinventory.ShowInventory);
-        //_rightSlot.onClick.AddListener(
-        //    _uiinventory.ShowInventory);
+        _uiinventory = GameObject.FindWithTag("UIInventory").
+            GetComponent<UIInventory>();
+
+        _leftSlot.onClick.AddListener(() =>
+        {
+            _uiinventory.ShowInventory();
+        });
+
+        _rightSlot.onClick.AddListener(() =>
+        {
+            _uiinventory.ShowInventory();
+        });
     }
 
     private void Awake()
@@ -21,7 +29,5 @@ public class UIHUDHotbar : MonoBehaviour
             GetComponent<Button>();
         _rightSlot = transform.GetChild(1).
             GetComponent<Button>();
-        //_uiinventory = GameObject.FindWithTag("UIInventory").
-        //    GetComponent<UIInventory>();
     }
 }
