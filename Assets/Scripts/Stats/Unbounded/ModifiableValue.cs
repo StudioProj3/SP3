@@ -9,16 +9,12 @@ public class ModifiableValue : IModifiableValue
     {
         get
         {
-            if (_isDirty)
+            float v = _initialValue;
+            foreach (var modifierPair in _modifiers)
             {
-                float v = _initialValue;
-                _modifiers
-                    .OrderByDescending(m => m.Priority)
-                    .ToList()
-                    .ForEach(m => v = m.Modify(v));
-                _isDirty = false;
-                _value = v;
+                v = modifierPair.Modify(v);
             }
+            _value = v;
 
             return _value;
         }
@@ -28,10 +24,8 @@ public class ModifiableValue : IModifiableValue
 
     public event Action ValueChanged;
 
-    // TODO (Chris): Change to a sorted number
-    // List of modifiers
-    private readonly List<Modifier> _modifiers;
-    private bool _isDirty = true;
+    // List of modifiers sorted on add adn remove
+    private List<Modifier> _modifiers;
 
     // Store the initial value for cloning
     private readonly float _initialValue;
@@ -83,15 +77,16 @@ public class ModifiableValue : IModifiableValue
 
     public void AddModifier(Modifier modifier)
     {
-        _isDirty = true;
         _modifiers.Add(modifier);
+        _modifiers = _modifiers.OrderByDescending(m => m.Priority).ToList();
+
         ValueChanged?.Invoke();
     }
-
     public void RemoveModifier(Modifier modifier)
     {
-        _isDirty = true;
         _modifiers.Remove(modifier);
+        _modifiers = _modifiers.OrderByDescending(m => m.Priority).ToList();
+
         ValueChanged?.Invoke();
     }
 

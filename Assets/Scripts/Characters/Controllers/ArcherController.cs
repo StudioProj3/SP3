@@ -14,9 +14,6 @@ public class ArcherController :
 
     private StatContainer _archerStatsContainer;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
@@ -102,18 +99,6 @@ public class ArcherController :
             ),
 
             new GenericState("Cooldown"),
-
-            new GenericState("Death",
-                new ActionEntry("Enter", () =>
-                {
-                    var playerLevelling = 
-                        _playerController.gameObject.
-                        GetComponent<PlayerLevelUp>();
-                    
-                    playerLevelling.GainExperience(ExpAmount);
-                })
-            
-            ),
 
             // Transitions
 

@@ -35,7 +35,13 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
+    public void StartEnemyTimer(int weight)
+    {
+        Debug.Log("EnemyDied");
+    }
+
     protected override void OnStart()
     {
+        EnemyControllerBase.OnEnemyDeath += StartEnemyTimer;
     }
 }

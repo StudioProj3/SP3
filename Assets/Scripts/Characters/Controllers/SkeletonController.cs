@@ -13,9 +13,6 @@ public class SkeletonController :
     private float _currentLifetime;
 
     private StatContainer _skeletonStatsContainer;
-
-    private GameObject _player;
-    private PlayerController _playerController;
     private Transform _source;
 
     private Vector3 _direction;
@@ -104,8 +101,6 @@ public class SkeletonController :
             ),
 
             new GenericState("Cooldown"),
-
-            new GenericState("Death"),
 
             // Transitions
 
