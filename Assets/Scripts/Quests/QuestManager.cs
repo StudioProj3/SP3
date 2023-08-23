@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 using static DebugUtils;
 
@@ -104,6 +102,7 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private void FinishQuestCallback(string id)
     {
+
     }
 
     private void QuestStateChangeCallback(Quest quest)
@@ -147,7 +146,9 @@ public sealed class QuestManager : Singleton<QuestManager>
         {
             return quest;
         }
+
         Fatal("Query quest failed.");
+
         return null;
     }
-}   
+}

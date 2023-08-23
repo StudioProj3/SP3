@@ -94,11 +94,12 @@ public class LoadingManager : Singleton<LoadingManager>
             {
                 AsyncOperation asyncLoad =
                     SceneManager.UnloadSceneAsync(sceneName);
+
                 return;
             }
         }
-        Log("Scene does not exist.");
 
+        Log("Scene does not exist.");
     }
 
     // If given scene is already loaded,
@@ -114,9 +115,9 @@ public class LoadingManager : Singleton<LoadingManager>
                 return;
             }
         }
+
         asyncLoad = SceneManager.LoadSceneAsync
             (sceneName, LoadSceneMode.Additive);
-
     }
 
     public bool CheckForAllObjects(string tag)
