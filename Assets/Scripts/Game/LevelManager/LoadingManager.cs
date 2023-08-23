@@ -8,10 +8,12 @@ public class LoadingManager : Singleton<LoadingManager>
     [SerializeField]
     public SceneList sceneList;
 
+    public AsyncOperation asyncLoad;
+
     // Load new independent scene
     public void LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad =
+        asyncLoad =
             SceneManager.LoadSceneAsync(sceneName);
 
         // TODO (Aquila) Demon Code
@@ -63,7 +65,6 @@ public class LoadingManager : Singleton<LoadingManager>
     // exists
     public void LoadSceneAdditive(string sceneName, bool forceLoad)
     {
-        AsyncOperation asyncLoad;
         if (forceLoad)
         {
             asyncLoad = SceneManager.LoadSceneAsync
@@ -79,7 +80,6 @@ public class LoadingManager : Singleton<LoadingManager>
                 return;
             }
         }
-
         asyncLoad = SceneManager.LoadSceneAsync
             (sceneName, LoadSceneMode.Additive);
 
@@ -92,7 +92,7 @@ public class LoadingManager : Singleton<LoadingManager>
         {
             if (SceneManager.GetSceneAt(i).name == sceneName)
             {
-                AsyncOperation asyncLoad =
+                asyncLoad =
                     SceneManager.UnloadSceneAsync(sceneName);
 
                 return;
@@ -106,7 +106,6 @@ public class LoadingManager : Singleton<LoadingManager>
     // unload the scene, and vice versa
     public void ToggleScene(string sceneName)
     {
-        AsyncOperation asyncLoad;
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             if (SceneManager.GetSceneAt(i).name == sceneName)
@@ -123,5 +122,10 @@ public class LoadingManager : Singleton<LoadingManager>
     public bool CheckForAllObjects(string tag)
     {
         return false;
+    }
+
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
     }
 }
