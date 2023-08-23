@@ -32,12 +32,22 @@ public class Dialogue : MonoBehaviour
         SetText(_dialogueInstance.Data.Dialogue[0]);
     }
 
+    public void EndDialogue()
+    {
+        gameObject.SetActive(false);
+        // NOTE (Chris): I reckon this could cause some issues.
+        GameManager.Instance.CurrentState = GameState.Play;
+        UIManager.Instance.ShowBars(false);
+        UIManager.Instance.ShowHUD(true);
+    }
+
     public bool NextText(out string text)
     {
         text = null;
 
-        if (_dialogueIndex <= _dialogueInstance.Data.Dialogue.Count - 1)
+        if (_dialogueIndex < _dialogueInstance.Data.Dialogue.Count - 1)
         {
+            _dialogueIndex++;
             text = _dialogueInstance.Data.Dialogue[_dialogueIndex];
             return true;
         }
