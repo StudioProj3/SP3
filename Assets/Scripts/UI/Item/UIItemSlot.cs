@@ -19,6 +19,12 @@ public class UIItemSlot : MonoBehaviour
         _itemQuantity.text = quantity.ToString();
     }
 
+    public void SetIconAndQuantity(Sprite sprite, uint quantity)
+    {
+        SetIcon(sprite);
+        SetQuantity(quantity);
+    }
+
     private void Awake()
     {
         _itemIcon = transform.GetChild(0).
