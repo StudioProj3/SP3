@@ -375,7 +375,6 @@ public abstract class InventoryBase :
         {
             _allItems.Add(ItemExists(_itemInitializerList[i]) ? 
                 _itemInitializerList[i] : null);
-
         }
     }
 }
