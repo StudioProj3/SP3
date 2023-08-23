@@ -17,9 +17,6 @@ public class MinotaurController :
 
     private StatContainer _minotaurStatsContainer;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
@@ -144,8 +141,6 @@ public class MinotaurController :
             ),
 
             new GenericState("Cooldown"),
-
-            new GenericState("Death"),
 
             // Transitions
 

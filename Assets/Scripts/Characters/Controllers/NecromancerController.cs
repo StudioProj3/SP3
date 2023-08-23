@@ -14,9 +14,6 @@ public class NecromancerController :
 
     private StatContainer _necromancerStatsContainer;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
     private Vector3 _direction;
     private float _distance;
     private MagicDamage _magicDamage;
@@ -133,8 +130,6 @@ public class NecromancerController :
             ),
 
             new GenericState("Cooldown"),
-
-            new GenericState("Death"),
 
             // Transitions
 

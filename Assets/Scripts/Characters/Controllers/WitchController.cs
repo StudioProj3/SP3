@@ -19,8 +19,6 @@ public class WitchController :
 
     private GameObject _target;
     private float _targetHealth;
-    private GameObject _player;
-    private PlayerController _playerController;
 
     private Vector3 _direction;
     private float _distance;
@@ -154,8 +152,6 @@ public class WitchController :
 
 
             new GenericState("Cooldown"),
-
-            new GenericState("Death"),
 
             // Transitions
 
