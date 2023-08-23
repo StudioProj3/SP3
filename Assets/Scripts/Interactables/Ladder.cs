@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class Ladder : MonoBehaviour, IInteractable
 {
     public string InteractText { get; } = "~ Enter ~";
-
-    [SerializeField]
-    private LayerMask _playerLayer;
 
     [SerializeField]
     private string _nextScene;
