@@ -98,15 +98,8 @@ public class PlayerController :
         base.Awake();
     }
 
-    private void Update()
+    private void HandleStatusEffects()
     {
-        UpdateInputs();
-
-        _animator.SetBool("isRunning", 
-            _stateMachine.CurrentState.StateID == "Walk");
-        _animator.SetBool("isRolling", 
-            _stateMachine.CurrentState.StateID == "Roll");
-
         if (!_statusEffects.IsNullOrEmpty())
         {
             _statusEffects.ForEach(effect => effect.HandleEffect(this));
@@ -120,6 +113,23 @@ public class PlayerController :
                 --i;
             }
         }
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.CurrentState != GameState.Play)
+        {
+            return;
+        }
+
+        UpdateInputs();
+
+        _animator.SetBool("isRunning", 
+            _stateMachine.CurrentState.StateID == "Walk");
+        _animator.SetBool("isRolling", 
+            _stateMachine.CurrentState.StateID == "Roll");
+
+        HandleStatusEffects();
 
         if (_horizontalInput != 0)
         {
@@ -133,12 +143,14 @@ public class PlayerController :
         {
             GameManager.Instance.CurrentState = GameState.Lose;
         }
-        
     }
 
     private void FixedUpdate()
     {
-        _stateMachine.FixedUpdate();
+        if (GameManager.Instance.CurrentState == GameState.Play)
+        {
+            _stateMachine.FixedUpdate();
+        }
     }
 
     private void UpdateInputs()

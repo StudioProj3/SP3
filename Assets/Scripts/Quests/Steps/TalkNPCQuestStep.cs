@@ -6,7 +6,7 @@ using static DebugUtils;
 public class TalkNPCQuestStep : QuestStep
 {
     [SerializeField]
-    private string _NPCtag;
+    private string _npcTag;
 
     [field: SerializeField]
     public DialogueInstance Dialogue { get; private set; }
@@ -19,14 +19,23 @@ public class TalkNPCQuestStep : QuestStep
 
     private void Start()
     {
-        Assert(Dialogue != null || string.IsNullOrEmpty(_NPCtag),
+        Assert(Dialogue != null || string.IsNullOrEmpty(_npcTag),
             "Dialogue or tag is null in Quest step. ID:" + _questID);
         
         // Reset the dialogue index to 0.
         _isDialogueComplete = true;
 
-        _targetNPCObject = GameObject.FindWithTag(_NPCtag);
-        _targetDialogue = _targetNPCObject.GetComponent<DialoguePoint>();
+        _targetNPCObject = GameObject.FindWithTag(_npcTag);
+
+        if (_targetNPCObject != null)
+        {
+            _targetDialogue = _targetNPCObject.GetComponent<DialoguePoint>();
+
+            if (_targetDialogue != null)
+            {
+                _targetDialogue.InjectData(Dialogue);
+            }
+        }
     }
 
 }
