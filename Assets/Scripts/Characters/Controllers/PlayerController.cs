@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -118,7 +117,11 @@ public class PlayerController :
 
     private void Update()
     {
-        if (GameManager.Instance.)
+        if (GameManager.Instance.CurrentState != GameState.Play)
+        {
+            return;
+        }
+
         UpdateInputs();
 
         _animator.SetBool("isRunning", 
@@ -144,7 +147,10 @@ public class PlayerController :
 
     private void FixedUpdate()
     {
-        _stateMachine.FixedUpdate();
+        if (GameManager.Instance.CurrentState == GameState.Play)
+        {
+            _stateMachine.FixedUpdate();
+        }
     }
 
     private void UpdateInputs()

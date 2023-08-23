@@ -22,7 +22,7 @@ public class Dialogue : MonoBehaviour
     public void StartDialogue()
     {
         gameObject.SetActive(true);
-        GameManager.Instance.ChangeGameState(GameState.Dialogue);
+        GameManager.Instance.CurrentState = GameState.Dialogue;
     }
 
     public bool NextText(out string text)

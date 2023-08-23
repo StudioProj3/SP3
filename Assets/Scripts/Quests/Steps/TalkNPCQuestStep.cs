@@ -26,8 +26,16 @@ public class TalkNPCQuestStep : QuestStep
         _isDialogueComplete = true;
 
         _targetNPCObject = GameObject.FindWithTag(_npcTag);
-        _targetDialogue = _targetNPCObject.GetComponent<DialoguePoint>();
-        _targetDialogue.InjectData(Dialogue);
+
+        if (_targetNPCObject != null)
+        {
+            _targetDialogue = _targetNPCObject.GetComponent<DialoguePoint>();
+
+            if (_targetDialogue != null)
+            {
+                _targetDialogue.InjectData(Dialogue);
+            }
+        }
     }
 
 }

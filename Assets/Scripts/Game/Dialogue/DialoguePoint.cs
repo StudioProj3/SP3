@@ -8,7 +8,7 @@ public class DialoguePoint : MonoBehaviour, IInteractable
     private DialogueInstance _dialogueInstance;
 
     private bool _canStart = false;
-    public string interactText => _interactTextData; 
+    public string InteractText => _interactTextData; 
 
     public bool CheckPlayer()
     {
