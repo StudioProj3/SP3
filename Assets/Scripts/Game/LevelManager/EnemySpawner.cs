@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private List<CharacterControllerBase> _pooledEnemyList;
+    private List<EnemyControllerBase> _pooledEnemyList;
 
-    public void SpawnEnemy()
+    public int SpawnEnemy()
     {
         int randomNum = Random.Range(0, _pooledEnemyList.Count);
-        Debug.Log(randomNum);
 
         _pooledEnemyList[randomNum].gameObject.SetActive(true);
         _pooledEnemyList[randomNum].transform.position =
                                transform.position;
         _pooledEnemyList[randomNum].transform.SetParent(null);
+
+        return _pooledEnemyList[randomNum].Weight;
     }
 
     private void Awake()
     {
-        _pooledEnemyList = new List<CharacterControllerBase>();
+        _pooledEnemyList = new List<EnemyControllerBase>();
         foreach (Transform child in transform)
         {
-            _pooledEnemyList.Add(child.GetComponent<CharacterControllerBase>());
+            _pooledEnemyList.Add(child.GetComponent<EnemyControllerBase>());
         }
     }
 

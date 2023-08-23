@@ -5,11 +5,14 @@ using UnityEngine;
 public class EnemyManager : Singleton<EnemyManager>
 {
     private GameObject _spawnerGroup;
+    private LevelManager _level;
     private List<EnemySpawner> _enemySpawners;
     private GameObject _player;
 
     public void SpawnEnemiesInScene()
     {
+        _level = GameObject.FindGameObjectWithTag("LevelManager")
+            .GetComponent<LevelManager>();
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
 
@@ -20,10 +23,14 @@ public class EnemyManager : Singleton<EnemyManager>
                 _enemySpawners.Add(child.GetComponent<EnemySpawner>());
             }
 
-            for (int i = 0; i < _enemySpawners.Count; ++i)
+            while (_level.CurrentWeight <= _level.WeightLimit)
             {
-                _enemySpawners[i].gameObject.SetActive(true);
-                _enemySpawners[i].SpawnEnemy();
+                int randomNum = Random.Range(0, _enemySpawners.Count);
+
+                _enemySpawners[randomNum].gameObject.SetActive(true);
+
+
+                _level.CurrentWeight += _enemySpawners[randomNum].SpawnEnemy();
             }
         }
     }

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-
     [SerializeField]
-    public List<string> _initScenes;
+    public int WeightLimit;
+    [SerializeField]
+    private List<string> _initScenes;
+   
+    [HideInInspector]
+    public int CurrentWeight;
 
     private LoadingManager _loadingManager;
     private string _currentScene;
@@ -17,6 +21,7 @@ public class LevelManager : MonoBehaviour
         _loadingManager = LoadingManager.Instance;
         _currentScene = _loadingManager.GetCurrentSceneName();
         _enemiesLoaded = false;
+        CurrentWeight = 0;
 
         for (int i = 0; i < _initScenes.Count; i++)
         {
