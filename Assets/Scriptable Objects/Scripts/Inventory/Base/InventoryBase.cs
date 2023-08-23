@@ -58,22 +58,19 @@ public abstract class InventoryBase :
         return _allItems[index]?.Key;
     }
 
-    public virtual void RemoveItemByAmount(ItemBase item, uint amount)
+    public virtual bool RemoveItemByIndex(int index, uint amount)
     {
-        for (int i = 0; i < _allItems.Count; ++i)
+        Assert(index >= 0, "`index` is less than zero");
+        Assert(amount <= _allItems[index].Value,
+             "`amount` is greater than item count");
+
+        _allItems[index].Value -= amount;
+
+        if (_allItems[index].Value == 0)
         {
-            if (_allItems[i].Key == item)
-            {
-                _allItems[i].Value -= amount;
-
-                if (_allItems[i].Value <= 0)
-                {
-                    _allItems[i] = null;
-                }
-
-                break;
-            }
+            _allItems[index] = null;
         }
+        return true;
     }
 
     // Function returns whether the modification request is valid
