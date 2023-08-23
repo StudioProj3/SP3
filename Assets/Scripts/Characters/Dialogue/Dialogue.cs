@@ -27,6 +27,7 @@ public class Dialogue : MonoBehaviour
     {
         gameObject.SetActive(true);
         GameManager.Instance.CurrentState = GameState.Dialogue;
+        UIManager.Instance.ShowBars(true);
         SetText(_dialogueInstance.Data.Dialogue[0]);
     }
 
