@@ -9,7 +9,7 @@ public class EnemyControllerBase :
     [field: SerializeField]
     public int ExpAmount { get; protected set; }
 
-    public static event Action<int> OnEnemyDeath;
+    public static event Action<string,int> OnEnemyDeath;
 
     protected virtual GameObject _player { get; set; }
     protected virtual PlayerController _playerController { get; set; }
@@ -21,8 +21,7 @@ public class EnemyControllerBase :
             new GenericState("Death",
                 new ActionEntry("Enter", () =>
                 {
-                    OnEnemyDeath(Weight);
-                    Debug.Log(_playerController);
+                    OnEnemyDeath(GameObject.FindWithTag("EnemySpawner").scene.name,Weight);
                     var playerLevelling =
                         _playerController.gameObject.
                         GetComponent<PlayerLevelUp>();

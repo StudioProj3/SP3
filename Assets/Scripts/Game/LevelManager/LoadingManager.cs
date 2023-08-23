@@ -92,6 +92,9 @@ public class LoadingManager : Singleton<LoadingManager>
         {
             if (SceneManager.GetSceneAt(i).name == sceneName)
             {
+                EnemyManager.Instance.DestroyEnemies(sceneName);
+
+
                 asyncLoad =
                     SceneManager.UnloadSceneAsync(sceneName);
 
@@ -119,9 +122,9 @@ public class LoadingManager : Singleton<LoadingManager>
             (sceneName, LoadSceneMode.Additive);
     }
 
-    public bool CheckForAllObjects(string tag)
+    public int GetNumberOfScenes()
     {
-        return false;
+        return SceneManager.sceneCountInBuildSettings;
     }
 
     public string GetCurrentSceneName()

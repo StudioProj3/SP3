@@ -10,12 +10,29 @@ public class EnemySpawner : MonoBehaviour
 
     public int SpawnEnemy()
     {
-        int randomNum = Random.Range(0, _pooledEnemyList.Count);
+        for (int i = 0; i < _pooledEnemyList.Count; i++)
+        {
+            if (!_pooledEnemyList[i].gameObject.activeSelf)
+                break;
 
-        _pooledEnemyList[randomNum].gameObject.SetActive(true);
-        _pooledEnemyList[randomNum].transform.position =
-            transform.position;
-        _pooledEnemyList[randomNum].transform.SetParent(null);
+            if (i + 1 == _pooledEnemyList.Count)
+                return 0;
+        }
+
+        int randomNum = 0;
+
+        while (true)
+        {
+            randomNum = Random.Range(0, _pooledEnemyList.Count);
+
+            if (!_pooledEnemyList[randomNum].gameObject.activeSelf)
+            {
+                _pooledEnemyList[randomNum].gameObject.SetActive(true);
+                _pooledEnemyList[randomNum].transform.position =
+                    transform.position;
+                break;
+            }
+        }
 
         return _pooledEnemyList[randomNum].Weight;
     }

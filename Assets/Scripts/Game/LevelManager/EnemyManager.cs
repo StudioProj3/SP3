@@ -5,14 +5,29 @@ using UnityEngine;
 public class EnemyManager : Singleton<EnemyManager>
 {
     private GameObject _spawnerGroup;
-    private LevelManager _level;
+    private Dictionary<string,LevelManager> _levelList;
     private List<EnemySpawner> _enemySpawners;
     private GameObject _player;
 
-    public void SpawnEnemiesInScene()
+    public void SpawnEnemiesInScene(string sceneName, LevelManager currentLevel)
     {
-        _level = GameObject.FindGameObjectWithTag("LevelManager")
-            .GetComponent<LevelManager>();
+        //int emptyElement = 0;
+
+        //for (int i = 0; i < _levelList.Count; i++)
+        //{
+        //    if(!_levelList[i])
+        //    {
+        //        emptyElement = i;
+        //        break;
+        //    }
+        //}
+
+        //_levelList.Insert(emptyElement, GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>());
+
+        if(!_levelList.ContainsKey(sceneName))
+            _levelList.Add(sceneName, currentLevel);
+        
+
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
 
@@ -23,25 +38,67 @@ public class EnemyManager : Singleton<EnemyManager>
                 _enemySpawners.Add(child.GetComponent<EnemySpawner>());
             }
 
-            while (_level.CurrentWeight <= _level.WeightLimit)
+            if(_levelList.TryGetValue(sceneName, out LevelManager level))
             {
-                int randomNum = Random.Range(0, _enemySpawners.Count);
+                while (level.CurrentWeight < level.WeightLimit)
+                {
+                    int randomNum = Random.Range(0, _enemySpawners.Count);
 
-                _enemySpawners[randomNum].gameObject.SetActive(true);
+                    _enemySpawners[randomNum].gameObject.SetActive(true);
 
+                    int enemyWeight = _enemySpawners[randomNum].SpawnEnemy();
 
-                _level.CurrentWeight += _enemySpawners[randomNum].SpawnEnemy();
+                    if (enemyWeight == 0)
+                        break;
+
+                    level.CurrentWeight += enemyWeight;
+
+                }
+
+                level.WeightOver = level.WeightLimit - level.CurrentWeight;
             }
+
+           
         }
     }
 
-    public void StartEnemyTimer(int weight)
+    public void StartEnemyTimer(string sceneName, int weight)
     {
-        Debug.Log("EnemyDied");
+        if (_levelList.TryGetValue(sceneName, out LevelManager level))
+        {
+
+            _ = Delay.Execute(() =>
+            {
+                level.CurrentWeight -= weight;
+                if(sceneName == GameObject.FindWithTag("LevelManager").scene.name)
+                    SpawnEnemiesInScene(sceneName, level);
+            }, 10.0f);
+        }
     }
 
+    public void DestroyEnemies(string sceneName)
+    {
+        GameObject[] enemiesObjects = GameObject.FindGameObjectsWithTag("Enemy");
+
+        Debug.Log(enemiesObjects.Length);
+
+        if (_levelList.TryGetValue(sceneName, out LevelManager level))
+        {
+            for (int i = 0; i < enemiesObjects.Length; i++)
+            {
+                if (enemiesObjects[i].GetComponent<EnemyControllerBase>())
+                    level.CurrentWeight -= enemiesObjects[i].GetComponent<EnemyControllerBase>().Weight;
+            }
+
+            level.CurrentWeight -= level.WeightOver;
+
+        }
+    }
     protected override void OnStart()
     {
         EnemyControllerBase.OnEnemyDeath += StartEnemyTimer;
+
+        _levelList = new Dictionary<string, LevelManager>(LoadingManager.Instance.GetNumberOfScenes());
+
     }
 }
