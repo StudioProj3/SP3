@@ -131,7 +131,7 @@ public class PlayerController :
         // Ideally only check when damage is taken
         if (Data.CharacterStats.GetStat("Health").Value <= 0)
         {
-            GameManager.Instance.ChangeGameState(GameState.Lose);
+            GameManager.Instance.CurrentState = GameState.Lose;
         }
         
     }
