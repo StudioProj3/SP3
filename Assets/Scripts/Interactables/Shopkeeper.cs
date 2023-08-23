@@ -36,6 +36,10 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         if (!_shopUI)
         {
             _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
+            if(_shopUI)
+            {
+                _shopUI.SetActive(false);
+            }
         }
         if(_toggleText.activeSelf)
         {
