@@ -16228,10 +16228,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641fc6ffad2e2354ba24f7b0d787e78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistent: 0
+  WeightLimit: 0
   _initScenes:
   - UIHUD
   - UI
+  CurrentWeight: 0
 --- !u!4 &1409956691
 Transform:
   m_ObjectHideFlags: 0
