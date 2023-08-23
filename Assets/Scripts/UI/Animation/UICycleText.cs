@@ -6,7 +6,7 @@ using static UI;
 // Text animation that goes from front to back before
 // coming back to the front
 [RequireComponent(typeof(TMP_Text))]
-public class UICycleTextAnimation : MonoBehaviour
+public class UICycleText : MonoBehaviour
 {
     [SerializeField]
     [Range(0.01f, 1f)]
