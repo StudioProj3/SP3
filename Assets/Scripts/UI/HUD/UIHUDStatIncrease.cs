@@ -28,6 +28,7 @@ public class UIHUDStatIncrease : MonoBehaviour
 
     private void Start()
     {
+        _currentLevel = _playerData.CharacterStats.GetStat("Level").Value;
         for (int i = 0; i < transform.childCount; ++i)
         {
             _upgradeButtons.Add(transform.GetChild(i).
@@ -51,6 +52,7 @@ public class UIHUDStatIncrease : MonoBehaviour
 
         UpdateStatText();
         _prevLevel = 1;
+        DisplayButtons(_prevLevel < _currentLevel);
     }
     
     private void UpdateStatText()
@@ -67,13 +69,13 @@ public class UIHUDStatIncrease : MonoBehaviour
             _playerData.CharacterStats.GetStat("Armor").Max;
         _statText[5].text = "Magic Res: " + 
             _playerData.CharacterStats.GetStat("MagicResistance").Max;
-        
-        DisplayButtons(false);
+
+        _prevLevel += 1;
+        DisplayButtons(_prevLevel < _currentLevel);
     }
 
     public void DisplayButtons(bool displayButtons)
     {
-        _prevLevel = _currentLevel;
         foreach(Button button in _upgradeButtons)
         {
             button.enabled = displayButtons;
