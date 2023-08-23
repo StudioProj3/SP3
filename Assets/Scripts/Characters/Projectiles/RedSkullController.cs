@@ -43,7 +43,6 @@ public class RedSkullController : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
     }
 
     private void Update()

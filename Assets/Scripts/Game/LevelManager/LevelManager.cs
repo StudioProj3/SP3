@@ -9,13 +9,13 @@ public class LevelManager : Singleton<LevelManager>
     private LoadingManager _loadingManager;
 
     [SerializeField]
-    private List<string> _initScenes;
+    public List<string> _initScenes;
 
     private GameObject _spawnerGroup;
     private List<EnemySpawner> _enemySpawners;
     private GameObject _player;
 
-    private void Awake()
+    protected override void OnStart()
     {
 
         _loadingManager = LoadingManager.Instance;
@@ -24,9 +24,6 @@ public class LevelManager : Singleton<LevelManager>
         {
             _loadingManager.LoadSceneAdditive(_initScenes[i], false);
         }
-
-        //_player = GameObject.FindGameObjectWithTag("Player");
-        //_loadingManager.LoadSceneAdditive(_loadingManager.sceneList.HUDScene, false);
 
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
@@ -45,13 +42,8 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _loadingManager.LoadScene(_loadingManager.sceneList.layer2Scene);
-        }
 
     }
 }

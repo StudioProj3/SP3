@@ -58,7 +58,6 @@ public class EarthController : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);  
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

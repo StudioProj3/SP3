@@ -40,13 +40,3 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("Respawn");
     }
 }
-
-public enum GameState
-{
-    MainMenu,
-    Play,
-    Dialogue,
-    Pause,
-    Win,
-    Lose,
-}

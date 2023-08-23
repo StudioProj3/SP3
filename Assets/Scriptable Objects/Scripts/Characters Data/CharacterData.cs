@@ -7,8 +7,17 @@ using UnityEngine;
 public class CharacterData : ScriptableObject,
     INameable, ISavable<CharacterData>
 {
+    [field: HorizontalDivider]
+    [field: Header("Basic Parameters")]
+
     [field: SerializeField]
     public string Name { get; protected set; }
+
+    [field: SerializeField]
+    public bool IsDead { get; set; }
+
+    [field: HorizontalDivider]
+    [field: Header("Inventory Parameters")]
 
     [field: SerializeField]
     public InventoryBase Inventory { get; set; }
@@ -16,8 +25,8 @@ public class CharacterData : ScriptableObject,
     [field: SerializeField]
     public HandInventory HandInventory { get; set; }
 
-    [field: SerializeField]
-    public bool IsDead { get; set; }
+    [field: HorizontalDivider]
+    [field: Header("Stats Parameters")]
 
     [field: SerializeField]
     public Stats CharacterStats { get; set; }
@@ -32,27 +41,36 @@ public class CharacterData : ScriptableObject,
     [field: ShowIf("EnableSave", true, true)]
     public string SaveID { get; protected set; }
 
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public ISerializable.SerializeFormat Format
+        { get; protected set; }
+
     public string Serialize()
     {
-        return "";
+        return JsonUtility.ToJson(this,
+            Format == ISerializable.SerializeFormat.Pretty);
     }
 
-    public CharacterData Deserialize()
+    public CharacterData Deserialize(string data)
     {
         return new();
     }
 
     public void HookEvents()
     {
-
+        if (EnableSave)
+        {
+            SaveManager.Instance.Hook(SaveID, Save, Load);
+        }
     }
 
-    public void Load(object send, EventArgs args)
+    public string Save()
     {
-
+        return Serialize();
     }
 
-    public void Save(object send, EventArgs args)
+    public void Load(string data)
     {
 
     }

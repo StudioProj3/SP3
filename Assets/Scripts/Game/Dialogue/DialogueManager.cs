@@ -28,7 +28,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
     }
 
-    protected override void OnAwake()
+    protected override void OnStart()
     {
         _dialogue = GetComponentInChildren<Dialogue>(true); 
     }

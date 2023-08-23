@@ -42,11 +42,6 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnEnemyKilled?.Invoke(data);
     }
 
-    protected override void OnAwake()
-    {
-        InitializeDictionary(); 
-    }
-
     private void OnEnable()
     {
         OnQuestStart += StartQuestCallback;
@@ -55,8 +50,10 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnQuestStateChange += QuestStateChangeCallback;
     }
 
-    private void Start()
+    protected override void OnStart()
     {
+        InitializeDictionary(); 
+
         foreach (Quest quest in _allQuests.Values)
         {
             QuestStateChange(quest);
