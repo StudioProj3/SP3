@@ -1,4 +1,9 @@
-public interface IDeserializable<T>
+using UnityEngine;
+
+public interface IDeserializable
 {
-    T Deserialize(string data);
+    void Deserialize(string data)
+    {
+        JsonUtility.FromJsonOverwrite(data, this);
+    }
 }

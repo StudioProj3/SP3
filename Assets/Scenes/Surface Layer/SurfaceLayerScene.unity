@@ -37060,6 +37060,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
+  _saveLocation: 0
+  _saveDirectory: 
+  _saveFileName: Save.json
+  _toHooks:
+  - {fileID: 11400000, guid: bc16ff1a8faa3bf4fb15625a970c048c, type: 2}
+  _editorDirectoryOverride: C:\SP3\savetmp
 --- !u!4 &1478020964
 Transform:
   m_ObjectHideFlags: 0

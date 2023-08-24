@@ -47,10 +47,6 @@ public class PlayerAttack : MonoBehaviour
         _heldItemContainer = transform.GetChild(0);
         _weaponFlipAngle = Quaternion.Euler(0f, -360f, 0f);
         _flipVector = new(-1f, 1f, 1f);
-        // TODO (Cheng Jun): This should be updated to try
-        // and fetch the player's local save instead of performing
-        // a reset once the save system is ready
-        _playerData.Reset();
     }
 
     private void Update()

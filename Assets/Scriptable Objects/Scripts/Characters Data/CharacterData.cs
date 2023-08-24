@@ -1,11 +1,9 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CharacterData",
     menuName = "Scriptable Objects/Character Data")]
 public class CharacterData : ScriptableObject,
-    INameable, ISavable<CharacterData>
+    INameable, ISavable
 {
     [field: HorizontalDivider]
     [field: Header("Basic Parameters")]
@@ -46,17 +44,6 @@ public class CharacterData : ScriptableObject,
     public ISerializable.SerializeFormat Format
         { get; protected set; }
 
-    public string Serialize()
-    {
-        return JsonUtility.ToJson(this,
-            Format == ISerializable.SerializeFormat.Pretty);
-    }
-
-    public CharacterData Deserialize(string data)
-    {
-        return new();
-    }
-
     public void HookEvents()
     {
         if (EnableSave)
@@ -67,29 +54,35 @@ public class CharacterData : ScriptableObject,
 
     public string Save()
     {
-        return Serialize();
+        ISerializable serializable = this;
+        return serializable.Serialize();
     }
 
     public void Load(string data)
     {
-
+        IDeserializable deserializable = this;
+        deserializable.Deserialize(data);
     }
 
     public virtual void Reset()
     {
         Inventory = null;
+
         if (HandInventory != null)
         {
             HandInventory.Reset();
         }
+
         IsDead = false;
     }
 
     protected virtual void OnValidate()
     {
 #if UNITY_EDITOR
+
         Name = name;
         UnityEditor.EditorUtility.SetDirty(this);
+
 #endif
     }
 }

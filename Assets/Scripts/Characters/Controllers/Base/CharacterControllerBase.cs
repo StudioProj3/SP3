@@ -61,6 +61,7 @@ public abstract class CharacterControllerBase :
     protected virtual void Awake()
     {
         Data.HookEvents();
+        Data.Reset();
     }
     
     protected void RemoveEffectImpl(StatusEffectBase statusEffect,
