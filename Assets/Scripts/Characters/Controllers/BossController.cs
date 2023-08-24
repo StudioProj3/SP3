@@ -87,8 +87,11 @@ public class BossController :
                     {
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
-                            _pooledMissleList[i].Init(_direction, _phyDamage,
+                            _pooledMissleList[i].Init(_direction, _phyDamage.AddModifier(
+                                Modifier.Multiply(_bossStatsContainer.
+                                GetStat("DamageMultiplier").Value, 3)),
                                 _arrowStatusEffect, _pooledMissles.transform, _player);
+
                             _pooledMissleList[i].transform.position =
                                 transform.position;
                             _pooledMissleList[i].transform.SetParent(null);
@@ -101,8 +104,11 @@ public class BossController :
                     {
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
-                            _pooledMissleList[i].Init(-_direction, _phyDamage,
+                            _pooledMissleList[i].Init(-_direction, _phyDamage.AddModifier(
+                                Modifier.Multiply(_bossStatsContainer.
+                                GetStat("DamageMultiplier").Value, 3)),
                                 _arrowStatusEffect, _pooledMissles.transform, _player);
+
                             _pooledMissleList[i].transform.position =
                                 transform.position;
                             _pooledMissleList[i].transform.SetParent(null);
@@ -338,7 +344,9 @@ public class BossController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _bossStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_bossStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), knockbackForce);
         }
     }
 
@@ -352,8 +360,11 @@ public class BossController :
             if (!(_pooledBulletList[j]
                 .gameObject.activeSelf))
             {
-                _pooledBulletList[j].Init(_direction, _phyDamage,
+                _pooledBulletList[j].Init(_direction, _magicDamage.AddModifier(
+                    Modifier.Multiply(_bossStatsContainer.
+                    GetStat("DamageMultiplier").Value, 3)),
                     _arrowStatusEffect, _pooledMissles.transform);
+
                 _pooledBulletList[j].transform.position = transform.position;
                 _pooledBulletList[j].transform.SetParent(null);
 
