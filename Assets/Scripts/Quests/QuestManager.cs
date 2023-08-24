@@ -16,6 +16,8 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private Dictionary<string, Quest> _allQuests = new();
 
+    private UIHUDQuestInformation _questDisplayInformation; 
+
     public void StartQuest(string id) 
     {
         OnQuestStart?.Invoke(id);
@@ -59,6 +61,16 @@ public sealed class QuestManager : Singleton<QuestManager>
         }
 
         StartQuest("Introduction");
+
+        GameObject questDisplayObject = 
+            GameObject.FindWithTag("QuestInformation");
+
+        if (questDisplayObject == null)
+        {
+            return;
+        }
+
+        _ = questDisplayObject.TryGetComponent(out _questDisplayInformation);
     }
 
     private void ChangeQuestState(string id, QuestState state)
