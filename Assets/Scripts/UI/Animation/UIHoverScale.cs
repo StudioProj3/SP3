@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using static DebugUtils;
 
 public class UIHoverScale :
-    MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    UITransitionBase, IPointerEnterHandler, IPointerExitHandler
 {
     public enum Axis
     {
@@ -13,31 +13,8 @@ public class UIHoverScale :
         XY,
     }
 
-    [HorizontalDivider]
-    [Header("Target")]
-
-    [SerializeField]
-    [Tooltip("Whether the transition is applied to this gameobject")]
-    private bool _moveSelf = true;
-
-    [SerializeField]
-    [ShowIf("_moveSelf", false)]
-    private RectTransform _otherRectTransform;
-
-    [HorizontalDivider]
-    [Header("Transition Parameters")]
-
     [SerializeField]
     private Axis _axis = Axis.XY;
-
-    [SerializeField]
-    [Range(-10f, 10f)]
-    private float _magnitude = 0.2f;
-
-    [SerializeField]
-    [Range(0f, 1f)]
-    [Tooltip("Time in seconds from the start to the end")]
-    private float _duration = 0.2f;
 
     private RectTransform _rectTransform;
     private Vector2 _original;
