@@ -96,7 +96,9 @@ public sealed class QuestManager : Singleton<QuestManager>
             _ = questUIObject.TryGetComponent(out _questDisplayInformation);
         }
 
-        this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
+        // this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
+        StartQuest("Introduction");
+        StartQuest("ShopkeeperQuest");
     }
 
     private void ChangeQuestState(string id, QuestState state)
