@@ -3304,7 +3304,7 @@ GameObject:
   - component: {fileID: 993836797}
   m_Layer: 5
   m_Name: QuestInformation
-  m_TagString: Untagged
+  m_TagString: QuestInformation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3342,6 +3342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c134faf29dde67341b9b1a9d2288da7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _questDisplayPrefab: {fileID: 0}
 --- !u!1001 &1021146968
 PrefabInstance:
   m_ObjectHideFlags: 0

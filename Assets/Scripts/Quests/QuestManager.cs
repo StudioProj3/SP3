@@ -16,6 +16,26 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private Dictionary<string, Quest> _allQuests = new();
 
+    private UIHUDQuestInformation QuestDisplayInformation
+    {
+        get 
+        {
+            if (_questDisplayInformation == null)
+            {
+                GameObject questDisplayObject = 
+                    GameObject.FindWithTag("QuestInformation");
+
+                if (questDisplayObject == null)
+                {
+                    return null;
+                }
+
+                _ = questDisplayObject.TryGetComponent(
+                    out _questDisplayInformation);
+            }
+            return _questDisplayInformation;
+        }
+    }
     private UIHUDQuestInformation _questDisplayInformation; 
 
     public void StartQuest(string id) 
@@ -51,6 +71,14 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnQuestStateChange += QuestStateChangeCallback;
     }
 
+    private void OnDisable()
+    {
+        OnQuestStart -= StartQuestCallback;
+        OnAdvanceQuest -= AdvanceQuestCallback;
+        OnFinishQuest -= FinishQuestCallback;
+        OnQuestStateChange -= QuestStateChangeCallback;
+    }
+
     protected override void OnStart()
     {
         InitializeDictionary(); 
@@ -60,17 +88,15 @@ public sealed class QuestManager : Singleton<QuestManager>
             QuestStateChange(quest);
         }
 
-        StartQuest("Introduction");
-
-        GameObject questDisplayObject = 
+        GameObject questUIObject = 
             GameObject.FindWithTag("QuestInformation");
 
-        if (questDisplayObject == null)
+        if (questUIObject != null)
         {
-            return;
+            _ = questUIObject.TryGetComponent(out _questDisplayInformation);
         }
 
-        _ = questDisplayObject.TryGetComponent(out _questDisplayInformation);
+        this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
     }
 
     private void ChangeQuestState(string id, QuestState state)
@@ -92,7 +118,13 @@ public sealed class QuestManager : Singleton<QuestManager>
     private void StartQuestCallback(string id)
     {
         Quest quest = GetQuest(id);
-        quest.InstantiateCurrentQuestStep(transform);
+        QuestStep step = quest.InstantiateCurrentQuestStep(transform);
+
+        if (QuestDisplayInformation != null)
+        {
+            QuestDisplayInformation.OnQuestStart(step.DisplayDescription);
+        }
+        
         ChangeQuestState(quest.Info.ID, QuestState.InProgress);
     }
 

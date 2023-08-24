@@ -10,19 +10,24 @@ public class UIHUDQuestInformation : MonoBehaviour
 
     private IObjectPool<UIHUDQuestDisplay> _questDisplays;
 
+    private UIHUDQuestDisplay _display;
+
+    public void OnQuestStart(string stepDescription)
+    {
+        _display.SetDisplayText(stepDescription);
+    }
+
     private void Awake()
     {
         _questDisplays = new ObjectPool<UIHUDQuestDisplay>(() => 
             Instantiate(_questDisplayPrefab));
+
+        // For testing
+        _display = GetComponentInChildren<UIHUDQuestDisplay>(true);
     }
 
     private void Start()
     {
         // Call these bindings at start because it is in an additive scene
-    }
-
-    private void StartQuestHandler()
-    {
-
     }
 }

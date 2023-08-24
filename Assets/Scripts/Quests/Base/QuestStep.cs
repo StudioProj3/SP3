@@ -2,8 +2,11 @@ using UnityEngine;
 
 public abstract class QuestStep : MonoBehaviour
 {
-    private bool _isFinished = false;
+    [field: SerializeField]
+    public string DisplayDescription { get; private set;}
+
     protected string _questID;
+    private bool _isFinished = false;
 
     public virtual void Initialize(string questID)
     {
