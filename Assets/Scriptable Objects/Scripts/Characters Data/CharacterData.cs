@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CharacterData",
     menuName = "Scriptable Objects/Character Data")]
 public class CharacterData : ScriptableObject,
-    INameable, ISavable<CharacterData>
+    INameable, ISavable
 {
     [field: HorizontalDivider]
     [field: Header("Basic Parameters")]
@@ -44,17 +44,6 @@ public class CharacterData : ScriptableObject,
     public ISerializable.SerializeFormat Format
         { get; protected set; }
 
-    public string Serialize()
-    {
-        return JsonUtility.ToJson(this,
-            Format == ISerializable.SerializeFormat.Pretty);
-    }
-
-    public void Deserialize(string data)
-    {
-        JsonUtility.FromJsonOverwrite(data, this);
-    }
-
     public void HookEvents()
     {
         if (EnableSave)
@@ -65,12 +54,14 @@ public class CharacterData : ScriptableObject,
 
     public string Save()
     {
-        return Serialize();
+        ISerializable serializable = this;
+        return serializable.Serialize();
     }
 
     public void Load(string data)
     {
-        Deserialize(data);
+        IDeserializable deserializable = this;
+        deserializable.Deserialize(data);
     }
 
     public virtual void Reset()

@@ -29,6 +29,12 @@ public class SaveManager : Singleton<SaveManager>
     [SerializeField]
     private string _saveFileName;
 
+    [HorizontalDivider]
+    [Header("Event Hooks")]
+
+    [SerializeField]
+    private List<ScriptableObject> _toHooks;
+
 #if UNITY_EDITOR
 
     [HorizontalDivider]
@@ -60,7 +66,7 @@ public class SaveManager : Singleton<SaveManager>
 
     public void Save(string saveID)
     {
-        bool result = _saveDict.ContainsKey(saveID);
+        bool result = _callbacks.ContainsKey(saveID);
 
         Assert(result, "key not found");
 
@@ -80,6 +86,8 @@ public class SaveManager : Singleton<SaveManager>
         WriteToDisk();
     }
 
+    // Also handles case where a new key value pair needs
+    // to be added to the local save file of the user
     public void LoadAll()
     {
         string saveLocation = GetSaveLocation();
@@ -102,7 +110,22 @@ public class SaveManager : Singleton<SaveManager>
 
         foreach (var pair in _callbacks)
         {
+            string saveID = pair.Key;
+
             Action<string> load = pair.Value.Second;
+
+            bool result = _saveDict.TryGetValue(
+                saveID, out string saveString);
+
+            // This is a new key value pair and is currently
+            // not in the load save file of the user
+            if (!result)
+            {
+                // Save a fresh initial state to disk
+                Save(saveID);
+
+                continue;
+            }
 
             load(_saveDict[pair.Key]);
         }
@@ -117,6 +140,17 @@ public class SaveManager : Singleton<SaveManager>
     private void Start()
     {
         LoadAll();
+    }
+
+    private void Awake()
+    {
+        foreach (ScriptableObject obj in _toHooks)
+        {
+            if (obj is ISavable savable)
+            {
+                savable.HookEvents();
+            }
+        }
     }
 
     private string GetSaveLocation()

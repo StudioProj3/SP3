@@ -76,6 +76,10 @@ public class PlayerPickup :
                 // successfully pick the items up
                 if (tryInventory)
                 {
+                    SaveManager.Instance.Save(
+                        (_characterData.Inventory as BasicInventory).
+                        SaveID);
+
                     other.gameObject.SetActive(false);
                     OnPlayerPickup?.Invoke(item, quantity);
 

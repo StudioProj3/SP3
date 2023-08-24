@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface ISerializable
 {
     enum SerializeFormat
@@ -8,5 +10,9 @@ public interface ISerializable
 
     SerializeFormat Format { get; }
 
-    string Serialize();
+    string Serialize()
+    {
+        return JsonUtility.ToJson(this,
+            Format == SerializeFormat.Pretty);
+    }
 }
