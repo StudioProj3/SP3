@@ -8,12 +8,14 @@ public class UIInventory : MonoBehaviour
     {
         gameObject.SetActive(true);
         _content.SetActive(true);
+        UIManager.Instance.ShowHUD(false);
     }
 
     public void HideInventory()
     {
         gameObject.SetActive(false);
         _content.SetActive(false);
+        UIManager.Instance.ShowHUD(true);
     }
 
     private void Awake()
