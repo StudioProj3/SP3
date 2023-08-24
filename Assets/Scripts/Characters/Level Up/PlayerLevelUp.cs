@@ -32,8 +32,7 @@ public class PlayerLevelUp : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_playerData.CharacterStats.
-            GetStat("Level").Value);
+
     }
     
     private void LevelUp()

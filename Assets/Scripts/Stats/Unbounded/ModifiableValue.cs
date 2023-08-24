@@ -11,21 +11,23 @@ public class ModifiableValue : IModifiableValue
     {
         get
         {
-            float v = _initialValue;
             if (_isDirty)
             {
-                _modifiers.OrderByDescending(m => m.Priority)
+                float v = _initialValue;
+                _modifiers
+                    .OrderByDescending(m => m.Priority)
                     .ToList()
-                    .ForEach(m => m.Modify(v));
+                    .ForEach(m => v = m.Modify(v));
                 _isDirty = false;
+                _value = v;
             }
-            _value = v;
 
             return _value;
         }
     }
 
     public float Max => Value;
+    public float Base => _initialValue;
 
     public event Action ValueChanged;
 
