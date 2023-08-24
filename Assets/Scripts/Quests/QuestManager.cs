@@ -8,6 +8,9 @@ using static DebugUtils;
 
 public sealed class QuestManager : Singleton<QuestManager> 
 {
+    [SerializeField]
+    private CharacterData _playerData; 
+
     public event Action<string> OnQuestStart; 
     public event Action<string> OnAdvanceQuest; 
     public event Action<string> OnFinishQuest; 
@@ -154,7 +157,7 @@ public sealed class QuestManager : Singleton<QuestManager>
             {
                 if (quest.Info.Autocomplete)
                 {
-                    QuestDisplayInformation.ClearQuest(quest.Info.ID);
+                    FinishQuest(id);
                 }
                 else
                 {
@@ -167,7 +170,19 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private void FinishQuestCallback(string id)
     {
-
+        Quest quest = GetQuest(id);
+        if (QuestDisplayInformation != null)
+        {
+            QuestDisplayInformation.ClearQuest(quest.Info.ID);
+            
+            // Handle the rewards
+            // TODO (Chris): Implement item rewards
+            if (_playerData.CharacterStats.TryGetStat(
+                "ExperiencePoints", out var xp))
+            {
+                xp.Add(quest.Info.RewardXP);
+            }
+        }
     }
 
     private void QuestStateChangeCallback(Quest quest)
