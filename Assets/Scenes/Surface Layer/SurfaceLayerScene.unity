@@ -18598,6 +18598,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6696665779751592122}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1161239567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6696665778595085488, guid: 7c1c33b2c02e3674cb69453aca66ede0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6696665779751592122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6b04b3770eb874fa4260b06ad2b5dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1161692918
 GameObject:
   m_ObjectHideFlags: 0
@@ -47000,6 +47012,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shrine Statue
       objectReference: {fileID: 0}
+    - target: {fileID: 6007648347606804004, guid: 68bfda4921374e34eacccf08ab8f35eb,
+        type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1161239567}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68bfda4921374e34eacccf08ab8f35eb, type: 3}
 --- !u!1001 &6114176375881938403

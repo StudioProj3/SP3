@@ -41,8 +41,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6968981157741433254, guid: fc8ac080be80294468594bc8db0d6f10,
         type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 6968981157741433254, guid: fc8ac080be80294468594bc8db0d6f10,
+        type: 3}
       propertyPath: m_Name
       value: EnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 6968981157741433254, guid: fc8ac080be80294468594bc8db0d6f10,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6968981157741433255, guid: fc8ac080be80294468594bc8db0d6f10,
         type: 3}
