@@ -12,6 +12,8 @@ public class UIHoverPanel :
 
     private TMP_Text _itemName;
     private TMP_Text _itemDescription;
+    private GameObject _action1Button;
+    private GameObject _action2Button;
 
     public void ShowPanel()
     {
@@ -55,6 +57,26 @@ public class UIHoverPanel :
         }
     }
 
+    public void ShowAction1Button()
+    {
+        _action1Button.SetActive(true);
+    }
+
+    public void HideAction1Button()
+    {
+        _action1Button.SetActive(false);
+    }
+
+    public void ShowAction2Button()
+    {
+        _action2Button.SetActive(true);
+    }
+
+    public void HideAction2Button()
+    {
+        _action2Button.SetActive(false);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         _lock = true;
@@ -63,7 +85,7 @@ public class UIHoverPanel :
     public void OnPointerExit(PointerEventData eventData)
     {
         _lock = false;
-        //Debug.Log("locl");
+        HidePanel();
     }
 
     private void Awake()
@@ -72,5 +94,8 @@ public class UIHoverPanel :
             GetComponent<TMP_Text>();
         _itemDescription = transform.GetChild(1).
             GetComponent<TMP_Text>();
+
+        _action1Button = transform.ChildGO(2);
+        _action2Button = transform.ChildGO(3);
     }
 }
