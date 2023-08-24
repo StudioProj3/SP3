@@ -88,7 +88,9 @@ public class MinotaurController :
                             normalized * _minotaurStatsContainer.
                             GetStat("Knockback").Value;
 
-                        _playerController.TakeDamage(_phyDamage,
+                        _playerController.TakeDamage(_phyDamage.AddModifier(
+                            Modifier.Multiply(_minotaurStatsContainer.
+                            GetStat("DamageMultiplier").Value, 3)),
                             knockbackForce);
 
                         break;
@@ -151,7 +153,10 @@ public class MinotaurController :
             }),
 
             // Idle > Walk
-            new RandomTimedTransition("Idle", "Walk", 0.2f, 0.5f),
+            new GenericTransition("Idle", "Walk", () =>
+            {
+                return _distance < 3.0f;
+            }),
 
             // Walk > Idle
             new FixedTimedTransition("Walk", "Idle", 0.7f),
@@ -254,7 +259,10 @@ public class MinotaurController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _minotaurStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_minotaurStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), knockbackForce);
         }
     }
 
@@ -265,8 +273,11 @@ public class MinotaurController :
 
             if (!(_pooledEarthList[i].gameObject.activeSelf))
             {
-                _pooledEarthList[i].Init(direction, _phyDamage,
+                _pooledEarthList[i].Init(direction, _phyDamage.AddModifier(
+                    Modifier.Multiply(_minotaurStatsContainer.
+                    GetStat("DamageMultiplier").Value, 3)),
                     _earthStatusEffect, _pooledEarth.transform);
+
                 _pooledEarthList[i].transform.position =
                     transform.position + direction;
                 _pooledEarthList[i].transform.SetParent(null);

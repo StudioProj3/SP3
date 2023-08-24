@@ -83,7 +83,9 @@ public class SkeletonController :
                             normalized * _skeletonStatsContainer.
                             GetStat("Knockback").Value;
 
-                        _playerController.TakeDamage(_phyDamage,
+                        _playerController.TakeDamage(_phyDamage.AddModifier(
+                            Modifier.Multiply(_skeletonStatsContainer.
+                            GetStat("DamageMultiplier").Value, 3)),
                             knockbackForce);
 
                         break;
@@ -210,7 +212,9 @@ public class SkeletonController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _skeletonStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_skeletonStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), knockbackForce);
         }
     }
 }
