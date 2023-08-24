@@ -151,7 +151,10 @@ public class MinotaurController :
             }),
 
             // Idle > Walk
-            new RandomTimedTransition("Idle", "Walk", 0.2f, 0.5f),
+            new GenericTransition("Idle", "Walk", () =>
+            {
+                return _distance < 3.0f;
+            }),
 
             // Walk > Idle
             new FixedTimedTransition("Walk", "Idle", 0.7f),
