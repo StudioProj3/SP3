@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
+using Newtonsoft.Json;
+
 // This class should only contain static modifiers
 // It caches the internal value to prevent extra calculation
 [Serializable]
@@ -31,14 +33,17 @@ public class ModifiableValue : IModifiableValue
 
     public event Action ValueChanged;
 
-    // List of modifiers sorted on add adn remove
+    // List of modifiers sorted on add and remove
+    [JsonProperty]
     private List<Modifier> _modifiers;
     private bool _isDirty = true;
 
     // Store the initial value for cloning
+    [JsonProperty]
     private readonly float _initialValue;
 
     // The internal value of the container
+    [JsonProperty]
     private float _value;
 
     public void Add(float toAdd)
