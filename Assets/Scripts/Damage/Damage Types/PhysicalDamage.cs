@@ -31,11 +31,30 @@ public class PhysicalDamage : Damage
             float damage = Mathf.Round(_damage.Value *
                 ((100 - resistance) / 100));
             entityStats.GetStat("Health").Subtract(damage);
+
+            if (entityStats.TryGetStat("Sanity", out var sanity))
+            {
+                Modifier maxHealthReduction = Modifier.Plus(
+                        Mathf.Round((sanity.Max - sanity.Value) / sanity.Max
+                        * damage * -0.5f), 10000);
+                        
+                entityStats.GetStat("Health").AddModifier(maxHealthReduction);
+            }
         }
         else
         {
             entityStats.GetStat("Health").Subtract(
                 Mathf.Round(_damage.Value));
+
+            if (entityStats.TryGetStat("Sanity", out var sanity))
+            {
+                Debug.Log("Sanity Damage");
+                Modifier maxHealthReduction = Modifier.Plus(
+                        Mathf.Round((sanity.Max - sanity.Value) / sanity.Max
+                        * _damage.Value * -0.5f), 10000);
+
+                entityStats.GetStat("Health").AddModifier(maxHealthReduction);
+            }
         }
     }
 }

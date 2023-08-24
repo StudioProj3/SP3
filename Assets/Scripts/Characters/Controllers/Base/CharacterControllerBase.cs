@@ -19,7 +19,7 @@ public abstract class CharacterControllerBase :
     protected SpriteRenderer _spriteRenderer;
     protected List<StatusEffectBase> _statusEffects = new();
 
-    public void TakeDamage(Damage damage, Vector3 knockback)
+    public virtual void TakeDamage(Damage damage, Vector3 knockback)
     {
         _rigidbody.AddForce(knockback, ForceMode.Impulse);
         damage.OnApply(this);

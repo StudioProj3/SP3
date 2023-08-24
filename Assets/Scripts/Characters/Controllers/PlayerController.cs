@@ -11,6 +11,20 @@ public class PlayerController :
     private float _verticalInput;
     private bool _rollKeyPressed;
 
+    public override void TakeDamage(Damage damage, Vector3 knockback)
+    {
+        _rigidbody.AddForce(knockback, ForceMode.Impulse);
+        damage.OnApply(this);
+
+        Color originalColor = _spriteRenderer.color;
+
+        _spriteRenderer.color = new Color(1, 0, 0,0.5f);
+        _ = Delay.Execute(() =>
+        {
+            _spriteRenderer.color = originalColor;
+        }, 0.15f);
+    }
+
     protected override void Start()
     {
         base.Start();
