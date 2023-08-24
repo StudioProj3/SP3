@@ -38,6 +38,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 _enemySpawners.Add(child.GetComponent<EnemySpawner>());
             }
 
+
             if(_levelList.TryGetValue(sceneName, out LevelManager level))
             {
                 while (level.CurrentWeight < level.WeightLimit)
@@ -48,14 +49,15 @@ public class EnemyManager : Singleton<EnemyManager>
 
                     int enemyWeight = _enemySpawners[randomNum].SpawnEnemy();
 
+
                     if (enemyWeight == 0)
-                        break;
+                        return;
 
                     level.CurrentWeight += enemyWeight;
 
                 }
 
-                level.WeightOver = level.WeightLimit - level.CurrentWeight;
+                level.WeightOver = level.CurrentWeight - level.WeightLimit;
             }
 
            
@@ -79,8 +81,6 @@ public class EnemyManager : Singleton<EnemyManager>
     public void DestroyEnemies(string sceneName)
     {
         GameObject[] enemiesObjects = GameObject.FindGameObjectsWithTag("Enemy");
-
-        Debug.Log(enemiesObjects.Length);
 
         if (_levelList.TryGetValue(sceneName, out LevelManager level))
         {

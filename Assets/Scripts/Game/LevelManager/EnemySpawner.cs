@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
                 return 0;
         }
 
+
         int randomNum = 0;
 
         while (true)
@@ -37,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
         return _pooledEnemyList[randomNum].Weight;
     }
 
-    private void Awake()
+    private void OnEnable()
     {
         _pooledEnemyList = new List<EnemyControllerBase>();
         foreach (Transform child in transform)

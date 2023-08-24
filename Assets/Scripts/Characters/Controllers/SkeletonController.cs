@@ -29,7 +29,7 @@ public class SkeletonController :
         _source = source;
     }
 
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
         

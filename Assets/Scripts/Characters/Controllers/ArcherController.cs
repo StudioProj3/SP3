@@ -18,7 +18,7 @@ public class ArcherController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
         _pooledArrows = transform.GetChild(0).gameObject;

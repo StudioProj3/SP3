@@ -27,6 +27,8 @@ public class EnemyControllerBase :
                         GetComponent<PlayerLevelUp>();
 
                     playerLevelling.GainExperience(ExpAmount);
+
+                    _rigidbody.velocity = new Vector3(0, 0, 0);
                 })
             )
         );

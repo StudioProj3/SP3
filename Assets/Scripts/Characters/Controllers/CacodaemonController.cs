@@ -14,7 +14,7 @@ public class CacodaemonController :
     private float _distance;
     private PhysicalDamage _phyDamage;
     
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
 
