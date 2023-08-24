@@ -47,8 +47,6 @@ public class LaserController : MonoBehaviour
             Mathf.Rad2Deg;
 
         collide = false;
-
-        //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
     public void SetAnimatorBool(string boolToSet, bool state)

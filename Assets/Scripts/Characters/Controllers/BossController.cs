@@ -27,6 +27,8 @@ public class BossController :
     private PhysicalDamage _phyDamage;
     private MagicDamage _magicDamage;
 
+    private int _attackIndex;
+
     protected void OnEnable()
     {
         base.Start();
@@ -68,8 +70,17 @@ public class BossController :
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = new Vector3(Random.Range(-1.0f, 1.0f),
-                        0.0f, Random.Range(-1.0f, 1.0f));
+                    int randomNum = Random.Range(0, 2);
+                    if (randomNum == 0)
+                    {
+                        _direction = new Vector3(Random.Range(-1.0f, 1.0f),
+                            0.0f, Random.Range(-1.0f, 1.0f));
+                    }
+                    else if(randomNum == 1)
+                    {
+                        _direction = _player.transform.position -
+                            transform.position;
+                    }
                 }),
                 new ActionEntry("FixedUpdate", () =>
                 {
@@ -77,6 +88,8 @@ public class BossController :
                         GetStat("MoveSpeed").Value * _direction;
                 })
             ),
+
+            new GenericState("Attack"),
 
             new GenericState("ShootMissle",
                 new ActionEntry("Enter", () =>
@@ -136,9 +149,15 @@ public class BossController :
             new GenericState("ShootLaserStart",
                 new ActionEntry("Enter", () =>
                 {
+                    _pooledLasers.transform.position = transform.position;
                     _pooledLasers.Init(_direction, _magicDamage.AddModifier(
                         Modifier.Multiply(0.5f,3)),
                         _playerController);
+                }),
+                new ActionEntry("FixedUpdate", () =>
+                {
+                    _pooledLasers.transform.position = transform.position;
+
                 })
             ),
 
@@ -150,7 +169,9 @@ public class BossController :
                 }),
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _pooledLasers.transform.Rotate(0.0f, 2.0f, 0.0f);
+                    _pooledLasers.transform.Rotate(0.0f, 1.5f, 0.0f);
+                    _pooledLasers.transform.position = transform.position;
+
                 })
             ),
 
@@ -231,23 +252,14 @@ public class BossController :
             }),
 
             // Idle > Walk
-            //new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
+            new RandomTimedTransition("Idle", "Walk", 0.5f, 1.0f),
 
-            new FixedTimedTransition("Idle", "ShootLaserStart", 2.0f),
-
-            new FixedTimedTransition("ShootLaserStart", "ShootLaser", 0.6f),
-
-            new FixedTimedTransition("ShootLaser", "ShootLaserEnd", 4.0f),
-
-            new FixedTimedTransition("ShootLaserEnd", "Idle", 2.0f),
-
-            // Walk > Idle
-            new FixedTimedTransition("Walk", "Idle", 0.7f),
+            new RandomTimedTransition("Walk", "Attack", 1.0f, 2.0f),
 
             // Idle > Roll
-            new GenericTransition("Idle", "MeleeDashStart", () =>
+            new GenericTransition("Attack", "MeleeDashStart", () =>
             {
-                return _distance < 1.0f;
+                return _distance < 1.0f || _attackIndex == 4;
             }),
 
             // Walk > Idle
@@ -257,12 +269,29 @@ public class BossController :
             new FixedTimedTransition("MeleeDash", "MeleeDashEnd", 3.0f),
 
             // Walk > Idle
-            new FixedTimedTransition("MeleeDashEnd", "Idle", 0.5f),
+            new FixedTimedTransition("MeleeDashEnd", "Cooldown", 0.5f),
 
-            // Idle > Going to shoot
-            new GenericTransition("Walk", "ShootMissle", () =>
+            new GenericTransition("Attack", "ShootLaserStart", () =>
             {
-                return _distance < 3.0f;
+                return _attackIndex == 0;
+            }),
+
+            new FixedTimedTransition("ShootLaserStart", "ShootLaser", 0.6f),
+
+            new FixedTimedTransition("ShootLaser", "ShootLaserEnd", 4.0f),
+
+            new FixedTimedTransition("ShootLaserEnd", "Cooldown", 2.0f),
+
+            new GenericTransition("Attack", "ShootRapid", () =>
+            {
+                 return _attackIndex == 1;
+            }),
+
+            new FixedTimedTransition("ShootRapid", "Cooldown", 2.0f),
+
+            new GenericTransition("Attack", "ShootMissle", () =>
+            {
+                return _attackIndex == 2;
             }),
 
             // Roll > Going to Shoot
@@ -274,7 +303,7 @@ public class BossController :
             new FixedTimedTransition("ShootMissle", "Cooldown", 0.2f),
 
             // Cooldown > Idle
-            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
+            new FixedTimedTransition("Cooldown", "Idle", 0.5f)
         );
 
         _stateMachine.SetStartState("Idle");
@@ -327,6 +356,8 @@ public class BossController :
 
         transform.rotation = Quaternion.Euler(0,
             _direction.x < 0 ? 180 : 0, 0);
+
+        _attackIndex = Random.Range(0, 4);
     }
 
     private void FixedUpdate()
@@ -363,9 +394,13 @@ public class BossController :
                 _pooledBulletList[j].Init(_direction, _magicDamage.AddModifier(
                     Modifier.Multiply(_bossStatsContainer.
                     GetStat("DamageMultiplier").Value, 3)),
-                    _arrowStatusEffect, _pooledMissles.transform);
+                    _arrowStatusEffect, _pooledBullets.transform);
 
-                _pooledBulletList[j].transform.position = transform.position;
+                _pooledBulletList[j].transform.position = new Vector3(
+                    transform.position.x,
+                    _pooledBullets.transform.position.y,
+                    transform.position.z);
+
                 _pooledBulletList[j].transform.SetParent(null);
 
                 break;

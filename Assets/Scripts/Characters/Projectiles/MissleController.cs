@@ -59,12 +59,6 @@ public class MissleController : MonoBehaviour
 
         _currentLifetime = _lifetime;
 
-        float angle = -Mathf.Atan2(direction.z, direction.x) *
-            Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0, angle, 0);
-
-        Debug.Log(_direction);
         _rigidbody.AddForce(_direction.normalized * 0.25f, ForceMode.Impulse);
 
     }
