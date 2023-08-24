@@ -11,7 +11,6 @@ public class Shrine : MonoBehaviour, IInteractable
     private GameObject _toggleText;
     private LoadingManager _loadingManager;
     private bool _shrineUsed;
-    private SpriteRenderer _runes;
 
     public void Interact()
     {
@@ -30,8 +29,6 @@ public class Shrine : MonoBehaviour, IInteractable
         _toggleText = transform.GetChild(0).gameObject;
         _toggleText.GetComponent<TextMeshPro>().text = InteractText;
         _toggleText.SetActive(false);
-        _runes = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        Debug.Log(_runes.name);
     }
 
     private void Update()
@@ -87,7 +84,6 @@ public class Shrine : MonoBehaviour, IInteractable
         }
 
         _shrineUsed = true;
-        _runes.color = Color.black;
         _toggleText.SetActive(false);
         ToggleShrine();
     }
