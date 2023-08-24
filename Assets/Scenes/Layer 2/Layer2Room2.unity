@@ -8546,12 +8546,12 @@ Transform:
   - {fileID: 1983947530}
   - {fileID: 1777000475}
   - {fileID: 2015692469}
-  - {fileID: 1101775814}
-  - {fileID: 1149283221}
   - {fileID: 1328594360}
-  - {fileID: 586779338}
+  - {fileID: 1101775814}
   - {fileID: 1551468862}
+  - {fileID: 1149283221}
   - {fileID: 1602496143}
+  - {fileID: 586779338}
   - {fileID: 77412135}
   - {fileID: 244194830}
   m_Father: {fileID: 2017002241}
@@ -17990,9 +17990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeightLimit: 50
-  _initScenes:
-  - UIHUD
-  - UI
+  _initScenes: []
   CurrentWeight: 0
   WeightOver: 0
 --- !u!4 &1409956691
