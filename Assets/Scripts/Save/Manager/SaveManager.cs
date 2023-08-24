@@ -58,6 +58,17 @@ public class SaveManager : Singleton<SaveManager>
         _callbacks.Add(saveID, new(saveCallback, loadCallback));
     }
 
+    public void Save(string saveID)
+    {
+        bool result = _saveDict.ContainsKey(saveID);
+
+        Assert(result, "key not found");
+
+        _saveDict[saveID] = _callbacks[saveID].First();
+
+        WriteToDisk();
+    }
+
     public void SaveAll()
     {
         foreach (var pair in _callbacks)
@@ -66,8 +77,7 @@ public class SaveManager : Singleton<SaveManager>
             _saveDict[pair.Key] = save();
         }
 
-        File.WriteAllText(GetSaveLocation(),
-            JsonConvert.SerializeObject(_saveDict));
+        WriteToDisk();
     }
 
     public void LoadAll()
@@ -79,6 +89,8 @@ public class SaveManager : Singleton<SaveManager>
         // Save file does not exist, no loading is required
         if (!exists)
         {
+            // Save the initial state of all savables
+            SaveAll();
             return;
         }
 
@@ -94,6 +106,12 @@ public class SaveManager : Singleton<SaveManager>
 
             load(_saveDict[pair.Key]);
         }
+    }
+
+    private void WriteToDisk()
+    {
+        File.WriteAllText(GetSaveLocation(),
+            JsonConvert.SerializeObject(_saveDict));
     }
 
     private void Start()

@@ -40,12 +40,9 @@ public class PlayerPickup :
                     _characterData.Inventory =
                         (item as InventoryItem).Inventory;
 
-                    // TODO (Cheng Jun): This should use the player's
-                    // local save and not reset on collect once the save
-                    // system is ready. For now it resets on collect as
-                    // the scriptable object saves its state which is
-                    // undesirable when in development
-                    _characterData.Inventory.Reset();
+                    SaveManager.Instance.Save(_characterData.SaveID);
+
+                    //_characterData.Inventory.Reset();
 
                     other.gameObject.SetActive(false);
 
