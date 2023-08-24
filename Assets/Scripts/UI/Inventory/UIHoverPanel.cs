@@ -10,6 +10,7 @@ public class UIHoverPanel :
     // Prevent closing of this hover panel
     private bool _lock = false;
 
+    private RectTransform _rectTransform;
     private TMP_Text _itemName;
     private TMP_Text _itemDescription;
     private GameObject _action1Button;
@@ -88,8 +89,19 @@ public class UIHoverPanel :
         HidePanel();
     }
 
+    public void ChangePosition(Vector2 position)
+    {
+        float halfWidth = Screen.width / 2f;
+        float halfHeight = Screen.height / 2f;
+
+        _rectTransform.anchoredPosition =
+            new(position.x - halfWidth,
+            position.y - halfHeight);
+    }
+
     private void Awake()
     {
+        _rectTransform = GetComponent<RectTransform>();
         _itemName = transform.GetChild(0).
             GetComponent<TMP_Text>();
         _itemDescription = transform.GetChild(1).

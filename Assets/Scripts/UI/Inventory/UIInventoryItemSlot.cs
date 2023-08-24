@@ -7,6 +7,15 @@ public class UIInventoryItemSlot :
     [SerializeField]
     private InventoryBase _inventory;
 
+    [SerializeField]
+    [Range(-500f, 500f)]
+    private float _offsetX = 0f;
+
+    [SerializeField]
+    [Range(-500f, 500f)]
+    private float _offsetY = 0f;
+
+    private RectTransform _rectTransform;
     private UIInventory _uiinventory;
     private UIHoverPanel _hoverPanel;
 
@@ -23,7 +32,7 @@ public class UIInventoryItemSlot :
     public void OnPointerExit(PointerEventData eventData)
     {
         this.DelayExecute(() =>
-            _hoverPanel.HidePanel(), 0.2f);
+            _hoverPanel.HidePanel(), 0.1f);
         _hover = false;
     }
 
@@ -39,6 +48,7 @@ public class UIInventoryItemSlot :
     {
         base.Awake();
 
+        _rectTransform = GetComponent<RectTransform>();
         _uiinventory = GameObject.FindWithTag("UIInventory").
             GetComponent<UIInventory>();
         _hoverPanel = _uiinventory.transform.GetChild(2).
@@ -67,5 +77,16 @@ public class UIInventoryItemSlot :
             _hoverPanel.HideAction1Button();
             _hoverPanel.HideAction2Button();
         }
+
+        UpdateHoverPanelPosition();
+    }
+
+    private void UpdateHoverPanelPosition()
+    {
+        Vector2 position = _rectTransform.transform.position;
+        position.x += _offsetX;
+        position.y += _offsetY;
+
+        _hoverPanel.ChangePosition(position);
     }
 }
