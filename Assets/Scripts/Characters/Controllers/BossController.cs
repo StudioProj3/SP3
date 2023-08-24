@@ -30,7 +30,7 @@ public class BossController :
     private PhysicalDamage _phyDamage;
     private MagicDamage _magicDamage;
 
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
         _pooledMissles = transform.GetChild(0).gameObject;

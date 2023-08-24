@@ -25,7 +25,7 @@ public class WitchController :
     private MagicDamage _magicDamage;
     private float buffCooldown;
 
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
 

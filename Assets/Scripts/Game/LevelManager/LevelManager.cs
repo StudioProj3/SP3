@@ -10,7 +10,9 @@ public class LevelManager : MonoBehaviour
     private List<string> _initScenes;
    
     [HideInInspector]
-    public int CurrentWeight;
+    public int CurrentWeight = 0;
+    [HideInInspector]
+    public int WeightOver = 0;
 
     private LoadingManager _loadingManager;
     private string _currentScene;
@@ -21,7 +23,6 @@ public class LevelManager : MonoBehaviour
         _loadingManager = LoadingManager.Instance;
         _currentScene = _loadingManager.GetCurrentSceneName();
         _enemiesLoaded = false;
-        CurrentWeight = 0;
 
         for (int i = 0; i < _initScenes.Count; i++)
         {
@@ -46,7 +47,7 @@ public class LevelManager : MonoBehaviour
         if (!_enemiesLoaded && _loadingManager.asyncLoad.isDone)
         {
             _enemiesLoaded = true;
-            EnemyManager.Instance.SpawnEnemiesInScene();
+            EnemyManager.Instance.SpawnEnemiesInScene(gameObject.scene.name, this);
         }
     }
 }
