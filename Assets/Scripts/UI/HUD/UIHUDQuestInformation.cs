@@ -12,7 +12,7 @@ public class UIHUDQuestInformation : MonoBehaviour
 
     private UIHUDQuestDisplay _display;
 
-    public void OnQuestStart(string stepDescription)
+    public void UpdateDisplayText(string stepDescription)
     {
         _display.SetDisplayText(stepDescription);
     }

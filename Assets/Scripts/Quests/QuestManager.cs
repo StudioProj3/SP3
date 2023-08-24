@@ -122,7 +122,7 @@ public sealed class QuestManager : Singleton<QuestManager>
 
         if (QuestDisplayInformation != null)
         {
-            QuestDisplayInformation.OnQuestStart(step.DisplayDescription);
+            QuestDisplayInformation.UpdateDisplayText(step.DisplayDescription);
         }
         
         ChangeQuestState(quest.Info.ID, QuestState.InProgress);
@@ -136,11 +136,21 @@ public sealed class QuestManager : Singleton<QuestManager>
         // If there are any more steps, instantiate the new one
         if (quest.CurrentStepExists())
         {
-            quest.InstantiateCurrentQuestStep(transform);
+            QuestStep step = quest.InstantiateCurrentQuestStep(transform);
+            if (QuestDisplayInformation != null)
+            {
+                QuestDisplayInformation.UpdateDisplayText(
+                    step.DisplayDescription);
+            }
         }
         else
         {
             ChangeQuestState(quest.Info.ID, QuestState.CanFinish);
+            if (QuestDisplayInformation != null)
+            {
+                QuestDisplayInformation.UpdateDisplayText(
+                    "Quest can finish");
+            }
         }
     }
 
