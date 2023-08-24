@@ -75,6 +75,18 @@ public class Stats :
     private readonly Dictionary<string, StatType> _statTypeMap =
         new();
 
+    public void AddListenerToStats()
+    {
+        if (EnableSave)
+        {
+            foreach (IModifiableValue value in _stats.Values)
+            {
+                value.ValueChanged +=
+                    () => SaveManager.Instance.Save(SaveID);
+            }
+        }
+    }
+
     public void HookEvents()
     {
         if (EnableSave)
@@ -90,11 +102,22 @@ public class Stats :
 
         JsonSerializerSettings settings = new()
         {
-            TypeNameHandling = TypeNameHandling.Auto
+            TypeNameHandling = TypeNameHandling.Objects,
+            TypeNameAssemblyFormatHandling =
+                TypeNameAssemblyFormatHandling.Simple,
         };
 
-        string statsDictStr = JsonConvert.SerializeObject(_stats,
-            typeof(Dictionary<StatType, IModifiableValue>), settings);
+        Dictionary<string, IModifiableValue> newDict = new();
+
+        foreach (var pair in _stats)
+        {
+            newDict.Add(JsonUtility.ToJson(pair.Key), pair.Value);
+        }
+
+        string statsDictStr = JsonConvert.SerializeObject(newDict,
+            typeof(Dictionary<string, IModifiableValue>), settings);
+
+        //Debug.Log(statsDictStr);
 
         List<string> fullStr = new()
             { thisObjStr, statsDictStr };
@@ -110,11 +133,25 @@ public class Stats :
         IDeserializable deserializable = this;
         deserializable.Deserialize(fullStr[0]);
 
-        Dictionary<StatType, IModifiableValue> statsDict =
-            JsonConvert.DeserializeObject<Dictionary<
-            StatType, IModifiableValue>>(fullStr[1]);
+        //Debug.Log(fullStr);
 
-        _stats = statsDict;
+        //JsonSerializerSettings settings = new()
+        //{
+        //    TypeNameHandling = TypeNameHandling.Objects
+        //};
+
+        //Dictionary<string, IModifiableValue> statsDict =
+        //    JsonConvert.DeserializeObject<Dictionary<
+        //    string, IModifiableValue>>(fullStr[1], settings);
+
+        //Dictionary<StatType, IModifiableValue> newDict = new();
+        //foreach (var pair in statsDict)
+        //{
+        //    newDict.Add(JsonUtility.FromJson<StatType>(pair.Key),
+        //        pair.Value);
+        //}
+
+        //_stats = newDict;
     }
 
     public IModifiableValue GetStat(string typeName)
