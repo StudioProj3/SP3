@@ -174,16 +174,9 @@ public sealed class QuestManager : Singleton<QuestManager>
         if (QuestDisplayInformation != null)
         {
             QuestDisplayInformation.ClearQuest(quest.Info.ID);
+            
             // Handle the rewards
-
-            // First check that the player data is not null
-            if (_playerData == null)
-            {
-                return;
-            }
-
             // TODO (Chris): Implement item rewards
-
             if (_playerData.CharacterStats.TryGetStat(
                 "ExperiencePoints", out var xp))
             {
