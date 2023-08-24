@@ -11,18 +11,9 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public void SpawnEnemiesInScene(string sceneName, LevelManager currentLevel)
     {
-        //int emptyElement = 0;
 
-        //for (int i = 0; i < _levelList.Count; i++)
-        //{
-        //    if(!_levelList[i])
-        //    {
-        //        emptyElement = i;
-        //        break;
-        //    }
-        //}
-
-        //_levelList.Insert(emptyElement, GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>());
+        if (_levelList == null)
+            return;
 
         if(!_levelList.ContainsKey(sceneName))
             _levelList.Add(sceneName, currentLevel);
