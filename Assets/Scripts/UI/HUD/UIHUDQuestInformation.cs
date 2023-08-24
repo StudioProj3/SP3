@@ -17,6 +17,14 @@ public class UIHUDQuestInformation : MonoBehaviour
         _display.SetDisplayText(stepDescription);
     }
 
+    public void Clear() 
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
     private void Awake()
     {
         _questDisplays = new ObjectPool<UIHUDQuestDisplay>(() => 
