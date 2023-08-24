@@ -145,11 +145,18 @@ public sealed class QuestManager : Singleton<QuestManager>
         }
         else
         {
-            ChangeQuestState(quest.Info.ID, QuestState.CanFinish);
             if (QuestDisplayInformation != null)
             {
-                QuestDisplayInformation.UpdateDisplayText(
-                    "Quest can finish");
+                if (quest.Info.Autocomplete)
+                {
+                    ChangeQuestState(quest.Info.ID, QuestState.Finished);
+                }
+                else
+                {
+                    ChangeQuestState(quest.Info.ID, QuestState.CanFinish);
+                    QuestDisplayInformation.UpdateDisplayText(
+                        "Quest can finish");
+                }
             }
         }
     }
