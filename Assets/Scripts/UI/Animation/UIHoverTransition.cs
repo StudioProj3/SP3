@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using static DebugUtils;
 
 public class UIHoverTransition :
-    MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    UITransitionBase, IPointerEnterHandler, IPointerExitHandler
 {
     public enum Direction
     {
@@ -14,31 +14,8 @@ public class UIHoverTransition :
         Down,
     }
 
-    [HorizontalDivider]
-    [Header("Target")]
-
-    [SerializeField]
-    [Tooltip("Whether the transition is applied to this gameobject")]
-    private bool _moveSelf = true;
-
-    [SerializeField]
-    [ShowIf("_moveSelf", false)]
-    private RectTransform _otherRectTransform;
-
-    [HorizontalDivider]
-    [Header("Transition Parameters")]
-
     [SerializeField]
     private Direction _direction = Direction.Up;
-
-    [SerializeField]
-    [Range(0f, 50f)]
-    private float _magnitude = 30f;
-
-    [SerializeField]
-    [Range(0f, 1f)]
-    [Tooltip("Time in seconds from the start to the end")]
-    private float _duration = 0.5f;
 
     private RectTransform _rectTransform;
     private Vector2 _original;

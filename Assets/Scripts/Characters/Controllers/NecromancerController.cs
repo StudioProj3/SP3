@@ -18,7 +18,7 @@ public class NecromancerController :
     private float _distance;
     private MagicDamage _magicDamage;
 
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
 
