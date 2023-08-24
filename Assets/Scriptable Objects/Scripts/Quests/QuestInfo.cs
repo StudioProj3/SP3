@@ -19,6 +19,12 @@ public class QuestInfo : ScriptableObject, INameable
     [field: SerializeField]
     public GameObject[] QuestSteps { get; protected set; }
 
+    [field: HorizontalDivider]
+    [field: Header("Settings")]
+
+    [field: SerializeField]
+    public bool Autocomplete { get; protected set; }
+
     private void OnValidate()
     {
 #if UNITY_EDITOR 
