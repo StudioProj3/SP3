@@ -269,7 +269,7 @@ MonoBehaviour:
   _initScenes:
   - UIHUD
   - UI
-  - Layer4RoomBoss
+  - Layer4Room1
   CurrentWeight: 0
   WeightOver: 0
 --- !u!4 &193742996
@@ -968,6 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
+  _playerCameraStateName: Player Camera
 --- !u!4 &1607571603
 Transform:
   m_ObjectHideFlags: 0
