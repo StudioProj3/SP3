@@ -36,6 +36,13 @@ public class CustomStatsEditor : Editor
 
         _instancedStatsReorderableList.DoLayoutList();
 
+        EditorGUILayout.PropertyField(serializedObject.
+            FindProperty("EnableSave".BackingField()));
+        EditorGUILayout.PropertyField(serializedObject.
+            FindProperty("SaveID".BackingField()));
+        EditorGUILayout.PropertyField(serializedObject.
+            FindProperty("Format".BackingField()));
+
         serializedObject.ApplyModifiedProperties();
     }
 

@@ -62,6 +62,8 @@ public abstract class CharacterControllerBase :
     {
         Data.HookEvents();
         Data.Reset();
+
+        Data.CharacterStats.HookEvents();
     }
     
     protected void RemoveEffectImpl(StatusEffectBase statusEffect,
