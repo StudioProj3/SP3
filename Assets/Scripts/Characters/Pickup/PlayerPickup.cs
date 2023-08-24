@@ -58,6 +58,9 @@ public class PlayerPickup :
 
             if (tryHandInventory)
             {
+                SaveManager.Instance.Save(_characterData.
+                    HandInventory.SaveID);
+
                 other.gameObject.SetActive(false);
 
                 TryNotificationCollect(_notification, sprite, name);

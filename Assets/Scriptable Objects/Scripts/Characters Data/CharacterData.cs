@@ -71,6 +71,7 @@ public class CharacterData : ScriptableObject,
         if (HandInventory != null)
         {
             HandInventory.Reset();
+            HandInventory.HookEvents();
         }
 
         IsDead = false;
