@@ -6259,9 +6259,9 @@ Transform:
   - {fileID: 1955521763}
   - {fileID: 519752089}
   - {fileID: 103637415}
+  - {fileID: 1375641609}
   - {fileID: 1272998618}
   - {fileID: 1668859530}
-  - {fileID: 1375641609}
   - {fileID: 1511483627}
   m_Father: {fileID: 2017002241}
   m_RootOrder: 0
@@ -14695,9 +14695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeightLimit: 50
-  _initScenes:
-  - UIHUD
-  - UI
+  _initScenes: []
   CurrentWeight: 0
   WeightOver: 0
 --- !u!4 &1409956691
