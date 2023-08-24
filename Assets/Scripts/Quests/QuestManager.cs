@@ -96,7 +96,9 @@ public sealed class QuestManager : Singleton<QuestManager>
             _ = questUIObject.TryGetComponent(out _questDisplayInformation);
         }
 
-        this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
+        // this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
+        StartQuest("Introduction");
+        StartQuest("ShopkeeperQuest");
     }
 
     private void ChangeQuestState(string id, QuestState state)
@@ -122,7 +124,7 @@ public sealed class QuestManager : Singleton<QuestManager>
 
         if (QuestDisplayInformation != null)
         {
-            QuestDisplayInformation.OnQuestStart(step.DisplayDescription);
+            QuestDisplayInformation.UpdateDisplayText(id, step.DisplayDescription);
         }
         
         ChangeQuestState(quest.Info.ID, QuestState.InProgress);
@@ -136,11 +138,30 @@ public sealed class QuestManager : Singleton<QuestManager>
         // If there are any more steps, instantiate the new one
         if (quest.CurrentStepExists())
         {
-            quest.InstantiateCurrentQuestStep(transform);
+            QuestStep step = quest.InstantiateCurrentQuestStep(transform);
+            if (QuestDisplayInformation != null)
+            {
+                QuestDisplayInformation.UpdateDisplayText(quest.Info.ID,
+                    step.DisplayDescription);
+            }
         }
         else
         {
-            ChangeQuestState(quest.Info.ID, QuestState.CanFinish);
+            ChangeQuestState(quest.Info.ID, quest.Info.Autocomplete 
+                ? QuestState.Finished : QuestState.CanFinish);
+
+            if (QuestDisplayInformation != null)
+            {
+                if (quest.Info.Autocomplete)
+                {
+                    QuestDisplayInformation.ClearQuest(quest.Info.ID);
+                }
+                else
+                {
+                    QuestDisplayInformation.UpdateDisplayText(quest.Info.ID,
+                        "Quest can finish");
+                }
+            }
         }
     }
 
