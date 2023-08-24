@@ -21,6 +21,11 @@ public class LaserController : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
+    private Animator _spawnLaserAnimator;
+    private Animator _laserAnimator;
+
+    private bool collide;
+
     public void Init(Vector3 direction, Damage damage,
         PlayerController playerController)
     {
@@ -35,15 +40,31 @@ public class LaserController : MonoBehaviour
         _rigidbody.velocity = _direction * _speed;
         _currentLifetime = _lifetime;
 
+        _spawnLaserAnimator = transform.GetChild(0).GetComponent<Animator>();
+        _laserAnimator = transform.GetChild(1).GetComponent<Animator>();
+
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
+        collide = false;
 
         //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
+    public void SetAnimatorBool(string boolToSet, bool state)
+    {
+        _spawnLaserAnimator.SetBool(boolToSet, state);
+        _laserAnimator.SetBool(boolToSet, state);
+    }
+
+    public void SetCollide(bool state)
+    {
+        collide = state;
+    }
+
     private void Awake()
     {
+
     }
 
     private void Update()
@@ -56,9 +77,9 @@ public class LaserController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" && collide)
         {
             Vector3 knockbackForce = _direction * _knockback;
 

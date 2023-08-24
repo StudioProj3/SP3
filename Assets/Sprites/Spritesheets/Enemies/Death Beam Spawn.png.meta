@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 83fce28109ba3054db830694305b5e71
+guid: 9199c19d1ea6b1749b771e3a8c827cab
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,138 +129,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Death Beam Sprite Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 448
-        width: 32
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7791510084f65204d899700d0171d48b
-      internalID: 820732146
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death Beam Sprite Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 384
-        width: 32
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32a195cf9cd5ace4ebf44b416e892c46
-      internalID: -1176480754
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death Beam Sprite Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 320
-        width: 32
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87e5228f399f27b4db9bd7a3cf1e583f
-      internalID: 138489718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death Beam Sprite Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 32
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e8e639e710a319a41828e1e64b446776
-      internalID: 2114480374
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death Beam Sprite Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 192
-        width: 32
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2cd8d8e7e39730444ad0c3f27ff6eb0e
-      internalID: -108628601
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death Beam Sprite Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a0e4a3c20c5e6184f887dc91d52ecedd
-      internalID: -1902112244
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death Beam Sprite Sheet_6
+      name: Death Beam Spawn_0
       rect:
         serializedVersion: 2
         x: 0
         y: 64
-        width: 32
+        width: 64
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -269,19 +143,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9f95cbe4805aa34e889f0a80cf7008d
-      internalID: -1744282684
+      spriteID: e85f16cf9b703c54e8cf7a4fc4668096
+      internalID: 328669221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death Beam Sprite Sheet_7
+      name: Death Beam Spawn_1
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
+        width: 64
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -290,8 +164,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 735ef1d9f509ff8498780b1e30b5b479
-      internalID: -301742166
+      spriteID: c0d9843630926464f9a0e2c31238f7a4
+      internalID: -221870147
       vertices: []
       indices: 
       edges: []
@@ -299,7 +173,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a182ecdebb0992f47a4d37b8110e96fa
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -307,14 +181,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Death Beam Sprite Sheet_0: 820732146
-      Death Beam Sprite Sheet_1: -1176480754
-      Death Beam Sprite Sheet_2: 138489718
-      Death Beam Sprite Sheet_3: 2114480374
-      Death Beam Sprite Sheet_4: -108628601
-      Death Beam Sprite Sheet_5: -1902112244
-      Death Beam Sprite Sheet_6: -1744282684
-      Death Beam Sprite Sheet_7: -301742166
+      Death Beam Spawn_0: 328669221
+      Death Beam Spawn_1: -221870147
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
