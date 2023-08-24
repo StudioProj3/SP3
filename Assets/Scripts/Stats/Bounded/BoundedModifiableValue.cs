@@ -5,6 +5,7 @@ public class BoundedModifiableValue :
 {
     public float Max => _modifiableValue.Value;
     public float Value => _boundedValue.Value;
+    public float Base => _modifiableValue.Base;
 
     public event Action ValueChanged;
 

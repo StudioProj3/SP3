@@ -27,6 +27,7 @@ public class ModifiableValue : IModifiableValue
     }
 
     public float Max => Value;
+    public float Base => _initialValue;
 
     public event Action ValueChanged;
 
