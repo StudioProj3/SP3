@@ -6,18 +6,22 @@ public class Shrine : MonoBehaviour, IInteractable
     public string InteractText { get; } = "~ Pray ~";
 
     private GameObject _toggleText;
-    private GameObject _shrineUI;
+    private LoadingManager _loadingManager;
 
     public void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _shrineUI.SetActive(!_shrineUI.activeSelf);
+            _loadingManager.ToggleScene("UIShrine");
+            _loadingManager.ToggleScene("UI");
+            _loadingManager.ToggleScene("UIHUD");
         }
     }
 
     private void Start()
     {
+        _loadingManager = LoadingManager.Instance;
+
         _toggleText = transform.GetChild(0).gameObject;
         _toggleText.GetComponent<TextMeshPro>().text = InteractText;
         _toggleText.SetActive(false);
@@ -26,15 +30,7 @@ public class Shrine : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (!_shrineUI)
-        {
-            _shrineUI = GameObject.FindGameObjectWithTag("ShrineUI");
-            if (_shrineUI)
-            {
-                _shrineUI.SetActive(false);
-            }
-        }
-        if (_toggleText.activeSelf && _shrineUI)
+        if (_toggleText.activeSelf)
         {
             Interact();
         }
@@ -55,12 +51,7 @@ public class Shrine : MonoBehaviour, IInteractable
         if (col.gameObject.CompareTag("Player"))
         {
             _toggleText.SetActive(false);
-            if (_shrineUI)
-            {
-                _shrineUI.SetActive(false);
-            }
         }
-
     }
 }
 
