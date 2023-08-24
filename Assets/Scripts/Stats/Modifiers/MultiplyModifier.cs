@@ -10,7 +10,7 @@ public class MultiplyModifier : Modifier
 
     public override float Modify(float value)
     {
-        return value * _value;
+        return value * this.value;
     }
 
     protected override Modifier CreateClone(float value, int priority)

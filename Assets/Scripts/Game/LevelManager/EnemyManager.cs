@@ -7,7 +7,6 @@ public class EnemyManager : Singleton<EnemyManager>
     private GameObject _spawnerGroup;
     private Dictionary<string,LevelManager> _levelList;
     private List<EnemySpawner> _enemySpawners;
-    private Dictionary<int, bool> _enemySpawnerStates;
     private GameObject _player;
 
     public void SpawnEnemiesInScene(string sceneName, LevelManager currentLevel)
@@ -22,71 +21,38 @@ public class EnemyManager : Singleton<EnemyManager>
 
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
-        _enemySpawnerStates = new Dictionary<int, bool>();
-        int index = 0;
 
-        if (!_spawnerGroup)
+        if (_spawnerGroup)
         {
-            return;
-        }
-
-        foreach (Transform child in _spawnerGroup.transform)
-        {
-            _enemySpawners.Add(child.GetComponent<EnemySpawner>());
-            _enemySpawnerStates.Add(index, false);
-            index++;
-        }
-
-
-        if (_levelList.TryGetValue(sceneName, out LevelManager level))
-        {
-            while (level.CurrentWeight < level.WeightLimit)
+            foreach (Transform child in _spawnerGroup.transform)
             {
-
-                for (int i = 0; i < _enemySpawnerStates.Count; i++)
-                {
-                    if (_enemySpawnerStates.TryGetValue(i, out bool state))
-                    {
-                        if (!state)
-                            break;
-
-                        if (i + 1 == _enemySpawnerStates.Count)
-                        {
-                            return;
-                        }
-                    }
-                }
-
-                int randomNum = Random.Range(0, _enemySpawners.Count);
-
-                if (_enemySpawnerStates.
-                    TryGetValue(randomNum, out bool state2))
-                {
-                    if (!state2)
-                    {
-                        _enemySpawners[randomNum].gameObject
-                            .SetActive(true);
-
-                        int enemyWeight = _enemySpawners[randomNum]
-                            .SpawnEnemy();
-
-
-                        if (enemyWeight == 0)
-                            return;
-
-                        level.CurrentWeight += enemyWeight;
-
-                        _enemySpawnerStates[randomNum] = true;
-                    }
-                }
-
+                _enemySpawners.Add(child.GetComponent<EnemySpawner>());
             }
 
-            level.WeightOver = level.CurrentWeight - level.WeightLimit;
-        }
+
+            if(_levelList.TryGetValue(sceneName, out LevelManager level))
+            {
+                while (level.CurrentWeight < level.WeightLimit)
+                {
+                    int randomNum = Random.Range(0, _enemySpawners.Count);
+
+                    _enemySpawners[randomNum].gameObject.SetActive(true);
+
+                    int enemyWeight = _enemySpawners[randomNum].SpawnEnemy();
+
+
+                    if (enemyWeight == 0)
+                        return;
+
+                    level.CurrentWeight += enemyWeight;
+
+                }
+
+                level.WeightOver = level.CurrentWeight - level.WeightLimit;
+            }
 
            
-        
+        }
     }
 
     public void StartEnemyTimer(string sceneName, int weight)

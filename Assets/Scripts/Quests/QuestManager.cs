@@ -174,7 +174,6 @@ public sealed class QuestManager : Singleton<QuestManager>
         if (QuestDisplayInformation != null)
         {
             QuestDisplayInformation.ClearQuest(quest.Info.ID);
-            
             // Handle the rewards
 
             // First check that the player data is not null

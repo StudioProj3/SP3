@@ -2,8 +2,6 @@ using System;
 
 using UnityEngine;
 
-using Newtonsoft.Json;
-
 [Serializable]
 public class BoundedValue : IValue
 {
@@ -22,9 +20,7 @@ public class BoundedValue : IValue
         }
     }
 
-    [JsonProperty]
     private readonly IValue _maxValueContainer;
-    [JsonProperty]
     private readonly IValue _minValueContainer;
 
     // Internal bounded value
