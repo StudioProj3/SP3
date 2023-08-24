@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 public class UIShrineEffect : MonoBehaviour
@@ -5,13 +7,15 @@ public class UIShrineEffect : MonoBehaviour
     [SerializeField]
     private CharacterData _playerData;
 
+    public static event Action<string> OnExitShrine;
+
     public void PrayForHealth()
     {
-        Debug.Log("Pray for health");
+        OnExitShrine("Health");
     }
 
     public void PrayForSanity()
     {
-        Debug.Log("Pray for sanity");
+        OnExitShrine("Sanity");
     }
 }

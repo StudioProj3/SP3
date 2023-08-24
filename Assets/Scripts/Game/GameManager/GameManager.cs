@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using static DebugUtils;
 
 public class GameManager : Singleton<GameManager>
@@ -33,6 +34,11 @@ public class GameManager : Singleton<GameManager>
 
     private void GameStateChangeHandler(GameState newState)
     {
+        if (newState != GameState.Pause)
+        {
+            UnPause();
+        }
+
         switch (newState)
         {
             case GameState.MainMenu:
@@ -42,6 +48,7 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.Pause:
+                HandlePauseState();
                 break;
 
             case GameState.Win:
@@ -63,5 +70,15 @@ public class GameManager : Singleton<GameManager>
     private void HandleLoseState()
     {
         Log("Respawn");
+    }
+
+    private void HandlePauseState()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void UnPause()
+    {
+        Time.timeScale = 1;
     }
 }

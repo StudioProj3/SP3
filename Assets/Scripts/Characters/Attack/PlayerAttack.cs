@@ -23,7 +23,6 @@ public class PlayerAttack : MonoBehaviour
     private PlayerController _player;
     private bool _usingLeftHand = true;
     protected UINotification _notification;
-
     private void Awake()
     {
         WeaponDamage.OnWeaponHit += DealDamage;
@@ -56,6 +55,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameState.Play)
+        {
+            return;
+        }
+        
         if (!_notification)
         {
             GameObject notifUI = GameObject.FindWithTag("UINotification");
