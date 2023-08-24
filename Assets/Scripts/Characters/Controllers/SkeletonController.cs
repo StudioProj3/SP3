@@ -1,36 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonController : 
-    CharacterControllerBase, IEffectable
+public class SkeletonController :
+    EnemyControllerBase, IEffectable
 {
 
-
-    [SerializeField]
-    private Stats _skeletonStats;
     [SerializeField]
     private LayerMask _playerLayer;
+
     [SerializeField]
     private float _lifetime;
 
     private float _currentLifetime;
 
     private StatContainer _skeletonStatsContainer;
-
-    private GameObject _player;
-    private PlayerController _playerController;
     private Transform _source;
-
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
 
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _skeletonStats;
+    IStatContainer IEffectable.EntityStats =>
+        _skeletonStatsContainer;
 
     public void Init(Transform source)
     {
@@ -39,39 +29,10 @@ public class SkeletonController :
         _source = source;
     }
 
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
-
-
-
+        
         SetupStateMachine();
     }
 
@@ -86,10 +47,12 @@ public class SkeletonController :
                     _rigidbody.velocity = new Vector3(0, 0, 0);
                 })
             ),
+
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 }),
                 new ActionEntry("FixedUpdate", () =>
@@ -104,21 +67,26 @@ public class SkeletonController :
                 {
                     Collider[] attackTarget;
                     attackTarget = Physics.OverlapCapsule(transform.position,
-                        new Vector3(transform.position.x + _direction.x * 0.5f, transform.position.y, transform.position.z),
+                        new Vector3(transform.position.x + _direction.x * 0.5f,
+                        transform.position.y, transform.position.z),
                         0.35f, _playerLayer, 0);
-
 
                     for (int i = 0; i < attackTarget.Length; i++)
                     {
-                        if (attackTarget[i].CompareTag("Player"))
+                        if (!attackTarget[i].CompareTag("Player"))
                         {
-
-                            Vector3 knockbackForce =
-                                (_player.transform.position - transform.position).normalized *
-                                _skeletonStatsContainer.GetStat("Knockback").Value;
-                            _playerController.TakeDamage(_phyDamage, knockbackForce);
-                            break;
+                            continue;
                         }
+
+                        Vector3 knockbackForce =
+                            (_player.transform.position - transform.position).
+                            normalized * _skeletonStatsContainer.
+                            GetStat("Knockback").Value;
+
+                        _playerController.TakeDamage(_phyDamage,
+                            knockbackForce);
+
+                        break;
                     }
                 })
             ),
@@ -126,7 +94,8 @@ public class SkeletonController :
             new GenericState("GoingToAttack",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 })
             ),
@@ -134,6 +103,12 @@ public class SkeletonController :
             new GenericState("Cooldown"),
 
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _skeletonStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Init > Idle
             new FixedTimedTransition("Init", "Idle", 2.0f),
@@ -164,33 +139,33 @@ public class SkeletonController :
 
             // Cooldown > Idle
             new FixedTimedTransition("Cooldown", "Idle", 0.2f)
-            
-        ) ;
+        );
 
         _stateMachine.SetStartState("Init");
 
         _stateMachine.Enter();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-        _skeletonStatsContainer = _skeletonStats.GetInstancedStatContainer();
+        _skeletonStatsContainer = Data.CharacterStats.
+            GetInstancedStatContainer();
         _phyDamage = PhysicalDamage.Create(_skeletonStatsContainer.
             GetStat("AttackDamage").Value);
+
+        EntityStats = _skeletonStatsContainer;
     }
 
     private void Update()
     {
-
-        
-
         _animator.SetBool("isAttacking",
             _stateMachine.CurrentState.StateID == "GoingToAttack");
         _animator.SetBool("isMoving",
            _stateMachine.CurrentState.StateID == "Walk");
-
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -206,7 +181,8 @@ public class SkeletonController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
@@ -216,13 +192,7 @@ public class SkeletonController :
 
         _currentLifetime -= Time.deltaTime;
 
-        if (_currentLifetime < 0f || _skeletonStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-            _stateMachine.FixedUpdate();
+        _stateMachine.FixedUpdate();
     }
 
     private void OnDisable()
@@ -237,12 +207,10 @@ public class SkeletonController :
     {
         if (col.gameObject == _player)
         {
-
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _skeletonStatsContainer.GetStat("Knockback").Value;
             _playerController.TakeDamage(_phyDamage, knockbackForce);
         }
-    }   
-
+    }
 }

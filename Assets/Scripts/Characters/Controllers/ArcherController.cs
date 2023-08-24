@@ -3,57 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
+
     [SerializeField]
-    private Stats _archerStats;
+    private StatusEffectBase _arrowStatusEffect;
 
     private GameObject _pooledArrows;
     private List<ArrowController> _pooledArrowList;
 
     private StatContainer _archerStatsContainer;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _archerStats;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        _animator.SetBool("isHurt", true);
-        damage.OnApply(this);
-        _animator.SetBool("isHurt", false);
-
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
         _pooledArrows = transform.GetChild(0).gameObject;
@@ -64,7 +29,10 @@ public class ArcherController :
             _pooledArrowList.Add(child.GetComponent<ArrowController>());
         }
 
-        _archerStatsContainer = _archerStats.GetInstancedStatContainer();
+        _archerStatsContainer = Data.CharacterStats.
+            GetInstancedStatContainer();
+
+        EntityStats = _archerStatsContainer;
         _phyDamage = PhysicalDamage.Create(_archerStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -96,8 +64,8 @@ public class ArcherController :
                     {
                         if (!(_pooledArrowList[i].gameObject.activeSelf))
                         {
-                            _pooledArrowList[i].Init(_direction, _phyDamage
-                                ,_pooledArrows.transform);
+                            _pooledArrowList[i].Init(_direction, _phyDamage,
+                                _arrowStatusEffect, _pooledArrows.transform);
                             _pooledArrowList[i].transform.position =
                                 transform.position;
                             _pooledArrowList[i].transform.SetParent(null);
@@ -111,7 +79,8 @@ public class ArcherController :
             new GenericState("Roll",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = transform.position - _player.transform.position;
+                    _direction = transform.position -
+                        _player.transform.position;
                     _direction.y = 0;
 
                     _rigidbody.AddForce( _archerStatsContainer.
@@ -123,7 +92,8 @@ public class ArcherController :
             new GenericState("GoingToShoot",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = _player.transform.position - transform.position;
+                    _direction = _player.transform.position -
+                        transform.position;
                     _direction.y = 0;
                 })
             ),
@@ -131,6 +101,12 @@ public class ArcherController :
             new GenericState("Cooldown"),
 
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _archerStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > Walk
             new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
@@ -173,7 +149,7 @@ public class ArcherController :
         _stateMachine.Enter();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
@@ -184,9 +160,11 @@ public class ArcherController :
         _animator.SetBool("isShooting",
             _stateMachine.CurrentState.StateID == "GoingToShoot");
         _animator.SetBool("isMoving",
-           _stateMachine.CurrentState.StateID == "Walk");
+            _stateMachine.CurrentState.StateID == "Walk");
         _animator.SetBool("isRolling",
-         _stateMachine.CurrentState.StateID == "Roll");
+            _stateMachine.CurrentState.StateID == "Roll");
+        _animator.SetBool("isDead",
+            _stateMachine.CurrentState.StateID == "Death");
 
 
         if (!_statusEffects.IsNullOrEmpty())
@@ -203,7 +181,8 @@ public class ArcherController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
@@ -211,13 +190,7 @@ public class ArcherController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        if (_archerStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-            _stateMachine.FixedUpdate();
+        _stateMachine.FixedUpdate();
     }
 
     private void OnCollisionEnter(Collision col)

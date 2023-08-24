@@ -15,12 +15,15 @@ MonoBehaviour:
   <Name>k__BackingField: Basic Bow
   <Sprite>k__BackingField: {fileID: 21300000, guid: fc886f1963c25a74786a98d29526efa3,
     type: 3}
+  <Atlas>k__BackingField: 0
   <Stackable>k__BackingField: 0
   <Weight>k__BackingField: 0
   Description: 
-  <WeaponDamageType>k__BackingField: {fileID: 11400000, guid: 3bca250d4bfb2b64cbb3631521cb9b47,
+  <WeaponDamageType>k__BackingField: {fileID: 11400000, guid: 5bc59f466333ec84ea6a53bb618cf5d4,
     type: 2}
-  <WeaponStatusEffect>k__BackingField: {fileID: 0}
+  <WeaponStatusEffect>k__BackingField: {fileID: 11400000, guid: b94292033a47ab34a9dedc56e97caf49,
+    type: 2}
   <WeaponStats>k__BackingField: {fileID: 11400000, guid: 87c848ad6a43b6b4da021e11250cc3e6,
     type: 2}
   _animationName: Shoot
+  _projectile: {fileID: 11400000, guid: cc49d064898ffc1429f19346fc650f80, type: 2}

@@ -7,7 +7,7 @@ public abstract class CharacterPickupBase :
     [Header("Character Data")]
 
     [SerializeField]
-    protected CharacterDataBase _characterData;
+    protected CharacterData _characterData;
 
     [HorizontalDivider]
     [Header("Allowed pickups")]
@@ -19,8 +19,13 @@ public abstract class CharacterPickupBase :
 
     protected abstract void OnTriggerEnter(Collider other);
 
-    protected virtual void Awake()
+    protected virtual void Update()
     {
+        if (_notification)
+        {
+            return;
+        }
+
         GameObject notifUI = GameObject.FindWithTag("UINotification");
 
         if (notifUI)

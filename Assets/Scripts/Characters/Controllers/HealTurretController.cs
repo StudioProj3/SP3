@@ -1,16 +1,11 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class HealTurretController :
-    CharacterControllerBase, IEffectable
+    EnemyControllerBase, IEffectable
 {
     [SerializeField]
-    private Stats _healTurretStats;
-
-    [SerializeField]
-    private LayerMask enemyLayer;
+    private LayerMask _enemyLayer;
 
     [SerializeField]
     private float healAmount;
@@ -19,50 +14,18 @@ public class HealTurretController :
 
     private ParticleSystem _healTurretParticles;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
-    private List<StatusEffectBase> _statusEffects = new();
-    private float _currentEffectTime;
-    private float _nextTickTime;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    IStatContainer IEffectable.EntityStats => _healTurretStats;
-
-    public void TakeDamage(Damage damage, Vector3 knockback)
-    {
-        _rigidbody.AddForce(knockback, ForceMode.Impulse);
-        damage.OnApply(this);
-    }
-
-    public void ApplyEffect(StatusEffectBase statusEffect)
-    {
-        _statusEffects.Add(statusEffect);
-        statusEffect.OnApply(this);
-    }
-
-    public void RemoveEffect(StatusEffectBase statusEffect)
-    {
-        int index = _statusEffects.IndexOf(statusEffect);
-        RemoveEffectImpl(statusEffect, index);
-    }
-
-    private void RemoveEffectImpl(StatusEffectBase statusEffect, int index)
-    {
-        statusEffect.OnExit(this);
-        _statusEffects.RemoveAt(index);
-    }
-
-    protected override void Start()
+    protected void OnEnable()
     {
         base.Start();
 
         _healTurretParticles = GetComponentInChildren<ParticleSystem>();
-        _healTurretStatsContainer = _healTurretStats.
+        _healTurretStatsContainer = Data.CharacterStats.
             GetInstancedStatContainer();
+        EntityStats = _healTurretStatsContainer;
         _phyDamage = PhysicalDamage.Create(_healTurretStatsContainer.
             GetStat("AttackDamage").Value);
 
@@ -79,7 +42,7 @@ public class HealTurretController :
                 {
                     Collider[] healTargets;
                     healTargets = Physics.OverlapSphere(transform.position,
-                        4f, enemyLayer, 0);
+                        4f, _enemyLayer, 0);
 
                     for (int i = 0; i < healTargets.Length; ++i)
                     {
@@ -87,12 +50,10 @@ public class HealTurretController :
                         {
                             IStatContainer container = healTargets[i].
                                 GetComponent<IEffectable>().EntityStats;
+
                             container.GetStat("Health").Add(healAmount);
                         }
                     }
-
-                    float angle = -Mathf.Atan2(_direction.z, _direction.x) *
-                        Mathf.Rad2Deg;
 
                     _healTurretParticles.Play();
                 })
@@ -101,6 +62,12 @@ public class HealTurretController :
             new GenericState("GoingToHeal"),
 
             // Transitions
+
+            new AllToOneTransition("Death", () =>
+            {
+                return _healTurretStatsContainer.
+                    GetStat("Health").Value <= 0;
+            }),
 
             // Idle > GoingToHeal
             new FixedTimedTransition("Idle", "GoingToHeal", 0.7f),
@@ -117,7 +84,7 @@ public class HealTurretController :
         _stateMachine.Enter();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
@@ -127,6 +94,8 @@ public class HealTurretController :
     {
         _animator.SetBool("isHealing",
            _stateMachine.CurrentState.StateID == "GoingToHeal");
+        _animator.SetBool("isDead",
+         _stateMachine.CurrentState.StateID == "Death");
 
         if (!_statusEffects.IsNullOrEmpty())
         {
@@ -142,19 +111,18 @@ public class HealTurretController :
             }
         }
 
-        _spriteRenderer.flipX = _direction.x < 0;
+        transform.rotation = Quaternion.Euler(0,
+            _direction.x < 0 ? 180 : 0, 0);
     }
 
     private void FixedUpdate()
     {
-        _distance = Vector3.Distance(_player.transform.position, transform.position);
-        if (_healTurretStatsContainer.
-            GetStat("Health").Value <= 0)
-        {
-            _animator.SetBool("isDead", true);
-        }
-        else
-            _stateMachine.FixedUpdate();
+        _distance = Vector3.Distance(_player.transform.position,
+            transform.position);
+
+
+        _stateMachine.FixedUpdate();
+
     }
 
     private void OnCollisionEnter(Collision col)

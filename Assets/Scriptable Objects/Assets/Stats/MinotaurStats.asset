@@ -19,6 +19,8 @@ MonoBehaviour:
   - rid: 8269461383876968450
   - rid: 8269461383876968451
   - rid: 8269461383876968452
+  - rid: 8269461477113987072
+  - rid: 8269461502578130947
   references:
     version: 2
     RefIds:
@@ -36,7 +38,7 @@ MonoBehaviour:
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 7a5862a2e73e150429d02e59c59bb71f, type: 2}
-        initialValue: 50
+        initialValue: 5
     - rid: 8269461383876968452
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
@@ -48,3 +50,13 @@ MonoBehaviour:
         type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
         initialValue: 100
         initialLowerBoundValue: 0
+    - rid: 8269461477113987072
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: e15db4b0babfeb54c924dbcd088966bd, type: 2}
+        initialValue: 8
+    - rid: 8269461502578130947
+      type: {class: Stats/StatMapEntry, ns: , asm: Stats}
+      data:
+        type: {fileID: 11400000, guid: 626c8f81eaec15e4da9a4a57c08b67c3, type: 2}
+        initialValue: 1

@@ -351,6 +351,9 @@ public class StateMachine<TSelfID, TStateID> :
                     _allAllToOneTransitionData[allToOneTransition].
                     Contains(CurrentState.StateID))
                 {
+                    HandleTransitionCallback(allToOneTransition);
+                    HandleTransitionDebugLogs(allToOneTransition);
+
                     return new(allToOneTransition.ToStateID,
                         allToOneTransition is IEagerTransition &&
                         (allToOneTransition as IEagerTransition).
@@ -379,13 +382,13 @@ public class StateMachine<TSelfID, TStateID> :
         {
             if (transition is AllToOneTransition<TStateID>)
             {
-                Debug.Log("State Machine \"" + StateID + "\" | " +
+                Log("State Machine \"" + StateID + "\" | " +
                     CurrentState.StateID + " > " + transition.ToStateID);
 
                 return;
             }
 
-            Debug.Log("State Machine \"" + StateID + "\" | " +
+            Log("State Machine \"" + StateID + "\" | " +
                 transition.FromStateID + " > " + transition.ToStateID);
         }
     }

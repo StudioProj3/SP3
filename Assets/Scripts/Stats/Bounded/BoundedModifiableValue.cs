@@ -1,12 +1,20 @@
 using System;
 
+using Newtonsoft.Json;
+
 public class BoundedModifiableValue :
     IModifiableValue
 {
+    public float Max => _modifiableValue.Value;
     public float Value => _boundedValue.Value;
+    public float Base => _modifiableValue.Base;
+
     public event Action ValueChanged;
 
+    [JsonProperty]
     private readonly BoundedValue _boundedValue;
+
+    [JsonProperty]
     private readonly ModifiableValue _modifiableValue;
 
     public void Add(float toAdd)
@@ -30,6 +38,12 @@ public class BoundedModifiableValue :
     public void Divide(float toDivide)
     {
         _boundedValue.Value /= toDivide;
+        ValueChanged?.Invoke();
+    }
+
+    public void Set(float toSet)
+    {
+        _boundedValue.Value = toSet;
         ValueChanged?.Invoke();
     }
 

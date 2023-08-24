@@ -15,18 +15,27 @@ MonoBehaviour:
   <Name>k__BackingField: Rotten Wood
   <Sprite>k__BackingField: {fileID: 21300000, guid: ba882fe3edcdf514c943090f95a41e15,
     type: 3}
+  <Atlas>k__BackingField: 0
   <Stackable>k__BackingField: 1
   <Weight>k__BackingField: 0
   Description: Rotten Wood
   <Rotten>k__BackingField: 1
   <CurrencyCost>k__BackingField:
     costs:
-    - <First>k__BackingField: {fileID: 0}
-      <Second>k__BackingField: 0
-    - <First>k__BackingField: {fileID: 0}
-      <Second>k__BackingField: 0
+    - <First>k__BackingField: {fileID: 11400000, guid: 5d7914049de860241aa97e4449d31b3f,
+        type: 2}
+      <Second>k__BackingField: 8
+    - <First>k__BackingField: {fileID: 11400000, guid: 4dc911fba8054bd45ad439714bbac215,
+        type: 2}
+      <Second>k__BackingField: 3
     - <First>k__BackingField: {fileID: 11400000, guid: 800f81c548c6d7847924eea266ba727c,
         type: 2}
-      <Second>k__BackingField: 0
-    - <First>k__BackingField: {fileID: 0}
-      <Second>k__BackingField: 0
+      <Second>k__BackingField: 2
+  <Disable>k__BackingField: 1
+  <DurationType>k__BackingField: 0
+  <FixedDuration>k__BackingField: 0
+  <MinDuration>k__BackingField: 0
+  <MaxDuration>k__BackingField: 0
+  <Target>k__BackingField: {fileID: 0}
+  _fixedDurationCond: 0
+  _randomDurationCond: 0

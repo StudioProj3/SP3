@@ -2,6 +2,10 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
+using Newtonsoft.Json;
+
+// This class should only contain static modifiers
+// It caches the internal value to prevent extra calculation
 [Serializable]
 public class ModifiableValue : IModifiableValue 
 {
@@ -24,40 +28,56 @@ public class ModifiableValue : IModifiableValue
         }
     }
 
+    public float Max => Value;
+    public float Base => _initialValue;
+
     public event Action ValueChanged;
 
-    // TODO (Chris): Change to a sorted number
-    // List of modifiers
-    private readonly List<Modifier> _modifiers;
+    // List of modifiers sorted on add and remove
+    [JsonProperty]
+    private List<Modifier> _modifiers;
     private bool _isDirty = true;
 
     // Store the initial value for cloning
+    [JsonProperty]
     private readonly float _initialValue;
 
     // The internal value of the container
+    [JsonProperty]
     private float _value;
 
     public void Add(float toAdd)
     {
         _value += toAdd;
+        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Subtract(float toSubtract)
     {
         _value -= toSubtract;
+        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Multiply(float toMultiply)
     {
         _value *= toMultiply;
+        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
     public void Divide(float toDivide)
     {
         _value /= toDivide;
+        _isDirty = true;
+        ValueChanged?.Invoke();
+    }
+
+    public void Set(float toSet)
+    {
+        _value = toSet;
+        _isDirty = true;
         ValueChanged?.Invoke();
     }
 
@@ -65,25 +85,30 @@ public class ModifiableValue : IModifiableValue
     {
         _initialValue = baseValue;
         _modifiers = new();
+        _isDirty = true;
     }
 
     public ModifiableValue(float baseValue, List<Modifier> modifiers)
     {
         _initialValue = baseValue;
         _modifiers = new(modifiers);
+        _isDirty = true;
     }
 
     public void AddModifier(Modifier modifier)
     {
-        _isDirty = true;
         _modifiers.Add(modifier);
+        _isDirty = true;
+        _modifiers = _modifiers.OrderByDescending(m => m.Priority).ToList();
+
         ValueChanged?.Invoke();
     }
-
     public void RemoveModifier(Modifier modifier)
     {
-        _isDirty = true;
         _modifiers.Remove(modifier);
+        _isDirty = true;
+        _modifiers = _modifiers.OrderByDescending(m => m.Priority).ToList();
+
         ValueChanged?.Invoke();
     }
 

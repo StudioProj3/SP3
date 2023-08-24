@@ -21,10 +21,14 @@ public abstract class TransitionBase<TStateID> :
 
     }
 
-    protected TransitionBase(TStateID fromStateID, TStateID toStateID)
+    protected TransitionBase(TStateID fromStateID, TStateID toStateID,
+        bool allowDefault = false)
     {
-        Assert(fromStateID != null && toStateID != null,
-            "`fromStateID` and/or `toStateID` is null");
+        if (!allowDefault)
+        {
+            Assert(fromStateID != null && toStateID != null,
+                "`fromStateID` and/or `toStateID` is null");
+        }
 
         FromStateID = fromStateID;
         ToStateID = toStateID;
@@ -36,12 +40,16 @@ public abstract class TransitionBase<TStateID> :
 public abstract class TransitionBase :
     TransitionBase<string>
 {
-    protected TransitionBase(string fromStateID, string toStateID)
+    protected TransitionBase(string fromStateID, string toStateID,
+        bool allowDefault = false)
     {
-        // Ensure that the strings passed in is neither null nor empty
-        Assert(!string.IsNullOrEmpty(fromStateID) &&
-            !string.IsNullOrEmpty(toStateID),
-            "`fromStateID` and/or `toStateID` is null or empty");
+        if (!allowDefault)
+        {
+            // Ensure that the strings passed in is neither null nor empty
+            Assert(!string.IsNullOrEmpty(fromStateID) &&
+                !string.IsNullOrEmpty(toStateID),
+                "`fromStateID` and/or `toStateID` is null or empty");
+        }
 
         FromStateID = fromStateID;
         ToStateID = toStateID;

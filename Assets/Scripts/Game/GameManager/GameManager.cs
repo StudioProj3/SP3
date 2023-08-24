@@ -1,51 +1,84 @@
 using System;
 using UnityEngine;
+using static DebugUtils;
+
 public class GameManager : Singleton<GameManager>
 {
+    public GameState CurrentState
+    {
+        get => _currentState;
+        set
+        {
+            if (_currentState == value)
+            {
+                return;
+            }
 
-    public GameState CurrentState;
+            _currentState = value;
+            OnGameStateChanged?.Invoke(_currentState);
+        }
+    }
+
+    private GameState _currentState;
 
     public event Action<GameState> OnGameStateChanged;
 
-    private void Start()
+    protected override void OnStart()
     {
-        ChangeGameState(GameState.MainMenu);
+        OnGameStateChanged += GameStateChangeHandler;
+
+        // NOTE (Chris): For debugging purposes, game state will be play.
+        CurrentState = GameState.Play;
+        // ChangeGameState(GameState.MainMenu);
     }
 
-    public void ChangeGameState(GameState nextState)
+    private void GameStateChangeHandler(GameState newState)
     {
-        CurrentState = nextState;
+        if (newState != GameState.Pause)
+        {
+            UnPause();
+        }
 
-        switch (nextState)
+        switch (newState)
         {
             case GameState.MainMenu:
                 break;
+
             case GameState.Play:
                 break;
+
             case GameState.Pause:
+                HandlePauseState();
                 break;
+
             case GameState.Win:
                 break;
+
             case GameState.Lose:
                 HandleLoseState();
                 break;
+            
+            case GameState.Dialogue:
+                break;
+
+            default:
+                Fatal("Unhandled `GameState` type");
+                break;
         }
-
-
-        OnGameStateChanged?.Invoke(nextState);
     }
 
     private void HandleLoseState()
     {
-        Debug.Log("Respawn");
+        Log("Respawn");
     }
-}
 
-public enum GameState
-{
-    MainMenu,
-    Play,
-    Pause,
-    Win,
-    Lose,
+    private void HandlePauseState()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void UnPause()
+    {
+        Time.timeScale = 1;
+    }
 }
