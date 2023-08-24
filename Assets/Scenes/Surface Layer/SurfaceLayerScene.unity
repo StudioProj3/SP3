@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -40797,7 +40797,7 @@ GameObject:
   - component: {fileID: 1704081136}
   m_Layer: 0
   m_Name: Items
-  m_TagString: Untagged
+  m_TagString: ItemSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40833,6 +40833,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c99b97bb80ff1e4287816a8bcff04c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _droppedItemPrefab: {fileID: 7198794479233771563, guid: 72dc0fd4ae60bb845ade50d7c3f0d625,
+    type: 3}
+  _starterItems:
+  - item: {fileID: 11400000, guid: 71369df1517f36d43a6974dc49f34097, type: 2}
+    quantity: 1
+    position: {x: -3, y: 1, z: 3}
 --- !u!1 &1727949619
 GameObject:
   m_ObjectHideFlags: 0

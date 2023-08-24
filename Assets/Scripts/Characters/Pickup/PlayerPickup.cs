@@ -83,7 +83,7 @@ public class PlayerPickup :
                         (_characterData.Inventory as BasicInventory).
                         SaveID);
 
-                    other.gameObject.SetActive(false);
+                    collectible.AttemptReleaseToPool();
                     OnPlayerPickup?.Invoke(item, quantity);
 
                     TryNotificationCollect(_notification, sprite, name);
