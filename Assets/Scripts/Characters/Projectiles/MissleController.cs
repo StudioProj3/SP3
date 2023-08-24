@@ -42,10 +42,7 @@ public class MissleController : MonoBehaviour
             _spriteRenderer.sprite = sprite;
         }
 
-        //float angle = -Mathf.Atan2(direction.z, direction.x) *
-        //    Mathf.Rad2Deg;
-
-        //transform.rotation = Quaternion.Euler(90, angle, 0);
+        _rigidbody.AddForce(_direction.normalized * 0.25f, ForceMode.Impulse);
     }
     public void Init(Vector3 direction, Damage damage,
         StatusEffectBase statusEffect,
@@ -66,6 +63,10 @@ public class MissleController : MonoBehaviour
             Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
+
+        Debug.Log(_direction);
+        _rigidbody.AddForce(_direction.normalized * 0.25f, ForceMode.Impulse);
+
     }
 
     private void Awake()

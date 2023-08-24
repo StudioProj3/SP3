@@ -22,9 +22,6 @@ public class BossController :
 
     private StatContainer _bossStatsContainer;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
@@ -84,11 +81,27 @@ public class BossController :
             new GenericState("ShootMissle",
                 new ActionEntry("Enter", () =>
                 {
+                    _direction = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+
                     for (int i = 0; i < _pooledMissleList.Count; i++)
                     {
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
                             _pooledMissleList[i].Init(_direction, _phyDamage,
+                                _arrowStatusEffect, _pooledMissles.transform, _player);
+                            _pooledMissleList[i].transform.position =
+                                transform.position;
+                            _pooledMissleList[i].transform.SetParent(null);
+
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < _pooledMissleList.Count; i++)
+                    {
+                        if (!(_pooledMissleList[i].gameObject.activeSelf))
+                        {
+                            _pooledMissleList[i].Init(-_direction, _phyDamage,
                                 _arrowStatusEffect, _pooledMissles.transform, _player);
                             _pooledMissleList[i].transform.position =
                                 transform.position;
@@ -130,29 +143,24 @@ public class BossController :
             new GenericState("Shield",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    Collider[] weaponTarget;
-                    weaponTarget = Physics.OverlapSphere(transform.position,
-                        0.5f, _weaponLayer, 0);
+                    //Collider[] weaponTarget;
+                    //weaponTarget = Physics.OverlapSphere(transform.position,
+                    //    1.0f, _weaponLayer, QueryTriggerInteraction.Collide);
 
 
-                    for (int i = 0; i < weaponTarget.Length; i++)
-                    {
-                        Vector3 knockbackForce =
-                            (_player.transform.position - transform.position).
-                            normalized * _bossStatsContainer.
-                            GetStat("Knockback").Value;
+                    //for (int i = 0; i < weaponTarget.Length; i++)
+                    //{
+                    //    Vector3 knockbackForce =
+                    //        (_player.transform.position - transform.position).
+                    //        normalized * _bossStatsContainer.
+                    //        GetStat("Knockback").Value;
 
-                        if (!weaponTarget[i].CompareTag("MeleeWeapon"))
-                        {
-                            _playerController.TakeDamage(
-                                _phyDamage, knockbackForce);
-                        }
-                        else if (!weaponTarget[i].CompareTag("RangedWeapon"))
-                        {
-                            weaponTarget[i].gameObject.SetActive(false);
-                            ShootBullet();
-                        }
-                    }
+                    //    _playerController.TakeDamage(
+                    //            _phyDamage, knockbackForce);
+
+                    //    Debug.Log("bruh");
+
+                    //}
                 })
             ),
 
@@ -194,7 +202,7 @@ public class BossController :
             // Idle > Walk
             //new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
 
-            new FixedTimedTransition("Idle", "ShootMissle", 2.0f),
+            new FixedTimedTransition("Idle", "Shield", 2.0f),
 
              new FixedTimedTransition("ShootMissle", "Idle", 5.0f),
 
@@ -223,8 +231,9 @@ public class BossController :
             }),
 
             // Roll > Going to Shoot
-            new FixedTimedTransition("Shield", "ShootMissle", 0.5f),
+            //new FixedTimedTransition("Shield", "ShootMissle", 0.5f),
 
+            //new FixedTimedTransition("Shield", "Idle", 0.5f),
 
             // Shoot > Cooldown
             new FixedTimedTransition("ShootMissle", "Cooldown", 0.2f),
