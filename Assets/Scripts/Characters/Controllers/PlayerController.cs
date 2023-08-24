@@ -31,7 +31,6 @@ public class PlayerController :
         EntityStats = Data.CharacterStats;
         
         SetupStateMachine();
-        Data.Reset();
     }
 
     protected override void SetupStateMachine()

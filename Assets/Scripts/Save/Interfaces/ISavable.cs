@@ -1,5 +1,5 @@
 public interface ISavable<T> :
-    ISerializable, IDeserializable<T>
+    ISerializable
 {
     bool EnableSave { get; }
 

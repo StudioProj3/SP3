@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CharacterData",
@@ -52,9 +50,9 @@ public class CharacterData : ScriptableObject,
             Format == ISerializable.SerializeFormat.Pretty);
     }
 
-    public CharacterData Deserialize(string data)
+    public void Deserialize(string data)
     {
-        return new();
+        JsonUtility.FromJsonOverwrite(data, this);
     }
 
     public void HookEvents()
@@ -72,24 +70,28 @@ public class CharacterData : ScriptableObject,
 
     public void Load(string data)
     {
-
+        Deserialize(data);
     }
 
     public virtual void Reset()
     {
         Inventory = null;
+
         if (HandInventory != null)
         {
             HandInventory.Reset();
         }
+
         IsDead = false;
     }
 
     protected virtual void OnValidate()
     {
 #if UNITY_EDITOR
+
         Name = name;
         UnityEditor.EditorUtility.SetDirty(this);
+
 #endif
     }
 }
