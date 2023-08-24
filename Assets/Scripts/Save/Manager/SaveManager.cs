@@ -1,13 +1,19 @@
 using System;
 using System.Collections.Generic;
 
+using UnityEngine;
+
 using static DebugUtils;
 
 public class SaveManager : Singleton<SaveManager>
 {
+    [SerializeField]
+    private string _saveDirectory;
+
     // Maps `SaveID` to a `Pair` of `Save` and `Load` callbacks
     private Dictionary<string, Pair<Func<string>, Action<string>>>
         _callbacks = new();
+    private string _saveString;
 
     public void Hook(string saveID, Func<string> saveCallback,
         Action<string> loadCallback)
@@ -21,6 +27,16 @@ public class SaveManager : Singleton<SaveManager>
             "`saveID` already exist");
 
         _callbacks.Add(saveID, new(saveCallback, loadCallback));
+    }
+
+    public void SaveAll()
+    {
+        foreach (var pair in _callbacks)
+        {
+            Func<string> save = pair.Value.First;
+
+            
+        }
     }
 
     private void Start()

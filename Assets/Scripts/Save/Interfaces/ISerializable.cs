@@ -2,8 +2,8 @@ public interface ISerializable
 {
     enum SerializeFormat
     {
-        Pretty,
         Minimal,
+        Pretty,
     }
 
     SerializeFormat Format { get; }
