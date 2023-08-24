@@ -86,19 +86,35 @@ public class Stats :
     public string Save()
     {
         ISerializable serializable = this;
-        string obj = serializable.Serialize();
+        string thisObjStr = serializable.Serialize();
 
-        var settings = new JsonSerializerSettings();
-        settings.TypeNameHandling = TypeNameHandling.Auto;
-        //Debug.Log(JsonConvert.SerializeObject(_stats, typeof(IModifiableValue), settings));
+        JsonSerializerSettings settings = new()
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        };
 
-        return obj;
+        string statsDictStr = JsonConvert.SerializeObject(_stats,
+            typeof(Dictionary<StatType, IModifiableValue>), settings);
+
+        List<string> fullStr = new()
+            { thisObjStr, statsDictStr };
+
+        return JsonConvert.SerializeObject(fullStr);
     }
 
     public void Load(string data)
     {
+        List<string> fullStr = JsonConvert.
+            DeserializeObject<List<string>>(data);
+
         IDeserializable deserializable = this;
-        deserializable.Deserialize(data);
+        deserializable.Deserialize(fullStr[0]);
+
+        Dictionary<StatType, IModifiableValue> statsDict =
+            JsonConvert.DeserializeObject<Dictionary<
+            StatType, IModifiableValue>>(fullStr[1]);
+
+        _stats = statsDict;
     }
 
     public IModifiableValue GetStat(string typeName)
