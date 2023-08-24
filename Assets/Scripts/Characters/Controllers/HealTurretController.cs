@@ -132,7 +132,9 @@ public class HealTurretController :
             Vector3 knockbackForce = 
                 (col.transform.position - transform.position).normalized *
                 _healTurretStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_healTurretStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), knockbackForce);
         }
     }
 }
