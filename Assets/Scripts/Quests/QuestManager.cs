@@ -15,6 +15,7 @@ public sealed class QuestManager : Singleton<QuestManager>
     public event Action<string> OnAdvanceQuest; 
     public event Action<string> OnFinishQuest; 
     public event Action<Quest> OnQuestStateChange;
+    public event Action<string, int, QuestStepState> OnQuestStepStateChange;
     public event Action<CharacterData> OnEnemyKilled;
 
     private Dictionary<string, Quest> _allQuests = new();
@@ -59,6 +60,11 @@ public sealed class QuestManager : Singleton<QuestManager>
     public void QuestStateChange(Quest quest)
     {
         OnQuestStateChange?.Invoke(quest);
+    }
+
+    public void QuestStepStateChange(string id, int stepIndex, QuestStepState quest)
+    {
+        OnQuestStepStateChange?.Invoke(id, stepIndex, quest);
     }
 
     public void EnemyKilled(CharacterData data)

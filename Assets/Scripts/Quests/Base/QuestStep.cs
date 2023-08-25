@@ -7,10 +7,12 @@ public abstract class QuestStep : MonoBehaviour
 
     protected string _questID;
     private bool _isFinished = false;
+    private int _stepIndex;
 
-    public virtual void Initialize(string questID)
+    public virtual void Initialize(string questID, int stepIndex)
     {
         _questID = questID;
+        _stepIndex = stepIndex;
     }
 
     protected void FinishQuestStep()
@@ -21,5 +23,10 @@ public abstract class QuestStep : MonoBehaviour
             QuestManager.Instance.AdvanceQuest(_questID);
             Destroy(gameObject);   
         }
+    }
+
+    protected void ChangeState(string newState)
+    {
+        QuestManager.Instance.QuestStepStateChange(_questID, _stepIndex, new QuestStepState(newState));
     }
 }
