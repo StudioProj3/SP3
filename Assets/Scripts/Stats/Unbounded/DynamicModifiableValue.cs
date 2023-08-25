@@ -22,8 +22,19 @@ public class DynamicModifiableValue : IModifiableValue
         }
     }
 
+    public IList<Modifier> ModifierList
+    {
+        get
+        {
+            IList<Modifier> _modifierList = _modifiers.AsReadOnly();
+            return _modifierList;
+        }
+    }
+
     public float Max => Value;
     public float Base => _initialValue;
+
+    public IList<Modifier> AppliedModifiers => ModifierList;
 
     public event Action ValueChanged;
 

@@ -81,4 +81,9 @@ public class GameManager : Singleton<GameManager>
     {
         Time.timeScale = 1;
     }
+
+    private void Update()
+    {
+        //Debug.Log(CurrentState);
+    }
 }
