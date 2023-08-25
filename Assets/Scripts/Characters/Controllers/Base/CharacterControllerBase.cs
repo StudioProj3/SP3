@@ -51,7 +51,13 @@ public abstract class CharacterControllerBase :
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioManager = AudioManager.Instance;
+
+        Stats stats = Data.CharacterStats;
+        stats.HookEvents();
+        stats.AddListenerToStats();
     }
+
+
 
     protected virtual void SetupStateMachine()
     {
@@ -65,11 +71,8 @@ public abstract class CharacterControllerBase :
         Data.HookEvents();
         Data.Reset();
 
-        Stats stats = Data.CharacterStats;
-        stats.HookEvents();
-        stats.AddListenerToStats();
     }
-    
+
     protected void RemoveEffectImpl(StatusEffectBase statusEffect,
         int index)
     {

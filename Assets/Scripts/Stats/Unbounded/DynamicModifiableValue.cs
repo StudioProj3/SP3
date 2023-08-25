@@ -108,4 +108,9 @@ public class DynamicModifiableValue : IModifiableValue
     {
         return new DynamicModifiableValue(_initialValue, _modifiers);
     }
+
+    public void InvokeValueChanged()
+    {
+        ValueChanged?.Invoke();
+    }
 }
