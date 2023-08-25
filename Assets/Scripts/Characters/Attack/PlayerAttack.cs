@@ -204,6 +204,12 @@ public class PlayerAttack : MonoBehaviour
 
     public void Equip(ItemBase itemToEquip, uint quantity)
     {
+        if (!_playerData.HandInventory.IsItemInside(itemToEquip))
+        {
+            // If the new item is not inside the hand, forgo equipping
+            return;
+        }
+
         if (_currentlyHolding != null)
         {
             _usingLeftHand = !_usingLeftHand;
