@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static DebugUtils;
 
 
 public class AudioManager : Singleton<AudioManager>
@@ -19,8 +20,8 @@ public class AudioManager : Singleton<AudioManager>
         //bgmSlider.value = AudioPrefsManager.Load("BGMVolume");
         //sfxSlider.value = AudioPrefsManager.Load("SFXVolume");
 
-        SetBGMVolume();
-        SetSFXVolume();
+        //SetBGMVolume();
+        //SetSFXVolume();
 
     }
 
@@ -30,28 +31,29 @@ public class AudioManager : Singleton<AudioManager>
 
     }
 
-    public void SetBGMVolume()
+    public void SetBGMVolume(float value)
     {
-        //float value = bgmSlider.value * 10 - 20;
-        //if (bgmSlider.value == 0)
-        //    value = -80;
+        float soundValue = value * 10 - 20;
+        if (value == 0)
+            soundValue = -80;
 
-        //mixer.SetFloat("BGMVolume", value);
-        //AudioPrefsManager.Save("BGMVolume", bgmSlider.value);
+        mixer.SetFloat("BGMVolume", soundValue);
+        //AudioPrefsManager.Save("BGMVolume", value);
     }
 
-    public void SetSFXVolume()
+    public void SetSFXVolume(float value)
     {
-        //float value = sfxSlider.value * 10 - 20;
-        //if (sfxSlider.value == 0)
-        //    value = -80;
-        //mixer.SetFloat("SFXVolume", value);
+        float soundValue = value * 10 - 20;
+        if (value == 0)
+            soundValue = -80;
+
+        mixer.SetFloat("SFXVolume", soundValue);
         //AudioPrefsManager.Save("SFXVolume", sfxSlider.value);
     }
 
     public void PlaySound(AudioClip audio, bool overlap)
     {
-        if(overlap)
+        if (overlap)
             sfxAudioSrc.PlayOneShot(audio, sfxAudioSrc.volume);
         else
         {
