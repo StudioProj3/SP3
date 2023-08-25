@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIDropArea : EventTrigger
+public class UIDropArea :
+    MonoBehaviour, IDropHandler
 {
-    public override void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)
     {
         if (eventData == null)
         {
