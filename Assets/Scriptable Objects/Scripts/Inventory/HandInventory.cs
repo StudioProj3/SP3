@@ -42,6 +42,8 @@ public class HandInventory :
     {
         IDeserializable deserializable = this;
         deserializable.Deserialize(data);
+
+        _allItems = new(_itemInitializerList);
     }
 
     public override void Reset()
@@ -56,9 +58,21 @@ public class HandInventory :
     }
 
     // Convenience helper function for readability
+    public uint LeftHandAmount()
+    {
+        return GetAmount(0);
+    }
+
+    // Convenience helper function for readability
     public ItemBase RightHand()
     {
         return GetItem(1);
+    }
+
+    // Convenience helper function for readability
+    public uint RightHandAmount()
+    {
+        return GetAmount(1);
     }
 
     protected override void OnValidate()

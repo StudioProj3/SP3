@@ -1,5 +1,7 @@
 using System;
 
+using Newtonsoft.Json;
+
 public class BoundedModifiableValue :
     IModifiableValue
 {
@@ -9,7 +11,10 @@ public class BoundedModifiableValue :
 
     public event Action ValueChanged;
 
+    [JsonProperty]
     private readonly BoundedValue _boundedValue;
+
+    [JsonProperty]
     private readonly ModifiableValue _modifiableValue;
 
     public void Add(float toAdd)
