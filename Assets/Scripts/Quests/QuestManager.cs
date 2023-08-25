@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static DebugUtils;
+using Newtonsoft.Json;
 
 public sealed class QuestManager : Singleton<QuestManager>, ISavable
 {
@@ -104,18 +105,27 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
             questDoneMap.Add(quest.Info.ID, quest.state == QuestState.Finished);
         }
 
-        return JsonUtility.ToJson(questDoneMap);
+        return JsonConvert.SerializeObject(questDoneMap);
     }
 
     public void Load(string data)
     {
-        Dictionary<string, bool> questDoneMap = JsonUtility
-            .FromJson<Dictionary<string, bool>>(data);
+        Dictionary<string, bool> questDoneMap = JsonConvert 
+            .DeserializeObject<Dictionary<string, bool>>(data);
 
+        // We want to default the state at first, then
+        // change it later
         foreach (Quest quest in _allQuests.Values)
         {
-            quest.state = questDoneMap[quest.Info.ID] ? 
-                QuestState.Finished : QuestState.RequirementsNotMet;
+            quest.state = QuestState.RequirementsNotMet;
+        }
+
+        foreach (string questID in questDoneMap.Keys)
+        {
+            if (questDoneMap[questID])
+            {
+                GetQuest(questID).state = QuestState.Finished; 
+            }
         }
     }
 
@@ -154,9 +164,8 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
             _ = questUIObject.TryGetComponent(out _questDisplayInformation);
         }
 
-        // this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
-        StartQuest("Introduction");
-        StartQuest("ShopkeeperQuest");
+        HookEvents();
+        this.DelayExecute(() => { StartQuest("Introduction"); StartQuest("ShopkeeperQuest"); }, 0.5f);
     }
 
     private void ChangeQuestState(string id, QuestState state)
@@ -168,16 +177,21 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
 
     private bool IsRequirementsMet(Quest quest)
     {
-        return quest
+        return !(quest
             .Info
             .PrerequisiteQuests
             .Where(q => GetQuest(q.ID).state != QuestState.Finished)
-            .Any();
+            .Count() > 0);
     }
 
     private void StartQuestCallback(string id)
     {
         Quest quest = GetQuest(id);
+
+        if (quest.state != QuestState.CanStart)
+        {
+            return;
+        }
         QuestStep step = quest.InstantiateCurrentQuestStep(transform);
 
         if (QuestDisplayInformation != null)
@@ -186,6 +200,8 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
         }
         
         ChangeQuestState(quest.Info.ID, QuestState.InProgress);
+
+        SaveManager.Instance.Save(SaveID);
     }
 
     private void AdvanceQuestCallback(string id)
@@ -260,8 +276,12 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
                         item.Value, spawnPosition));
                 }
             }
+        }
 
-
+        // Save the new result
+        if (EnableSave)
+        {
+            SaveManager.Instance.Save(SaveID);
         }
     }
 

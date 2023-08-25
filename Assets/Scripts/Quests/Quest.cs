@@ -6,7 +6,7 @@ using static DebugUtils;
 public class Quest
 {
     public QuestInfo Info { get; private set; }
-    public QuestState state; 
+    public QuestState state = QuestState.RequirementsNotMet; 
     private int _currentQuestStepIndex;
     private QuestStepState[] _stepStates;
 
