@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyManager : Singleton<EnemyManager>
 {
     private GameObject _spawnerGroup;
-    private Dictionary<string,LevelManager> _levelList;
+    private Dictionary<string, LevelManager> _levelList;
     private List<EnemySpawner> _enemySpawners;
     private Dictionary<int, bool> _enemySpawnerStates;
     private GameObject _player;
@@ -15,9 +15,9 @@ public class EnemyManager : Singleton<EnemyManager>
         if (_levelList == null)
             return;
 
-        if(!_levelList.ContainsKey(sceneName))
+        if (!_levelList.ContainsKey(sceneName))
             _levelList.Add(sceneName, currentLevel);
-        
+
 
         _spawnerGroup = GameObject.FindGameObjectWithTag("EnemySpawner");
         _enemySpawners = new List<EnemySpawner>();
@@ -84,8 +84,8 @@ public class EnemyManager : Singleton<EnemyManager>
             level.WeightOver = level.CurrentWeight - level.WeightLimit;
         }
 
-           
-        
+
+
     }
 
     public void StartEnemyTimer(string sceneName, int weight)
@@ -96,7 +96,7 @@ public class EnemyManager : Singleton<EnemyManager>
             _ = Delay.Execute(() =>
             {
                 level.CurrentWeight -= weight;
-                if(sceneName == GameObject.FindWithTag("LevelManager").scene.name)
+                if (sceneName == GameObject.FindWithTag("LevelManager").scene.name)
                     SpawnEnemiesInScene(sceneName, level);
             }, 10.0f);
         }

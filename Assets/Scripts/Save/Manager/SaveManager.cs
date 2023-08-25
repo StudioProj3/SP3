@@ -20,6 +20,14 @@ public class SaveManager : Singleton<SaveManager>
     [Header("Save Parameters")]
 
     [SerializeField]
+    [Range(0f, 60f)]
+    [Tooltip("Time in seconds for auto save")]
+    private float _autoSaveFrequency = 30f;
+
+    [HorizontalDivider]
+    [Header("Save Location Parameters")]
+
+    [SerializeField]
     private SaveLocation _saveLocation;
 
     [SerializeField]
@@ -140,6 +148,11 @@ public class SaveManager : Singleton<SaveManager>
     private void Start()
     {
         LoadAll();
+
+        // The individual savables already call save when they are
+        // changed this is just as a fallback but technically should
+        // be fully functional without
+        InvokeRepeating(nameof(SaveAll), 0f, _autoSaveFrequency);
     }
 
     private void Awake()

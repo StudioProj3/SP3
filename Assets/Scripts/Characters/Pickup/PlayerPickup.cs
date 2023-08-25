@@ -44,7 +44,7 @@ public class PlayerPickup :
 
                     //_characterData.Inventory.Reset();
 
-                    other.gameObject.SetActive(false);
+                    collectible.AttemptReleaseToPool();
 
                     TryNotificationCollect(_notification, sprite, name);
                 }
@@ -58,7 +58,10 @@ public class PlayerPickup :
 
             if (tryHandInventory)
             {
-                other.gameObject.SetActive(false);
+                SaveManager.Instance.Save(_characterData.
+                    HandInventory.SaveID);
+
+                collectible.AttemptReleaseToPool();
 
                 TryNotificationCollect(_notification, sprite, name);
                 OnPlayerPickup?.Invoke(item, quantity);
@@ -80,7 +83,7 @@ public class PlayerPickup :
                         (_characterData.Inventory as BasicInventory).
                         SaveID);
 
-                    other.gameObject.SetActive(false);
+                    collectible.AttemptReleaseToPool();
                     OnPlayerPickup?.Invoke(item, quantity);
 
                     TryNotificationCollect(_notification, sprite, name);
