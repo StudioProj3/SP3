@@ -22,13 +22,12 @@ public class BossController :
 
     private StatContainer _bossStatsContainer;
 
-    private GameObject _player;
-    private PlayerController _playerController;
-
     private Vector3 _direction;
     private float _distance;
     private PhysicalDamage _phyDamage;
     private MagicDamage _magicDamage;
+
+    private int _attackIndex;
 
     protected void OnEnable()
     {
@@ -71,8 +70,17 @@ public class BossController :
             new GenericState("Walk",
                 new ActionEntry("Enter", () =>
                 {
-                    _direction = new Vector3(Random.Range(-1.0f, 1.0f),
-                        0.0f, Random.Range(-1.0f, 1.0f));
+                    int randomNum = Random.Range(0, 2);
+                    if (randomNum == 0)
+                    {
+                        _direction = new Vector3(Random.Range(-1.0f, 1.0f),
+                            0.0f, Random.Range(-1.0f, 1.0f));
+                    }
+                    else if(randomNum == 1)
+                    {
+                        _direction = _player.transform.position -
+                            transform.position;
+                    }
                 }),
                 new ActionEntry("FixedUpdate", () =>
                 {
@@ -81,15 +89,39 @@ public class BossController :
                 })
             ),
 
+            new GenericState("Attack"),
+
             new GenericState("ShootMissle",
                 new ActionEntry("Enter", () =>
                 {
+                    _direction = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+
                     for (int i = 0; i < _pooledMissleList.Count; i++)
                     {
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
-                            _pooledMissleList[i].Init(_direction, _phyDamage,
+                            _pooledMissleList[i].Init(_direction, _phyDamage.AddModifier(
+                                Modifier.Multiply(_bossStatsContainer.
+                                GetStat("DamageMultiplier").Value, 3)),
                                 _arrowStatusEffect, _pooledMissles.transform, _player);
+
+                            _pooledMissleList[i].transform.position =
+                                transform.position;
+                            _pooledMissleList[i].transform.SetParent(null);
+
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < _pooledMissleList.Count; i++)
+                    {
+                        if (!(_pooledMissleList[i].gameObject.activeSelf))
+                        {
+                            _pooledMissleList[i].Init(-_direction, _phyDamage.AddModifier(
+                                Modifier.Multiply(_bossStatsContainer.
+                                GetStat("DamageMultiplier").Value, 3)),
+                                _arrowStatusEffect, _pooledMissles.transform, _player);
+
                             _pooledMissleList[i].transform.position =
                                 transform.position;
                             _pooledMissleList[i].transform.SetParent(null);
@@ -114,45 +146,73 @@ public class BossController :
                 })
             ),
 
+            new GenericState("ShootLaserStart",
+                new ActionEntry("Enter", () =>
+                {
+                    _pooledLasers.transform.position = transform.position;
+                    _pooledLasers.Init(_direction, _magicDamage.AddModifier(
+                        Modifier.Multiply(0.5f,3)),
+                        _playerController);
+                }),
+                new ActionEntry("FixedUpdate", () =>
+                {
+                    _pooledLasers.transform.position = transform.position;
+
+                })
+            ),
+
             new GenericState("ShootLaser",
                 new ActionEntry("Enter", () =>
                 {
-                    _pooledLasers.Init(_direction, _magicDamage,
-                               _playerController);
+                    _pooledLasers.SetCollide(true);
+                    _pooledLasers.SetAnimatorBool("Firing", true);
                 }),
-
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    _pooledLasers.transform.Rotate(0.0f, 2.0f, 0.0f);
+                    _pooledLasers.transform.Rotate(0.0f, 1.5f, 0.0f);
+                    _pooledLasers.transform.position = transform.position;
+
+                })
+            ),
+
+            new GenericState("ShootLaserEnd",
+                new ActionEntry("Enter", () =>
+                {
+                    _pooledLasers.SetCollide(false);
+
+                    _pooledLasers.SetAnimatorBool("End", true);
+                })
+            ),
+
+            new GenericState("ShootLaserCooldown",
+                new ActionEntry("Enter", () =>
+                {
+                    _pooledLasers.SetAnimatorBool("Firing", false);
+                    _pooledLasers.SetAnimatorBool("End", false);
                 })
             ),
 
             new GenericState("Shield",
                 new ActionEntry("FixedUpdate", () =>
                 {
-                    Collider[] weaponTarget;
-                    weaponTarget = Physics.OverlapSphere(transform.position,
-                        0.5f, _weaponLayer, 0);
+                    //Collider[] weaponTarget;
+                    //weaponTarget = Physics.OverlapSphere(transform.position,
+                    //    1.0f, _weaponLayer, QueryTriggerInteraction.Collide);
 
 
-                    for (int i = 0; i < weaponTarget.Length; i++)
-                    {
-                        Vector3 knockbackForce =
-                            (_player.transform.position - transform.position).
-                            normalized * _bossStatsContainer.
-                            GetStat("Knockback").Value;
+                    //for (int i = 0; i < weaponTarget.Length; i++)
+                    //{
+                    //    Vector3 knockbackForce =
+                    //        (_player.transform.position - transform.position).
+                    //        normalized * _bossStatsContainer.
+                    //        GetStat("Knockback").Value;
 
-                        if (!weaponTarget[i].CompareTag("MeleeWeapon"))
-                        {
-                            _playerController.TakeDamage(
-                                _phyDamage, knockbackForce);
-                        }
-                        else if (!weaponTarget[i].CompareTag("RangedWeapon"))
-                        {
-                            weaponTarget[i].gameObject.SetActive(false);
-                            ShootBullet();
-                        }
-                    }
+                    //    _playerController.TakeDamage(
+                    //            _phyDamage, knockbackForce);
+
+                    //    Debug.Log("bruh");
+
+                    //}
                 })
             ),
 
@@ -192,19 +252,14 @@ public class BossController :
             }),
 
             // Idle > Walk
-            //new RandomTimedTransition("Idle", "Walk", 1.0f, 2.0f),
+            new RandomTimedTransition("Idle", "Walk", 0.5f, 1.0f),
 
-            new FixedTimedTransition("Idle", "ShootMissle", 2.0f),
-
-             new FixedTimedTransition("ShootMissle", "Idle", 5.0f),
-
-            // Walk > Idle
-            new FixedTimedTransition("Walk", "Idle", 0.7f),
+            new RandomTimedTransition("Walk", "Attack", 1.0f, 2.0f),
 
             // Idle > Roll
-            new GenericTransition("Idle", "MeleeDashStart", () =>
+            new GenericTransition("Attack", "MeleeDashStart", () =>
             {
-                return _distance < 1.0f;
+                return _distance < 1.0f || _attackIndex == 4;
             }),
 
             // Walk > Idle
@@ -214,23 +269,41 @@ public class BossController :
             new FixedTimedTransition("MeleeDash", "MeleeDashEnd", 3.0f),
 
             // Walk > Idle
-            new FixedTimedTransition("MeleeDashEnd", "Idle", 0.5f),
+            new FixedTimedTransition("MeleeDashEnd", "Cooldown", 0.5f),
 
-            // Idle > Going to shoot
-            new GenericTransition("Walk", "ShootMissle", () =>
+            new GenericTransition("Attack", "ShootLaserStart", () =>
             {
-                return _distance < 3.0f;
+                return _attackIndex == 0;
+            }),
+
+            new FixedTimedTransition("ShootLaserStart", "ShootLaser", 0.6f),
+
+            new FixedTimedTransition("ShootLaser", "ShootLaserEnd", 4.0f),
+
+            new FixedTimedTransition("ShootLaserEnd", "Cooldown", 2.0f),
+
+            new GenericTransition("Attack", "ShootRapid", () =>
+            {
+                 return _attackIndex == 1;
+            }),
+
+            new FixedTimedTransition("ShootRapid", "Cooldown", 2.0f),
+
+            new GenericTransition("Attack", "ShootMissle", () =>
+            {
+                return _attackIndex == 2;
             }),
 
             // Roll > Going to Shoot
-            new FixedTimedTransition("Shield", "ShootMissle", 0.5f),
+            //new FixedTimedTransition("Shield", "ShootMissle", 0.5f),
 
+            //new FixedTimedTransition("Shield", "Idle", 0.5f),
 
             // Shoot > Cooldown
             new FixedTimedTransition("ShootMissle", "Cooldown", 0.2f),
 
             // Cooldown > Idle
-            new FixedTimedTransition("Cooldown", "Idle", 0.2f)
+            new FixedTimedTransition("Cooldown", "Idle", 0.5f)
         );
 
         _stateMachine.SetStartState("Idle");
@@ -283,6 +356,8 @@ public class BossController :
 
         transform.rotation = Quaternion.Euler(0,
             _direction.x < 0 ? 180 : 0, 0);
+
+        _attackIndex = Random.Range(0, 4);
     }
 
     private void FixedUpdate()
@@ -300,7 +375,9 @@ public class BossController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _bossStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                Modifier.Multiply(_bossStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), knockbackForce);
         }
     }
 
@@ -314,9 +391,16 @@ public class BossController :
             if (!(_pooledBulletList[j]
                 .gameObject.activeSelf))
             {
-                _pooledBulletList[j].Init(_direction, _phyDamage,
-                    _arrowStatusEffect, _pooledMissles.transform);
-                _pooledBulletList[j].transform.position = transform.position;
+                _pooledBulletList[j].Init(_direction, _magicDamage.AddModifier(
+                    Modifier.Multiply(_bossStatsContainer.
+                    GetStat("DamageMultiplier").Value, 3)),
+                    _arrowStatusEffect, _pooledBullets.transform);
+
+                _pooledBulletList[j].transform.position = new Vector3(
+                    transform.position.x,
+                    _pooledBullets.transform.position.y,
+                    transform.position.z);
+
                 _pooledBulletList[j].transform.SetParent(null);
 
                 break;

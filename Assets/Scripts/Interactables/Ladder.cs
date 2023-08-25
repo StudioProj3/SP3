@@ -1,18 +1,15 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class Ladder : MonoBehaviour, IInteractable
+public class Ladder : InteractableBase
 {
-    public string InteractText { get; } = "~ Enter ~";
-
     [SerializeField]
     private string _nextScene;
-
 
     private GameObject _toggleText;
     private LoadingManager _loadingManager;
 
-    public void Interact()
+    protected override void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -25,19 +22,17 @@ public class Ladder : MonoBehaviour, IInteractable
         _loadingManager = LoadingManager.Instance;
 
         _toggleText = transform.GetChild(0).gameObject;
-        _toggleText.GetComponent<TextMeshPro>().text = InteractText;
+        _toggleText.GetComponent<TextMeshPro>().text =
+            _interactText;
         _toggleText.SetActive(false);
-
     }
 
     private void Update()
     {
-
         if (_toggleText.activeSelf)
         {
             Interact();
         }
-
     }
 
     private void OnTriggerEnter(Collider col)
@@ -46,7 +41,6 @@ public class Ladder : MonoBehaviour, IInteractable
         {
             _toggleText.SetActive(true);
         }
-
     }
 
     private void OnTriggerExit(Collider col)
@@ -55,7 +49,5 @@ public class Ladder : MonoBehaviour, IInteractable
         {
             _toggleText.SetActive(false);
         }
-
     }
 }
-

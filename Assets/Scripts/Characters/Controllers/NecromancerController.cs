@@ -84,7 +84,11 @@ public class NecromancerController :
                             _direction = _player.transform.position -
                                 _pooledSkullList[i].transform.position;
 
-                            _pooledSkullList[i].Init(_direction, _magicDamage,
+                            _pooledSkullList[i].Init(_direction,
+                                _magicDamage.AddModifier(
+                                Modifier.Multiply(_necromancerStatsContainer.
+                                GetStat("DamageMultiplier").Value, 3)),
+
                                 _playerController, _pooledSkulls.transform);
                             _pooledSkullList[i].transform.SetParent(null);
 
@@ -229,7 +233,10 @@ public class NecromancerController :
             Vector3 knockbackForce =
                 (col.transform.position - transform.position).normalized *
                 _necromancerStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_magicDamage, knockbackForce);
+
+            _playerController.TakeDamage(_magicDamage.AddModifier(
+                Modifier.Multiply(_necromancerStatsContainer.
+                GetStat("DamageMultiplier").Value, 3)), knockbackForce);
         }
     }
 }

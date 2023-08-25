@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 
@@ -19,6 +20,13 @@ public abstract class InventoryBase :
     protected List<Pair<int, uint>> _indexToQuantityMap = new();
     protected List<Pair<int, bool>> _nonStackableIndexToNewValueMap =
         new();
+
+    public bool IsItemInside(ItemBase itemBase) 
+    {
+        return _allItems.Where(kv => kv != null)
+            .Select(kv => kv.Key)
+            .Contains(itemBase);
+    }
 
     public int GetAmount(ItemBase itemBase)
     {

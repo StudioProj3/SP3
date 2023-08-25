@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class DialoguePoint : MonoBehaviour, IInteractable
+public class DialoguePoint : MonoBehaviour
 {
     [SerializeField] private string _interactTextData;
     private TMP_Text _interactText;

@@ -64,10 +64,14 @@ public class ArcherController :
                     {
                         if (!(_pooledArrowList[i].gameObject.activeSelf))
                         {
-                            _pooledArrowList[i].Init(_direction, _phyDamage,
+                            _pooledArrowList[i].Init(_direction, _phyDamage.AddModifier(
+                                Modifier.Multiply(_archerStatsContainer.
+                                GetStat("DamageMultiplier").Value, 3)),
                                 _arrowStatusEffect, _pooledArrows.transform);
+
                             _pooledArrowList[i].transform.position =
                                 transform.position;
+
                             _pooledArrowList[i].transform.SetParent(null);
 
                             break;
@@ -200,7 +204,10 @@ public class ArcherController :
             Vector3 knockbackForce = 
                 (col.transform.position - transform.position).normalized *
                 _archerStatsContainer.GetStat("Knockback").Value;
-            _playerController.TakeDamage(_phyDamage, knockbackForce);
+            _playerController.TakeDamage(_phyDamage.AddModifier(
+                 Modifier.Multiply(_archerStatsContainer.
+                 GetStat("DamageMultiplier").Value, 3)),
+                 knockbackForce);
         }
     }
 }
