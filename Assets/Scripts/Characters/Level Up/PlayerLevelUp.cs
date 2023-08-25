@@ -1,23 +1,16 @@
 using UnityEngine;
 
-using static DebugUtils;
-
 public class PlayerLevelUp : MonoBehaviour
 {
-
     [SerializeField]
     private CharacterData _playerData;
 
     private IModifiableValue _experiencePoints;
     private IModifiableValue _currentLevel;
+
     public void GainExperience(float experience)
     {
         _experiencePoints.Add(experience);
-
-        if (_experiencePoints.Value == _experiencePoints.Max)
-        {
-            LevelUp();
-        }
     }
     
     private void Start()
@@ -28,12 +21,22 @@ public class PlayerLevelUp : MonoBehaviour
             GetStat("Level");
         _experiencePoints.Set(0);
         _currentLevel.Set(1);
+
+        _experiencePoints.ValueChanged += ValueChangedHandler;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-
+        _experiencePoints.ValueChanged -= ValueChangedHandler;
     }
+
+    private void ValueChangedHandler()
+    {
+        if (_experiencePoints.Value == _experiencePoints.Max)
+        {
+            LevelUp();
+        }
+    } 
     
     private void LevelUp()
     {

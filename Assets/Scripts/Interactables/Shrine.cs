@@ -4,8 +4,6 @@ using TMPro;
 public class Shrine : MonoBehaviour, IInteractable
 {
     public string InteractText { get; } = "~ Pray ~";
-
-    [SerializeField]
     private CharacterControllerBase _player;
 
     private GameObject _toggleText;
@@ -29,6 +27,8 @@ public class Shrine : MonoBehaviour, IInteractable
         _toggleText = transform.GetChild(0).gameObject;
         _toggleText.GetComponent<TextMeshPro>().text = InteractText;
         _toggleText.SetActive(false);
+        _player = GameObject.FindGameObjectWithTag("Player")
+                            .GetComponent<CharacterControllerBase>();
     }
 
     private void Update()

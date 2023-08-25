@@ -43,7 +43,7 @@ public abstract class InventoryBase :
     public virtual void Reset()
     {
         // Clear any items that might still be in there
-        for (int i = 0; i < _allItems.Capacity; ++i)
+        for (int i = 0; i < _allItems.Count; ++i)
         {
             _allItems[i] = null;
             _itemInitializerList[i] = null;

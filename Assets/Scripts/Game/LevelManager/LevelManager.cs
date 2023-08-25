@@ -46,6 +46,20 @@ public class LevelManager : MonoBehaviour
 
         if (!_enemiesLoaded && _loadingManager.asyncLoad.isDone)
         {
+            GameObject startPos = GameObject.FindWithTag("PlayerStart");
+            GameObject player = GameObject.FindWithTag("Player");
+
+            if (startPos)
+            {
+                player.transform.position =
+                    startPos.transform.position;
+            }
+            else
+            {
+                player.transform.position =
+                    new Vector3(0, player.transform.position.y, 0);
+            }
+
             _enemiesLoaded = true;
             EnemyManager.Instance.SpawnEnemiesInScene(gameObject.scene.name, this);
         }

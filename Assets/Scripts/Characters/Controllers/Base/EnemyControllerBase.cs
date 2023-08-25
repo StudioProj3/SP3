@@ -22,11 +22,7 @@ public class EnemyControllerBase :
                 new ActionEntry("Enter", () =>
                 {
                     OnEnemyDeath(GameObject.FindWithTag("EnemySpawner").scene.name,Weight);
-                    var playerLevelling =
-                        _playerController.gameObject.
-                        GetComponent<PlayerLevelUp>();
-
-                    playerLevelling.GainExperience(ExpAmount);
+                    _playerController.EntityStats.GetStat("ExperiencePoints").Add(ExpAmount);
 
                     _rigidbody.velocity = new Vector3(0, 0, 0);
                 })

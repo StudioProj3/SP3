@@ -10,5 +10,9 @@ public class BasicInventoryEditor : ReorderEditorBase
         AddProperty("MaxNumSlots");
         AddProperty("MaxPerSlot");
         AddField("_itemInitializerList");
+
+        AddProperty("EnableSave");
+        AddProperty("SaveID");
+        AddProperty("Format");
     }
 }

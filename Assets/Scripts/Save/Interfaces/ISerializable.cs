@@ -1,12 +1,18 @@
+using UnityEngine;
+
 public interface ISerializable
 {
     enum SerializeFormat
     {
-        Pretty,
         Minimal,
+        Pretty,
     }
 
     SerializeFormat Format { get; }
 
-    string Serialize();
+    string Serialize()
+    {
+        return JsonUtility.ToJson(this,
+            Format == SerializeFormat.Pretty);
+    }
 }

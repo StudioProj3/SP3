@@ -6,11 +6,23 @@ public class UIHUDHotbar : MonoBehaviour
     private Button _leftSlot;
     private Button _rightSlot;
     private UIInventory _uiinventory;
+    private bool _loaded = false;
 
-    private void Start()
+    private void Update()
     {
-        _uiinventory = GameObject.FindWithTag("UIInventory").
-            GetComponent<UIInventory>();
+        if (_loaded)
+        {
+            return;
+        }
+
+        GameObject gameObject = GameObject.FindWithTag("UIInventory");
+
+        if (!gameObject)
+        {
+            return;
+        }
+
+        _uiinventory = gameObject.GetComponent<UIInventory>();
 
         _leftSlot.onClick.AddListener(() =>
         {
@@ -21,6 +33,8 @@ public class UIHUDHotbar : MonoBehaviour
         {
             _uiinventory.ShowInventory();
         });
+
+        _loaded = true;
     }
 
     private void Awake()
