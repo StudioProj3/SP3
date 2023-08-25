@@ -15,7 +15,8 @@ public class UIHUDHotbar : MonoBehaviour
             return;
         }
 
-        GameObject gameObject = GameObject.FindWithTag("UIInventory");
+        GameObject gameObject = GameObject.
+            FindWithTag("UIInventory");
 
         if (!gameObject)
         {
