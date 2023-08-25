@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 public interface IModifiableValue : IValue
 {
     float Max { get; }
     float Base { get; }
+
+    IList<Modifier> AppliedModifiers { get;}
 
     event Action ValueChanged;
 

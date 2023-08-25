@@ -182,13 +182,31 @@ public sealed class QuestManager : Singleton<QuestManager>
                 return;
             }
 
-            // TODO (Chris): Implement item rewards
-
             if (_playerData.CharacterStats.TryGetStat(
                 "ExperiencePoints", out var xp))
             {
                 xp.Add(quest.Info.RewardXP);
             }
+
+
+            GameObject spawner = GameObject.FindWithTag("ItemSpawner");
+            if (spawner != null)
+            {
+                if (spawner.TryGetComponent(out ItemSpawner spawnerComponent))
+                {
+                    // Try to retrieve the player's position to spawn
+                    // the reward objects
+                    GameObject player = GameObject.FindWithTag("Player");
+                    Vector3 spawnPosition = player != null ? 
+                        player.transform.position : Vector3.zero;
+
+                    quest.Info.RewardItems.ForEach(item =>
+                        spawnerComponent.SpawnObject(item.Key, 
+                        item.Value, spawnPosition));
+                }
+            }
+
+
         }
     }
 

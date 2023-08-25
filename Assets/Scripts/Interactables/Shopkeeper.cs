@@ -1,16 +1,14 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class Shopkeeper : MonoBehaviour, IInteractable
+public class Shopkeeper : InteractableBase
 {
-    public string InteractText { get; } = "~ Shop ~";
-
     private GameObject _toggleText;
     private GameObject _shopUI;
     
-    public void Interact()
+    protected override void Interact()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             _shopUI.SetActive(!_shopUI.activeSelf);
         }
@@ -19,9 +17,9 @@ public class Shopkeeper : MonoBehaviour, IInteractable
     private void Start()
     {
         _toggleText = transform.GetChild(0).gameObject;
-        _toggleText.GetComponent<TextMeshPro>().text = InteractText;
+        _toggleText.GetComponent<TextMeshPro>().text =
+            _interactText;
         _toggleText.SetActive(false);
-
     }
 
     private void Update()
@@ -29,16 +27,16 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         if (!_shopUI)
         {
             _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
-            if(_shopUI)
+            if (_shopUI)
             {
                 _shopUI.SetActive(false);
             }
         }
-        if(_toggleText.activeSelf && _shopUI)
+
+        if (_toggleText.activeSelf && _shopUI)
         {
             Interact();
         }
-
     }
 
     private void OnTriggerEnter(Collider col)
@@ -47,7 +45,6 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         {
             _toggleText.SetActive(true);
         }
-
     }
 
     private void OnTriggerExit(Collider col)
@@ -55,12 +52,11 @@ public class Shopkeeper : MonoBehaviour, IInteractable
         if (col.gameObject.CompareTag("Player"))
         {
             _toggleText.SetActive(false);
+
             if (_shopUI)
             {
                 _shopUI.SetActive(false);
             }
         }
-
     }
 }
-

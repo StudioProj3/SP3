@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
+using UnityEngine;
+
 // This class should only contain static modifiers
 // It caches the internal value to prevent extra calculation
 [Serializable]
@@ -30,10 +32,22 @@ public class ModifiableValue : IModifiableValue
     }
 
     [JsonIgnore]
+    public IList<Modifier> ModifierList
+    {
+        get
+        {
+            IList<Modifier> _modifierList = _modifiers.AsReadOnly();
+            return _modifierList;
+        }
+    }
+
+    [JsonIgnore]
     public float Max => Value;
 
     [JsonIgnore]
     public float Base => _initialValue;
+    
+    public IList<Modifier> AppliedModifiers => ModifierList;
 
     public event Action ValueChanged;
 

@@ -1,16 +1,15 @@
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
-public class Shrine : MonoBehaviour, IInteractable
+public class Shrine : InteractableBase
 {
-    public string InteractText { get; } = "~ Pray ~";
-    private CharacterControllerBase _player;
-
     private GameObject _toggleText;
     private LoadingManager _loadingManager;
+    private CharacterControllerBase _player;
     private bool _shrineUsed;
 
-    public void Interact()
+    protected override void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E) && !_shrineUsed)
         {
@@ -20,15 +19,22 @@ public class Shrine : MonoBehaviour, IInteractable
 
     private void Start()
     {
+
         UIShrineEffect.OnExitShrine += ShrineUsed;
 
         _loadingManager = LoadingManager.Instance;
 
         _toggleText = transform.GetChild(0).gameObject;
-        _toggleText.GetComponent<TextMeshPro>().text = InteractText;
+        _toggleText.GetComponent<TextMeshPro>().text =
+            _interactText;
         _toggleText.SetActive(false);
-        _player = GameObject.FindGameObjectWithTag("Player")
-                            .GetComponent<CharacterControllerBase>();
+        _player = GameObject.FindGameObjectWithTag("Player").
+            GetComponent<CharacterControllerBase>();
+    }
+
+    private void OnDestroy()
+    {
+        UIShrineEffect.OnExitShrine -= ShrineUsed;
     }
 
     private void Update()
@@ -37,7 +43,6 @@ public class Shrine : MonoBehaviour, IInteractable
         {
             Interact();
         }
-
     }
 
     private void OnTriggerEnter(Collider col)
@@ -76,16 +81,37 @@ public class Shrine : MonoBehaviour, IInteractable
     {
         if (choice == "Health")
         {
+            var health = _player.Data.CharacterStats.GetStat("Health");
+            var appliedModifiers = health.AppliedModifiers;
+            List<Modifier> indexesToRemove = new();
+
+            for (int i = 0; i < appliedModifiers.Count; ++i)
+            {
+                if (appliedModifiers[i].Value < 0)
+                {
+                    indexesToRemove.Add(appliedModifiers[i]);
+                }
+            }
+
+            foreach (Modifier modifier in indexesToRemove)
+            {
+                health.RemoveModifier(modifier);
+            }
+
+            float missingHealth = health.Max - health.Value;
+            health.Add(missingHealth * 0.5f);
         }
-        else if (choice == "Sanity")
+        if (choice == "Sanity")
         {
             _player.Data.CharacterStats.GetStat("Sanity")
                 .Set(_player.Data.CharacterStats.GetStat("Sanity").Max);
         }
 
         _shrineUsed = true;
-        _toggleText.SetActive(false);
+        if (_toggleText)
+        {
+            _toggleText.SetActive(false);
+        }
         ToggleShrine();
     }
 }
-

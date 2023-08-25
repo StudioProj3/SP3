@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
@@ -13,6 +14,8 @@ public class BoundedModifiableValue :
 
     [JsonIgnore]
     public float Base => _modifiableValue.Base;
+
+    public IList<Modifier> AppliedModifiers => _modifiableValue.AppliedModifiers;
 
     public event Action ValueChanged;
 
