@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9422,6 +9422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b368aa97878949746b2a008a4256695e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactText: ~ Shop ~
 --- !u!65 &633062474
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37885,6 +37886,7 @@ GameObject:
   - component: {fileID: 1536840740}
   - component: {fileID: 1536840742}
   - component: {fileID: 1536840741}
+  - component: {fileID: 1536840743}
   m_Layer: 6
   m_Name: House
   m_TagString: Scene Object
@@ -37972,6 +37974,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1536840743
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536840739}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8750003, y: 0.6484375, z: 0.9637703}
+  m_Center: {x: 0, y: 0, z: -0.35688514}
 --- !u!1 &1541491691
 GameObject:
   m_ObjectHideFlags: 0
