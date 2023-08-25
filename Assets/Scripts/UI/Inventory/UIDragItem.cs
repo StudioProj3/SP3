@@ -5,8 +5,9 @@ public class UIDragItem :
     MonoBehaviour, IDragHandler, IBeginDragHandler,
     IEndDragHandler
 {
+    public Transform Parent { get; set; }
+
     private UIInventory _uiinventory;
-    private Transform _parent;
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -27,7 +28,7 @@ public class UIDragItem :
 
     private void Awake()
     {
-        _parent = transform.parent;
+        Parent = transform.parent;
         _uiinventory = GameObject.FindWithTag("UIInventory").
             GetComponent<UIInventory>();
     }
@@ -40,6 +41,6 @@ public class UIDragItem :
 
     private void RevertOrder()
     {
-        transform.SetParent(_parent);
+        transform.SetParent(Parent);
     }
 }
