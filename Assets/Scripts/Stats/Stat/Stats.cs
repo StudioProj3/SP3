@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
+using Newtonsoft.Json;
+
 using UnityEngine;
 
 // NOTE (Chris): Take note that the inspector for
@@ -9,7 +11,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Stats",
     menuName = "Scriptable Objects/Stats/Stats")]
 public class Stats :
-    ScriptableObject, IStatContainer
+    ScriptableObject, IStatContainer, ISavable
 {
     [Serializable]
     private class StatMapEntry
@@ -51,12 +53,106 @@ public class Stats :
     [SerializeReference]
     private List<StatMapEntry> _instancedStatInitializerList;
 
+    [field: HorizontalDivider]
+    [field: Header("Save Parameters")]
+
+    [field: SerializeField]
+    public bool EnableSave { get; protected set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public string SaveID { get; protected set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public ISerializable.SerializeFormat Format
+        { get; protected set; }
+
     private Dictionary<StatType, IModifiableValue> _stats = new();
     private Dictionary<StatType, IModifiableValue> _instancedStats =
         new();
 
     private readonly Dictionary<string, StatType> _statTypeMap =
         new();
+
+    public void AddListenerToStats()
+    {
+        if (EnableSave)
+        {
+            foreach (IModifiableValue value in _stats.Values)
+            {
+                value.ValueChanged +=
+                    () => SaveManager.Instance.Save(SaveID);
+            }
+        }
+    }
+
+    public void HookEvents()
+    {
+        if (EnableSave)
+        {
+            SaveManager.Instance.Hook(SaveID, Save, Load);
+        }
+    }
+
+    public string Save()
+    {
+        ISerializable serializable = this;
+        string thisObjStr = serializable.Serialize();
+
+        JsonSerializerSettings settings = new()
+        {
+            TypeNameHandling = TypeNameHandling.Objects,
+            TypeNameAssemblyFormatHandling =
+                TypeNameAssemblyFormatHandling.Simple,
+        };
+
+        Dictionary<string, IModifiableValue> newDict = new();
+
+        foreach (var pair in _stats)
+        {
+            newDict.Add(JsonUtility.ToJson(pair.Key), pair.Value);
+        }
+
+        string statsDictStr = JsonConvert.SerializeObject(newDict,
+            typeof(Dictionary<string, IModifiableValue>), settings);
+
+        //Debug.Log(statsDictStr);
+
+        List<string> fullStr = new()
+            { thisObjStr, statsDictStr };
+
+        return JsonConvert.SerializeObject(fullStr);
+    }
+
+    public void Load(string data)
+    {
+        List<string> fullStr = JsonConvert.
+            DeserializeObject<List<string>>(data);
+
+        IDeserializable deserializable = this;
+        deserializable.Deserialize(fullStr[0]);
+
+        //Debug.Log(fullStr);
+
+        //JsonSerializerSettings settings = new()
+        //{
+        //    TypeNameHandling = TypeNameHandling.Objects
+        //};
+
+        //Dictionary<string, IModifiableValue> statsDict =
+        //    JsonConvert.DeserializeObject<Dictionary<
+        //    string, IModifiableValue>>(fullStr[1], settings);
+
+        //Dictionary<StatType, IModifiableValue> newDict = new();
+        //foreach (var pair in statsDict)
+        //{
+        //    newDict.Add(JsonUtility.FromJson<StatType>(pair.Key),
+        //        pair.Value);
+        //}
+
+        //_stats = newDict;
+    }
 
     public IModifiableValue GetStat(string typeName)
     {

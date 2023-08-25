@@ -9,6 +9,8 @@ public class PlayerController :
 
     private float _horizontalInput;
     private float _verticalInput;
+
+    private Vector3 _previousDirection = new(1, 0, 0);
     private bool _rollKeyPressed;
 
     public override void TakeDamage(Damage damage, Vector3 knockback)
@@ -52,12 +54,11 @@ public class PlayerController :
                 new ActionEntry("Enter", () =>
                 {
                     _animator.SetBool("facingFront",
-                        _verticalInput == -1);
+                        _previousDirection.z == -1);
                     _animator.SetBool("facingSide",
-                        _horizontalInput != 0);
+                        _previousDirection.x != 0);
 
-                    Vector3 direction =
-                        new(_horizontalInput, 0, _verticalInput);
+                    Vector3 direction = _previousDirection;
 
                     _rigidbody.AddForce(
                         Data.CharacterStats.GetStat("MoveSpeed").Value *
@@ -170,6 +171,10 @@ public class PlayerController :
     {
         if (!_rollKeyPressed)
         {
+            if (_horizontalInput != 0 || _verticalInput != 0)
+            {
+                _previousDirection = new(_horizontalInput, 0, _verticalInput);
+            }
             _rollKeyPressed = Input.GetKeyDown(KeyCode.LeftShift);
         }
 

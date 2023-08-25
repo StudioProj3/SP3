@@ -3,16 +3,18 @@ using System;
 public abstract class Modifier : ICloneable
 {
     // Priority of the modifier (higher = more priority)
-    public int Priority => priority;
+    public int Priority => _priority;
+
+    public float Value => _value;
 
     // Internal immutable value
-    protected readonly float value;
-    protected readonly int priority;
+    protected readonly float _value;
+    protected readonly int _priority;
 
     public Modifier(float value, int priority)
     {
-        this.value = value;
-        this.priority = priority;
+        _value = value;
+        _priority = priority;
     }
 
     public abstract float Modify(float value);
@@ -30,6 +32,6 @@ public abstract class Modifier : ICloneable
     // `ICloneable` implementation
     public virtual object Clone()
     {
-        return CreateClone(value, priority);
+        return CreateClone(_value, _priority);
     }
 }

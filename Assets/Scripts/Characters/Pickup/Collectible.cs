@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 using static DebugUtils;
 
@@ -12,6 +13,30 @@ public class Collectible : MonoBehaviour
     public uint Quantity { get; private set; }
 
     private SpriteRenderer _spriteRenderer;
+    private IObjectPool<Collectible> _ownerPool = null;
+
+    public void Initialize(IObjectPool<Collectible> pool, 
+        ItemBase item, uint quantity, Vector3 position)
+    {
+        Item = item;
+        Quantity = quantity;
+        _spriteRenderer.sprite = item.Sprite;
+        _ownerPool = pool;
+
+        transform.position = position;
+    }
+
+    public void AttemptReleaseToPool()
+    {
+        if (_ownerPool != null)
+        {
+            _ownerPool.Release(this);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
 
     private void Start()
     {
