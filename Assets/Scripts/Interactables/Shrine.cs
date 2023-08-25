@@ -1,16 +1,14 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class Shrine : MonoBehaviour
+public class Shrine : InteractableBase
 {
-    public string InteractText { get; } = "~ Pray ~";
-    private CharacterControllerBase _player;
-
     private GameObject _toggleText;
     private LoadingManager _loadingManager;
+    private CharacterControllerBase _player;
     private bool _shrineUsed;
 
-    public void Interact()
+    protected override void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E) && !_shrineUsed)
         {
@@ -25,10 +23,11 @@ public class Shrine : MonoBehaviour
         _loadingManager = LoadingManager.Instance;
 
         _toggleText = transform.GetChild(0).gameObject;
-        _toggleText.GetComponent<TextMeshPro>().text = InteractText;
+        _toggleText.GetComponent<TextMeshPro>().text =
+            _interactText;
         _toggleText.SetActive(false);
-        _player = GameObject.FindGameObjectWithTag("Player")
-                            .GetComponent<CharacterControllerBase>();
+        _player = GameObject.FindGameObjectWithTag("Player").
+            GetComponent<CharacterControllerBase>();
     }
 
     private void Update()
@@ -37,7 +36,6 @@ public class Shrine : MonoBehaviour
         {
             Interact();
         }
-
     }
 
     private void OnTriggerEnter(Collider col)
@@ -74,10 +72,7 @@ public class Shrine : MonoBehaviour
 
     private void ShrineUsed(string choice)
     {
-        if (choice == "Health")
-        {
-        }
-        else if (choice == "Sanity")
+        if (choice == "Sanity")
         {
             _player.Data.CharacterStats.GetStat("Sanity")
                 .Set(_player.Data.CharacterStats.GetStat("Sanity").Max);
@@ -88,4 +83,3 @@ public class Shrine : MonoBehaviour
         ToggleShrine();
     }
 }
-
