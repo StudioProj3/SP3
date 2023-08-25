@@ -1,33 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using static DebugUtils;
-
 
 public class AudioManager : Singleton<AudioManager>
 {
     public AudioMixer mixer;
 
-    private AudioSource sfxAudioSrc;
-    //public Slider bgmSlider;
-    //public Slider sfxSlider;
-
-    // Start is called before the first frame update
+    private List<AudioSource> _audioList;
+  
     void Start()
     {
+        _audioList = new List<AudioSource>();
 
+        foreach (Transform child in transform)
+        {
+            _audioList.Add(child.GetComponent<AudioSource>());
+        }
         //bgmSlider.value = AudioPrefsManager.Load("BGMVolume");
         //sfxSlider.value = AudioPrefsManager.Load("SFXVolume");
 
         //SetBGMVolume();
         //SetSFXVolume();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 
@@ -51,16 +44,72 @@ public class AudioManager : Singleton<AudioManager>
         //AudioPrefsManager.Save("SFXVolume", sfxSlider.value);
     }
 
-    public void PlaySound(AudioClip audio, bool overlap)
+    public void PlaySound2D(AudioClip audio, bool loop, float duration = 0.0f)
     {
-        if (overlap)
-            sfxAudioSrc.PlayOneShot(audio, sfxAudioSrc.volume);
-        else
+        for(int i = 0; i < _audioList.Count; i++)
         {
-            if (!sfxAudioSrc.isPlaying)
+            if (!_audioList[i].isPlaying)
             {
-                sfxAudioSrc.PlayOneShot(audio, sfxAudioSrc.volume);
+                _audioList[i].spatialBlend = 0.0f;
+                _audioList[i].loop = loop;
+                _audioList[i].clip = audio;
+                _audioList[i].Play();
+
+                if (loop)
+                {
+                    _ = Delay.Execute(() =>
+                    {
+                        StopSound(_audioList[i]);
+                    }, duration);
+                }
+                break;
             }
         }
+       
+    }
+
+    public void PlaySound3D(AudioClip audio,Vector3 position
+        , bool loop, float duration = 0.0f)
+    {
+        for (int i = 0; i < _audioList.Count; i++)
+        {
+            if (!_audioList[i].isPlaying)
+            {
+                _audioList[i].spatialBlend = 1.0f;
+                _audioList[i].transform.position = position;
+                _audioList[i].loop = loop;
+                _audioList[i].clip = audio;
+                _audioList[i].Play();
+
+                if (loop)
+                {
+                    _ = Delay.Execute(() =>
+                    {
+                        StopSound(_audioList[i]);
+                    }, duration);
+                }
+                break;
+            }
+        }
+
+    }
+
+
+    public void StopSound(AudioSource source)
+    {
+        if(source.isPlaying)
+            source.Stop();
+    }
+
+    public void StopAllSounds()
+    {
+        for (int i = 0; i < _audioList.Count; i++)
+        {
+            if (_audioList[i].isPlaying)
+            {
+                _audioList[i].Stop();
+            }
+        }
+       
     }
 }

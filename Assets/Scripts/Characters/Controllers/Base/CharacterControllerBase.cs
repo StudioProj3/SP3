@@ -18,6 +18,7 @@ public abstract class CharacterControllerBase :
     protected Animator _animator;
     protected SpriteRenderer _spriteRenderer;
     protected List<StatusEffectBase> _statusEffects = new();
+    protected AudioManager _audioManager;
 
     public virtual void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -49,6 +50,7 @@ public abstract class CharacterControllerBase :
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioManager = AudioManager.Instance;
     }
 
     protected virtual void SetupStateMachine()
