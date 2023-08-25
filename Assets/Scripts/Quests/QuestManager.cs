@@ -6,7 +6,7 @@ using UnityEngine;
 
 using static DebugUtils;
 
-public sealed class QuestManager : Singleton<QuestManager> 
+public sealed class QuestManager : Singleton<QuestManager>, ISavable
 {
     [SerializeField]
     private CharacterData _playerData; 
@@ -19,6 +19,21 @@ public sealed class QuestManager : Singleton<QuestManager>
     public event Action<CharacterData> OnEnemyKilled;
 
     private Dictionary<string, Quest> _allQuests = new();
+
+    [field: HorizontalDivider]
+    [field: Header("Save Settings")]
+    [field: SerializeField]
+    public bool EnableSave { get; private set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public string SaveID { get; private set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public ISerializable.SerializeFormat Format
+        { get; private set; }
+    
 
     private UIHUDQuestInformation QuestDisplayInformation
     {
@@ -72,12 +87,45 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnEnemyKilled?.Invoke(data);
     }
 
+
+    public void HookEvents()
+    {
+        if (EnableSave)
+        {
+            SaveManager.Instance.Hook(SaveID, Save, Load);
+        }
+    }
+
+    public string Save()
+    {
+        Dictionary<string, bool> questDoneMap = new();
+        foreach (Quest quest in _allQuests.Values)
+        {
+            questDoneMap.Add(quest.Info.ID, quest.state == QuestState.Finished);
+        }
+
+        return JsonUtility.ToJson(questDoneMap);
+    }
+
+    public void Load(string data)
+    {
+        Dictionary<string, bool> questDoneMap = JsonUtility
+            .FromJson<Dictionary<string, bool>>(data);
+
+        foreach (Quest quest in _allQuests.Values)
+        {
+            quest.state = questDoneMap[quest.Info.ID] ? 
+                QuestState.Finished : QuestState.RequirementsNotMet;
+        }
+    }
+
     private void OnEnable()
     {
         OnQuestStart += StartQuestCallback;
         OnAdvanceQuest += AdvanceQuestCallback;
         OnFinishQuest += FinishQuestCallback;
         OnQuestStateChange += QuestStateChangeCallback;
+        OnQuestStepStateChange += QuestStepStateChangeCallback;
     }
 
     private void OnDisable()
@@ -86,6 +134,7 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnAdvanceQuest -= AdvanceQuestCallback;
         OnFinishQuest -= FinishQuestCallback;
         OnQuestStateChange -= QuestStateChangeCallback;
+        OnQuestStepStateChange -= QuestStepStateChangeCallback;
     }
 
     protected override void OnStart()
@@ -219,6 +268,14 @@ public sealed class QuestManager : Singleton<QuestManager>
     private void QuestStateChangeCallback(Quest quest)
     {
 
+    }
+
+    private void QuestStepStateChangeCallback(string id, 
+        int index, QuestStepState questStepState)
+    {
+        Quest quest = GetQuest(id);
+        quest.StoreQuestStepState(questStepState, index);
+        ChangeQuestState(id, quest.state);
     }
 
     private void Update()

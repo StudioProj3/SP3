@@ -66,4 +66,9 @@ public class Quest
             Debug.Log("Could not store quest step state");
         }
     }
+
+    public QuestData GetQuestData()
+    {
+        return new QuestData(state, _currentQuestStepIndex, _stepStates);
+    }
 }

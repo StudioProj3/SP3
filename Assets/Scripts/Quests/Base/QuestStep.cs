@@ -15,6 +15,17 @@ public abstract class QuestStep : MonoBehaviour
         _stepIndex = stepIndex;
     }
 
+    public void InitializeFromQuestStep(string id, int index, string state)
+    {
+        _questID = id;
+        _stepIndex = index;
+       
+        if (!string.IsNullOrEmpty(state))
+        {
+            SetQuestStepState(state);
+        }
+    }
+
     protected void FinishQuestStep()
     {
         if (!_isFinished)
@@ -29,4 +40,6 @@ public abstract class QuestStep : MonoBehaviour
     {
         QuestManager.Instance.QuestStepStateChange(_questID, _stepIndex, new QuestStepState(newState));
     }
+
+    protected virtual void SetQuestStepState(string state) {}
 }
