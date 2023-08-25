@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -149,8 +150,9 @@ public class SaveManager : Singleton<SaveManager>
             JsonConvert.SerializeObject(_saveDict));
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
         LoadAll();
 
         // The individual savables already call save when they are
