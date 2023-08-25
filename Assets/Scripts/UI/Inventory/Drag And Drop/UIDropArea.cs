@@ -10,7 +10,6 @@ public class UIDropArea : EventTrigger
             return;
         }
 
-        Debug.Log("Ondrop");
         GameObject gameObject = eventData.pointerDrag;
         UIDragItem dragItem = gameObject.
             GetComponent<UIDragItem>();
