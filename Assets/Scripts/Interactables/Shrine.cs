@@ -20,6 +20,7 @@ public class Shrine : MonoBehaviour, IInteractable
 
     private void Start()
     {
+
         UIShrineEffect.OnExitShrine += ShrineUsed;
 
         _loadingManager = LoadingManager.Instance;
@@ -29,6 +30,11 @@ public class Shrine : MonoBehaviour, IInteractable
         _toggleText.SetActive(false);
         _player = GameObject.FindGameObjectWithTag("Player")
                             .GetComponent<CharacterControllerBase>();
+    }
+
+    private void OnDestroy()
+    {
+        UIShrineEffect.OnExitShrine -= ShrineUsed;
     }
 
     private void Update()
@@ -84,7 +90,10 @@ public class Shrine : MonoBehaviour, IInteractable
         }
 
         _shrineUsed = true;
-        _toggleText.SetActive(false);
+        if (_toggleText)
+        {
+            _toggleText.SetActive(false);
+        }
         ToggleShrine();
     }
 }
