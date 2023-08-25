@@ -82,7 +82,11 @@ public class Stats :
             foreach (IModifiableValue value in _stats.Values)
             {
                 value.ValueChanged +=
-                    () => SaveManager.Instance.Save(SaveID);
+                    () => 
+                    {
+                        // Debug.Log("Save");
+                        SaveManager.Instance.Save(SaveID);
+                    };
             }
         }
     }
@@ -109,7 +113,7 @@ public class Stats :
 
         foreach (var pair in _stats)
         {
-            newDict.Add(JsonUtility.ToJson(pair.Key), pair.Value);
+            newDict.Add(pair.Key.name, pair.Value);
         }
 
         string statsDictStr = JsonConvert.SerializeObject(newDict,
@@ -119,7 +123,7 @@ public class Stats :
             //{ thisObjStr, statsDictStr };
 
         //return JsonConvert.SerializeObject(fullStr);
-        return thisObjStr;
+        return statsDictStr;
     }
 
     public void Load(string data)
@@ -127,29 +131,35 @@ public class Stats :
         //List<string> fullStr = JsonConvert.
         //    DeserializeObject<List<string>>(data);
 
-        IDeserializable deserializable = this;
+        // IDeserializable deserializable = this;
         //deserializable.Deserialize(fullStr[0]);
-        deserializable.Deserialize(data);
+        // deserializable.Deserialize(data);
 
         //Debug.Log(fullStr);
 
-        //JsonSerializerSettings settings = new()
-        //{
-        //    TypeNameHandling = TypeNameHandling.Objects
-        //};
+        JsonSerializerSettings settings = new()
+        {
+           TypeNameHandling = TypeNameHandling.Objects
+        };
 
-        //Dictionary<string, IModifiableValue> statsDict =
-        //    JsonConvert.DeserializeObject<Dictionary<
-        //    string, IModifiableValue>>(fullStr[1], settings);
+        Dictionary<string, IModifiableValue> statsDict =
+           JsonConvert.DeserializeObject<Dictionary<
+           string, IModifiableValue>>(data, settings);
 
-        //Dictionary<StatType, IModifiableValue> newDict = new();
-        //foreach (var pair in statsDict)
-        //{
-        //    newDict.Add(JsonUtility.FromJson<StatType>(pair.Key),
-        //        pair.Value);
-        //}
+        Dictionary<StatType, IModifiableValue> newDict = new();
+        foreach (var pair in statsDict)
+        {
+            newDict.Add(Resources.Load<StatType>("Scriptable Objects/Stat Types/" + pair.Key),
+                pair.Value);
 
-        //_stats = newDict;
+            if (pair.Value is BoundedModifiableValue value)
+            {
+                value.BindEvent();
+            }
+        }
+
+        _stats = newDict;
+        AddListenerToStats();
     }
 
     public IModifiableValue GetStat(string typeName)

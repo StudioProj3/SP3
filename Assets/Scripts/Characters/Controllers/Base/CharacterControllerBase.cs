@@ -55,6 +55,8 @@ public abstract class CharacterControllerBase :
         stats.AddListenerToStats();
     }
 
+
+
     protected virtual void SetupStateMachine()
     {
         _stateMachine = new StateMachine("main", 

@@ -21,6 +21,8 @@ public class PlayerPickup :
     {
         if (other.CompareTag("Collectible"))
         {
+            // _characterData.CharacterStats.GetStat("Health").AddModifier(Modifier.Plus(20, 0));
+
             bool result = other.TryGetComponent(
                 out Collectible collectible);
 
@@ -51,6 +53,7 @@ public class PlayerPickup :
 
                 return;
             }
+
 
             // Attempt to pickup into hand inventory
             bool tryHandInventory = _characterData.HandInventory.
