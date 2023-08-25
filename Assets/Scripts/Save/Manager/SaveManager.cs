@@ -87,8 +87,10 @@ public class SaveManager : Singleton<SaveManager>
     {
         foreach (var pair in _callbacks)
         {
+            string saveID = pair.Key;
+
             Func<string> save = pair.Value.First;
-            _saveDict[pair.Key] = save();
+            _saveDict[saveID] = save();
         }
 
         WriteToDisk();
@@ -114,6 +116,8 @@ public class SaveManager : Singleton<SaveManager>
         Dictionary<string, string> saveDict =
             JsonConvert.DeserializeObject
             <Dictionary<string, string>>(loadSaveString);
+        Debug.Log(saveDict.Count);
+
         _saveDict = saveDict;
 
         foreach (var pair in _callbacks)
@@ -135,7 +139,7 @@ public class SaveManager : Singleton<SaveManager>
                 continue;
             }
 
-            load(_saveDict[pair.Key]);
+            load(saveString);
         }
     }
 

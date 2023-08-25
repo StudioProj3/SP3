@@ -102,9 +102,7 @@ public class Stats :
 
         JsonSerializerSettings settings = new()
         {
-            TypeNameHandling = TypeNameHandling.Objects,
-            TypeNameAssemblyFormatHandling =
-                TypeNameAssemblyFormatHandling.Simple,
+            TypeNameHandling = TypeNameHandling.Auto,
         };
 
         Dictionary<string, IModifiableValue> newDict = new();
@@ -117,21 +115,21 @@ public class Stats :
         string statsDictStr = JsonConvert.SerializeObject(newDict,
             typeof(Dictionary<string, IModifiableValue>), settings);
 
-        //Debug.Log(statsDictStr);
+        //List<string> fullStr = new()
+            //{ thisObjStr, statsDictStr };
 
-        List<string> fullStr = new()
-            { thisObjStr, statsDictStr };
-
-        return JsonConvert.SerializeObject(fullStr);
+        //return JsonConvert.SerializeObject(fullStr);
+        return thisObjStr;
     }
 
     public void Load(string data)
     {
-        List<string> fullStr = JsonConvert.
-            DeserializeObject<List<string>>(data);
+        //List<string> fullStr = JsonConvert.
+        //    DeserializeObject<List<string>>(data);
 
         IDeserializable deserializable = this;
-        deserializable.Deserialize(fullStr[0]);
+        //deserializable.Deserialize(fullStr[0]);
+        deserializable.Deserialize(data);
 
         //Debug.Log(fullStr);
 
