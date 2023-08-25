@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Stairs : MonoBehaviour, IInteractable
+public class Stairs : MonoBehaviour
 {
     public string InteractText { get; } = "~ Enter ~";
 

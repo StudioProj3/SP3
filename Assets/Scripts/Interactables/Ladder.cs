@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class Ladder : MonoBehaviour, IInteractable
+public class Ladder : MonoBehaviour
 {
     public string InteractText { get; } = "~ Enter ~";
 

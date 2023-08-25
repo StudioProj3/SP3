@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class Shopkeeper : MonoBehaviour, IInteractable
+public class Shopkeeper : MonoBehaviour
 {
     public string InteractText { get; } = "~ Shop ~";
 

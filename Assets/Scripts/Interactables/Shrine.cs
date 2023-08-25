@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class Shrine : MonoBehaviour, IInteractable
+public class Shrine : MonoBehaviour
 {
     public string InteractText { get; } = "~ Pray ~";
     private CharacterControllerBase _player;
