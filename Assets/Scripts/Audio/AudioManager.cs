@@ -7,22 +7,6 @@ public class AudioManager : Singleton<AudioManager>
     public AudioMixer mixer;
 
     private List<AudioSource> _audioList;
-  
-    void Start()
-    {
-        _audioList = new List<AudioSource>();
-
-        foreach (Transform child in transform)
-        {
-            _audioList.Add(child.GetComponent<AudioSource>());
-        }
-        //bgmSlider.value = AudioPrefsManager.Load("BGMVolume");
-        //sfxSlider.value = AudioPrefsManager.Load("SFXVolume");
-
-        //SetBGMVolume();
-        //SetSFXVolume();
-
-    }
 
     public void SetBGMVolume(float value)
     {
@@ -111,5 +95,21 @@ public class AudioManager : Singleton<AudioManager>
             }
         }
        
+    }
+
+    protected override void OnStart()
+    {
+        _audioList = new List<AudioSource>();
+
+        foreach (Transform child in transform)
+        {
+            _audioList.Add(child.GetComponent<AudioSource>());
+        }
+        //bgmSlider.value = AudioPrefsManager.Load("BGMVolume");
+        //sfxSlider.value = AudioPrefsManager.Load("SFXVolume");
+
+        //SetBGMVolume();
+        //SetSFXVolume();
+
     }
 }
