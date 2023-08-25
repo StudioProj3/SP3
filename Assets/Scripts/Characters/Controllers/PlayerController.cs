@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -31,8 +33,14 @@ public class PlayerController :
     {
         base.Start();
         EntityStats = Data.CharacterStats;
+        Ladder.OnPlayerReturn += ResetHealthAndSanity;
         
         SetupStateMachine();
+    }
+
+    protected void OnDestroy()
+    {
+        Ladder.OnPlayerReturn -= ResetHealthAndSanity;
     }
 
     protected override void SetupStateMachine()
@@ -180,5 +188,32 @@ public class PlayerController :
 
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    private void ResetHealthAndSanity()
+    {
+        // Remove negative health modifiers and reset health
+        var health = Data.CharacterStats.GetStat("Health");
+        var appliedModifiers = health.AppliedModifiers;
+        List<Modifier> indexesToRemove = new();
+
+        for (int i = 0; i < appliedModifiers.Count; ++i)
+        {
+            if (appliedModifiers[i].Value < 0)
+            {
+                indexesToRemove.Add(appliedModifiers[i]);
+            }
+        }
+
+        foreach (Modifier modifier in indexesToRemove)
+        {
+            health.RemoveModifier(modifier);
+        }
+
+        health.Set(health.Max);
+
+        // Reset Sanity
+        var sanity = Data.CharacterStats.GetStat("Sanity");
+        sanity.Set(sanity.Max);
     }
 }
