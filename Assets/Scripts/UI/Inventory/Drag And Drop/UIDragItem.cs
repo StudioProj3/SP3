@@ -63,7 +63,7 @@ public class UIDragItem :
 
     private void BringToFront()
     {
-        transform.SetParent(transform.parent.parent.parent);
+        transform.SetParent(transform.parent.parent.parent.parent);
         transform.SetAsLastSibling();
     }
 }
