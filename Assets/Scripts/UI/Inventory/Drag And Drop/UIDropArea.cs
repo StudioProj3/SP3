@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 public class UIDropArea :
     MonoBehaviour, IDropHandler
 {
+    private UIInventory _uiinventory;
+
     public UIDragItem DragItem { get; set; }
 
     private UIInventoryItemSlot _inventoryItemSlot;
@@ -51,6 +53,8 @@ public class UIDropArea :
             anchoredPosition = new(0f, 4.9f);
 
         DragItem = dragItem;
+
+        Debug.Log("srop");
     }
 
     private void Awake()

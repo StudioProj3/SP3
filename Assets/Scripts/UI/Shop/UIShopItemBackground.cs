@@ -1,19 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIShopItemBackground : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler
 {
-    public UnityEvent<bool> _pointerEvent;
-
-    private void Start()
-    {
-        if (_pointerEvent == null)
-        {
-            _pointerEvent = new UnityEvent<bool>();
-        }
-    }
+    private UnityEvent<bool> _pointerEvent;
 
     public void SubscribePointerEvent(UnityAction<bool> action)
     {
@@ -33,5 +26,13 @@ public class UIShopItemBackground : MonoBehaviour,
     public void OnPointerExit(PointerEventData eventData)
     {
         _pointerEvent?.Invoke(false);
+    }
+    
+    private void Awake()
+    {
+        if (_pointerEvent == null)
+        {
+            _pointerEvent = new UnityEvent<bool>();
+        }
     }
 }

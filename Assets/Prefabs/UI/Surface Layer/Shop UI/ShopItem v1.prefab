@@ -538,7 +538,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3146799219688396924}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5094951074406150245}
+        m_TargetAssemblyTypeName: UIShopItem, UI
+        m_MethodName: OnItemClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5881562032292855015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,9 +563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c39d8f282b18a24cbe2654cd8317993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointerEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3146799219834921084
 GameObject:
   m_ObjectHideFlags: 0

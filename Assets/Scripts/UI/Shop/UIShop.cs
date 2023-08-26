@@ -5,6 +5,7 @@ using UnityEngine;
 
 using static DebugUtils;
 using static CoinItemBase;
+using UnityEngine.PlayerLoop;
 
 public class UIShop : MonoBehaviour
 {
@@ -46,21 +47,149 @@ public class UIShop : MonoBehaviour
     [Header("Player Data")]
 
     [SerializeField]
-    private InventoryBase _playerInventory;
+    private CharacterData _playerData;
 
-    private void OnValidate()
+    [HorizontalDivider]
+    [Header("Misc")]
+
+    [SerializeField]
+    private UIShopDescriptionPanel _descriptionPanel;
+
+    [SerializeField]
+    private Transform _scrollRectTransform;
+
+    private Vector3 _scrollRectOriginalPosition;
+
+    private UINotification UINotification 
     {
+        get 
+        {
+            if (_uiNotification == null)
+            {
+                GameObject questDisplayObject = 
+                    GameObject.FindWithTag("UINotification");
 
+                if (questDisplayObject == null)
+                {
+                    return null;
+                }
+
+                _ = questDisplayObject.TryGetComponent(
+                    out _uiNotification);
+            }
+            return _uiNotification;
+        }
     }
 
-    private int[] GetPlayerWealth()
+    private UINotification _uiNotification;
+
+    private Animator _animator;
+
+    public void ShowShop(bool shopOpen)
+    {
+        _animator.SetBool("shopOpen", shopOpen);
+        if (shopOpen)
+        {
+            _scrollRectTransform.position =_scrollRectOriginalPosition;
+        }
+    }
+
+    public void OnItemPurchaseAttempt(UIShopItem panel)
+    {
+        var wealth = GetPlayerWealth(out int handBronzeAmount,
+            out int handSilverAmount,
+            out int handGoldAmount);
+
+        int[] costs = (new string[3] { panel.BronzeText.text,
+            panel.SilverText.text,
+            panel.GoldText.text })
+            .Select(str => int.Parse(str))
+            .ToArray();
+
+        // Check if we have enough money
+        for (int i = CoinType.Bronze; i < CoinType.Gold + 1; ++i)
+        {
+            if (wealth[i] < costs[i])
+            {
+                Debug.Log("Not enough money.");
+                panel.Shake();
+                return;
+            }
+        }
+
+        var item = panel.ShopItem.Item;
+        uint handInventoryStackSize = _playerData.HandInventory.MaxPerSlot;
+
+        // TODO (Chris): Do we need to try adding to the hand?
+        if (_playerData.Inventory != null && _playerData.Inventory.Add(item, 1))
+        {
+            int[] handAmounts = new int[3] 
+                { handBronzeAmount, handSilverAmount, handGoldAmount };
+            ItemBase[] coinItems = new ItemBase[3]
+            {
+                _bronzeCoin, _silverCoin, _goldCoin
+            };
+
+            // First, we want to use the hand money first
+            for (int i = CoinType.Bronze; i < CoinType.Gold + 1; ++i)
+            {
+                if (handAmounts[i] > 0)
+                {
+                    costs[i] -= handAmounts[i];
+                    _playerData.HandInventory.Remove(coinItems[i],
+                        (uint)handAmounts[i]);
+                }
+
+                // Then we use the players inventory coins using the rest
+                if (costs[i] > 0)
+                {
+                    _playerData.Inventory.Remove(coinItems[i],
+                        (uint)costs[i]);
+                }
+            }
+
+            UINotification.Collect(item.Sprite, item.Name);
+        }
+        else
+        {
+            Debug.Log("Not enough space.");
+            panel.Shake();
+        }
+    }
+
+    private int[] GetPlayerWealth(out int handBronzeAmount, out int handSilverAmount, out int handGoldAmount)
     {
         int[] wealth = new int[3];
-        wealth[CoinType.Bronze] = _playerInventory.GetAmount(_bronzeCoin);
-        wealth[CoinType.Silver] = _playerInventory.GetAmount(_silverCoin);
-        wealth[CoinType.Gold] = _playerInventory.GetAmount(_goldCoin);
+
+        if (_playerData.Inventory != null)
+        {
+            wealth[CoinType.Bronze] += _playerData.Inventory.GetAmount(_bronzeCoin);
+            wealth[CoinType.Silver] += _playerData.Inventory.GetAmount(_silverCoin);
+            wealth[CoinType.Gold]   += _playerData.Inventory.GetAmount(_goldCoin);
+        }
+
+        handBronzeAmount = _playerData.HandInventory.GetAmount(_bronzeCoin);
+        wealth[CoinType.Bronze] += handBronzeAmount;
+
+        handSilverAmount = _playerData.HandInventory.GetAmount(_silverCoin);
+        wealth[CoinType.Silver] += handSilverAmount;
+
+        handGoldAmount = _playerData.HandInventory.GetAmount(_goldCoin);
+        wealth[CoinType.Gold] += handGoldAmount;
 
         return wealth;
+    }
+
+    // NOTE (Chris): We want to update with the UIShopItem since
+    // we already have determined the order of the costs, since
+    // it doesn't matter in the costs array in ISellable CurrencyCost
+    private void UpdateDescriptionPanel(UIShopItem item, bool mouseOver)
+    {
+        if (mouseOver)
+        {
+            _descriptionPanel.UpdateHoveredShopItem(item);
+        }
+        _animator.SetBool("itemHovered", mouseOver);
     }
 
     private void Start()
@@ -72,6 +201,13 @@ public class UIShop : MonoBehaviour
         // Log("Not null materials: " + notNullMaterials.Count());
         // Log("Distinct materials: " + distinctMaterials.Count());
         GeneratePrefabs(_materials, _materialsTransform);
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponentInParent<Animator>();
+
+        _scrollRectOriginalPosition = _scrollRectTransform.position;
     }
 
     // Generate prefabs for given list, and parents them to target
@@ -106,9 +242,10 @@ public class UIShop : MonoBehaviour
                     }
                 }
             }
-            uiItem.Initialize(item.Item, itemCosts[CoinType.Bronze],
-                itemCosts[CoinType.Silver], itemCosts[CoinType.Gold]);
 
+            uiItem.Initialize(item, itemCosts[CoinType.Bronze],
+                itemCosts[CoinType.Silver], itemCosts[CoinType.Gold],
+                UpdateDescriptionPanel, OnItemPurchaseAttempt);
         }
     }
 }
