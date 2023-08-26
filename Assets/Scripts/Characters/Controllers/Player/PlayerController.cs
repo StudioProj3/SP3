@@ -27,6 +27,11 @@ public class PlayerController :
         {
             _spriteRenderer.color = originalColor;
         }, 0.15f);
+
+        if (Data.CharacterStats.GetStat("Health").Value <= 0)
+        {
+            GameManager.Instance.CurrentState = GameState.Lose;
+        }
     }
 
     protected override void Start()
@@ -34,6 +39,7 @@ public class PlayerController :
         base.Start();
         EntityStats = Data.CharacterStats;
         Ladder.OnPlayerReturn += ResetHealthAndSanity;
+        UIPlayerRespawn.BeginPlayerRespawn += RespawnPlayer;
         
         SetupStateMachine();
     }
@@ -41,6 +47,7 @@ public class PlayerController :
     protected void OnDestroy()
     {
         Ladder.OnPlayerReturn -= ResetHealthAndSanity;
+        UIPlayerRespawn.BeginPlayerRespawn -= RespawnPlayer;
     }
 
     protected override void SetupStateMachine()
@@ -215,5 +222,13 @@ public class PlayerController :
         // Reset Sanity
         var sanity = Data.CharacterStats.GetStat("Sanity");
         sanity.Set(sanity.Max);
+    }
+
+    private void RespawnPlayer()
+    {
+        ResetHealthAndSanity();
+        GameManager.Instance.CurrentState = GameState.Play;
+        LoadingManager.Instance.UnloadScene("UIDeathScreen");
+        LoadingManager.Instance.LoadScene("SurfaceLayerScene");
     }
 }
