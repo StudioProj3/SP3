@@ -1,37 +1,38 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIShopItemBackground : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler
 {
-    public UnityEvent<bool> pointerEvent;
-
-    private void Start()
-    {
-        if (pointerEvent == null)
-        {
-            pointerEvent = new UnityEvent<bool>();
-        }
-    }
+    private UnityEvent<bool> _pointerEvent;
 
     public void SubscribePointerEvent(UnityAction<bool> action)
     {
-        pointerEvent.AddListener(action);
+        _pointerEvent.AddListener(action);
     }
 
     public void UnsubscribePointerEvent(UnityAction<bool> action)
     {
-        pointerEvent.RemoveListener(action);
+        _pointerEvent.RemoveListener(action);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        pointerEvent?.Invoke(true);
+        _pointerEvent?.Invoke(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        pointerEvent?.Invoke(false);
+        _pointerEvent?.Invoke(false);
+    }
+    
+    private void Awake()
+    {
+        if (_pointerEvent == null)
+        {
+            _pointerEvent = new UnityEvent<bool>();
+        }
     }
 }

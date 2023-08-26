@@ -47,7 +47,7 @@ public class UIShop : MonoBehaviour
     [Header("Player Data")]
 
     [SerializeField]
-    private InventoryBase _playerInventory;
+    private CharacterData _playerData;
 
     [HorizontalDivider]
     [Header("Misc")]
@@ -55,17 +55,113 @@ public class UIShop : MonoBehaviour
     [SerializeField]
     private UIShopDescriptionPanel _descriptionPanel;
 
-    private void OnValidate()
+    private UINotification UINotification 
     {
+        get 
+        {
+            if (_uiNotification == null)
+            {
+                GameObject questDisplayObject = 
+                    GameObject.FindWithTag("UINotification");
 
+                if (questDisplayObject == null)
+                {
+                    return null;
+                }
+
+                _ = questDisplayObject.TryGetComponent(
+                    out _uiNotification);
+            }
+            return _uiNotification;
+        }
     }
 
-    private int[] GetPlayerWealth()
+    private UINotification _uiNotification;
+
+    public void OnItemPurchaseAttempt(UIShopItem panel)
+    {
+        var wealth = GetPlayerWealth(out int handBronzeAmount,
+            out int handSilverAmount,
+            out int handGoldAmount);
+
+        int[] costs = (new string[3] { panel.BronzeText.text,
+            panel.SilverText.text,
+            panel.GoldText.text })
+            .Select(str => int.Parse(str))
+            .ToArray();
+
+        // Check if we have enough money
+        for (int i = CoinType.Bronze; i < CoinType.Gold + 1; ++i)
+        {
+            if (wealth[i] < costs[i])
+            {
+                Debug.Log("Not enough money.");
+                return;
+            }
+        }
+
+        var item = panel.ShopItem.Item;
+        uint handInventoryStackSize = _playerData.HandInventory.MaxPerSlot;
+
+        // TODO (Chris): Do we need to try adding to the hand?
+        if (_playerData.Inventory != null && _playerData.Inventory.Add(item, 1))
+        {
+            int[] handAmounts = new int[3] 
+                { handBronzeAmount, handSilverAmount, handGoldAmount };
+            ItemBase[] coinItems = new ItemBase[3]
+            {
+                _bronzeCoin, _silverCoin, _goldCoin
+            };
+
+            // First, we want to use the hand money first
+            for (int i = CoinType.Bronze; i < CoinType.Gold + 1; ++i)
+            {
+                if (handAmounts[i] > 0)
+                {
+                    costs[i] -= handAmounts[i];
+                    _playerData.HandInventory.Remove(coinItems[i],
+                        (uint)handAmounts[i]);
+                }
+            }
+
+            // Then we use the players inventory coins using the rest
+            for (int i = CoinType.Bronze; i < CoinType.Gold + 1; ++i)
+            {
+                if (costs[i] > 0)
+                {
+                    _playerData.Inventory.Remove(coinItems[i],
+                        (uint)costs[i]);
+                }
+            }
+
+
+            UINotification.Collect(item.Sprite, item.Name);
+        }
+        else
+        {
+            Debug.Log("Not enough space.");
+        }
+    }
+
+    private int[] GetPlayerWealth(out int handBronzeAmount, out int handSilverAmount, out int handGoldAmount)
     {
         int[] wealth = new int[3];
-        wealth[CoinType.Bronze] = _playerInventory.GetAmount(_bronzeCoin);
-        wealth[CoinType.Silver] = _playerInventory.GetAmount(_silverCoin);
-        wealth[CoinType.Gold] = _playerInventory.GetAmount(_goldCoin);
+
+        if (_playerData.Inventory != null)
+        {
+            wealth[CoinType.Bronze] += _playerData.Inventory.GetAmount(_bronzeCoin);
+            wealth[CoinType.Silver] += _playerData.Inventory.GetAmount(_silverCoin);
+            wealth[CoinType.Gold]   += _playerData.Inventory.GetAmount(_goldCoin);
+        }
+
+        handBronzeAmount = _playerData.HandInventory.GetAmount(_bronzeCoin);
+        wealth[CoinType.Bronze] += handBronzeAmount;
+
+        handSilverAmount = _playerData.HandInventory.GetAmount(_silverCoin);
+        wealth[CoinType.Silver] += handSilverAmount;
+
+        handGoldAmount = _playerData.HandInventory.GetAmount(_goldCoin);
+        wealth[CoinType.Gold] += handGoldAmount;
 
         return wealth;
     }
@@ -124,7 +220,7 @@ public class UIShop : MonoBehaviour
 
             uiItem.Initialize(item, itemCosts[CoinType.Bronze],
                 itemCosts[CoinType.Silver], itemCosts[CoinType.Gold],
-                UpdateDescriptionPanel);
+                UpdateDescriptionPanel, OnItemPurchaseAttempt);
         }
     }
 }

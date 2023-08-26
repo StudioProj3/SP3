@@ -34,6 +34,32 @@ public class UIShopItem : MonoBehaviour
     public ShopItem ShopItem { get; private set; }
 
     private Action<UIShopItem> _mouseOverAction;
+    private Action<UIShopItem> _mouseClickAction;
+
+    public void OnItemClick()
+    {
+        _mouseClickAction.Invoke(this);
+    }
+
+    public void Initialize(ShopItem item, int bronzeCount,
+        int silverCount, int goldCount, Action<UIShopItem> updateDescription,
+        Action<UIShopItem> onPurchaseAttempt) 
+    {
+        ShopItem = item;
+        _itemIcon.sprite = item.Item.Sprite;
+
+        _bronzeCountText.text = bronzeCount.ToString();
+        _bronzeCountText.transform.parent.gameObject.SetActive(bronzeCount > 0);
+
+        _silverCountText.text = silverCount.ToString();
+        _silverCountText.transform.parent.gameObject.SetActive(silverCount > 0);
+
+        _goldCountText.text = goldCount.ToString();
+        _goldCountText.transform.parent.gameObject.SetActive(goldCount > 0);
+
+        _mouseOverAction = updateDescription;
+        _mouseClickAction = onPurchaseAttempt;
+    }    
 
     private void OnPointerEvent(bool mouseOver)
     {
@@ -55,39 +81,4 @@ public class UIShopItem : MonoBehaviour
         _background.UnsubscribePointerEvent(OnPointerEvent);
     }
 
-    public void Initialize(ShopItem item, int bronzeCount,
-        int silverCount, int goldCount, Action<UIShopItem> updateDescription) 
-    {
-        ShopItem = item;
-        _itemIcon.sprite = item.Item.Sprite;
-
-        if (bronzeCount > 0)
-        {
-            _bronzeCountText.text = bronzeCount.ToString();
-        }
-        else
-        {
-            _bronzeCountText.transform.parent.gameObject.SetActive(false);
-        }
-
-        if (silverCount > 0)
-        {
-            _silverCountText.text = silverCount.ToString();
-        }
-        else
-        {
-            _silverCountText.transform.parent.gameObject.SetActive(false);
-        }
-
-        if (goldCount > 0)
-        {
-            _goldCountText.text = goldCount.ToString();
-        }
-        else
-        {
-            _goldCountText.transform.parent.gameObject.SetActive(false);
-        }
-
-        _mouseOverAction = updateDescription;
-    }
 }

@@ -569,7 +569,7 @@ MonoBehaviour:
   _bronzeCoin: {fileID: 11400000, guid: 800f81c548c6d7847924eea266ba727c, type: 2}
   _silverCoin: {fileID: 11400000, guid: 5d7914049de860241aa97e4449d31b3f, type: 2}
   _goldCoin: {fileID: 11400000, guid: 4dc911fba8054bd45ad439714bbac215, type: 2}
-  _playerInventory: {fileID: 11400000, guid: bc16ff1a8faa3bf4fb15625a970c048c, type: 2}
+  _playerData: {fileID: 11400000, guid: 71cf11ac1946eb94d94d1db99e42b3fa, type: 2}
   _descriptionPanel: {fileID: 33954288}
 --- !u!1 &152583838
 GameObject:
@@ -1481,6 +1481,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3146799220559115576, guid: 6b287aee543232848a5fcfa3ce2b53b2,
     type: 3}
   m_PrefabInstance: {fileID: 1131777242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &499971952 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3146799220559115577, guid: 6b287aee543232848a5fcfa3ce2b53b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1817329102}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &531881209
 GameObject:
@@ -2567,7 +2573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1069104753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3137,7 +3143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1420483833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3500,7 +3506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 625, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1250, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1534932544
@@ -4193,6 +4199,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
+        type: 3}
+      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
+        type: 3}
+      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
+        type: 3}
+      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 499971952}
+    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
+        type: 3}
+      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6134402150397478477, guid: 6b287aee543232848a5fcfa3ce2b53b2,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4353,7 +4379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 625, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1250, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854536195
@@ -4681,7 +4707,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 531881210}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.53125
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5328,9 +5354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c39d8f282b18a24cbe2654cd8317993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1502563126829535885
 MonoBehaviour:
   m_ObjectHideFlags: 0
