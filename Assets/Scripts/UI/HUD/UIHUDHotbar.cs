@@ -10,6 +10,14 @@ public class UIHUDHotbar : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (_uiinventory)
+            {
+                _uiinventory.ShowInventory();
+            }
+        }
+
         if (_loaded)
         {
             return;

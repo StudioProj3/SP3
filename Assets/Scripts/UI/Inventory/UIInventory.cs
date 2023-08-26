@@ -50,4 +50,12 @@ public class UIInventory : MonoBehaviour
         _mainInventory = transform.GetChild(1, 2).
             GetComponent<UIMainInventory>();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            HideInventory();
+        }
+    }
 }
