@@ -22,7 +22,7 @@ public abstract class ItemBase :
     public bool Usable { get; protected set; }
 
     [field: SerializeField]
-    public bool Droppable { get; protected set; }
+    public bool Droppable { get; protected set; } = true;
 
     [field: SerializeField]
     public float Weight { get; protected set; } = 0f;
