@@ -9,6 +9,7 @@ public class UIHoverPanel :
     MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public static event Action<ItemBase, int, InventoryBase> OnItemUse;
+    public static event Action<ItemBase, int, InventoryBase> OnItemDrop;
     // Prevent closing of this hover panel
     private bool _lock = false;
 
@@ -62,6 +63,16 @@ public class UIHoverPanel :
         }
 
         OnItemUse?.Invoke(_referenceItem, _itemIndex, _refInventory);
+    }
+
+    public void OnDropButtonClick()
+    {
+        if (_referenceItem == null)
+        {
+            return;
+        }
+
+        OnItemDrop?.Invoke(_referenceItem, _itemIndex, _refInventory);
     }
 
     public void SetEventArgs(ItemBase item, int index, 

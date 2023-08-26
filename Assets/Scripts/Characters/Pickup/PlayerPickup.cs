@@ -26,6 +26,11 @@ public class PlayerPickup :
             bool result = other.TryGetComponent(
                 out Collectible collectible);
 
+            if (!collectible.enabled)
+            {
+                return;
+            }
+
             Assert(result, "There should be a `Collectible` " +
                 "component on the gameobject");
 

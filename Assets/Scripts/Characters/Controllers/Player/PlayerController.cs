@@ -40,6 +40,7 @@ public class PlayerController :
         EntityStats = Data.CharacterStats;
         Ladder.OnPlayerReturn += ResetHealthAndSanity;
         UIHoverPanel.OnItemUse += ConsumeFromInventory;
+        UIHoverPanel.OnItemDrop += DropFromInventory;
         UIPlayerRespawn.BeginPlayerRespawn += RespawnPlayer;
         
         SetupStateMachine();
@@ -50,6 +51,7 @@ public class PlayerController :
         Ladder.OnPlayerReturn -= ResetHealthAndSanity;
         UIPlayerRespawn.BeginPlayerRespawn -= RespawnPlayer;
         UIHoverPanel.OnItemUse -= ConsumeFromInventory;
+        UIHoverPanel.OnItemDrop -= DropFromInventory;
     }
 
     protected override void SetupStateMachine()
@@ -241,6 +243,28 @@ public class PlayerController :
             consumable.ApplyConsumptionEffect(Data.CharacterStats, this);
             inventory.RemoveItemByIndex(index, 1);
         }
+    }
+
+    private void DropFromInventory(ItemBase item, int index, InventoryBase inventory)
+    {
+        GameObject spawner = GameObject.FindWithTag("ItemSpawner");
+        if (spawner != null)
+        {
+            if (spawner.TryGetComponent(out ItemSpawner spawnerComponent))
+            {
+                Collectible collectible = 
+                    spawnerComponent.SpawnObject(item, 1, transform.position);
+
+                collectible.enabled = false;
+                
+                // After 0.5 seconds, enable collection again.
+                this.DelayExecute(() => 
+                {
+                    collectible.enabled = true;
+                }, 0.5f);
+            }
+        }
+        inventory.RemoveItemByIndex(index, 1);
     }
 
 }

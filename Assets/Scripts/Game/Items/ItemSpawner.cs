@@ -42,9 +42,10 @@ public class ItemSpawner : MonoBehaviour
         });
     }
 
-    public void SpawnObject(ItemBase item, uint quantity, Vector3 position)
+    public Collectible SpawnObject(ItemBase item, uint quantity, Vector3 position)
     {
         Collectible collectible = _droppedItemPool.Get();
         collectible.Initialize(_droppedItemPool, item, quantity, position);
+        return collectible;
     }
 }
