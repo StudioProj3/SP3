@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class EarthController : MonoBehaviour
 {
-
-    [field: SerializeField]
+    [SerializeField]
     private float _lifetime;
 
-    [field: SerializeField]
+    [SerializeField]
     private LayerMask targetLayer;
 
     private float _currentLifetime;
@@ -18,7 +17,7 @@ public class EarthController : MonoBehaviour
 
     public void Init(Vector3 direction, Damage damage, 
         StatusEffectBase statusEffect, 
-        Transform source, Sprite sprite)
+        Transform source, Sprite sprite = null)
     {
         gameObject.SetActive(true);
         _direction = direction;
@@ -28,7 +27,7 @@ public class EarthController : MonoBehaviour
 
         _currentLifetime = _lifetime;
 
-        if (_spriteRenderer.sprite != sprite)
+        if (sprite && _spriteRenderer.sprite != sprite)
         {
             _spriteRenderer.sprite = sprite;
         }
@@ -36,24 +35,8 @@ public class EarthController : MonoBehaviour
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(90, angle, 0);
-    }
-    public void Init(Vector3 direction, Damage damage, 
-        StatusEffectBase statusEffect, 
-        Transform source)
-    {
-        gameObject.SetActive(true);
-        _direction = direction;
-        _damage = damage;
-        _source = source;
-        _statusEffect = statusEffect;
-
-        _currentLifetime = _lifetime;
-
-        float angle = -Mathf.Atan2(direction.z, direction.x) *
-            Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        transform.rotation = Quaternion.
+            Euler(sprite ? 90f : 0f, angle, 0f);
     }
 
     private void Awake()
@@ -78,6 +61,7 @@ public class EarthController : MonoBehaviour
         {
             Vector3 knockbackForce = _direction * 1.5f;
             effectable.TakeDamage(_damage, knockbackForce);
+
             if (_statusEffect)
             {
                 effectable.ApplyEffect(_statusEffect.Clone());
