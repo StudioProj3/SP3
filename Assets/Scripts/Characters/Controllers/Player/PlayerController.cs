@@ -39,6 +39,7 @@ public class PlayerController :
         base.Start();
         EntityStats = Data.CharacterStats;
         Ladder.OnPlayerReturn += ResetHealthAndSanity;
+        UIInventoryItemSlot.OnUseFromInventory += ConsumeFromInventory;
         UIPlayerRespawn.BeginPlayerRespawn += RespawnPlayer;
         
         SetupStateMachine();
@@ -48,6 +49,7 @@ public class PlayerController :
     {
         Ladder.OnPlayerReturn -= ResetHealthAndSanity;
         UIPlayerRespawn.BeginPlayerRespawn -= RespawnPlayer;
+        UIInventoryItemSlot.OnUseFromInventory -= ConsumeFromInventory;
     }
 
     protected override void SetupStateMachine()
@@ -230,5 +232,13 @@ public class PlayerController :
         GameManager.Instance.CurrentState = GameState.Play;
         LoadingManager.Instance.UnloadScene("UIDeathScreen");
         LoadingManager.Instance.LoadScene("SurfaceLayerScene");
+    }
+
+    private void ConsumeFromInventory(ItemBase item)
+    {
+        if (item is IConsumable consumable)
+        {
+            consumable.ApplyConsumptionEffect(Data.CharacterStats, this);
+        }
     }
 }
