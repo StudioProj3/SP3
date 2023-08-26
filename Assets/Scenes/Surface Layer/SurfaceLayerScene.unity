@@ -10454,7 +10454,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654939507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.025}
+  m_LocalPosition: {x: 0, y: 0, z: 0.012}
   m_LocalScale: {x: 0.4285714, y: 0.4285714, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10463,7 +10463,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.001, y: 0.007}
+  m_AnchoredPosition: {x: 0.009, y: 0.007}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &661516093
@@ -39216,6 +39216,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8750003, y: 0.6484375, z: 1.1843505}
   m_Center: {x: 0, y: 0, z: -0.028640538}
+--- !u!114 &1536840744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536840739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96da419dc4205db4880ff09739ae0ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactText: ~ Crafting ~
 --- !u!1 &1541491691
 GameObject:
   m_ObjectHideFlags: 0
