@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +8,7 @@ using static DebugUtils;
 public class UIHoverPanel :
     MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public static event Action<ItemBase, int, InventoryBase> OnItemUse;
     // Prevent closing of this hover panel
     private bool _lock = false;
 
@@ -19,6 +21,10 @@ public class UIHoverPanel :
     private TMP_Text _itemDescription;
     private GameObject _action1Button;
     private GameObject _action2Button;
+
+    private ItemBase _referenceItem;
+    private int _itemIndex;
+    private InventoryBase _refInventory;
 
     public void MakeHidden()
     {
@@ -46,6 +52,24 @@ public class UIHoverPanel :
         {
             gameObject.SetActive(false);
         }
+    }
+
+    public void OnUseButtonClick()
+    {
+        if (_referenceItem == null)
+        {
+            return;
+        }
+
+        OnItemUse?.Invoke(_referenceItem, _itemIndex, _refInventory);
+    }
+
+    public void SetEventArgs(ItemBase item, int index, 
+        InventoryBase refInventory)
+    {
+        _referenceItem = item;
+        _itemIndex = index;
+        _refInventory = refInventory;
     }
 
     public void SetItemName(string name)
