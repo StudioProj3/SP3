@@ -15,6 +15,7 @@ public class EnemyControllerBase :
     {
         public ItemBase item;
         public uint amount;
+        public float percentChance;
     }
 
     [field:SerializeField]
@@ -40,8 +41,12 @@ public class EnemyControllerBase :
 
                     for (int i = 0; i < ItemDropList.Count; i++)
                     {
-                        itemSpawner.SpawnObject(ItemDropList[i].item,
-                            ItemDropList[i].amount, transform.position);
+                        float randomFloat = UnityEngine.Random.Range(0.0f, 1.0f);
+                        if (randomFloat < ItemDropList[i].percentChance)
+                        {
+                            itemSpawner.SpawnObject(ItemDropList[i].item,
+                                ItemDropList[i].amount, transform.position);
+                        }
                     }
                 })
             )
