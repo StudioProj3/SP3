@@ -17,8 +17,15 @@ MonoBehaviour:
     type: 3}
   <Atlas>k__BackingField: 0
   <Stackable>k__BackingField: 1
+  <Usable>k__BackingField: 1
+  <Droppable>k__BackingField: 1
   <Weight>k__BackingField: 0
-  Description: 
+  Description: 'A regular apple, with a editble gold coating
+
+    +40 current health
+
+    +10
+    current sanity'
   _effectsThatModify:
   - statToChange: {fileID: 11400000, guid: e1ee6d50190725b49ab694749b2744d2, type: 2}
     modifierType: 1

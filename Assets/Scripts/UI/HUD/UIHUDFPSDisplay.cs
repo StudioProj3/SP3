@@ -11,23 +11,37 @@ public class UIHUDFPSDisplay : MonoBehaviour
 
     private TMP_Text _fpsDisplay;
     private float _accumulator;
+    private bool _toggled;
+
+    public void Toggle()
+    {
+        _toggled = !_toggled;
+    }
 
     private void Update()
     {
-        float dt = Time.deltaTime;
-
-        _accumulator += dt;
-        while (_accumulator >= _frequency)
+        if (_toggled)
         {
-            _fpsDisplay.text = ((int)(1f / dt)).
-                ToString();
+            float dt = Time.deltaTime;
 
-            _accumulator -= _frequency;
+            _accumulator += dt;
+            while (_accumulator >= _frequency)
+            {
+                _fpsDisplay.text = ((int)(1f / dt)).
+                    ToString();
+
+                _accumulator -= _frequency;
+            }
+        }
+        else
+        {
+            _fpsDisplay.text = "";
         }
     }
 
     private void Awake()
     {
         _fpsDisplay = GetComponent<TMP_Text>();
+        _toggled = true;
     }
 }

@@ -69,7 +69,10 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLoseState()
     {
-        Log("Respawn");
+        LoadingManager.Instance.LoadSceneAdditive("UIDeathScreen", true);
+        LoadingManager.Instance.UnloadScene("UI");
+        LoadingManager.Instance.UnloadScene("UIHUD");
+        GameStateChangeHandler(GameState.Pause);
     }
 
     private void HandlePauseState()
@@ -80,5 +83,10 @@ public class GameManager : Singleton<GameManager>
     private void UnPause()
     {
         Time.timeScale = 1;
+    }
+
+    private void Update()
+    {
+        //Debug.Log(CurrentState);
     }
 }

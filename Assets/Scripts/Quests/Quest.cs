@@ -6,14 +6,22 @@ using static DebugUtils;
 public class Quest
 {
     public QuestInfo Info { get; private set; }
-    public QuestState state; 
+    public QuestState state = QuestState.RequirementsNotMet; 
     private int _currentQuestStepIndex;
+    private QuestStepState[] _stepStates;
 
     public Quest(QuestInfo info)
     {
         Info = info;
         state = QuestState.RequirementsNotMet;
         _currentQuestStepIndex = 0;
+        _stepStates = new QuestStepState[Info.QuestSteps.Length];
+
+        for (int i = 0; i < _stepStates.Length; ++i)
+        {
+            _stepStates[i] = new QuestStepState();
+        }
+
     }
 
     public void MoveToNextStep()
@@ -33,7 +41,7 @@ public class Quest
         {
             QuestStep questStep = Object.Instantiate(prefab, parentTransform)
                 .GetComponent<QuestStep>();
-            questStep.Initialize(Info.ID);
+            questStep.Initialize(Info.ID, _currentQuestStepIndex);
             return questStep;
         }
         return null;
@@ -47,4 +55,20 @@ public class Quest
         return Info.QuestSteps[_currentQuestStepIndex];
     }
 
+    public void StoreQuestStepState(QuestStepState stepState, int index)
+    {
+        if (index < _stepStates.Length)
+        {
+            _stepStates[index].state = stepState.state;
+        }
+        else
+        {
+            Debug.Log("Could not store quest step state");
+        }
+    }
+
+    public QuestData GetQuestData()
+    {
+        return new QuestData(state, _currentQuestStepIndex, _stepStates);
+    }
 }

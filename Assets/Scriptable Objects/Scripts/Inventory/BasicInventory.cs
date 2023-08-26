@@ -44,5 +44,11 @@ public class BasicInventory :
     {
         IDeserializable deserializable = this;
         deserializable.Deserialize(data);
+
+        for (int i = 0; i < _itemInitializerList.Count; ++i)
+        {
+            _allItems[i] = _itemInitializerList[i].Key ?
+                _itemInitializerList[i] : null;
+        }
     }
 }

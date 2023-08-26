@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 using UnityEngine;
 
@@ -6,6 +7,8 @@ using static DebugUtils;
 
 public class UIMainInventory : MonoBehaviour
 {
+    public InventoryBase Inventory { get; private set; }
+
     [SerializeField]
     private CharacterData _character;
 
@@ -15,28 +18,35 @@ public class UIMainInventory : MonoBehaviour
     private GameObject _viewport;
     private Transform _contentItems;
     private GameObject _noMainInventory;
-    private List<UIItemSlot> _slots = new();
+    private List<UIInventoryItemSlot> _slots = new();
+
+    public static event Action UseButtonClicked;
+
+    public void StartUseItemEvent()
+    {
+        UseButtonClicked();
+    }
 
     private void Update()
     {
-        InventoryBase inventory = _character.Inventory;
+        Inventory = _character.Inventory;
 
-        _viewport.SetActive(inventory);
-        _noMainInventory.SetActive(!inventory);
+        _viewport.SetActive(Inventory);
+        _noMainInventory.SetActive(!Inventory);
 
-        if (!inventory)
+        if (!Inventory)
         {
             return;
         }
 
-        UpdateSlots(inventory);
+        UpdateSlots(Inventory);
 
         for (int i = 0; i < _slots.Count; ++i)
         {
             UIItemSlot slot = _slots[i];
 
             // There are more `_slots` than `MaxNumSlots`
-            if (i >= inventory.MaxNumSlots)
+            if (i >= Inventory.MaxNumSlots)
             {
                 // Hide this slot
                 slot.gameObject.SetActive(false);
@@ -47,12 +57,12 @@ public class UIMainInventory : MonoBehaviour
             // Show this slot
             slot.gameObject.SetActive(true);
 
-            ItemBase item = inventory.GetItem(i);
+            ItemBase item = Inventory.GetItem(i);
 
             if (item)
             {
                 slot.SetIconAndQuantity(item.Sprite,
-                    inventory.GetAmount(i));
+                    Inventory.GetAmount(i));
             }
             else
             {
@@ -76,7 +86,7 @@ public class UIMainInventory : MonoBehaviour
         for (int i = 0; i < _contentItems.childCount; ++i)
         {
             _slots.Add(_contentItems.GetChild(i).
-                GetComponent<UIItemSlot>());
+                GetComponent<UIInventoryItemSlot>());
         }
 
         _noMainInventory = transform.ChildGO(1);
@@ -93,7 +103,7 @@ public class UIMainInventory : MonoBehaviour
             GameObject newObject =
                 Instantiate(_slotPrefab, _contentItems.transform);
 
-            _slots.Add(newObject.GetComponent<UIItemSlot>());
+            _slots.Add(newObject.GetComponent<UIInventoryItemSlot>());
         }
     }
 }

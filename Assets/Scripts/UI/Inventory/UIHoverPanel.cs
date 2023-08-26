@@ -10,16 +10,30 @@ public class UIHoverPanel :
     // Prevent closing of this hover panel
     private bool _lock = false;
 
+    // Prevent the hover panel from begin visible,
+    // overrides `_lock`
+    private bool _hidden = false;
+
     private RectTransform _rectTransform;
     private TMP_Text _itemName;
     private TMP_Text _itemDescription;
     private GameObject _action1Button;
     private GameObject _action2Button;
 
+    public void MakeHidden()
+    {
+        _hidden = true;
+    }
+
+    public void MakeVisible()
+    {
+        _hidden = false;
+    }
+
     public void ShowPanel()
     {
         // Only allow changes if `_lock` is false
-        if (!_lock)
+        if (!_lock && !_hidden)
         {
             gameObject.SetActive(true);
         }
@@ -60,22 +74,32 @@ public class UIHoverPanel :
 
     public void ShowAction1Button()
     {
-        _action1Button.SetActive(true);
+        Action1Button(true);
     }
 
     public void HideAction1Button()
     {
-        _action1Button.SetActive(false);
+        Action1Button(false);
+    }
+
+    public void Action1Button(bool active)
+    {
+        _action1Button.SetActive(active);
     }
 
     public void ShowAction2Button()
     {
-        _action2Button.SetActive(true);
+        Action2Button(true);
     }
 
     public void HideAction2Button()
     {
-        _action2Button.SetActive(false);
+        Action2Button(false);
+    }
+
+    public void Action2Button(bool active)
+    {
+        _action2Button.SetActive(active);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -97,6 +121,14 @@ public class UIHoverPanel :
         _rectTransform.anchoredPosition =
             new(position.x - halfWidth,
             position.y - halfHeight);
+    }
+
+    private void Update()
+    {
+        if (_hidden)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void Awake()

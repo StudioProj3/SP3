@@ -4,13 +4,36 @@ using UnityEngine;
 public class Shopkeeper : InteractableBase
 {
     private GameObject _toggleText;
-    private GameObject _shopUI;
+
+    private UIShop UIShop 
+    {
+        get 
+        {
+            if (_uiShop == null)
+            {
+                GameObject uiShopObject = 
+                    GameObject.FindWithTag("ShopUI").transform.ChildGO(0);
+
+                if (uiShopObject == null)
+                {
+                    return null;
+                }
+
+                _ = uiShopObject.TryGetComponent(
+                    out _uiShop);
+            }
+            return _uiShop;
+        }
+    }
+    private UIShop _uiShop; 
+    private bool _isOpen = false;
     
     protected override void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _shopUI.SetActive(!_shopUI.activeSelf);
+            _isOpen = !_isOpen;
+            UIShop.ShowShop(_isOpen);
         }
     }
 
@@ -24,16 +47,7 @@ public class Shopkeeper : InteractableBase
 
     private void Update()
     {
-        if (!_shopUI)
-        {
-            _shopUI = GameObject.FindGameObjectWithTag("ShopUI");
-            if (_shopUI)
-            {
-                _shopUI.SetActive(false);
-            }
-        }
-
-        if (_toggleText.activeSelf && _shopUI)
+        if (_toggleText.activeSelf && UIShop)
         {
             Interact();
         }
@@ -53,9 +67,9 @@ public class Shopkeeper : InteractableBase
         {
             _toggleText.SetActive(false);
 
-            if (_shopUI)
+            if (UIShop)
             {
-                _shopUI.SetActive(false);
+                UIShop.ShowShop(false);
             }
         }
     }

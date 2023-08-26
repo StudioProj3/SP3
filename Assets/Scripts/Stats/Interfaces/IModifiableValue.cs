@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 public interface IModifiableValue : IValue
 {
     float Max { get; }
     float Base { get; }
+
+    IList<Modifier> AppliedModifiers { get;}
 
     event Action ValueChanged;
 
@@ -16,4 +19,6 @@ public interface IModifiableValue : IValue
     void Divide(float toDivide);
 
     void Set(float toSet);
+
+    void InvokeValueChanged();
 }

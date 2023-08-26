@@ -18,6 +18,7 @@ public abstract class CharacterControllerBase :
     protected Animator _animator;
     protected SpriteRenderer _spriteRenderer;
     protected List<StatusEffectBase> _statusEffects = new();
+    protected AudioManager _audioManager;
 
     public virtual void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -49,7 +50,14 @@ public abstract class CharacterControllerBase :
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioManager = AudioManager.Instance;
+
+        Stats stats = Data.CharacterStats;
+        stats.HookEvents();
+        stats.AddListenerToStats();
     }
+
+
 
     protected virtual void SetupStateMachine()
     {
@@ -63,11 +71,8 @@ public abstract class CharacterControllerBase :
         Data.HookEvents();
         Data.Reset();
 
-        Stats stats = Data.CharacterStats;
-        stats.HookEvents();
-        stats.AddListenerToStats();
     }
-    
+
     protected void RemoveEffectImpl(StatusEffectBase statusEffect,
         int index)
     {

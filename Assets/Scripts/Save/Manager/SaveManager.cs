@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -87,8 +88,10 @@ public class SaveManager : Singleton<SaveManager>
     {
         foreach (var pair in _callbacks)
         {
+            string saveID = pair.Key;
+
             Func<string> save = pair.Value.First;
-            _saveDict[pair.Key] = save();
+            _saveDict[saveID] = save();
         }
 
         WriteToDisk();
@@ -114,6 +117,8 @@ public class SaveManager : Singleton<SaveManager>
         Dictionary<string, string> saveDict =
             JsonConvert.DeserializeObject
             <Dictionary<string, string>>(loadSaveString);
+        Debug.Log(saveDict.Count);
+
         _saveDict = saveDict;
 
         foreach (var pair in _callbacks)
@@ -135,7 +140,7 @@ public class SaveManager : Singleton<SaveManager>
                 continue;
             }
 
-            load(_saveDict[pair.Key]);
+            load(saveString);
         }
     }
 
@@ -145,8 +150,9 @@ public class SaveManager : Singleton<SaveManager>
             JsonConvert.SerializeObject(_saveDict));
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
         LoadAll();
 
         // The individual savables already call save when they are
@@ -162,6 +168,11 @@ public class SaveManager : Singleton<SaveManager>
             if (obj is ISavable savable)
             {
                 savable.HookEvents();
+
+                if (obj is IResettable resettable)
+                {
+                    resettable.ResetAll();
+                }
             }
         }
     }

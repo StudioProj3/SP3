@@ -1,11 +1,15 @@
+using System;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UIInventoryItemSlot :
     UIItemSlot, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField]
-    private InventoryBase _inventory;
+    [field: SerializeField]
+    public InventoryBase Inventory { get; private set; }
+
+    public static event Action<ItemBase> OnUseFromInventory;
 
     [SerializeField]
     [Range(-500f, 500f)]
@@ -20,6 +24,7 @@ public class UIInventoryItemSlot :
     private UIHoverPanel _hoverPanel;
 
     private bool _hover = false;
+    private ItemBase _item;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -36,6 +41,11 @@ public class UIInventoryItemSlot :
         _hover = false;
     }
 
+    public void UseItemInSlot()
+    {
+        OnUseFromInventory(_item);
+    }
+
     private void Update()
     {
         if (_hover)
@@ -48,6 +58,8 @@ public class UIInventoryItemSlot :
     {
         base.Awake();
 
+        UIMainInventory.UseButtonClicked += UseItemInSlot;
+
         _rectTransform = GetComponent<RectTransform>();
         _uiinventory = GameObject.FindWithTag("UIInventory").
             GetComponent<UIInventory>();
@@ -55,10 +67,17 @@ public class UIInventoryItemSlot :
             GetComponent<UIHoverPanel>();
     }
 
+    private void OnDestroy()
+    {
+        UIMainInventory.UseButtonClicked -= UseItemInSlot;
+    }
+
     private void UpdateHoverPanel()
     {
-        ItemBase item = _inventory.GetItem(
+        ItemBase item = Inventory.GetItem(
             transform.GetSiblingIndex());
+
+        _item = item;
 
         Pair<string, string> result = new();
         result.First = item != null ? item.Name : "Empty";
@@ -67,16 +86,8 @@ public class UIInventoryItemSlot :
         _hoverPanel.SetItemName(result.First);
         _hoverPanel.SetItemDescription(result.Second);
 
-        if (item)
-        {
-            _hoverPanel.ShowAction1Button();
-            _hoverPanel.ShowAction2Button();
-        }
-        else
-        {
-            _hoverPanel.HideAction1Button();
-            _hoverPanel.HideAction2Button();
-        }
+        _hoverPanel.Action1Button(item && item.Usable);
+        _hoverPanel.Action2Button(item && item.Droppable);
 
         UpdateHoverPanelPosition();
     }

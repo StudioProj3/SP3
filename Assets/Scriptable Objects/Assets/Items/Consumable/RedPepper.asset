@@ -17,8 +17,17 @@ MonoBehaviour:
     type: 3}
   <Atlas>k__BackingField: 0
   <Stackable>k__BackingField: 1
+  <Usable>k__BackingField: 1
+  <Droppable>k__BackingField: 1
   <Weight>k__BackingField: 0
-  Description: 
+  Description: 'A spicy pepper
+
+    +1.5x damage for 10s
+
+    +5 current sanity
+
+    -Damage
+    over time'
   _effectsThatModify:
   - statToChange: {fileID: 11400000, guid: 626c8f81eaec15e4da9a4a57c08b67c3, type: 2}
     modifierType: 1

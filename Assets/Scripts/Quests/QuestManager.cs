@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static DebugUtils;
+using Newtonsoft.Json;
 
-public sealed class QuestManager : Singleton<QuestManager> 
+public sealed class QuestManager : Singleton<QuestManager>, ISavable
 {
     [SerializeField]
     private CharacterData _playerData; 
@@ -15,9 +16,25 @@ public sealed class QuestManager : Singleton<QuestManager>
     public event Action<string> OnAdvanceQuest; 
     public event Action<string> OnFinishQuest; 
     public event Action<Quest> OnQuestStateChange;
+    public event Action<string, int, QuestStepState> OnQuestStepStateChange;
     public event Action<CharacterData> OnEnemyKilled;
 
     private Dictionary<string, Quest> _allQuests = new();
+
+    [field: HorizontalDivider]
+    [field: Header("Save Settings")]
+    [field: SerializeField]
+    public bool EnableSave { get; private set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public string SaveID { get; private set; }
+
+    [field: SerializeField]
+    [field: ShowIf("EnableSave", true, true)]
+    public ISerializable.SerializeFormat Format
+        { get; private set; }
+    
 
     private UIHUDQuestInformation QuestDisplayInformation
     {
@@ -61,9 +78,55 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnQuestStateChange?.Invoke(quest);
     }
 
+    public void QuestStepStateChange(string id, int stepIndex, QuestStepState quest)
+    {
+        OnQuestStepStateChange?.Invoke(id, stepIndex, quest);
+    }
+
     public void EnemyKilled(CharacterData data)
     {
         OnEnemyKilled?.Invoke(data);
+    }
+
+
+    public void HookEvents()
+    {
+        if (EnableSave)
+        {
+            SaveManager.Instance.Hook(SaveID, Save, Load);
+        }
+    }
+
+    public string Save()
+    {
+        Dictionary<string, bool> questDoneMap = new();
+        foreach (Quest quest in _allQuests.Values)
+        {
+            questDoneMap.Add(quest.Info.ID, quest.state == QuestState.Finished);
+        }
+
+        return JsonConvert.SerializeObject(questDoneMap);
+    }
+
+    public void Load(string data)
+    {
+        Dictionary<string, bool> questDoneMap = JsonConvert 
+            .DeserializeObject<Dictionary<string, bool>>(data);
+
+        // We want to default the state at first, then
+        // change it later
+        foreach (Quest quest in _allQuests.Values)
+        {
+            quest.state = QuestState.RequirementsNotMet;
+        }
+
+        foreach (string questID in questDoneMap.Keys)
+        {
+            if (questDoneMap[questID])
+            {
+                GetQuest(questID).state = QuestState.Finished; 
+            }
+        }
     }
 
     private void OnEnable()
@@ -72,6 +135,7 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnAdvanceQuest += AdvanceQuestCallback;
         OnFinishQuest += FinishQuestCallback;
         OnQuestStateChange += QuestStateChangeCallback;
+        OnQuestStepStateChange += QuestStepStateChangeCallback;
     }
 
     private void OnDisable()
@@ -80,6 +144,7 @@ public sealed class QuestManager : Singleton<QuestManager>
         OnAdvanceQuest -= AdvanceQuestCallback;
         OnFinishQuest -= FinishQuestCallback;
         OnQuestStateChange -= QuestStateChangeCallback;
+        OnQuestStepStateChange -= QuestStepStateChangeCallback;
     }
 
     protected override void OnStart()
@@ -99,9 +164,8 @@ public sealed class QuestManager : Singleton<QuestManager>
             _ = questUIObject.TryGetComponent(out _questDisplayInformation);
         }
 
-        // this.DelayExecute(() => StartQuest("Introduction"), 0.5f);
-        StartQuest("Introduction");
-        StartQuest("ShopkeeperQuest");
+        HookEvents();
+        this.DelayExecute(() => { StartQuest("Introduction"); StartQuest("ShopkeeperQuest"); }, 0.5f);
     }
 
     private void ChangeQuestState(string id, QuestState state)
@@ -113,16 +177,21 @@ public sealed class QuestManager : Singleton<QuestManager>
 
     private bool IsRequirementsMet(Quest quest)
     {
-        return quest
+        return !(quest
             .Info
             .PrerequisiteQuests
             .Where(q => GetQuest(q.ID).state != QuestState.Finished)
-            .Any();
+            .Count() > 0);
     }
 
     private void StartQuestCallback(string id)
     {
         Quest quest = GetQuest(id);
+
+        if (quest.state != QuestState.CanStart)
+        {
+            return;
+        }
         QuestStep step = quest.InstantiateCurrentQuestStep(transform);
 
         if (QuestDisplayInformation != null)
@@ -131,6 +200,8 @@ public sealed class QuestManager : Singleton<QuestManager>
         }
         
         ChangeQuestState(quest.Info.ID, QuestState.InProgress);
+
+        SaveManager.Instance.Save(SaveID);
     }
 
     private void AdvanceQuestCallback(string id)
@@ -205,14 +276,26 @@ public sealed class QuestManager : Singleton<QuestManager>
                         item.Value, spawnPosition));
                 }
             }
+        }
 
-
+        // Save the new result
+        if (EnableSave)
+        {
+            SaveManager.Instance.Save(SaveID);
         }
     }
 
     private void QuestStateChangeCallback(Quest quest)
     {
 
+    }
+
+    private void QuestStepStateChangeCallback(string id, 
+        int index, QuestStepState questStepState)
+    {
+        Quest quest = GetQuest(id);
+        quest.StoreQuestStepState(questStepState, index);
+        ChangeQuestState(id, quest.state);
     }
 
     private void Update()
