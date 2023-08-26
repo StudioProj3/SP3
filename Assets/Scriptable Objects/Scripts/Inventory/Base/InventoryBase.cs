@@ -338,35 +338,38 @@ public abstract class InventoryBase :
         {
             _allItems[index1] = _allItems[index2];
             _allItems[index2] = null;
+
+            _itemInitializerList[index1] =
+                _itemInitializerList[index2];
+            _itemInitializerList[index2] = null;
+
+            return true;
         }
         else if (_allItems[index2] == null)
         {
             _allItems[index2] = _allItems[index1];
             _allItems[index1] = null;
-        }
-        else
-        {
-            ItemBase itemBase = _allItems[index1].Key;
-            uint quantity = _allItems[index1].Value;
 
-            _allItems[index1].Key = _allItems[index2].Key;
-            _allItems[index1].Value = _allItems[index2].Value;
+            _itemInitializerList[index2] =
+                _itemInitializerList[index1];
+            _itemInitializerList[index1] = null;
 
-            _allItems[index2].Key = itemBase;
-            _allItems[index2].Value = quantity;
+            return true;
         }
+        
+        ItemBase itemBase = _allItems[index1].Key;
+        uint quantity = _allItems[index1].Value;
+
+        _allItems[index1].Key = _allItems[index2].Key;
+        _allItems[index1].Value = _allItems[index2].Value;
+
+        _allItems[index2].Key = itemBase;
+        _allItems[index2].Value = quantity;
 
         foreach (int idx in arr)
         {
-            if (_allItems[idx] == null)
-            {
-                _itemInitializerList[idx] = null;
-            }
-            else
-            {
-                _itemInitializerList[idx].Key = _allItems[idx].Key;
-                _itemInitializerList[idx].Value = _allItems[idx].Value;
-            }
+            _itemInitializerList[idx].Key = _allItems[idx].Key;
+            _itemInitializerList[idx].Value = _allItems[idx].Value;
         }
 
         return true;
