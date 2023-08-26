@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 using UnityEngine;
 
@@ -18,6 +19,13 @@ public class UIMainInventory : MonoBehaviour
     private Transform _contentItems;
     private GameObject _noMainInventory;
     private List<UIInventoryItemSlot> _slots = new();
+
+    public static event Action UseButtonClicked;
+
+    public void StartUseItemEvent()
+    {
+        UseButtonClicked();
+    }
 
     private void Update()
     {
