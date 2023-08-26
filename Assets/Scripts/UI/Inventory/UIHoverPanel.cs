@@ -74,22 +74,32 @@ public class UIHoverPanel :
 
     public void ShowAction1Button()
     {
-        _action1Button.SetActive(true);
+        Action1Button(true);
     }
 
     public void HideAction1Button()
     {
-        _action1Button.SetActive(false);
+        Action1Button(false);
+    }
+
+    public void Action1Button(bool active)
+    {
+        _action1Button.SetActive(active);
     }
 
     public void ShowAction2Button()
     {
-        _action2Button.SetActive(true);
+        Action2Button(true);
     }
 
     public void HideAction2Button()
     {
-        _action2Button.SetActive(false);
+        Action2Button(false);
+    }
+
+    public void Action2Button(bool active)
+    {
+        _action2Button.SetActive(active);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
