@@ -168,6 +168,11 @@ public class SaveManager : Singleton<SaveManager>
             if (obj is ISavable savable)
             {
                 savable.HookEvents();
+
+                if (obj is IResettable resettable)
+                {
+                    resettable.ResetAll();
+                }
             }
         }
     }
