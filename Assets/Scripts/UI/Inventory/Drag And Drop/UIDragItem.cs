@@ -42,7 +42,9 @@ public class UIDragItem :
     public void RevertParent()
     {
         transform.SetParent(Parent);
+        transform.SetAsFirstSibling();
         transform.localScale = Vector3.one;
+
         DropArea = Parent.GetComponent<UIDropArea>();
     }
 
