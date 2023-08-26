@@ -412,23 +412,28 @@ public abstract class InventoryBase :
             return false;
         }
 
-        int[] arr = new int[] { index1, index2 };
-
-        foreach (int idx in arr)
+        if (_allItems[index1] == null)
         {
-            int otherIdx = idx == index1 ? index2 : index1;
+            _allItems[index1] = other._allItems[index2];
+            other._allItems[index2] = null;
 
-            if (_allItems[idx] == null)
-            {
-                _allItems[idx] = other._allItems[otherIdx];
-                other._allItems[otherIdx] = null;
+            _itemInitializerList[index1] = other.
+                _itemInitializerList[index2];
+            other._itemInitializerList[index2] = null;
 
-                _itemInitializerList[idx] = other.
-                    _itemInitializerList[otherIdx];
-                other._itemInitializerList[otherIdx] = null;
+            return true;
 
-                return true;
-            }
+        }
+        else if (other._allItems[index2] == null)
+        {
+            other._allItems[index2] = _allItems[index1];
+            _allItems[index1] = null;
+
+            other._itemInitializerList[index2] =
+                _itemInitializerList[index1];
+            _itemInitializerList[index1] = null;
+
+            return true;
         }
 
         ItemBase itemBase = _allItems[index1].Key;
