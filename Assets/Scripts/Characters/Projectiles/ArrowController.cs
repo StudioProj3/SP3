@@ -24,7 +24,7 @@ public class ArrowController : MonoBehaviour
 
     public void Init(Vector3 direction, Damage damage, 
         StatusEffectBase statusEffect, 
-        Transform source, Sprite sprite)
+        Transform source, Sprite sprite = null)
     {
         gameObject.SetActive(true);
         _direction = direction;
@@ -36,7 +36,7 @@ public class ArrowController : MonoBehaviour
 
         _currentLifetime = _lifetime;
 
-        if (_spriteRenderer.sprite != sprite)
+        if (sprite && _spriteRenderer.sprite != sprite)
         {
             _spriteRenderer.sprite = sprite;
         }
@@ -44,26 +44,8 @@ public class ArrowController : MonoBehaviour
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(90, angle, 0);
-    }
-    public void Init(Vector3 direction, Damage damage, 
-        StatusEffectBase statusEffect, 
-        Transform source)
-    {
-        gameObject.SetActive(true);
-        _direction = direction;
-        _damage = damage;
-        _source = source;
-        _statusEffect = statusEffect;
-
-        _rigidbody.velocity = _direction * _speed;
-
-        _currentLifetime = _lifetime;
-
-        float angle = -Mathf.Atan2(direction.z, direction.x) *
-            Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        transform.rotation = Quaternion.
+            Euler(sprite ? 90f : 0f, angle, 0f);
     }
 
     private void Awake()
@@ -89,12 +71,15 @@ public class ArrowController : MonoBehaviour
         {
             Vector3 knockbackForce = _direction * 1.5f;
             effectable.TakeDamage(_damage, knockbackForce);
+
             if (_statusEffect)
             {
                 effectable.ApplyEffect(_statusEffect.Clone());
             }
+
             RemoveProjectile();
         }
+
         else if (collider.gameObject.CompareTag("Scene Object"))
         {
             RemoveProjectile();
