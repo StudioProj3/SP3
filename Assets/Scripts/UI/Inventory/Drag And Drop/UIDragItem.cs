@@ -34,6 +34,7 @@ public class UIDragItem :
     {
         RevertParent();
         _rectTransform.sizeDelta = _size;
+        _rectTransform.anchoredPosition = new(0f, 4.9f);
         _image.raycastTarget = true;
 
         _uiinventory.ShowHoverPanel();
@@ -42,7 +43,9 @@ public class UIDragItem :
     public void RevertParent()
     {
         transform.SetParent(Parent);
+        transform.SetAsFirstSibling();
         transform.localScale = Vector3.one;
+
         DropArea = Parent.GetComponent<UIDropArea>();
     }
 

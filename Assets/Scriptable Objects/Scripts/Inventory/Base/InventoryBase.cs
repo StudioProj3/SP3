@@ -325,14 +325,49 @@ public abstract class InventoryBase :
         Assert(index2 < _allItems.Count,
             "`index2` out of range");
 
-        if (index1 == index2)
+        if ((_allItems[index1] == null &&
+            _allItems[index2] == null) ||
+            (index1 == index2))
         {
             return true;
         }
 
-        // Swap the 2 elements
-        (_allItems[index1], _allItems[index2]) =
-            (_allItems[index2], _allItems[index1]);
+        int[] arr = new int[] { index1, index2 };
+
+        if (_allItems[index1] == null)
+        {
+            _allItems[index1] = _allItems[index2];
+            _allItems[index2] = null;
+        }
+        else if (_allItems[index2] == null)
+        {
+            _allItems[index2] = _allItems[index1];
+            _allItems[index1] = null;
+        }
+        else
+        {
+            ItemBase itemBase = _allItems[index1].Key;
+            uint quantity = _allItems[index1].Value;
+
+            _allItems[index1].Key = _allItems[index2].Key;
+            _allItems[index1].Value = _allItems[index2].Value;
+
+            _allItems[index2].Key = itemBase;
+            _allItems[index2].Value = quantity;
+        }
+
+        foreach (int idx in arr)
+        {
+            if (_allItems[idx] == null)
+            {
+                _itemInitializerList[idx] = null;
+            }
+            else
+            {
+                _itemInitializerList[idx].Key = _allItems[idx].Key;
+                _itemInitializerList[idx].Value = _allItems[idx].Value;
+            }
+        }
 
         return true;
     }
