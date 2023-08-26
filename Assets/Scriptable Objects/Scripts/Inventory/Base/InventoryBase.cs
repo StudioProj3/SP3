@@ -6,7 +6,7 @@ using UnityEngine;
 using static DebugUtils;
 
 public abstract class InventoryBase :
-    ScriptableObject
+    ScriptableObject, IResettable
 {
     public abstract uint MaxNumSlots { get; protected set; }
 
@@ -59,6 +59,11 @@ public abstract class InventoryBase :
 
         _indexToQuantityMap.Clear();
         _nonStackableIndexToNewValueMap.Clear();
+    }
+
+    public void ResetAll()
+    {
+        Reset();
     }
 
     public virtual ItemBase GetItem(int index)
