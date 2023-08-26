@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 6940940614848581137, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5,
         type: 3}
       propertyPath: m_Name
-      value: Item
+      value: Main Inventory Item
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4158208255639962559, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5, type: 3}
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef561708a4077b4f98ad311da2cc5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bringFrontCount: 5
 --- !u!1 &9016165655511731704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6940940614848581137, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5,
