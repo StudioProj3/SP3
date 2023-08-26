@@ -4968,6 +4968,18 @@ MonoBehaviour:
     type: 2}
   <Weight>k__BackingField: 2
   <ExpAmount>k__BackingField: 40
-  <ItemDropList>k__BackingField: []
+  <ItemDropList>k__BackingField:
+  - item: {fileID: 11400000, guid: 800f81c548c6d7847924eea266ba727c, type: 2}
+    amount: 1
+    percentChance: 0.9
+  - item: {fileID: 11400000, guid: 5d7914049de860241aa97e4449d31b3f, type: 2}
+    amount: 1
+    percentChance: 0.1
+  - item: {fileID: 11400000, guid: bc2f61f0315fbaa44b4709e859e1963c, type: 2}
+    amount: 1
+    percentChance: 0.15
+  - item: {fileID: 11400000, guid: b1bd6da47c952504ea66d7bea8b14ac3, type: 2}
+    amount: 1
+    percentChance: 0.8
   _sfxGoingToCharge: {fileID: 8300000, guid: 8499dcc5e971e5b4a8dd3f89dde7bcfa, type: 3}
   _sfxCharging: {fileID: 8300000, guid: ea053b74273a26d46925454250c9e808, type: 3}

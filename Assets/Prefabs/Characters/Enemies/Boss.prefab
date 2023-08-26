@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 545015ee8dc276a40995a0c580b40b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
   _lifetime: 5
+  _speed: 0
   _knockback: 0
 --- !u!1 &361131876390461782
 GameObject:
@@ -538,6 +538,16 @@ MonoBehaviour:
     type: 2}
   <Weight>k__BackingField: 0
   <ExpAmount>k__BackingField: 500
+  <ItemDropList>k__BackingField:
+  - item: {fileID: 11400000, guid: 5d7914049de860241aa97e4449d31b3f, type: 2}
+    amount: 2
+    percentChance: 1
+  - item: {fileID: 11400000, guid: 4dc911fba8054bd45ad439714bbac215, type: 2}
+    amount: 2
+    percentChance: 1
+  - item: {fileID: 11400000, guid: 29695865e6ac1954286d4dbf6e8148a5, type: 2}
+    amount: 1
+    percentChance: 0.01
   _weaponLayer:
     serializedVersion: 2
     m_Bits: 8
