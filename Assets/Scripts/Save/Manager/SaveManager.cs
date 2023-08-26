@@ -117,7 +117,6 @@ public class SaveManager : Singleton<SaveManager>
         Dictionary<string, string> saveDict =
             JsonConvert.DeserializeObject
             <Dictionary<string, string>>(loadSaveString);
-        Debug.Log(saveDict.Count);
 
         _saveDict = saveDict;
 
