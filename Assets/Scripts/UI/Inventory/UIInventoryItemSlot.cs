@@ -9,8 +9,6 @@ public class UIInventoryItemSlot :
     [field: SerializeField]
     public InventoryBase Inventory { get; private set; }
 
-    public static event Action<ItemBase> OnUseFromInventory;
-
     [SerializeField]
     [Range(-500f, 500f)]
     private float _offsetX = 0f;
@@ -24,7 +22,6 @@ public class UIInventoryItemSlot :
     private UIHoverPanel _hoverPanel;
 
     private bool _hover = false;
-    private ItemBase _item;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -41,11 +38,6 @@ public class UIInventoryItemSlot :
         _hover = false;
     }
 
-    public void UseItemInSlot()
-    {
-        OnUseFromInventory(_item);
-    }
-
     private void Update()
     {
         if (_hover)
@@ -58,18 +50,12 @@ public class UIInventoryItemSlot :
     {
         base.Awake();
 
-        UIMainInventory.UseButtonClicked += UseItemInSlot;
 
         _rectTransform = GetComponent<RectTransform>();
         _uiinventory = GameObject.FindWithTag("UIInventory").
             GetComponent<UIInventory>();
         _hoverPanel = _uiinventory.transform.GetChild(2).
             GetComponent<UIHoverPanel>();
-    }
-
-    private void OnDestroy()
-    {
-        UIMainInventory.UseButtonClicked -= UseItemInSlot;
     }
 
     private void UpdateHoverPanel()
@@ -82,6 +68,8 @@ public class UIInventoryItemSlot :
         Pair<string, string> result = new();
         result.First = item != null ? item.Name : "Empty";
         result.Second = item != null ? item.Description : "-";
+
+        _hoverPanel.SetEventArgs(item, transform.GetSiblingIndex(), Inventory);
 
         _hoverPanel.SetItemName(result.First);
         _hoverPanel.SetItemDescription(result.Second);
