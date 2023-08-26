@@ -11,6 +11,9 @@ public class UIDragItem :
 
     public UIDropArea DropArea { get; private set; }
 
+    [SerializeField]
+    private uint _bringFrontCount = 1;
+
     private UIInventory _uiinventory;
     private Image _image;
     private RectTransform _rectTransform;
@@ -63,7 +66,7 @@ public class UIDragItem :
 
     private void BringToFront()
     {
-        transform.SetParent(transform.parent.parent.parent.parent);
+        transform.SetParent(transform.Parent((int)_bringFrontCount));
         transform.SetAsLastSibling();
     }
 }

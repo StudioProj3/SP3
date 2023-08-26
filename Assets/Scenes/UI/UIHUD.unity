@@ -1557,7 +1557,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand Item
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6438300113613846092, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5, type: 3}
 --- !u!224 &376085187 stripped
 RectTransform:
@@ -4474,7 +4475,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Hand Item
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6438300113613846092, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 39bbcfd2dc850fb43bfbb7476a0b35e5, type: 3}
 --- !u!224 &1021146969 stripped
 RectTransform:
