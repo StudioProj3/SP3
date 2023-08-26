@@ -34,6 +34,7 @@ public class UIDragItem :
     {
         RevertParent();
         _rectTransform.sizeDelta = _size;
+        _rectTransform.anchoredPosition = new(0f, 4.9f);
         _image.raycastTarget = true;
 
         _uiinventory.ShowHoverPanel();
