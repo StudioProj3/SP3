@@ -55,6 +55,11 @@ public class UIShop : MonoBehaviour
     [SerializeField]
     private UIShopDescriptionPanel _descriptionPanel;
 
+    [SerializeField]
+    private Transform _scrollRectTransform;
+
+    private Vector3 _scrollRectOriginalPosition;
+
     private UINotification UINotification 
     {
         get 
@@ -77,6 +82,17 @@ public class UIShop : MonoBehaviour
     }
 
     private UINotification _uiNotification;
+
+    private Animator _animator;
+
+    public void ShowShop(bool shopOpen)
+    {
+        _animator.SetBool("shopOpen", shopOpen);
+        if (shopOpen)
+        {
+            _scrollRectTransform.position =_scrollRectOriginalPosition;
+        }
+    }
 
     public void OnItemPurchaseAttempt(UIShopItem panel)
     {
@@ -167,9 +183,13 @@ public class UIShop : MonoBehaviour
     // NOTE (Chris): We want to update with the UIShopItem since
     // we already have determined the order of the costs, since
     // it doesn't matter in the costs array in ISellable CurrencyCost
-    private void UpdateDescriptionPanel(UIShopItem item)
+    private void UpdateDescriptionPanel(UIShopItem item, bool mouseOver)
     {
-        _descriptionPanel.UpdateHoveredShopItem(item);
+        if (mouseOver)
+        {
+            _descriptionPanel.UpdateHoveredShopItem(item);
+        }
+        _animator.SetBool("itemHovered", mouseOver);
     }
 
     private void Start()
@@ -181,6 +201,13 @@ public class UIShop : MonoBehaviour
         // Log("Not null materials: " + notNullMaterials.Count());
         // Log("Distinct materials: " + distinctMaterials.Count());
         GeneratePrefabs(_materials, _materialsTransform);
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponentInParent<Animator>();
+
+        _scrollRectOriginalPosition = _scrollRectTransform.position;
     }
 
     // Generate prefabs for given list, and parents them to target

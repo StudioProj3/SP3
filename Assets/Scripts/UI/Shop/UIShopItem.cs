@@ -33,7 +33,7 @@ public class UIShopItem : MonoBehaviour
 
     public ShopItem ShopItem { get; private set; }
 
-    private Action<UIShopItem> _mouseOverAction;
+    private Action<UIShopItem, bool> _mouseOverAction;
     private Action<UIShopItem> _mouseClickAction;
 
     public void OnItemClick()
@@ -47,7 +47,7 @@ public class UIShopItem : MonoBehaviour
     }
 
     public void Initialize(ShopItem item, int bronzeCount,
-        int silverCount, int goldCount, Action<UIShopItem> updateDescription,
+        int silverCount, int goldCount, Action<UIShopItem, bool> updateDescription,
         Action<UIShopItem> onPurchaseAttempt) 
     {
         ShopItem = item;
@@ -70,10 +70,7 @@ public class UIShopItem : MonoBehaviour
     {
         _animator.SetBool("mouseOver", mouseOver);
 
-        if (mouseOver)
-        {
-            _mouseOverAction?.Invoke(this); 
-        }
+        _mouseOverAction?.Invoke(this, mouseOver); 
     }
 
     private void Start()
