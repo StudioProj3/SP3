@@ -29,9 +29,11 @@ public class BossController :
 
     private int _attackIndex;
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
+        base.OnEnable();
+
         _pooledMissles = transform.GetChild(0).gameObject;
         _pooledMissleList = new List<MissleController>();
 

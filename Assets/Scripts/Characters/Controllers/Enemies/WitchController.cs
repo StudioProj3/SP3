@@ -25,9 +25,10 @@ public class WitchController :
     private MagicDamage _magicDamage;
     private float buffCooldown;
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
+        base.OnEnable();
 
         _witchParticles = GetComponentInChildren<ParticleSystem>();
         _witchStatsContainer = Data.CharacterStats.

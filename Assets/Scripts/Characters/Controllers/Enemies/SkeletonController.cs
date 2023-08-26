@@ -29,10 +29,11 @@ public class SkeletonController :
         _source = source;
     }
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
-        
+        base.OnEnable();
+
         SetupStateMachine();
     }
 

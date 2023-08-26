@@ -17,9 +17,10 @@ public class CacodaemonController :
     private float _distance;
     private PhysicalDamage _phyDamage;
     
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
+        base.OnEnable();
 
         _cacodaemonParticles = GetComponentInChildren<ParticleSystem>();
         _cacodaemonStatsContainer = Data.CharacterStats.

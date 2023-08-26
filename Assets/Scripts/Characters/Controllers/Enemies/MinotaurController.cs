@@ -21,9 +21,10 @@ public class MinotaurController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
+        base.OnEnable();
 
         _pooledEarth = transform.GetChild(0).gameObject;
         _pooledEarthList = new List<EarthController>();

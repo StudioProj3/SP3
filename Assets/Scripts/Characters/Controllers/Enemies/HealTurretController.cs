@@ -18,9 +18,10 @@ public class HealTurretController :
     private float _distance;
     private PhysicalDamage _phyDamage;
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
+        base.OnEnable();
 
         _healTurretParticles = GetComponentInChildren<ParticleSystem>();
         _healTurretStatsContainer = Data.CharacterStats.

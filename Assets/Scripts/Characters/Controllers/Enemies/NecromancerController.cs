@@ -18,9 +18,10 @@ public class NecromancerController :
     private float _distance;
     private MagicDamage _magicDamage;
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.Start();
+        base.OnEnable();
 
         _pooledSkeletons = transform.GetChild(0).gameObject;
         _pooledSkeletonList = new List<SkeletonController>();
