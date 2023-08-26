@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 public class UIDropArea :
     MonoBehaviour, IDropHandler
 {
+    private UIInventory _uiinventory;
+
     public UIDragItem DragItem { get; set; }
 
     public void OnDrop(PointerEventData eventData)
@@ -21,6 +23,12 @@ public class UIDropArea :
         {
             return;
         }
+
+        int index1 = dragItem.Parent.GetSiblingIndex();
+        int index2 = transform.GetSiblingIndex();
+
+        // Perform the actual inventory item swap
+        _uiinventory.MainInventory.Swap(index1, index2);
 
         dragItem.DropArea.DragItem = DragItem;
 
@@ -44,5 +52,7 @@ public class UIDropArea :
     {
         DragItem = transform.GetChild(0).
             GetComponent<UIDragItem>();
+        _uiinventory = GameObject.FindWithTag("UIInventory").
+            GetComponent<UIInventory>();
     }
 }
