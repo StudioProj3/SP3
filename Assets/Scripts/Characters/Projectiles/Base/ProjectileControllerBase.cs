@@ -14,7 +14,15 @@ public abstract class ProjectileControllerBase :
     protected Vector3 _direction;
     protected Damage _damage;
 
-    private void RemoveProjectile(Transform source = null)
+    protected void Init(Vector3 direction, Damage damage)
+    {
+        _direction = direction;
+        _damage = damage;
+
+        _currentLifetime = _lifetime;
+    }
+
+    protected void RemoveProjectile(Transform source = null)
     {
         gameObject.SetActive(false);
 

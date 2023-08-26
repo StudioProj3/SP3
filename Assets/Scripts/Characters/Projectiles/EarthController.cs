@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public class EarthController : MonoBehaviour
+public class EarthController :
+    ProjectileControllerBase
 {
-    [SerializeField]
-    private float _lifetime;
-
     [SerializeField]
     private LayerMask targetLayer;
 
-    private float _currentLifetime;
-    private Vector3 _direction;
-    private Damage _damage;
     private StatusEffectBase _statusEffect;
     private Transform _source;
     private SpriteRenderer _spriteRenderer;
@@ -19,13 +14,12 @@ public class EarthController : MonoBehaviour
         StatusEffectBase statusEffect, 
         Transform source, Sprite sprite = null)
     {
+        Init(direction, damage);
+
         gameObject.SetActive(true);
-        _direction = direction;
-        _damage = damage;
+
         _source = source;
         _statusEffect = statusEffect;
-
-        _currentLifetime = _lifetime;
 
         if (sprite && _spriteRenderer.sprite != sprite)
         {
@@ -50,7 +44,7 @@ public class EarthController : MonoBehaviour
 
         if (_currentLifetime < 0f)
         {
-            RemoveProjectile();
+            RemoveProjectile(_source);
         }
     }
 
@@ -67,11 +61,5 @@ public class EarthController : MonoBehaviour
                 effectable.ApplyEffect(_statusEffect.Clone());
             }
         }
-    }
-
-    private void RemoveProjectile()
-    {
-        gameObject.SetActive(false);
-        transform.SetParent(_source);
     }
 }

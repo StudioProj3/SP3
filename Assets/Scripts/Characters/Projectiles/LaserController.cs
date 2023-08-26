@@ -1,41 +1,31 @@
 using UnityEngine;
 
-public class LaserController : MonoBehaviour
+public class LaserController :
+    ProjectileControllerBase
 {
     [SerializeField]
     private float _speed;
 
     [SerializeField]
-    private float _lifetime;
-
-    [SerializeField]
     private float _knockback;
 
-    private float _currentLifetime;
-
-    private Vector3 _direction;
-    private Damage _damage;
     private PlayerController _playerController;
-
     private Rigidbody _rigidbody;
-
     private Animator _spawnLaserAnimator;
     private Animator _laserAnimator;
-
     private bool _collide;
 
     public void Init(Vector3 direction, Damage damage,
         PlayerController playerController)
     {
+        Init(direction, damage);
+
         gameObject.SetActive(true);
 
-        _direction = direction;
-        _damage = damage;
         _playerController = playerController;
 
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.velocity = _direction * _speed;
-        _currentLifetime = _lifetime;
 
         _spawnLaserAnimator = transform.GetChild(0).
             GetComponent<Animator>();
@@ -77,10 +67,5 @@ public class LaserController : MonoBehaviour
 
             _playerController.TakeDamage(_damage, knockbackForce);
         }
-    }
-
-    private void RemoveProjectile()
-    {
-        gameObject.SetActive(false);
     }
 }
