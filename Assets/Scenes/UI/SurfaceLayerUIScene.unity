@@ -1482,12 +1482,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1131777242}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &499971952 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3146799220559115577, guid: 6b287aee543232848a5fcfa3ce2b53b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1817329102}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &531881209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2464,6 +2458,7 @@ GameObject:
   - component: {fileID: 1012294701}
   - component: {fileID: 1012294700}
   - component: {fileID: 1012294699}
+  - component: {fileID: 1012294703}
   m_Layer: 5
   m_Name: ShopCanvas
   m_TagString: ShopUI
@@ -2554,6 +2549,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1012294703
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012294698}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 473b7f0aec619c342a91a2d6e89f8650, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1069104752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,7 +2589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1069104753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3143,7 +3159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1420483833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3506,7 +3522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 625, y: 0}
   m_SizeDelta: {x: 1250, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1534932544
@@ -4199,26 +4215,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
-        type: 3}
-      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
-        type: 3}
-      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
-        type: 3}
-      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 499971952}
-    - target: {fileID: 5881562032292855015, guid: 6b287aee543232848a5fcfa3ce2b53b2,
-        type: 3}
-      propertyPath: pointerEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6134402150397478477, guid: 6b287aee543232848a5fcfa3ce2b53b2,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4379,7 +4375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 625, y: 0}
   m_SizeDelta: {x: 1250, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854536195
@@ -4707,7 +4703,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 531881210}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.53125
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

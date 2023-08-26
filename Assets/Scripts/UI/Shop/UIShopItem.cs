@@ -41,6 +41,11 @@ public class UIShopItem : MonoBehaviour
         _mouseClickAction.Invoke(this);
     }
 
+    public void Shake()
+    {
+        _animator.SetTrigger("shake");
+    }
+
     public void Initialize(ShopItem item, int bronzeCount,
         int silverCount, int goldCount, Action<UIShopItem> updateDescription,
         Action<UIShopItem> onPurchaseAttempt) 

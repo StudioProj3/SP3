@@ -96,6 +96,7 @@ public class UIShop : MonoBehaviour
             if (wealth[i] < costs[i])
             {
                 Debug.Log("Not enough money.");
+                panel.Shake();
                 return;
             }
         }
@@ -122,11 +123,8 @@ public class UIShop : MonoBehaviour
                     _playerData.HandInventory.Remove(coinItems[i],
                         (uint)handAmounts[i]);
                 }
-            }
 
-            // Then we use the players inventory coins using the rest
-            for (int i = CoinType.Bronze; i < CoinType.Gold + 1; ++i)
-            {
+                // Then we use the players inventory coins using the rest
                 if (costs[i] > 0)
                 {
                     _playerData.Inventory.Remove(coinItems[i],
@@ -134,12 +132,12 @@ public class UIShop : MonoBehaviour
                 }
             }
 
-
             UINotification.Collect(item.Sprite, item.Name);
         }
         else
         {
             Debug.Log("Not enough space.");
+            panel.Shake();
         }
     }
 
