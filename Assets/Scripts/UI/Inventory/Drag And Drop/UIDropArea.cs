@@ -35,7 +35,7 @@ public class UIDropArea :
         int index2 = transform.GetSiblingIndex();
 
         // Perform the actual inventory item swap
-        _inventory.Swap(index1, index2);
+        inventory.Swap(_inventory, index1, index2);
 
         dragItem.DropArea.DragItem = DragItem;
 
