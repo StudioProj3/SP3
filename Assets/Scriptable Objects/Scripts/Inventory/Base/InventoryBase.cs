@@ -318,6 +318,25 @@ public abstract class InventoryBase :
         return Modify(item, (int)(number * -1));
     }
 
+    public virtual bool Swap(int index1, int index2)
+    {
+        Assert(index1 < _allItems.Count,
+            "`index1` out of range");
+        Assert(index2 < _allItems.Count,
+            "`index2` out of range");
+
+        if (index1 == index2)
+        {
+            return true;
+        }
+
+        // Swap the 2 elements
+        (_allItems[index1], _allItems[index2]) =
+            (_allItems[index2], _allItems[index1]);
+
+        return true;
+    }
+
     // For debugging
     public void Print()
     {
