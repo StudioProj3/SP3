@@ -4,8 +4,8 @@ using UnityEngine.EventSystems;
 public class UIInventoryItemSlot :
     UIItemSlot, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField]
-    private InventoryBase _inventory;
+    [field: SerializeField]
+    public InventoryBase Inventory { get; private set; }
 
     [SerializeField]
     [Range(-500f, 500f)]
@@ -57,7 +57,7 @@ public class UIInventoryItemSlot :
 
     private void UpdateHoverPanel()
     {
-        ItemBase item = _inventory.GetItem(
+        ItemBase item = Inventory.GetItem(
             transform.GetSiblingIndex());
 
         Pair<string, string> result = new();

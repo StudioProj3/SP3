@@ -32,4 +32,18 @@ public static class TransformUtils
     {
         return transform.parent.gameObject;
     }
+
+    // Get the parent recursively with `number` 1 being just
+    // `transform.parent` and 2 being `transform.parent.parent`
+    // so on and forth
+    public static Transform Parent(this Transform transform,
+        int number)
+    {
+        for (int i = 0; i < number; ++i)
+        {
+            transform = transform.parent;
+        }
+
+        return transform;
+    }
 }

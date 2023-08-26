@@ -325,6 +325,7 @@ public abstract class InventoryBase :
         Assert(index2 < _allItems.Count,
             "`index2` out of range");
 
+        // Early return for trivial cases
         if ((_allItems[index1] == null &&
             _allItems[index2] == null) ||
             (index1 == index2))
@@ -334,59 +335,143 @@ public abstract class InventoryBase :
 
         int[] arr = new int[] { index1, index2 };
 
-        if (_allItems[index1] == null)
+        foreach (int idx in arr)
         {
-            _allItems[index1] = _allItems[index2];
-            _allItems[index2] = null;
-        }
-        else if (_allItems[index2] == null)
-        {
-            _allItems[index2] = _allItems[index1];
-            _allItems[index1] = null;
-        }
-        else
-        {
-            ItemBase itemBase = _allItems[index1].Key;
-            uint quantity = _allItems[index1].Value;
+            int other = idx == index1 ? index2 : index1;
 
-            _allItems[index1].Key = _allItems[index2].Key;
-            _allItems[index1].Value = _allItems[index2].Value;
+            if (_allItems[idx] == null)
+            {
+                _allItems[idx] = _allItems[other];
+                _allItems[other] = null;
 
-            _allItems[index2].Key = itemBase;
-            _allItems[index2].Value = quantity;
+                _itemInitializerList[idx] =
+                    _itemInitializerList[other];
+                _itemInitializerList[other] = null;
+
+                return true;
+            }
         }
+
+        ItemBase itemBase = _allItems[index1].Key;
+        uint quantity = _allItems[index1].Value;
+
+        _allItems[index1].Key = _allItems[index2].Key;
+        _allItems[index1].Value = _allItems[index2].Value;
+
+        _allItems[index2].Key = itemBase;
+        _allItems[index2].Value = quantity;
 
         foreach (int idx in arr)
         {
-            if (_allItems[idx] == null)
-            {
-                _itemInitializerList[idx] = null;
-            }
-            else
-            {
-                _itemInitializerList[idx].Key = _allItems[idx].Key;
-                _itemInitializerList[idx].Value = _allItems[idx].Value;
-            }
+            _itemInitializerList[idx].Key = _allItems[idx].Key;
+            _itemInitializerList[idx].Value = _allItems[idx].Value;
         }
 
         return true;
     }
 
+    // Swap across inventory boundaries with `index1` being
+    // the index in the current inventory and `index2` being
+    // the index in `other`
+    public virtual bool Swap(InventoryBase other, int index1,
+        int index2)
+    {
+        Assert(index1 < _allItems.Count,
+            "`index1` out of range");
+        Assert(index2 < other._allItems.Count,
+            "`index2` out of range");
+
+        // Early return for trivial cases
+        if ((_allItems[index1] == null &&
+            other._allItems[index2] == null) ||
+            ((this == other) && (index1 == index2)))
+        {
+            return true;
+        }
+
+        uint maxPerSlot1 = MaxNumSlots;
+        uint maxPerSlot2 = other.MaxNumSlots;
+
+        uint quantity1 = 0;
+        uint quantity2 = 0;
+
+        if (_allItems[index1] != null)
+        {
+            quantity1 = _allItems[index1].Value;
+        }
+
+        if (other._allItems[index2] != null)
+        {
+            quantity2 = other._allItems[index2].Value;
+        }
+
+        // Quantity of any 1 of the 2 slots cannot fit in the
+        // target slot
+        if (quantity1 > maxPerSlot2 || quantity2 > maxPerSlot1)
+        {
+            return false;
+        }
+
+        int[] arr = new int[] { index1, index2 };
+
+        foreach (int idx in arr)
+        {
+            int otherIdx = idx == index1 ? index2 : index1;
+
+            if (_allItems[idx] == null)
+            {
+                _allItems[idx] = other._allItems[otherIdx];
+                other._allItems[otherIdx] = null;
+
+                _itemInitializerList[idx] = other.
+                    _itemInitializerList[otherIdx];
+                other._itemInitializerList[otherIdx] = null;
+
+                return true;
+            }
+        }
+
+        ItemBase itemBase = _allItems[index1].Key;
+        uint quantity = _allItems[index1].Value;
+
+        _allItems[index1].Key = other._allItems[index2].Key;
+        _allItems[index1].Value = other._allItems[index2].Value;
+
+        other._allItems[index2].Key = itemBase;
+        other._allItems[index2].Value = quantity;
+
+        _itemInitializerList[index1].Key =
+            _allItems[index1].Key;
+        _itemInitializerList[index1].Value =
+            _allItems[index1].Value;
+
+        other._itemInitializerList[index2].Key =
+            other._allItems[index2].Key;
+        other._itemInitializerList[index2].Value =
+            other._allItems[index2].Value;
+
+        return true;
+    }
+
+#if UNITY_EDITOR
+
     // For debugging
     public void Print()
     {
-        Log("Inventory size: "  + _allItems.Count.ToString());
+        Log("Inventory size: " + _allItems.Count.ToString());
 
         for (int i = 0; i < _allItems.Count; ++i)
         {
-            if (_allItems[i] != null) 
+            if (_allItems[i] != null)
             {
                 Log("Index " + i.ToString() + " : " +
-                    _allItems[i].First.Name + 
-                    " : " + _allItems[i].Second.ToString()); 
+                    _allItems[i].First.Name + " : " +
+                    _allItems[i].Second.ToString());
             }
         }
     }
+
+#endif
 
     // Update the inventory list `_allItems` with
     // the starter items and new max number of slots
