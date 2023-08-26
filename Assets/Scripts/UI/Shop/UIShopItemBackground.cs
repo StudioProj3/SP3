@@ -5,33 +5,33 @@ using UnityEngine.EventSystems;
 public class UIShopItemBackground : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler
 {
-    public UnityEvent<bool> _pointerEvent;
+    public UnityEvent<bool> pointerEvent;
 
     private void Start()
     {
-        if (_pointerEvent == null)
+        if (pointerEvent == null)
         {
-            _pointerEvent = new UnityEvent<bool>();
+            pointerEvent = new UnityEvent<bool>();
         }
     }
 
     public void SubscribePointerEvent(UnityAction<bool> action)
     {
-        _pointerEvent.AddListener(action);
+        pointerEvent.AddListener(action);
     }
 
     public void UnsubscribePointerEvent(UnityAction<bool> action)
     {
-        _pointerEvent.RemoveListener(action);
+        pointerEvent.RemoveListener(action);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _pointerEvent?.Invoke(true);
+        pointerEvent?.Invoke(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _pointerEvent?.Invoke(false);
+        pointerEvent?.Invoke(false);
     }
 }

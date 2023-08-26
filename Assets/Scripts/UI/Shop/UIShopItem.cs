@@ -1,9 +1,15 @@
+using System;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIShopItem : MonoBehaviour
 {
+    public TMP_Text BronzeText => _bronzeCountText;
+    public TMP_Text SilverText => _silverCountText;
+    public TMP_Text GoldText => _goldCountText;
+
     [SerializeField]
     private Image _itemIcon;
 
@@ -25,11 +31,18 @@ public class UIShopItem : MonoBehaviour
     [SerializeField]
     private UIShopItemBackground _background;
 
-    public ItemBase Item { get; private set; }
+    public ShopItem ShopItem { get; private set; }
+
+    private Action<UIShopItem> _mouseOverAction;
 
     private void OnPointerEvent(bool mouseOver)
     {
         _animator.SetBool("mouseOver", mouseOver);
+
+        if (mouseOver)
+        {
+            _mouseOverAction?.Invoke(this); 
+        }
     }
 
     private void Start()
@@ -42,11 +55,11 @@ public class UIShopItem : MonoBehaviour
         _background.UnsubscribePointerEvent(OnPointerEvent);
     }
 
-    public void Initialize(ItemBase item, int bronzeCount,
-        int silverCount, int goldCount) 
+    public void Initialize(ShopItem item, int bronzeCount,
+        int silverCount, int goldCount, Action<UIShopItem> updateDescription) 
     {
-        Item = item;
-        _itemIcon.sprite = item.Sprite;
+        ShopItem = item;
+        _itemIcon.sprite = item.Item.Sprite;
 
         if (bronzeCount > 0)
         {
@@ -74,5 +87,7 @@ public class UIShopItem : MonoBehaviour
         {
             _goldCountText.transform.parent.gameObject.SetActive(false);
         }
+
+        _mouseOverAction = updateDescription;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 using static DebugUtils;
 using static CoinItemBase;
+using UnityEngine.PlayerLoop;
 
 public class UIShop : MonoBehaviour
 {
@@ -48,6 +49,12 @@ public class UIShop : MonoBehaviour
     [SerializeField]
     private InventoryBase _playerInventory;
 
+    [HorizontalDivider]
+    [Header("Misc")]
+
+    [SerializeField]
+    private UIShopDescriptionPanel _descriptionPanel;
+
     private void OnValidate()
     {
 
@@ -61,6 +68,14 @@ public class UIShop : MonoBehaviour
         wealth[CoinType.Gold] = _playerInventory.GetAmount(_goldCoin);
 
         return wealth;
+    }
+
+    // NOTE (Chris): We want to update with the UIShopItem since
+    // we already have determined the order of the costs, since
+    // it doesn't matter in the costs array in ISellable CurrencyCost
+    private void UpdateDescriptionPanel(UIShopItem item)
+    {
+        _descriptionPanel.UpdateHoveredShopItem(item);
     }
 
     private void Start()
@@ -106,9 +121,10 @@ public class UIShop : MonoBehaviour
                     }
                 }
             }
-            uiItem.Initialize(item.Item, itemCosts[CoinType.Bronze],
-                itemCosts[CoinType.Silver], itemCosts[CoinType.Gold]);
 
+            uiItem.Initialize(item, itemCosts[CoinType.Bronze],
+                itemCosts[CoinType.Silver], itemCosts[CoinType.Gold],
+                UpdateDescriptionPanel);
         }
     }
 }
