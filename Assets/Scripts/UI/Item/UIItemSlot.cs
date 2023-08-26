@@ -8,10 +8,22 @@ public class UIItemSlot : MonoBehaviour
 
     public void SetIcon(Sprite sprite)
     {
-        Image icon = transform.GetChild(0).
-            GetComponent<Image>();
-        icon.sprite = sprite;
-        icon.color = icon.color.
+        Transform icon = transform.GetChild(0);
+        
+        if (!icon)
+        {
+            return;
+        }
+
+        Image image = icon.GetComponent<Image>();
+
+        if (!image)
+        {
+            return;
+        }
+
+        image.sprite = sprite;
+        image.color = image.color.
             Set(a: sprite ? 1f : 0f);
     }
 

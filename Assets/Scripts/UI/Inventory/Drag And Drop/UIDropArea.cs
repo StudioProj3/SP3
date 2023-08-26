@@ -36,6 +36,8 @@ public class UIDropArea :
             anchoredPosition = new(0f, 4.9f);
 
         DragItem = dragItem;
+
+        Debug.Log("srop");
     }
 
     private void Awake()
