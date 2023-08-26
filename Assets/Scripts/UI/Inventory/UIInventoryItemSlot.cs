@@ -3,9 +3,14 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using static DebugUtils;
+
 public class UIInventoryItemSlot :
     UIItemSlot, IPointerEnterHandler, IPointerExitHandler
 {
+    [field: SerializeField]
+    public string Tag { get; private set; }
+
     [field: SerializeField]
     public InventoryBase Inventory { get; private set; }
 
@@ -21,6 +26,7 @@ public class UIInventoryItemSlot :
 
     private RectTransform _rectTransform;
     private UIInventory _uiinventory;
+    private UICrafting _uicrafting;
     private UIHoverPanel _hoverPanel;
 
     private bool _hover = false;
@@ -38,6 +44,7 @@ public class UIInventoryItemSlot :
     {
         this.DelayExecute(() =>
             _hoverPanel.HidePanel(), 0.1f);
+
         _hover = false;
     }
 
@@ -61,10 +68,25 @@ public class UIInventoryItemSlot :
         UIMainInventory.UseButtonClicked += UseItemInSlot;
 
         _rectTransform = GetComponent<RectTransform>();
-        _uiinventory = GameObject.FindWithTag("UIInventory").
-            GetComponent<UIInventory>();
-        _hoverPanel = _uiinventory.transform.GetChild(2).
-            GetComponent<UIHoverPanel>();
+
+        if (Tag == "UIInventory")
+        {
+            _uiinventory = GameObject.FindWithTag(Tag).
+                GetComponent<UIInventory>();
+            _hoverPanel = _uiinventory.transform.GetChild(2).
+                GetComponent<UIHoverPanel>();
+        }
+        else if (Tag == "UICrafting")
+        {
+            _uicrafting = GameObject.FindWithTag(Tag).
+                GetComponent<UICrafting>();
+            _hoverPanel = _uicrafting.transform.GetChild(2).
+                GetComponent<UIHoverPanel>();
+        }
+        else
+        {
+            Fatal("Unhandled tag type");
+        }
     }
 
     private void OnDestroy()
