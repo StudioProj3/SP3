@@ -5,12 +5,14 @@ public class Crafting : InteractableBase
 {
     private GameObject _textObject;
     private TMP_Text _toggleText;
+    private UICrafting _crafting;
+    private bool _loaded = false;
 
     protected override void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-
+            _crafting.ShowCrafting();
         }
     }
 
@@ -25,6 +27,22 @@ public class Crafting : InteractableBase
 
     private void Update()
     {
+        if (!_loaded)
+        {
+            GameObject gameObject = GameObject.
+                FindWithTag("UICrafting");
+
+            if (!gameObject)
+            {
+                return;
+            }
+
+            _crafting = gameObject.
+                GetComponent<UICrafting>();
+
+            _loaded = true;
+        }
+
         if (_textObject.activeSelf)
         {
             Interact();
