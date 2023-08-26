@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class UIShrineEffect : MonoBehaviour
 {
-    [SerializeField]
-    private CharacterData _playerData;
-
     public static event Action<string> OnExitShrine;
 
     public void PrayForHealth()
