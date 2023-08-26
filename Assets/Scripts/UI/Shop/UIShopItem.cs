@@ -1,9 +1,15 @@
+using System;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIShopItem : MonoBehaviour
 {
+    public TMP_Text BronzeText => _bronzeCountText;
+    public TMP_Text SilverText => _silverCountText;
+    public TMP_Text GoldText => _goldCountText;
+
     [SerializeField]
     private Image _itemIcon;
 
@@ -25,11 +31,46 @@ public class UIShopItem : MonoBehaviour
     [SerializeField]
     private UIShopItemBackground _background;
 
-    public ItemBase Item { get; private set; }
+    public ShopItem ShopItem { get; private set; }
+
+    private Action<UIShopItem, bool> _mouseOverAction;
+    private Action<UIShopItem> _mouseClickAction;
+
+    public void OnItemClick()
+    {
+        _mouseClickAction.Invoke(this);
+    }
+
+    public void Shake()
+    {
+        _animator.SetTrigger("shake");
+    }
+
+    public void Initialize(ShopItem item, int bronzeCount,
+        int silverCount, int goldCount, Action<UIShopItem, bool> updateDescription,
+        Action<UIShopItem> onPurchaseAttempt) 
+    {
+        ShopItem = item;
+        _itemIcon.sprite = item.Item.Sprite;
+
+        _bronzeCountText.text = bronzeCount.ToString();
+        _bronzeCountText.transform.parent.gameObject.SetActive(bronzeCount > 0);
+
+        _silverCountText.text = silverCount.ToString();
+        _silverCountText.transform.parent.gameObject.SetActive(silverCount > 0);
+
+        _goldCountText.text = goldCount.ToString();
+        _goldCountText.transform.parent.gameObject.SetActive(goldCount > 0);
+
+        _mouseOverAction = updateDescription;
+        _mouseClickAction = onPurchaseAttempt;
+    }    
 
     private void OnPointerEvent(bool mouseOver)
     {
         _animator.SetBool("mouseOver", mouseOver);
+
+        _mouseOverAction?.Invoke(this, mouseOver); 
     }
 
     private void Start()
@@ -42,37 +83,4 @@ public class UIShopItem : MonoBehaviour
         _background.UnsubscribePointerEvent(OnPointerEvent);
     }
 
-    public void Initialize(ItemBase item, int bronzeCount,
-        int silverCount, int goldCount) 
-    {
-        Item = item;
-        _itemIcon.sprite = item.Sprite;
-
-        if (bronzeCount > 0)
-        {
-            _bronzeCountText.text = bronzeCount.ToString();
-        }
-        else
-        {
-            _bronzeCountText.transform.parent.gameObject.SetActive(false);
-        }
-
-        if (silverCount > 0)
-        {
-            _silverCountText.text = silverCount.ToString();
-        }
-        else
-        {
-            _silverCountText.transform.parent.gameObject.SetActive(false);
-        }
-
-        if (goldCount > 0)
-        {
-            _goldCountText.text = goldCount.ToString();
-        }
-        else
-        {
-            _goldCountText.transform.parent.gameObject.SetActive(false);
-        }
-    }
 }

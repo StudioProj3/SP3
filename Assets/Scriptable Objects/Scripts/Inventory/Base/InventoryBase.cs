@@ -34,6 +34,11 @@ public abstract class InventoryBase :
 
         for (int i = 0; i < _allItems.Count; ++i)
         {
+            if (_allItems[i] == null)
+            {
+                continue;
+            }
+
             if (_allItems[i].Key == itemBase)
             {
                 amount += (int)_allItems[i].Value;
