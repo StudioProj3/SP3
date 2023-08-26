@@ -7,12 +7,17 @@ public class DisableOnMessageMethod : MonoBehaviour
         Awake,
         Start,
         FirstUpdate,
+        NTHUpdate,
     }
 
     [SerializeField]
     private MessageMethod _messageMethod;
 
-    private bool _firstUpdate = true;
+    [SerializeField]
+    [ShowIf("_messageMethod", MessageMethod.NTHUpdate)]
+    private uint _frameNumber = 2;
+
+    private uint _updateFrameNumber = 1;
 
     private void Awake()
     {
@@ -32,13 +37,15 @@ public class DisableOnMessageMethod : MonoBehaviour
 
     private void Update()
     {
-        if (_firstUpdate &&
-            _messageMethod == MessageMethod.FirstUpdate)
+        if ((_updateFrameNumber == 1 &&
+            _messageMethod == MessageMethod.FirstUpdate) ||
+            (_updateFrameNumber == _frameNumber &&
+            _messageMethod == MessageMethod.NTHUpdate))
         {
             Disable();
         }
 
-        _firstUpdate = false;
+        _updateFrameNumber++;
     }
 
     private void Disable()

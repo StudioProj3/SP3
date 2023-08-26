@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class Shrine : InteractableBase
 
     private void Start()
     {
+
         UIShrineEffect.OnExitShrine += ShrineUsed;
 
         _loadingManager = LoadingManager.Instance;
@@ -28,6 +30,11 @@ public class Shrine : InteractableBase
         _toggleText.SetActive(false);
         _player = GameObject.FindGameObjectWithTag("Player").
             GetComponent<CharacterControllerBase>();
+    }
+
+    private void OnDestroy()
+    {
+        UIShrineEffect.OnExitShrine -= ShrineUsed;
     }
 
     private void Update()
@@ -72,6 +79,28 @@ public class Shrine : InteractableBase
 
     private void ShrineUsed(string choice)
     {
+        if (choice == "Health")
+        {
+            var health = _player.Data.CharacterStats.GetStat("Health");
+            var appliedModifiers = health.AppliedModifiers;
+            List<Modifier> indexesToRemove = new();
+
+            for (int i = 0; i < appliedModifiers.Count; ++i)
+            {
+                if (appliedModifiers[i].Value < 0)
+                {
+                    indexesToRemove.Add(appliedModifiers[i]);
+                }
+            }
+
+            foreach (Modifier modifier in indexesToRemove)
+            {
+                health.RemoveModifier(modifier);
+            }
+
+            float missingHealth = health.Max - health.Value;
+            health.Add(missingHealth * 0.5f);
+        }
         if (choice == "Sanity")
         {
             _player.Data.CharacterStats.GetStat("Sanity")
@@ -79,7 +108,10 @@ public class Shrine : InteractableBase
         }
 
         _shrineUsed = true;
-        _toggleText.SetActive(false);
+        if (_toggleText)
+        {
+            _toggleText.SetActive(false);
+        }
         ToggleShrine();
     }
 }

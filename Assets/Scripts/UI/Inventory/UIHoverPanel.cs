@@ -10,16 +10,30 @@ public class UIHoverPanel :
     // Prevent closing of this hover panel
     private bool _lock = false;
 
+    // Prevent the hover panel from begin visible,
+    // overrides `_lock`
+    private bool _hidden = false;
+
     private RectTransform _rectTransform;
     private TMP_Text _itemName;
     private TMP_Text _itemDescription;
     private GameObject _action1Button;
     private GameObject _action2Button;
 
+    public void MakeHidden()
+    {
+        _hidden = true;
+    }
+
+    public void MakeVisible()
+    {
+        _hidden = false;
+    }
+
     public void ShowPanel()
     {
         // Only allow changes if `_lock` is false
-        if (!_lock)
+        if (!_lock && !_hidden)
         {
             gameObject.SetActive(true);
         }
@@ -97,6 +111,14 @@ public class UIHoverPanel :
         _rectTransform.anchoredPosition =
             new(position.x - halfWidth,
             position.y - halfHeight);
+    }
+
+    private void Update()
+    {
+        if (_hidden)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void Awake()
