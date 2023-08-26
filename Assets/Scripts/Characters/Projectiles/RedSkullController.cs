@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RedSkullController : MonoBehaviour
@@ -41,10 +39,6 @@ public class RedSkullController : MonoBehaviour
         //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
-    private void Awake()
-    {
-    }
-
     private void Update()
     {
         _currentLifetime -= Time.deltaTime;
@@ -57,14 +51,13 @@ public class RedSkullController : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.CompareTag("Player"))
         {
             Vector3 knockbackForce = _direction * _knockback;
 
             _playerController.TakeDamage(_damage,knockbackForce);
             RemoveProjectile();
         }
-        
     }
 
     private void RemoveProjectile()

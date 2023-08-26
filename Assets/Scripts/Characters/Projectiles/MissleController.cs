@@ -42,8 +42,10 @@ public class MissleController : MonoBehaviour
             _spriteRenderer.sprite = sprite;
         }
 
-        _rigidbody.AddForce(_direction.normalized * 0.25f, ForceMode.Impulse);
+        _rigidbody.AddForce(_direction.normalized * 0.25f,
+            ForceMode.Impulse);
     }
+
     public void Init(Vector3 direction, Damage damage,
         StatusEffectBase statusEffect,
         Transform source, GameObject player)
@@ -59,8 +61,8 @@ public class MissleController : MonoBehaviour
 
         _currentLifetime = _lifetime;
 
-        _rigidbody.AddForce(_direction.normalized * 0.25f, ForceMode.Impulse);
-
+        _rigidbody.AddForce(_direction.normalized * 0.25f,
+            ForceMode.Impulse);
     }
 
     private void Awake()
@@ -84,12 +86,11 @@ public class MissleController : MonoBehaviour
         if (gameObject.activeSelf)
         {
             _direction = _player.transform.position -
-                           transform.position;
+                transform.position;
 
-            _rigidbody.AddForce(_direction.normalized * 0.15f, ForceMode.Impulse);
+            _rigidbody.AddForce(_direction.normalized * 0.15f,
+                ForceMode.Impulse);
         }
-
-      
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -99,10 +100,12 @@ public class MissleController : MonoBehaviour
         {
             Vector3 knockbackForce = _direction * 1.5f;
             effectable.TakeDamage(_damage, knockbackForce);
+
             if (_statusEffect)
             {
                 effectable.ApplyEffect(_statusEffect.Clone());
             }
+
             RemoveProjectile();
         }
         else if (collider.gameObject.CompareTag("Scene Object"))
