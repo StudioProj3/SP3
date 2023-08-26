@@ -86,16 +86,8 @@ public class UIInventoryItemSlot :
         _hoverPanel.SetItemName(result.First);
         _hoverPanel.SetItemDescription(result.Second);
 
-        if (item)
-        {
-            _hoverPanel.ShowAction1Button();
-            _hoverPanel.ShowAction2Button();
-        }
-        else
-        {
-            _hoverPanel.HideAction1Button();
-            _hoverPanel.HideAction2Button();
-        }
+        _hoverPanel.Action1Button(item && item.Usable);
+        _hoverPanel.Action2Button(item && item.Droppable);
 
         UpdateHoverPanelPosition();
     }
