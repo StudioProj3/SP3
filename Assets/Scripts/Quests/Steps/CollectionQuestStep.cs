@@ -76,10 +76,18 @@ public class CollectionQuestStep : QuestStep
             (int)(_itemsToCollect[item].Second + quantity),
             (int)_itemsToCollect[item].First);
 
+        UpdateState();
+
         // If we have met the quantities that we want, finish the quest step
         if (!_itemsToCollect.Values.Any(pair => pair.First > pair.Second))
         {
             FinishQuestStep();
         }
+    }
+
+    private void UpdateState()
+    {
+        string serializedItems = JsonUtility.ToJson(_itemsToCollect);
+        ChangeState(serializedItems);
     }
 }

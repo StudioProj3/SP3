@@ -21,6 +21,8 @@ public class PlayerPickup :
     {
         if (other.CompareTag("Collectible"))
         {
+            // _characterData.CharacterStats.GetStat("Health").AddModifier(Modifier.Plus(20, 0));
+
             bool result = other.TryGetComponent(
                 out Collectible collectible);
 
@@ -42,15 +44,15 @@ public class PlayerPickup :
 
                     SaveManager.Instance.Save(_characterData.SaveID);
 
-                    //_characterData.Inventory.Reset();
-
                     collectible.AttemptReleaseToPool();
 
-                    TryNotificationCollect(_notification, sprite, name);
+                    TryNotificationCollect(_notification, sprite, name,
+                        quantity);
                 }
 
                 return;
             }
+
 
             // Attempt to pickup into hand inventory
             bool tryHandInventory = _characterData.HandInventory.
@@ -63,7 +65,8 @@ public class PlayerPickup :
 
                 collectible.AttemptReleaseToPool();
 
-                TryNotificationCollect(_notification, sprite, name);
+                TryNotificationCollect(_notification, sprite, name,
+                    quantity);
                 OnPlayerPickup?.Invoke(item, quantity);
 
                 return;
@@ -86,7 +89,8 @@ public class PlayerPickup :
                     collectible.AttemptReleaseToPool();
                     OnPlayerPickup?.Invoke(item, quantity);
 
-                    TryNotificationCollect(_notification, sprite, name);
+                    TryNotificationCollect(_notification, sprite, name,
+                        quantity);
 
                     return;
                 }
@@ -100,7 +104,7 @@ public class PlayerPickup :
     }
 
     private void TryNotificationCollect(UINotification notification,
-        Sprite sprite, string name)
+        Sprite sprite, string name, uint quantity)
     {
         // Do not attempt to trigger notification if the
         // UI objects are not found
@@ -109,6 +113,6 @@ public class PlayerPickup :
             return;
         }
 
-        notification.Collect(sprite, name);
+        notification.Collect(sprite, name, quantity);
     }
 }

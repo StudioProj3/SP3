@@ -43,7 +43,11 @@ public class HandInventory :
         IDeserializable deserializable = this;
         deserializable.Deserialize(data);
 
-        _allItems = new(_itemInitializerList);
+        for (int i = 0; i < _itemInitializerList.Count; ++i)
+        {
+            _allItems[i] = _itemInitializerList[i].Key ?
+                _itemInitializerList[i] : null;
+        }
     }
 
     public override void Reset()

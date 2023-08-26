@@ -6,7 +6,7 @@ using UnityEngine;
 using static DebugUtils;
 
 public abstract class InventoryBase :
-    ScriptableObject
+    ScriptableObject, IResettable
 {
     public abstract uint MaxNumSlots { get; protected set; }
 
@@ -59,6 +59,11 @@ public abstract class InventoryBase :
 
         _indexToQuantityMap.Clear();
         _nonStackableIndexToNewValueMap.Clear();
+    }
+
+    public void ResetAll()
+    {
+        Reset();
     }
 
     public virtual ItemBase GetItem(int index)
@@ -311,6 +316,60 @@ public abstract class InventoryBase :
     public virtual bool Remove(ItemBase item, uint number)
     {
         return Modify(item, (int)(number * -1));
+    }
+
+    public virtual bool Swap(int index1, int index2)
+    {
+        Assert(index1 < _allItems.Count,
+            "`index1` out of range");
+        Assert(index2 < _allItems.Count,
+            "`index2` out of range");
+
+        if ((_allItems[index1] == null &&
+            _allItems[index2] == null) ||
+            (index1 == index2))
+        {
+            return true;
+        }
+
+        int[] arr = new int[] { index1, index2 };
+
+        if (_allItems[index1] == null)
+        {
+            _allItems[index1] = _allItems[index2];
+            _allItems[index2] = null;
+        }
+        else if (_allItems[index2] == null)
+        {
+            _allItems[index2] = _allItems[index1];
+            _allItems[index1] = null;
+        }
+        else
+        {
+            ItemBase itemBase = _allItems[index1].Key;
+            uint quantity = _allItems[index1].Value;
+
+            _allItems[index1].Key = _allItems[index2].Key;
+            _allItems[index1].Value = _allItems[index2].Value;
+
+            _allItems[index2].Key = itemBase;
+            _allItems[index2].Value = quantity;
+        }
+
+        foreach (int idx in arr)
+        {
+            if (_allItems[idx] == null)
+            {
+                _itemInitializerList[idx] = null;
+            }
+            else
+            {
+                _itemInitializerList[idx].Key = _allItems[idx].Key;
+                _itemInitializerList[idx].Value = _allItems[idx].Value;
+            }
+        }
+
+        return true;
     }
 
     // For debugging

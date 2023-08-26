@@ -16,7 +16,7 @@ public class UIHandInventory : MonoBehaviour
         if (leftHand)
         {
             _leftHandSlot.SetIconAndQuantity(leftHand.Sprite,
-                _inventory.GetAmount(0));
+                _inventory.LeftHandAmount());
         }
         else
         {
@@ -26,7 +26,7 @@ public class UIHandInventory : MonoBehaviour
         if (rightHand)
         {
             _rightHandSlot.SetIconAndQuantity(rightHand.Sprite,
-                _inventory.GetAmount(1));
+                _inventory.RightHandAmount());
         }
         else
         {
