@@ -7,11 +7,15 @@ using Newtonsoft.Json;
 [Serializable]
 public class BoundedValue : IValue
 {
+    [JsonIgnore]
     public float Max => _maxValueContainer?.Value ?? 0; 
+
+    [JsonIgnore]
     public float Min => _minValueContainer?.Value ?? 0;
 
     public event Action ValueChanged; 
 
+    [JsonIgnore]
     public float Value
     { 
         get => _value;
@@ -27,8 +31,15 @@ public class BoundedValue : IValue
     [JsonProperty]
     private readonly IValue _minValueContainer;
 
+
     // Internal bounded value
+    [JsonProperty]
     private float _value;
+
+    public BoundedValue()
+    {
+        _value = 0;
+    }
 
     public BoundedValue(IValue minContainer) :
         this(minContainer, null)
@@ -36,8 +47,8 @@ public class BoundedValue : IValue
 
     }
 
-    public BoundedValue(IValue minContainer = null,
-        IValue maxContainer = null)
+    public BoundedValue(IValue minContainer,
+        IValue maxContainer)
     {
         _minValueContainer = minContainer;
         _maxValueContainer = maxContainer;

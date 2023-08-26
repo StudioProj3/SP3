@@ -4,7 +4,10 @@ using UnityEngine;
 public class CacodaemonController :
     EnemyControllerBase, IEffectable
 {
-   
+    [SerializeField]
+    private AudioClip _sfxGoingToCharge;
+    [SerializeField]
+    private AudioClip _sfxCharging;
 
     private StatContainer _cacodaemonStatsContainer;
 
@@ -49,6 +52,8 @@ public class CacodaemonController :
             new GenericState("Charge",
                 new ActionEntry("Enter", () =>
                 {
+                    _audioManager.PlaySound3D(_sfxCharging,
+                       transform.position, false);
                     _direction = _player.transform.position -
                         transform.position;
                     _direction.y = 0f;
@@ -66,7 +71,13 @@ public class CacodaemonController :
                 })
             ),
 
-            new GenericState("GoingToCharge"),
+            new GenericState("GoingToCharge",
+                new ActionEntry("Enter", () =>
+                {
+                    _audioManager.PlaySound3D(_sfxGoingToCharge,
+                        transform.position, false);
+                })
+            ),
 
             new GenericState("Cooldown"),
 

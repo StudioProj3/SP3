@@ -19,4 +19,6 @@ public interface IModifiableValue : IValue
     void Divide(float toDivide);
 
     void Set(float toSet);
+
+    void InvokeValueChanged();
 }

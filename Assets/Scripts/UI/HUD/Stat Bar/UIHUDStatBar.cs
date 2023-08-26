@@ -43,7 +43,7 @@ public class UIHUDStatBar : MonoBehaviour
         // stored in the `_accumulator`
         while (_accumulator >= (1f / _frequency))
         {
-            float ratio = _value.Value / _value.Max;
+            float ratio = _stats.GetStat(_statType).Value / _stats.GetStat(_statType).Max;
 
             float padding = _statBarLeft.padding.x;
             float newPadding = (1f - ratio) * _length;

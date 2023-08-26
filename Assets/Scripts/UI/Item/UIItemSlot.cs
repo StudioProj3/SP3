@@ -4,13 +4,26 @@ using UnityEngine.UI;
 
 public class UIItemSlot : MonoBehaviour
 {
-    private Image _itemIcon;
     private TMP_Text _itemQuantity;
 
     public void SetIcon(Sprite sprite)
     {
-        _itemIcon.sprite = sprite;
-        _itemIcon.color = _itemIcon.color.
+        Transform icon = transform.GetChild(0);
+        
+        if (!icon)
+        {
+            return;
+        }
+
+        Image image = icon.GetComponent<Image>();
+
+        if (!image)
+        {
+            return;
+        }
+
+        image.sprite = sprite;
+        image.color = image.color.
             Set(a: sprite ? 1f : 0f);
     }
 
@@ -27,8 +40,6 @@ public class UIItemSlot : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _itemIcon = transform.GetChild(0).
-            GetComponent<Image>();
         _itemQuantity = transform.GetChild(1).
             GetComponent<TMP_Text>();
     }

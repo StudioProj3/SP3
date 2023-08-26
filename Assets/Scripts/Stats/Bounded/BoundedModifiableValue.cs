@@ -6,8 +6,13 @@ using Newtonsoft.Json;
 public class BoundedModifiableValue :
     IModifiableValue
 {
+    [JsonIgnore]
     public float Max => _modifiableValue.Value;
+
+    [JsonIgnore]
     public float Value => _boundedValue.Value;
+
+    [JsonIgnore]
     public float Base => _modifiableValue.Base;
 
     public IList<Modifier> AppliedModifiers => _modifiableValue.AppliedModifiers;
@@ -58,6 +63,11 @@ public class BoundedModifiableValue :
         _modifiableValue.ValueChanged += () => _boundedValue.OnMaxValueChanged();
     }
 
+    public BoundedModifiableValue()
+    {
+
+    }
+
     public void AddModifier(Modifier modifier)
     {
         _modifiableValue.AddModifier(modifier);
@@ -75,5 +85,20 @@ public class BoundedModifiableValue :
         return new BoundedModifiableValue(
             _boundedValue.Clone() as BoundedValue,
             _modifiableValue.Clone() as ModifiableValue);
+    }
+
+    public void BindEvent()
+    {
+        if (_modifiableValue == null || _boundedValue == null)
+        {
+            return;
+        }
+
+        _modifiableValue.ValueChanged += () => _boundedValue.OnMaxValueChanged();
+    }
+
+    public void InvokeValueChanged()
+    {
+        _modifiableValue?.InvokeValueChanged();
     }
 }

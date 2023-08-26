@@ -11,6 +11,7 @@ using UnityEngine;
 [Serializable]
 public class ModifiableValue : IModifiableValue 
 {
+    [JsonIgnore]
     public float Value
     {
         get
@@ -30,6 +31,7 @@ public class ModifiableValue : IModifiableValue
         }
     }
 
+    [JsonIgnore]
     public IList<Modifier> ModifierList
     {
         get
@@ -39,7 +41,10 @@ public class ModifiableValue : IModifiableValue
         }
     }
 
+    [JsonIgnore]
     public float Max => Value;
+
+    [JsonIgnore]
     public float Base => _initialValue;
     
     public IList<Modifier> AppliedModifiers => ModifierList;
@@ -108,6 +113,12 @@ public class ModifiableValue : IModifiableValue
         _isDirty = true;
     }
 
+    public ModifiableValue()
+    {
+        _initialValue = 0;
+        _modifiers = new();
+    }
+
     public void AddModifier(Modifier modifier)
     {
         _modifiers.Add(modifier);
@@ -128,5 +139,10 @@ public class ModifiableValue : IModifiableValue
     public object Clone()
     {
         return new ModifiableValue(_initialValue, _modifiers);
+    }
+
+    public void InvokeValueChanged()
+    {
+        ValueChanged?.Invoke(); 
     }
 }

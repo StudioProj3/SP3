@@ -9,6 +9,8 @@ public class UIDragItem :
 {
     public Transform Parent { get; set; }
 
+    public UIDropArea DropArea { get; private set; }
+
     private UIInventory _uiinventory;
     private Image _image;
     private RectTransform _rectTransform;
@@ -30,16 +32,28 @@ public class UIDragItem :
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        RevertOrder();
+        RevertParent();
         _rectTransform.sizeDelta = _size;
+        _rectTransform.anchoredPosition = new(0f, 4.9f);
         _image.raycastTarget = true;
 
         _uiinventory.ShowHoverPanel();
     }
 
+    public void RevertParent()
+    {
+        transform.SetParent(Parent);
+        transform.SetAsFirstSibling();
+        transform.localScale = Vector3.one;
+
+        DropArea = Parent.GetComponent<UIDropArea>();
+    }
+
     private void Awake()
     {
         Parent = transform.parent;
+        DropArea = Parent.GetComponent<UIDropArea>();
+
         _uiinventory = GameObject.FindWithTag("UIInventory").
             GetComponent<UIInventory>();
         _image = GetComponent<Image>();
@@ -51,10 +65,5 @@ public class UIDragItem :
     {
         transform.SetParent(transform.parent.parent.parent);
         transform.SetAsLastSibling();
-    }
-
-    private void RevertOrder()
-    {
-        transform.SetParent(Parent);
     }
 }
