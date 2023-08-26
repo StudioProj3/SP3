@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LaserController : MonoBehaviour
@@ -24,12 +22,11 @@ public class LaserController : MonoBehaviour
     private Animator _spawnLaserAnimator;
     private Animator _laserAnimator;
 
-    private bool collide;
+    private bool _collide;
 
     public void Init(Vector3 direction, Damage damage,
         PlayerController playerController)
     {
-
         gameObject.SetActive(true);
 
         _direction = direction;
@@ -40,13 +37,15 @@ public class LaserController : MonoBehaviour
         _rigidbody.velocity = _direction * _speed;
         _currentLifetime = _lifetime;
 
-        _spawnLaserAnimator = transform.GetChild(0).GetComponent<Animator>();
-        _laserAnimator = transform.GetChild(1).GetComponent<Animator>();
+        _spawnLaserAnimator = transform.GetChild(0).
+            GetComponent<Animator>();
+        _laserAnimator = transform.GetChild(1).
+            GetComponent<Animator>();
 
         float angle = -Mathf.Atan2(direction.z, direction.x) *
             Mathf.Rad2Deg;
 
-        collide = false;
+        _collide = false;
     }
 
     public void SetAnimatorBool(string boolToSet, bool state)
@@ -57,12 +56,7 @@ public class LaserController : MonoBehaviour
 
     public void SetCollide(bool state)
     {
-        collide = state;
-    }
-
-    private void Awake()
-    {
-
+        _collide = state;
     }
 
     private void Update()
@@ -77,13 +71,12 @@ public class LaserController : MonoBehaviour
 
     private void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.tag == "Player" && collide)
+        if (col.CompareTag("Player") && _collide)
         {
             Vector3 knockbackForce = _direction * _knockback;
 
             _playerController.TakeDamage(_damage, knockbackForce);
         }
-
     }
 
     private void RemoveProjectile()
