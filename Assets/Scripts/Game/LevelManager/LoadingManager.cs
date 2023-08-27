@@ -10,14 +10,21 @@ public class LoadingManager : Singleton<LoadingManager>
 
     public AsyncOperation asyncLoad;
 
+    private Animator _animator;
+
     // Load new independent scene
     public void LoadScene(string sceneName)
     {
         SaveManager.Instance.SaveAll();
+        _animator.SetBool("sceneLoad", true);
         asyncLoad =
             SceneManager.LoadSceneAsync(sceneName);
         
-        asyncLoad.completed += (_) => SaveManager.Instance.LoadAll();
+        asyncLoad.completed += (_) => 
+        {
+            SaveManager.Instance.LoadAll();
+            _animator.SetBool("sceneLoad", false);
+        };
 
         // TODO (Aquila) Demon Code
 
@@ -133,5 +140,10 @@ public class LoadingManager : Singleton<LoadingManager>
     public string GetCurrentSceneName()
     {
         return SceneManager.GetActiveScene().name;
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();   
     }
 }
