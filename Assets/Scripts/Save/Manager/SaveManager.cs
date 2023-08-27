@@ -88,10 +88,10 @@ public class SaveManager : Singleton<SaveManager>
 
     public void Save(string saveID)
     {
-        if (SceneManager.GetActiveScene().name != "SurfaceLayerScene")
-        {
-            return;
-        }
+        // if (SceneManager.GetActiveScene().name != "SurfaceLayerScene")
+        // {
+        //     return;
+        // }
 
         bool result = _callbacks.ContainsKey(saveID);
 
@@ -104,10 +104,10 @@ public class SaveManager : Singleton<SaveManager>
 
     public void SaveAll()
     {
-        if (SceneManager.GetActiveScene().name != "SurfaceLayerScene")
-        {
-            return;
-        }
+        // if (SceneManager.GetActiveScene().name != "SurfaceLayerScene")
+        // {
+        //     return;
+        // }
 
         foreach (var pair in _callbacks)
         {
