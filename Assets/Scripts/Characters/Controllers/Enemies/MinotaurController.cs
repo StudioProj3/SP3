@@ -12,6 +12,12 @@ public class MinotaurController :
     [SerializeField]
     private StatusEffectBase _earthStatusEffect;
 
+    [SerializeField]
+    private AudioClip _sfxSpinning;
+
+    [SerializeField]
+    private AudioClip _sfxEarthSpell;
+
     private GameObject _pooledEarth;
     private List<EarthController> _pooledEarthList;
 
@@ -64,6 +70,12 @@ public class MinotaurController :
             ),
 
             new GenericState("Spin",
+                new ActionEntry("Enter", () =>
+                {
+                    _audioManager.PlaySound3D(_sfxSpinning,
+                       transform.position, false);
+                }),
+        
                 new ActionEntry("FixedUpdate", () =>
                 {
 
@@ -104,7 +116,7 @@ public class MinotaurController :
             new GenericState("Quake",
                 new ActionEntry("Enter", () =>
                 {
-                    
+
                     _ = Delay.Execute(() =>
                     {
                         EarthSpell(_direction * 0.5f);
@@ -274,6 +286,8 @@ public class MinotaurController :
 
             if (!(_pooledEarthList[i].gameObject.activeSelf))
             {
+                _audioManager.PlaySound3D(_sfxEarthSpell,
+                     transform.position, false);
                 _pooledEarthList[i].Init(direction, _phyDamage.AddModifier(
                     Modifier.Multiply(_minotaurStatsContainer.
                     GetStat("DamageMultiplier").Value, 3)),
