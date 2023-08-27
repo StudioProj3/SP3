@@ -12,6 +12,8 @@ public class Collectible : MonoBehaviour
     [field: SerializeField]
     public uint Quantity { get; private set; }
 
+    public Vector3 OriginalPosition { get; private set; }
+
     private SpriteRenderer _spriteRenderer;
     private IObjectPool<Collectible> _ownerPool = null;
 
@@ -38,8 +40,13 @@ public class Collectible : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+    }
+
     private void Start()
     {
+        OriginalPosition = transform.position;
         // Check if the current `Item` can decay and whether
         // it is currently enabled
         if (Item is IItemDecay decay && !decay.Disable)

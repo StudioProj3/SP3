@@ -155,6 +155,39 @@ public class SaveManager : Singleton<SaveManager>
         }
     }
 
+    public void Load(string saveID)
+    {
+        string saveLocation = GetSaveLocation();
+
+        bool exists = File.Exists(saveLocation);
+
+        // Save file does not exist, no loading is required
+        if (!exists)
+        {
+            // Save the initial state of all savables
+            SaveAll();
+            return;
+        }
+
+        string loadSaveString = File.ReadAllText(saveLocation);
+        Dictionary<string, string> saveDict =
+            JsonConvert.DeserializeObject
+            <Dictionary<string, string>>(loadSaveString);
+    
+        if (_callbacks.ContainsKey(saveID))
+        {
+            Action<string> load = _callbacks[saveID].Second;
+            bool result = _saveDict.TryGetValue(
+                saveID, out string saveString);
+            
+            if (result)
+            {
+                load(saveString);
+            }
+
+        }
+    }
+
     protected override void OnStart()
     {
         StartCoroutine(Init());
