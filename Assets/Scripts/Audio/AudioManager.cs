@@ -97,6 +97,22 @@ public class AudioManager : Singleton<AudioManager>
        
     }
 
+    public void StopAllMusic()
+    {
+        GameObject[] levelList = GameObject.
+            FindGameObjectsWithTag("LevelManager");
+        for (int i = 0; i < levelList.Length; i++)
+        {
+            Debug.Log(levelList[i]);
+
+            if (levelList[i].TryGetComponent<AudioSource>(out AudioSource audio))
+            {
+                audio.Stop();
+            }
+        }
+
+    }
+
     protected override void OnStart()
     {
         _audioList = new List<AudioSource>();
