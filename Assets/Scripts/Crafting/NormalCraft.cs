@@ -2,19 +2,19 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class BasicCraft : MonoBehaviour
+public class NormalCraft : MonoBehaviour
 {
     [SerializeField]
-    private List<BasicRecipe> _allRecipes = new();
+    private List<NormalRecipe> _allRecipes = new();
 
     private Animator _animator;
 
-    public bool Craft(BasicRecipeInventory inventory,
+    public bool Craft(NormalRecipeInventory inventory,
         UnitInventory unit)
     {
         uint freeSpace = unit.MaxPerSlot - unit.SlotAmount();
 
-        foreach (BasicRecipe recipe in _allRecipes)
+        foreach (NormalRecipe recipe in _allRecipes)
         {
             uint spaceNeeded = recipe.TargetQuantity;
 
@@ -50,22 +50,28 @@ public class BasicCraft : MonoBehaviour
         return false;
     }
 
-    public bool Match(BasicRecipeInventory inventory,
-        BasicRecipe recipe)
+    public bool Match(NormalRecipeInventory inventory,
+        NormalRecipe recipe)
     {
         return inventory.Row1Col1() == recipe.Row1Col1 &&
             inventory.Row1Col2() == recipe.Row1Col2 &&
+            inventory.Row1Col3() == recipe.Row1Col3 &&
             inventory.Row2Col1() == recipe.Row2Col1 &&
-            inventory.Row2Col2() == recipe.Row2Col2;
+            inventory.Row2Col2() == recipe.Row2Col2 &&
+            inventory.Row2Col3() == recipe.Row2Col3 &&
+            inventory.Row3Col1() == recipe.Row3Col1 &&
+            inventory.Row3Col2() == recipe.Row3Col2 &&
+            inventory.Row3Col3() == recipe.Row3Col3;
     }
 
-    private void Deduct(BasicRecipeInventory inventory,
-        BasicRecipe recipe)
+    private void Deduct(NormalRecipeInventory inventory,
+        NormalRecipe recipe)
     {
         ItemBase[] arr = new ItemBase[]
         {
-            recipe.Row1Col1, recipe.Row1Col2,
-            recipe.Row2Col1, recipe.Row2Col2,
+            recipe.Row1Col1, recipe.Row1Col2, recipe.Row1Col3,
+            recipe.Row2Col1, recipe.Row2Col2, recipe.Row2Col3,
+            recipe.Row3Col1, recipe.Row3Col2, recipe.Row3Col3,
         };
 
         for (int i = 0; i < arr.Length; ++i)

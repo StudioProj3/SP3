@@ -67,11 +67,23 @@ public class SaveManager : Singleton<SaveManager>
         Assert(loadCallback != null,
             "`loadCallback` should not be null");
 
-        Assert(!_callbacks.ContainsKey(saveID),
-            "`saveID` already exist");
+        // Assert(!_callbacks.ContainsKey(saveID),
+        //     "`saveID` already exist");
 
-        _callbacks.Add(saveID, new(saveCallback, loadCallback));
+        if (!_callbacks.ContainsKey(saveID))
+        {
+            _callbacks.Add(saveID, new(saveCallback, loadCallback));
+        }
     }
+
+    public void Unhook(string saveID)
+    {
+        if (_callbacks.ContainsKey(saveID))
+        {
+            _callbacks.Remove(saveID);
+        }
+    }
+
 
     public void Save(string saveID)
     {
@@ -140,6 +152,39 @@ public class SaveManager : Singleton<SaveManager>
             }
 
             load(saveString);
+        }
+    }
+
+    public void Load(string saveID)
+    {
+        string saveLocation = GetSaveLocation();
+
+        bool exists = File.Exists(saveLocation);
+
+        // Save file does not exist, no loading is required
+        if (!exists)
+        {
+            // Save the initial state of all savables
+            SaveAll();
+            return;
+        }
+
+        string loadSaveString = File.ReadAllText(saveLocation);
+        Dictionary<string, string> saveDict =
+            JsonConvert.DeserializeObject
+            <Dictionary<string, string>>(loadSaveString);
+    
+        if (_callbacks.ContainsKey(saveID))
+        {
+            Action<string> load = _callbacks[saveID].Second;
+            bool result = _saveDict.TryGetValue(
+                saveID, out string saveString);
+            
+            if (result)
+            {
+                load(saveString);
+            }
+
         }
     }
 

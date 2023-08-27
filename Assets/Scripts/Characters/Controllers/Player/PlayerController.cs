@@ -38,7 +38,6 @@ public class PlayerController :
     {
         base.Start();
         EntityStats = Data.CharacterStats;
-        Ladder.OnPlayerReturn += ResetHealthAndSanity;
         UIHoverPanel.OnItemUse += ConsumeFromInventory;
         UIHoverPanel.OnItemDrop += DropFromInventory;
         UIPlayerRespawn.BeginPlayerRespawn += RespawnPlayer;
@@ -48,7 +47,6 @@ public class PlayerController :
 
     protected void OnDestroy()
     {
-        Ladder.OnPlayerReturn -= ResetHealthAndSanity;
         UIPlayerRespawn.BeginPlayerRespawn -= RespawnPlayer;
         UIHoverPanel.OnItemUse -= ConsumeFromInventory;
         UIHoverPanel.OnItemDrop -= DropFromInventory;
@@ -170,6 +168,11 @@ public class PlayerController :
                 _horizontalInput < 0f ? 180f : 0f, 0f);
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Data.HandInventory.Print();
+        }
+
         // Temporary bandaid solution
         // Ideally only check when damage is taken
         if (Data.CharacterStats.GetStat("Health").Value <= 0)
@@ -201,36 +204,8 @@ public class PlayerController :
         _verticalInput = Input.GetAxisRaw("Vertical");
     }
 
-    private void ResetHealthAndSanity()
-    {
-        // Remove negative health modifiers and reset health
-        var health = Data.CharacterStats.GetStat("Health");
-        var appliedModifiers = health.AppliedModifiers;
-        List<Modifier> indexesToRemove = new();
-
-        for (int i = 0; i < appliedModifiers.Count; ++i)
-        {
-            if (appliedModifiers[i].Value < 0)
-            {
-                indexesToRemove.Add(appliedModifiers[i]);
-            }
-        }
-
-        foreach (Modifier modifier in indexesToRemove)
-        {
-            health.RemoveModifier(modifier);
-        }
-
-        health.Set(health.Max);
-
-        // Reset Sanity
-        var sanity = Data.CharacterStats.GetStat("Sanity");
-        sanity.Set(sanity.Max);
-    }
-
     private void RespawnPlayer()
     {
-        ResetHealthAndSanity();
         GameManager.Instance.CurrentState = GameState.Play;
         LoadingManager.Instance.UnloadScene("UIDeathScreen");
         LoadingManager.Instance.LoadScene("SurfaceLayerScene");

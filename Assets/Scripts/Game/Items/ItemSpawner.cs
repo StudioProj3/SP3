@@ -23,6 +23,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
         public string itemJson;
         public uint quantity;
         public SerializableVector3 position;
+        public SerializableVector3 scale;
     }
 
     [Serializable]
@@ -61,6 +62,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
 
     private IObjectPool<Collectible> _droppedItemPool;
     private PlayerPickup _pickup;
+    private bool _isHooked = false;
 
     private void OnPickupCallback(ItemBase item, uint quantity)
     {
@@ -70,7 +72,11 @@ public class ItemSpawner : MonoBehaviour, ISavable
     private void Awake()
     {
         // Might need to hook later
-        HookEvents();
+        if (!_isHooked)
+        {
+            _isHooked = true;
+            HookEvents();
+        }
 
         _droppedItemPool = new ObjectPool<Collectible>
         (
@@ -101,17 +107,33 @@ public class ItemSpawner : MonoBehaviour, ISavable
                 _pickup.OnPlayerPickup.AddListener(OnPickupCallback);
             }
         }
+        // yield return null;
+        // SaveManager.Instance.Load(SaveID);
     }
 
     private void OnDestroy()
     {
         _pickup.OnPlayerPickup.RemoveListener(OnPickupCallback);
+        if (EnableSave)
+        {
+            SaveManager.Instance.Unhook(SaveID);
+            _isHooked = false;
+        }
     }
 
     public Collectible SpawnObject(ItemBase item, uint quantity, Vector3 position)
     {
         Collectible collectible = _droppedItemPool.Get();
         collectible.Initialize(_droppedItemPool, item, quantity, position);
+        SaveManager.Instance.Save(SaveID);
+        return collectible;
+    }
+
+    public Collectible SpawnObject(ItemBase item, uint quantity, Vector3 position, Vector3 scale)
+    {
+        Collectible collectible = _droppedItemPool.Get();
+        collectible.Initialize(_droppedItemPool, item, quantity, position);
+        collectible.transform.localScale = scale;
         SaveManager.Instance.Save(SaveID);
         return collectible;
     }
@@ -123,15 +145,15 @@ public class ItemSpawner : MonoBehaviour, ISavable
             SaveManager.Instance.Hook(SaveID, Save, Load);
         }
     }
-
     public string Save()
     {
-        var collectibles = GetComponentsInChildren<Collectible>();
+        var collectibles = GetComponentsInChildren<Collectible>(false);
         var collectiblePairs = collectibles
             .Select(c => new ItemSaveEntry() {
                 itemJson = JsonUtility.ToJson(new ItemWrapper(c.Item)),
                 quantity = c.Quantity,
-                position = new SerializableVector3(c.transform.position)
+                position = new SerializableVector3(c.GetComponent<Animator>().rootPosition),
+                scale = new SerializableVector3(c.transform.localScale)
             })
             .ToList();
 
@@ -148,8 +170,10 @@ public class ItemSpawner : MonoBehaviour, ISavable
         var collectiblePairs = JsonConvert
             .DeserializeObject<List<ItemSaveEntry>>(data);
 
-        collectiblePairs.ForEach(i => SpawnObject(
-            JsonUtility.FromJson<ItemWrapper>(i.itemJson).item, 
-            i.quantity, i.position.UnityVector));
+        collectiblePairs.ForEach(i => 
+        {
+            SpawnObject(JsonUtility.FromJson<ItemWrapper>(i.itemJson).item, 
+                i.quantity, i.position.UnityVector, i.scale.UnityVector);
+        });
     }
 }

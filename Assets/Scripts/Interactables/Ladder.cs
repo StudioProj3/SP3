@@ -31,7 +31,7 @@ public class Ladder : InteractableBase
 
             if (_nextScene == "SurfaceLayerScene")
             {
-                OnPlayerReturn();
+                OnPlayerReturn?.Invoke();
             }
 
             _loadingManager.LoadScene(_nextScene);
