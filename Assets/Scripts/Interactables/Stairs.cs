@@ -16,8 +16,12 @@ public class Stairs : InteractableBase
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _loadingManager.LoadSceneAdditive(_nextScene, false);
-            _loadingManager.UnloadScene(gameObject.scene.name);
+            _loadingManager.OnSceneStartLoading();
+            _ = Delay.Execute(() => {
+                LoadingManager.Instance.LoadSceneAdditive(_nextScene, false);
+                LoadingManager.Instance.LoadAfterAdditiveFinish();
+                LoadingManager.Instance.UnloadScene(gameObject.scene.name);
+            }, 0.167f);
         }
     }
 

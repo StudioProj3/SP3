@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,12 +15,18 @@ public class LoadingManager : Singleton<LoadingManager>
     public List<AsyncOperation> additiveLoadingSceneOperations = new();
 
     private Animator _animator;
+    private bool _loadRightAfterAdditiveEnds;
 
     // Load new independent scene
 
     public void OnSceneFinishedLoading()
     {
         _animator.SetBool("sceneLoad", false);
+    }
+
+    public void OnSceneStartLoading()
+    {
+        _animator.SetBool("sceneLoad", true);
     }
 
     public void LoadScene(string sceneName)
@@ -77,6 +85,11 @@ public class LoadingManager : Singleton<LoadingManager>
                 
         //    }
         //}
+    }
+
+    public void LoadAfterAdditiveFinish()
+    {
+        _loadRightAfterAdditiveEnds = true;
     }
 
     // Load new additive scene, if forceLoad is true,
@@ -155,5 +168,16 @@ public class LoadingManager : Singleton<LoadingManager>
     private void Awake()
     {
         _animator = GetComponent<Animator>();   
+    }
+
+    private void Update()
+    {
+        if (_loadRightAfterAdditiveEnds && additiveLoadingSceneOperations
+            .Where(x => !x.isDone).Count() == 0)
+        {
+            _loadRightAfterAdditiveEnds = false;
+            additiveLoadingSceneOperations.Clear();            
+            OnSceneFinishedLoading();
+        }
     }
 }
