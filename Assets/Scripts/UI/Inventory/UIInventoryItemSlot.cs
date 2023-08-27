@@ -94,7 +94,7 @@ public class UIInventoryItemSlot :
         _hoverPanel.SetEventArgs(item, transform.GetSiblingIndex(), Inventory);
 
         _hoverPanel.SetItemName(result.First);
-        _hoverPanel.SetItemDescription(result.Second);
+        _hoverPanel.SetItemDescription(result.Second ?? "-");
 
         _hoverPanel.Action1Button(item && item.Usable);
         _hoverPanel.Action2Button(item && item.Droppable);
