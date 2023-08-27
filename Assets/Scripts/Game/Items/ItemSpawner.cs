@@ -69,6 +69,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
 
     private void Awake()
     {
+        // Might need to hook later
         HookEvents();
 
         _droppedItemPool = new ObjectPool<Collectible>
