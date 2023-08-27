@@ -143,13 +143,18 @@ public class SaveManager : Singleton<SaveManager>
         }
     }
 
+    protected override void OnStart()
+    {
+        StartCoroutine(Init());
+    }
+
     private void WriteToDisk()
     {
         File.WriteAllText(GetSaveLocation(),
             JsonConvert.SerializeObject(_saveDict));
     }
 
-    private IEnumerator Start()
+    private IEnumerator Init()
     {
         yield return null;
         LoadAll();
