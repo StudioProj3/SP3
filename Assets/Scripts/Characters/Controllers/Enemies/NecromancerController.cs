@@ -6,6 +6,9 @@ public class NecromancerController :
     EnemyControllerBase, IEffectable
 {
 
+    [SerializeField]
+    private AudioClip _sfxShoot;
+
     private GameObject _pooledSkeletons;
     private List<SkeletonController> _pooledSkeletonList;
 
@@ -92,6 +95,9 @@ public class NecromancerController :
 
                                 _playerController, _pooledSkulls.transform);
                             _pooledSkullList[i].transform.SetParent(null);
+
+                            _audioManager.PlaySound3D(_sfxShoot,
+                                transform.position, false);
 
                             break;
                         }

@@ -85,6 +85,19 @@ public class AudioManager : Singleton<AudioManager>
             source.Stop();
     }
 
+    public void StopSound(AudioClip audio)
+    {
+        for (int i = 0; i < _audioList.Count; i++)
+        {
+            if (_audioList[i].isPlaying && 
+                _audioList[i].clip == audio)
+            {
+                _audioList[i].Stop();
+                break;
+            }
+        }
+    }
+
     public void StopAllSounds()
     {
         for (int i = 0; i < _audioList.Count; i++)
@@ -103,8 +116,6 @@ public class AudioManager : Singleton<AudioManager>
             FindGameObjectsWithTag("LevelManager");
         for (int i = 0; i < levelList.Length; i++)
         {
-            Debug.Log(levelList[i]);
-
             if (levelList[i].TryGetComponent<AudioSource>(out AudioSource audio))
             {
                 audio.Stop();

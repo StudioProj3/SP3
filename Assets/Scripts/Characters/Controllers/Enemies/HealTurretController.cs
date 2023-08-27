@@ -10,6 +10,12 @@ public class HealTurretController :
     [SerializeField]
     private float healAmount;
 
+    [SerializeField]
+    private AudioClip _sfxChargingUp;
+
+    [SerializeField]
+    private AudioClip _sfxHealing;
+
     private StatContainer _healTurretStatsContainer;
 
     private ParticleSystem _healTurretParticles;
@@ -41,6 +47,8 @@ public class HealTurretController :
             new GenericState("Heal",
                 new ActionEntry("Enter", () =>
                 {
+                    _audioManager.PlaySound3D(_sfxHealing,
+                       transform.position, false);
                     Collider[] healTargets;
                     healTargets = Physics.OverlapSphere(transform.position,
                         4f, _enemyLayer, 0);
@@ -60,7 +68,13 @@ public class HealTurretController :
                 })
             ),
 
-            new GenericState("GoingToHeal"),
+            new GenericState("GoingToHeal",
+                new ActionEntry("Enter", () =>
+                {
+                    _audioManager.PlaySound3D(_sfxChargingUp,
+                       transform.position, false);
+                })
+            ),
 
             // Transitions
 
