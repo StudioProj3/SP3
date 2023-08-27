@@ -7,6 +7,11 @@ public abstract class Damage : ScriptableObject
 
     protected ModifiableValue _damage;
 
+    public Damage()
+    {
+        _damage = new(_initialDamageValue);
+    }
+
     public abstract void OnApply(IEffectable entityStats);
 
     public virtual void AfterApply()
