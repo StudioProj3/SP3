@@ -21,6 +21,8 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
 
     private Dictionary<string, Quest> _allQuests = new();
 
+    private bool _hasHooked = false;
+
     [field: HorizontalDivider]
     [field: Header("Save Settings")]
     [field: SerializeField]
@@ -164,7 +166,11 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
             _ = questUIObject.TryGetComponent(out _questDisplayInformation);
         }
 
-        HookEvents();
+        if (!_hasHooked)
+        {
+            _hasHooked = true;
+            HookEvents();
+        }
         this.DelayExecute(() => { StartQuest("Introduction"); StartQuest("ShopkeeperQuest"); }, 0.5f);
     }
 

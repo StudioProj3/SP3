@@ -13,8 +13,11 @@ public class LoadingManager : Singleton<LoadingManager>
     // Load new independent scene
     public void LoadScene(string sceneName)
     {
+        SaveManager.Instance.SaveAll();
         asyncLoad =
             SceneManager.LoadSceneAsync(sceneName);
+        
+        asyncLoad.completed += (_) => SaveManager.Instance.LoadAll();
 
         // TODO (Aquila) Demon Code
 

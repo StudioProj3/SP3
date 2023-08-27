@@ -61,6 +61,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
 
     private IObjectPool<Collectible> _droppedItemPool;
     private PlayerPickup _pickup;
+    private bool _isHooked = false;
 
     private void OnPickupCallback(ItemBase item, uint quantity)
     {
@@ -70,7 +71,11 @@ public class ItemSpawner : MonoBehaviour, ISavable
     private void Awake()
     {
         // Might need to hook later
-        HookEvents();
+        if (!_isHooked)
+        {
+            _isHooked = true;
+            HookEvents();
+        }
 
         _droppedItemPool = new ObjectPool<Collectible>
         (
@@ -106,6 +111,10 @@ public class ItemSpawner : MonoBehaviour, ISavable
     private void OnDestroy()
     {
         _pickup.OnPlayerPickup.RemoveListener(OnPickupCallback);
+        if (EnableSave)
+        {
+            SaveManager.Instance.Unhook(SaveID);
+        }
     }
 
     public Collectible SpawnObject(ItemBase item, uint quantity, Vector3 position)
@@ -123,10 +132,9 @@ public class ItemSpawner : MonoBehaviour, ISavable
             SaveManager.Instance.Hook(SaveID, Save, Load);
         }
     }
-
     public string Save()
     {
-        var collectibles = GetComponentsInChildren<Collectible>();
+        var collectibles = GetComponentsInChildren<Collectible>(false);
         var collectiblePairs = collectibles
             .Select(c => new ItemSaveEntry() {
                 itemJson = JsonUtility.ToJson(new ItemWrapper(c.Item)),

@@ -170,6 +170,11 @@ public class PlayerController :
                 _horizontalInput < 0f ? 180f : 0f, 0f);
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Data.HandInventory.Print();
+        }
+
         // Temporary bandaid solution
         // Ideally only check when damage is taken
         if (Data.CharacterStats.GetStat("Health").Value <= 0)

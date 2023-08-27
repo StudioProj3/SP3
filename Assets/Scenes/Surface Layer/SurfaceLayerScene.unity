@@ -11052,6 +11052,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3946489867123637789, guid: a476b301d1ff1444aa36f15215883b16,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3946489867123637791, guid: a476b301d1ff1444aa36f15215883b16,
         type: 3}
       propertyPath: m_RootOrder
@@ -35785,6 +35790,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic Wand
       objectReference: {fileID: 0}
+    - target: {fileID: 3946489867123637789, guid: 4ab351a7564f2544cad60a2f6dea8d18,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3946489867123637791, guid: 4ab351a7564f2544cad60a2f6dea8d18,
         type: 3}
       propertyPath: m_RootOrder
@@ -35908,6 +35918,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Watermelon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3680655189270139343, guid: 2db0e2d36ce4ed9478dfcad4e33d3466,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2db0e2d36ce4ed9478dfcad4e33d3466, type: 3}
@@ -36829,6 +36844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bronze Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097245857375809097, guid: e42c77b395e55704ca71e9707e4024cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097245857375809099, guid: e42c77b395e55704ca71e9707e4024cc,
         type: 3}
@@ -39317,15 +39337,7 @@ MonoBehaviour:
   m_ChildCameras:
   - {fileID: 1864077195}
   - {fileID: 37120366}
-  m_Instructions:
-  - m_FullHash: -1473256424
-    m_VirtualCamera: {fileID: 1864077195}
-    m_ActivateAfter: 0
-    m_MinDuration: 0
-  - m_FullHash: 141624005
-    m_VirtualCamera: {fileID: 37120366}
-    m_ActivateAfter: 0
-    m_MinDuration: 0
+  m_Instructions: []
   m_DefaultBlend:
     m_Style: 1
     m_Time: 0.5
@@ -42162,10 +42174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _droppedItemPrefab: {fileID: 7198794479233771563, guid: 72dc0fd4ae60bb845ade50d7c3f0d625,
     type: 3}
-  _starterItems:
-  - item: {fileID: 11400000, guid: 71369df1517f36d43a6974dc49f34097, type: 2}
-    quantity: 1
-    position: {x: -3, y: 1, z: 3}
+  _starterItems: []
   <EnableSave>k__BackingField: 1
   <SaveID>k__BackingField: SurfaceLayerSceneSpawner
   <Format>k__BackingField: 0
@@ -43623,6 +43632,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RedBag
+      objectReference: {fileID: 0}
+    - target: {fileID: 1395863710430244217, guid: 9594eb562ee1eed4d84efb8b67b2ef0d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1395863710430244219, guid: 9594eb562ee1eed4d84efb8b67b2ef0d,
         type: 3}
@@ -45712,6 +45726,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bronze Coin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097245857375809097, guid: e42c77b395e55704ca71e9707e4024cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097245857375809099, guid: e42c77b395e55704ca71e9707e4024cc,
         type: 3}
@@ -48467,6 +48486,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946489867123637789, guid: a476b301d1ff1444aa36f15215883b16,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3946489867123637791, guid: a476b301d1ff1444aa36f15215883b16,
         type: 3}
