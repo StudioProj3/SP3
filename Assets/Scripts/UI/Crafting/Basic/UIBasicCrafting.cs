@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 using static DebugUtils;
@@ -8,6 +9,20 @@ public class UIBasicCrafting : MonoBehaviour
     private UICrafting _uicrafting;
     private GameObject _craftButton;
     private GameObject _book;
+    private GameObject _bookLeftButton;
+    private GameObject _bookRightButton;
+    private TMP_Text _bookNumber;
+    private uint _number = 1;
+
+    public void BookLeft()
+    {
+        _number--;
+    }
+
+    public void BookRight()
+    {
+        _number++;
+    }
 
     private void Update()
     {
@@ -21,6 +36,15 @@ public class UIBasicCrafting : MonoBehaviour
             case UICrafting.Mode.Book:
                 _book.SetActive(true);
                 _craftButton.SetActive(false);
+
+                int count = _basicCraft.AllRecipes.Count;
+
+                _bookNumber.text = _number.ToString() +
+                    " / " + count.ToString();
+
+                _bookLeftButton.SetActive(_number > 1);
+                _bookRightButton.SetActive(_number < count);
+
                 break;
 
             default:
@@ -36,5 +60,8 @@ public class UIBasicCrafting : MonoBehaviour
             GetComponent<UICrafting>();
         _craftButton = transform.ChildGO(2);
         _book = transform.ChildGO(3);
+        _bookNumber = _book.GetComponentInChildren<TMP_Text>();
+        _bookLeftButton = _book.transform.ChildGO(1);
+        _bookRightButton = _book.transform.ChildGO(2);
     }
 }

@@ -2658,7 +2658,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 326026914}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3271,9 +3271,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 262357910}
   - {fileID: 1097596427}
   - {fileID: 590747423}
-  - {fileID: 262357910}
   m_Father: {fileID: 1493157591}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3585,7 +3585,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1843472628}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3635,7 +3635,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 374090810}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 968611723}
+        m_TargetAssemblyTypeName: UIBasicCrafting, UI
+        m_MethodName: BookLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &374090810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5795,7 +5807,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 326026914}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5866,7 +5878,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 590747426}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1493157594}
+        m_TargetAssemblyTypeName: UINormalCrafting, UI
+        m_MethodName: BookRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &590747426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8415,7 +8439,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1843472628}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8465,7 +8489,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 801889867}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 968611723}
+        m_TargetAssemblyTypeName: UIBasicCrafting, UI
+        m_MethodName: BookRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &801889867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10569,13 +10605,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7c6d209e3f1224c9d906b774d24afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allRecipes:
-  - {fileID: 11400000, guid: 9db7eec0456d38b4c88998f37d6be611, type: 2}
+  <AllRecipes>k__BackingField:
+  - {fileID: 11400000, guid: c223f2371f9cac749a8842542bae5a7b, type: 2}
+  - {fileID: 11400000, guid: daf5dffde14704c4f9323dd84fb49f2c, type: 2}
   - {fileID: 11400000, guid: 6e9e32d6d2b2fdd4a96b2a36f9df17db, type: 2}
   - {fileID: 11400000, guid: c15a2cd48aaf42e46b16f512d08f0335, type: 2}
   - {fileID: 11400000, guid: da0cddeb68e8fb4418c141953e2d3720, type: 2}
-  - {fileID: 11400000, guid: c223f2371f9cac749a8842542bae5a7b, type: 2}
-  - {fileID: 11400000, guid: daf5dffde14704c4f9323dd84fb49f2c, type: 2}
+  - {fileID: 11400000, guid: 9db7eec0456d38b4c88998f37d6be611, type: 2}
 --- !u!95 &968611722
 Animator:
   serializedVersion: 5
@@ -11226,7 +11262,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 326026914}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11297,7 +11333,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1097596430}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1493157594}
+        m_TargetAssemblyTypeName: UINormalCrafting, UI
+        m_MethodName: BookLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1097596430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14017,7 +14065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50535a7390543964d89a94dbd67397dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allRecipes:
+  <AllRecipes>k__BackingField:
   - {fileID: 11400000, guid: 245219044ad9dd24c9536baaf588e513, type: 2}
   - {fileID: 11400000, guid: a3f10c37ae325004a90da05a07e752d2, type: 2}
 --- !u!95 &1493157593
@@ -15549,7 +15597,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1843472628}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16087,9 +16135,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1782254713}
   - {fileID: 374090808}
   - {fileID: 801889865}
-  - {fileID: 1782254713}
   m_Father: {fileID: 968611720}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
