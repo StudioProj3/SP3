@@ -7,7 +7,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Consumable",
     menuName = "Scriptable Objects/Items/Consumable")]
-public class ConsumableItem : ItemBase, IConsumable
+public class ConsumableItem : ItemBase, IConsumable, ISellable
 {
     [Serializable]
     private class ConsumptionEffectModifier : ConsumptionEffect
@@ -32,6 +32,9 @@ public class ConsumableItem : ItemBase, IConsumable
 
     [SerializeField]
     private List<StatusEffectBase> _statusEffects;
+    
+    [field: SerializeField]
+    public CurrencyCost CurrencyCost { get; protected set; }
 
     private Dictionary<Pair<StatType, Modifier>, float> _statsToModify;
     private Dictionary<StatType, float> _statsToAdd;

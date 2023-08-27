@@ -17,6 +17,8 @@ MonoBehaviour:
     type: 3}
   <Atlas>k__BackingField: 1
   <Stackable>k__BackingField: 0
+  <Usable>k__BackingField: 0
+  <Droppable>k__BackingField: 1
   <Weight>k__BackingField: 0
   Description: 
   <WeaponDamageType>k__BackingField: {fileID: 11400000, guid: 3bca250d4bfb2b64cbb3631521cb9b47,
@@ -24,4 +26,14 @@ MonoBehaviour:
   <WeaponStatusEffect>k__BackingField: {fileID: 0}
   <WeaponStats>k__BackingField: {fileID: 11400000, guid: 23cd16b30edf51d4c9f65e7c4cc796df,
     type: 2}
+  <CurrencyCost>k__BackingField:
+    costs:
+    - <First>k__BackingField: {fileID: 11400000, guid: 800f81c548c6d7847924eea266ba727c,
+        type: 2}
+      <Second>k__BackingField: 6
+    - <First>k__BackingField: {fileID: 11400000, guid: 5d7914049de860241aa97e4449d31b3f,
+        type: 2}
+      <Second>k__BackingField: 9
+    - <First>k__BackingField: {fileID: 0}
+      <Second>k__BackingField: 0
   _animationName: MeleeSwing

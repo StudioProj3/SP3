@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class WeaponBase : ItemBase
+public abstract class WeaponBase : ItemBase, ISellable
 {
     [field: HorizontalDivider]
     [field: Header("Weapon Parameters")]
@@ -13,6 +13,10 @@ public abstract class WeaponBase : ItemBase
     
     [field: SerializeField]
     public Stats WeaponStats { get; protected set; }
+
+    
+    [field: SerializeField]
+    public CurrencyCost CurrencyCost { get; protected set; }
 
     public bool CanAttack { get; protected set; }
 
