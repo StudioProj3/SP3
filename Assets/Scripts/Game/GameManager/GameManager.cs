@@ -52,6 +52,7 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.Win:
+                HandleWinState();
                 break;
 
             case GameState.Lose:
@@ -70,6 +71,14 @@ public class GameManager : Singleton<GameManager>
     private void HandleLoseState()
     {
         LoadingManager.Instance.LoadSceneAdditive("UIDeathScreen", true);
+        LoadingManager.Instance.UnloadScene("UI");
+        LoadingManager.Instance.UnloadScene("UIHUD");
+        GameStateChangeHandler(GameState.Pause);
+    }
+
+    private void HandleWinState()
+    {
+        LoadingManager.Instance.LoadSceneAdditive("UIWinScreen", true);
         LoadingManager.Instance.UnloadScene("UI");
         LoadingManager.Instance.UnloadScene("UIHUD");
         GameStateChangeHandler(GameState.Pause);
