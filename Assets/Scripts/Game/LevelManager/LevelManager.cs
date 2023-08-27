@@ -67,7 +67,7 @@ public class LevelManager : MonoBehaviour
             _loadingManager.additiveLoadingSceneOperations.Clear();
             _loadingManager.OnSceneFinishedLoading();
 
-            QuestManager.Instance.UpdateQuestTextOnSceneChange();
+            // QuestManager.Instance.UpdateQuestTextOnSceneChange();
         }
     }
 }
