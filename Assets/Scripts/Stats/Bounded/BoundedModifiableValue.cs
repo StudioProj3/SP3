@@ -95,6 +95,7 @@ public class BoundedModifiableValue :
         }
 
         _modifiableValue.ValueChanged += () => _boundedValue.OnMaxValueChanged();
+        _boundedValue.SetMax(_modifiableValue);
     }
 
     public void InvokeValueChanged()

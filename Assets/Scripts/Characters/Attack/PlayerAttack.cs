@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -68,13 +69,13 @@ public class PlayerAttack : MonoBehaviour
         
         CalculateMousePos();
         
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             _usingLeftHand = !_usingLeftHand;
             UpdateHands();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !RaycastUtils.PointerIsOverUI(Input.mousePosition))
         {
             if (_currentlyHolding is IConsumable consumable)
             {

@@ -19,8 +19,13 @@ public class PlayerLevelUp : MonoBehaviour
             GetStat("ExperiencePoints");
         _currentLevel = _playerData.CharacterStats.
             GetStat("Level");
-        _experiencePoints.Set(0);
-        _currentLevel.Set(1);
+
+        // NOTE (Chris): Bandage fix
+        if (_currentLevel.Value == 100)
+        {
+            _experiencePoints.Set(0);
+            _currentLevel.Set(1);
+        }
 
         _experiencePoints.ValueChanged += ValueChangedHandler;
     }

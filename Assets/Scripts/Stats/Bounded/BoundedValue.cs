@@ -21,20 +21,26 @@ public class BoundedValue : IValue
         get => _value;
         set
         {
-            _value = Mathf.Clamp(value, Min, Max);
+            _value = Mathf.Clamp(value, _minValueContainer.Value,
+                _maxValueContainer.Value);
             ValueChanged?.Invoke();
         }
     }
 
     [JsonProperty]
-    private readonly IValue _maxValueContainer;
+    private IValue _maxValueContainer;
     [JsonProperty]
-    private readonly IValue _minValueContainer;
+    private IValue _minValueContainer;
 
 
     // Internal bounded value
     [JsonProperty]
     private float _value;
+
+    public void SetMax(ModifiableValue newMax)
+    {
+        _maxValueContainer = newMax;
+    }
 
     public BoundedValue()
     {
