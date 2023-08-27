@@ -125,6 +125,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
     {
         Collectible collectible = _droppedItemPool.Get();
         collectible.Initialize(_droppedItemPool, item, quantity, position);
+        collectible.OverrideOriginalPosition(position);
         SaveManager.Instance.Save(SaveID);
         return collectible;
     }
