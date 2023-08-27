@@ -21,6 +21,9 @@ MonoBehaviour:
   - rid: 8269461383876968452
   - rid: 8269461477113987072
   - rid: 8269461502578130947
+  <EnableSave>k__BackingField: 0
+  <SaveID>k__BackingField: 
+  <Format>k__BackingField: 0
   references:
     version: 2
     RefIds:
@@ -43,12 +46,12 @@ MonoBehaviour:
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 54790303e6a70064c9d0bdc5056fd391, type: 2}
-        initialValue: 20
+        initialValue: 15
     - rid: 8269461446570541063
       type: {class: Stats/BoundedStatMapEntry, ns: , asm: Stats}
       data:
         type: {fileID: 11400000, guid: 5130a9276da399c4389bdb1f69f7ce44, type: 2}
-        initialValue: 100
+        initialValue: 140
         initialLowerBoundValue: 0
     - rid: 8269461477113987072
       type: {class: Stats/StatMapEntry, ns: , asm: Stats}
