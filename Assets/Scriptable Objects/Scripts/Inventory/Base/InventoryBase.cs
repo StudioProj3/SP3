@@ -88,7 +88,6 @@ public abstract class InventoryBase :
              "`amount` is greater than item count");
 
         _allItems[index].Value -= amount;
-        _itemInitializerList[index].Value -= amount;
 
         if (_allItems[index].Value == 0)
         {
