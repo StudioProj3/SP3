@@ -18,7 +18,7 @@ public class BasicCraft : MonoBehaviour
 
             // Target item is not the same hence stacking
             // is not possible
-            if (recipe.Target != unit.Slot())
+            if (unit.Slot() && recipe.Target != unit.Slot())
             {
                 continue;
             }
