@@ -13,7 +13,7 @@ public class PlayerLevelUp : MonoBehaviour
         _experiencePoints.Add(experience);
     }
     
-    private void Awake()
+    private void Start()
     {
         _experiencePoints = _playerData.CharacterStats.
             GetStat("ExperiencePoints");

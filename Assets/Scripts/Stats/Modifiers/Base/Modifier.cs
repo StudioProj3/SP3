@@ -11,27 +11,30 @@ public abstract class Modifier : ICloneable
     protected readonly float _value;
     protected readonly int _priority;
 
-    public Modifier(float value, int priority)
+    public bool Permanent { get; protected set; }
+
+    public Modifier(float value, int priority, bool permanent)
     {
         _value = value;
         _priority = priority;
+        Permanent = permanent;
     }
 
     public abstract float Modify(float value);
 
     // Factory functions
-    public static Modifier Plus(float value, int priority) =>
-        new PlusModifier(value, priority);
+    public static Modifier Plus(float value, int priority, bool permanent = true) =>
+        new PlusModifier(value, priority, permanent);
 
-    public static Modifier Multiply(float value, int priority) =>
-        new MultiplyModifier(value, priority);
+    public static Modifier Multiply(float value, int priority, bool permanent = true) =>
+        new MultiplyModifier(value, priority, permanent);
 
     protected abstract Modifier CreateClone(float value,
-        int priority);
+        int priority, bool peramenent);
 
     // `ICloneable` implementation
     public virtual object Clone()
     {
-        return CreateClone(_value, _priority);
+        return CreateClone(_value, _priority, Permanent);
     }
 }

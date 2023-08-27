@@ -41,7 +41,7 @@ public class AttackMultiplierEffect : StatusEffectBase
 
         _duration = duration;
         _attackChange = attackChange;
-        _attackModifier = Modifier.Multiply(attackChange, 25);
+        _attackModifier = Modifier.Multiply(attackChange, 25, false);
 
         return this;
     }
