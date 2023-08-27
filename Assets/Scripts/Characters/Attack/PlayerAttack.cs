@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -74,7 +75,7 @@ public class PlayerAttack : MonoBehaviour
             UpdateHands();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !RaycastUtils.PointerIsOverUI(Input.mousePosition))
         {
             if (_currentlyHolding is IConsumable consumable)
             {
