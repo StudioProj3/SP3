@@ -1,13 +1,26 @@
 using UnityEngine;
 
+using static DebugUtils;
+
 public class UICrafting : MonoBehaviour
 {
+    public enum Page
+    {
+        Basic,
+        Normal,
+    }
+
     private GameObject _content;
     private GameObject _basicTitle;
     private GameObject _basicCrafting;
     private GameObject _normalTitle;
     private GameObject _normalCrafting;
     private UIHoverPanel _hoverPanel;
+
+    private GameObject _leftButton;
+    private GameObject _rightButton;
+
+    private Page _page = Page.Basic;
 
     // To be used when player is dragging items to
     // reduce visual clutter
@@ -29,6 +42,11 @@ public class UICrafting : MonoBehaviour
         _basicCrafting.SetActive(true);
         _normalTitle.SetActive(false);
         _normalCrafting.SetActive(false);
+
+        _leftButton.SetActive(false);
+        _rightButton.SetActive(true);
+
+        _page = Page.Basic;
     }
 
     public void SwitchToNormalCrafting()
@@ -37,25 +55,64 @@ public class UICrafting : MonoBehaviour
         _normalCrafting.SetActive(true);
         _basicTitle.SetActive(false);
         _basicCrafting.SetActive(false);
+
+        _leftButton.SetActive(true);
+        _rightButton.SetActive(false);
+
+        _page = Page.Normal;
+    }
+
+    public void SwitchLeft()
+    {
+        switch (_page)
+        {
+            case Page.Basic:
+                Fatal("Invalid page switch operation");
+                break;
+
+            case Page.Normal:
+                SwitchToBasicCrafting();
+                break;
+
+            default:
+                Fatal("Unhandled page type");
+                break;
+        }
+    }
+
+    public void SwitchRight()
+    {
+        switch (_page)
+        {
+            case Page.Basic:
+                SwitchToNormalCrafting();
+                break;
+
+            case Page.Normal:
+                Fatal("Invalid page switch operation");
+                break;
+
+            default:
+                Fatal("Unhandled page type");
+                break;
+        }
     }
 
     public void ShowCrafting()
     {
         gameObject.SetActive(true);
-        _content.SetActive(true);
         UIManager.Instance.ShowHUD(false);
     }
 
     public void HideCrafting()
     {
         gameObject.SetActive(false);
-        _content.SetActive(false);
         UIManager.Instance.ShowHUD(true);
     }
 
     private void Awake()
     {
-        _content = transform.ChildGO(0);
+        _content = transform.ChildGO(1);
 
         _basicTitle = _content.transform.ChildGO(0);
         _basicCrafting = _content.transform.ChildGO(4);
@@ -64,5 +121,8 @@ public class UICrafting : MonoBehaviour
 
         _hoverPanel = transform.GetChild(2).
             GetComponent<UIHoverPanel>();
+
+        _leftButton = transform.ChildGO(4);
+        _rightButton = transform.ChildGO(5);
     }
 }
