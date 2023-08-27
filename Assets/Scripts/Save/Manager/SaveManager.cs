@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using static DebugUtils;
 
@@ -87,6 +88,11 @@ public class SaveManager : Singleton<SaveManager>
 
     public void Save(string saveID)
     {
+        if (SceneManager.GetActiveScene().name != "SurfaceLayerScene")
+        {
+            return;
+        }
+
         bool result = _callbacks.ContainsKey(saveID);
 
         Assert(result, "key not found");
@@ -98,6 +104,11 @@ public class SaveManager : Singleton<SaveManager>
 
     public void SaveAll()
     {
+        if (SceneManager.GetActiveScene().name != "SurfaceLayerScene")
+        {
+            return;
+        }
+
         foreach (var pair in _callbacks)
         {
             string saveID = pair.Key;
