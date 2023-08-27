@@ -10,6 +10,12 @@ public class SkeletonController :
     [SerializeField]
     private float _lifetime;
 
+    [SerializeField]
+    private AudioClip _sfxSpawn;
+    [SerializeField]
+
+    private AudioClip _sfxSwing;
+
     private float _currentLifetime;
 
     private StatContainer _skeletonStatsContainer;
@@ -45,6 +51,8 @@ public class SkeletonController :
             new GenericState("Init",
                 new ActionEntry("Enter", () =>
                 {
+                    _audioManager.PlaySound3D(_sfxSpawn,
+                      transform.position, false);
                     _rigidbody.velocity = new Vector3(0, 0, 0);
                 })
             ),
@@ -66,6 +74,10 @@ public class SkeletonController :
             new GenericState("Attack",
                 new ActionEntry("Enter", () =>
                 {
+
+                    _audioManager.PlaySound3D(_sfxSwing,
+                       transform.position, false);
+
                     Collider[] attackTarget;
                     attackTarget = Physics.OverlapCapsule(transform.position,
                         new Vector3(transform.position.x + _direction.x * 0.5f,

@@ -11,6 +11,16 @@ public class BossController :
     [SerializeField]
     private StatusEffectBase _arrowStatusEffect;
 
+    [SerializeField]
+    private AudioClip _sfxShootMissle;
+    [SerializeField]
+    private AudioClip _sfxShootBullet;
+    [SerializeField]
+    private AudioClip _sfxShootLaser;
+    [SerializeField]
+    private AudioClip _sfxDash;
+
+
     private GameObject _pooledMissles;
     private List<MissleController> _pooledMissleList;
 
@@ -102,6 +112,9 @@ public class BossController :
                     {
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
+                            _audioManager.PlaySound3D(_sfxShootMissle,
+                                transform.position, false);
+
                             _pooledMissleList[i].Init(_direction, _phyDamage.AddModifier(
                                 Modifier.Multiply(_bossStatsContainer.
                                 GetStat("DamageMultiplier").Value, 3)),
@@ -119,6 +132,9 @@ public class BossController :
                     {
                         if (!(_pooledMissleList[i].gameObject.activeSelf))
                         {
+                            _audioManager.PlaySound3D(_sfxShootMissle,
+                                transform.position, false);
+
                             _pooledMissleList[i].Init(-_direction, _phyDamage.AddModifier(
                                 Modifier.Multiply(_bossStatsContainer.
                                 GetStat("DamageMultiplier").Value, 3)),
@@ -151,6 +167,7 @@ public class BossController :
             new GenericState("ShootLaserStart",
                 new ActionEntry("Enter", () =>
                 {
+                   
                     _pooledLasers.transform.position = transform.position;
                     _pooledLasers.Init(_direction, _magicDamage.AddModifier(
                         Modifier.Multiply(0.5f,3)),
@@ -166,6 +183,8 @@ public class BossController :
             new GenericState("ShootLaser",
                 new ActionEntry("Enter", () =>
                 {
+                    _audioManager.PlaySound3D(_sfxShootLaser,
+                        transform.position, true, 10.0f);
                     _pooledLasers.SetCollide(true);
                     _pooledLasers.SetAnimatorBool("Firing", true);
                 }),
@@ -180,6 +199,7 @@ public class BossController :
             new GenericState("ShootLaserEnd",
                 new ActionEntry("Enter", () =>
                 {
+                    _audioManager.StopSound(_sfxShootLaser);
                     _pooledLasers.SetCollide(false);
 
                     _pooledLasers.SetAnimatorBool("End", true);
@@ -226,6 +246,8 @@ public class BossController :
                     {
                         _ = Delay.Execute(() =>
                         {
+                            _audioManager.PlaySound3D(_sfxDash,
+                                transform.position, false);
                             _direction = _player.transform.position -
                                 transform.position;
                             _direction.y = 0;
@@ -396,6 +418,10 @@ public class BossController :
             if (!(_pooledBulletList[j]
                 .gameObject.activeSelf))
             {
+
+                _audioManager.PlaySound3D(_sfxShootBullet,
+                    transform.position, false);
+
                 _pooledBulletList[j].Init(_direction, _magicDamage.AddModifier(
                     Modifier.Multiply(_bossStatsContainer.
                     GetStat("DamageMultiplier").Value, 3)),

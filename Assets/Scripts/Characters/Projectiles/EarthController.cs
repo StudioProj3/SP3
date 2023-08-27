@@ -31,10 +31,12 @@ public class EarthController :
 
         transform.rotation = Quaternion.
             Euler(sprite ? 90f : 0f, angle, 0f);
+
     }
 
     private void Awake()
     {
+       
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

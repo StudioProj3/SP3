@@ -24,6 +24,11 @@ public class UIBasicCrafting : MonoBehaviour
         _number++;
     }
 
+    public BasicRecipe GetRecipe()
+    {
+        return _basicCraft.AllRecipes[(int)_number - 1];
+    }
+
     private void Update()
     {
         switch (_uicrafting.CurrentMode)

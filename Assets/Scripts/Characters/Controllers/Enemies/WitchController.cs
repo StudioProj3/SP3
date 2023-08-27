@@ -13,6 +13,9 @@ public class WitchController :
     [SerializeField]
     private StatusEffectBase _defenseBuff;
 
+    [SerializeField]
+    private AudioClip _sfxBuffing;
+
     private StatContainer _witchStatsContainer;
 
     private ParticleSystem _witchParticles;
@@ -93,8 +96,8 @@ public class WitchController :
             new GenericState("BuffAttack",
                 new ActionEntry("Enter", () =>
                 {
-                    // FIXME (Aquila) When getting damage multiplier
-                    // stat after applying buff, an error occurs
+                    _audioManager.PlaySound3D(_sfxBuffing,
+                        transform.position, false);
 
                     Collider[] buffTargets;
                     buffTargets = Physics.OverlapSphere(transform.position,
@@ -122,9 +125,8 @@ public class WitchController :
              new GenericState("BuffDefense",
                 new ActionEntry("Enter", () =>
                 {
-
-                    // FIXME (Aquila) When getting armor stat
-                    // after applying buff, an error occurs
+                    _audioManager.PlaySound3D(_sfxBuffing,
+                        transform.position, false);
 
                     Collider[] buffTargets;
                     buffTargets = Physics.OverlapSphere(transform.position,

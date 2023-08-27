@@ -8,6 +8,9 @@ public class ArcherController :
 
     [SerializeField]
     private StatusEffectBase _arrowStatusEffect;
+    [SerializeField]
+    private AudioClip _sfxShoot;
+
 
     private GameObject _pooledArrows;
     private List<ArrowController> _pooledArrowList;
@@ -75,6 +78,9 @@ public class ArcherController :
                                 transform.position;
 
                             _pooledArrowList[i].transform.SetParent(null);
+
+                            _audioManager.PlaySound3D(_sfxShoot,
+                                transform.position, false);
 
                             break;
                         }
