@@ -37,7 +37,10 @@ public class UIDropArea :
         // Perform the actual inventory item swap
         inventory.Swap(_inventory, index1, index2);
 
-        dragItem.DropArea.DragItem = DragItem;
+        if (dragItem.DropArea)
+        {
+            dragItem.DropArea.DragItem = DragItem;
+        }
 
         // Perform the switch of parents
         DragItem.Parent = dragItem.Parent;
