@@ -40,8 +40,13 @@ public class Collectible : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+    }
+
     private void Start()
     {
+        OriginalPosition = transform.position;
         // Check if the current `Item` can decay and whether
         // it is currently enabled
         if (Item is IItemDecay decay && !decay.Disable)
@@ -82,6 +87,5 @@ public class Collectible : MonoBehaviour
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        OriginalPosition = transform.position;
     }
 }

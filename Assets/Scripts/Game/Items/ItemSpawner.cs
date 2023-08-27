@@ -152,7 +152,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
             .Select(c => new ItemSaveEntry() {
                 itemJson = JsonUtility.ToJson(new ItemWrapper(c.Item)),
                 quantity = c.Quantity,
-                position = new SerializableVector3(c.GetComponent<Animator>().rootPosition),
+                position = new SerializableVector3(c.OriginalPosition),
                 scale = new SerializableVector3(c.transform.localScale)
             })
             .ToList();
