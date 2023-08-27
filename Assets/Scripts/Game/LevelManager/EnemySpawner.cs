@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
 
     public int SpawnEnemy()
     {
+        if (transform.childCount <= 0)
+            return 0;
         for (int i = 0; i < _pooledEnemyList.Count; i++)
         {
             if (!_pooledEnemyList[i].gameObject.activeSelf)

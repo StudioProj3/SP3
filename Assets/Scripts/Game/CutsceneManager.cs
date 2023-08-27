@@ -32,7 +32,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!_boss.activeSelf)
+        if(_boss && !_boss.activeSelf)
         {
             WinCutscene();
         }
