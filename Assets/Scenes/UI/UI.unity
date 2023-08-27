@@ -9765,6 +9765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 968611720}
   - component: {fileID: 968611721}
+  - component: {fileID: 968611722}
   m_Layer: 5
   m_Name: Basic Crafting
   m_TagString: Untagged
@@ -9814,6 +9815,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da0cddeb68e8fb4418c141953e2d3720, type: 2}
   - {fileID: 11400000, guid: c223f2371f9cac749a8842542bae5a7b, type: 2}
   - {fileID: 11400000, guid: daf5dffde14704c4f9323dd84fb49f2c, type: 2}
+--- !u!95 &968611722
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968611719}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 15d30148b7a53614598371ff8922efe5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &985917041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13034,6 +13056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1493157591}
   - component: {fileID: 1493157592}
+  - component: {fileID: 1493157593}
   m_Layer: 5
   m_Name: Normal Crafting
   m_TagString: Untagged
@@ -13079,6 +13102,27 @@ MonoBehaviour:
   _allRecipes:
   - {fileID: 11400000, guid: 245219044ad9dd24c9536baaf588e513, type: 2}
   - {fileID: 11400000, guid: a3f10c37ae325004a90da05a07e752d2, type: 2}
+--- !u!95 &1493157593
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493157590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cabfade8458c27a42ab86aeb5bd121ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1524680266
 PrefabInstance:
   m_ObjectHideFlags: 0
