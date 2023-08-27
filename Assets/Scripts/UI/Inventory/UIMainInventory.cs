@@ -20,13 +20,6 @@ public class UIMainInventory : MonoBehaviour
     private GameObject _noMainInventory;
     private List<UIInventoryItemSlot> _slots = new();
 
-    public static event Action UseButtonClicked;
-
-    public void StartUseItemEvent()
-    {
-        UseButtonClicked();
-    }
-
     private void Update()
     {
         Inventory = _character.Inventory;
@@ -105,5 +98,6 @@ public class UIMainInventory : MonoBehaviour
 
             _slots.Add(newObject.GetComponent<UIInventoryItemSlot>());
         }
+
     }
 }

@@ -39,7 +39,8 @@ public class PlayerController :
         base.Start();
         EntityStats = Data.CharacterStats;
         Ladder.OnPlayerReturn += ResetHealthAndSanity;
-        UIInventoryItemSlot.OnUseFromInventory += ConsumeFromInventory;
+        UIHoverPanel.OnItemUse += ConsumeFromInventory;
+        UIHoverPanel.OnItemDrop += DropFromInventory;
         UIPlayerRespawn.BeginPlayerRespawn += RespawnPlayer;
         
         SetupStateMachine();
@@ -49,7 +50,8 @@ public class PlayerController :
     {
         Ladder.OnPlayerReturn -= ResetHealthAndSanity;
         UIPlayerRespawn.BeginPlayerRespawn -= RespawnPlayer;
-        UIInventoryItemSlot.OnUseFromInventory -= ConsumeFromInventory;
+        UIHoverPanel.OnItemUse -= ConsumeFromInventory;
+        UIHoverPanel.OnItemDrop -= DropFromInventory;
     }
 
     protected override void SetupStateMachine()
@@ -234,11 +236,35 @@ public class PlayerController :
         LoadingManager.Instance.LoadScene("SurfaceLayerScene");
     }
 
-    private void ConsumeFromInventory(ItemBase item)
+    private void ConsumeFromInventory(ItemBase item, int index, InventoryBase inventory)
     {
         if (item is IConsumable consumable)
         {
             consumable.ApplyConsumptionEffect(Data.CharacterStats, this);
+            inventory.RemoveItemByIndex(index, 1);
         }
     }
+
+    private void DropFromInventory(ItemBase item, int index, InventoryBase inventory)
+    {
+        GameObject spawner = GameObject.FindWithTag("ItemSpawner");
+        if (spawner != null)
+        {
+            if (spawner.TryGetComponent(out ItemSpawner spawnerComponent))
+            {
+                Collectible collectible = 
+                    spawnerComponent.SpawnObject(item, 1, transform.position);
+
+                collectible.enabled = false;
+                
+                // After 0.5 seconds, enable collection again.
+                this.DelayExecute(() => 
+                {
+                    collectible.enabled = true;
+                }, 0.5f);
+            }
+        }
+        inventory.RemoveItemByIndex(index, 1);
+    }
+
 }

@@ -117,7 +117,6 @@ public class SaveManager : Singleton<SaveManager>
         Dictionary<string, string> saveDict =
             JsonConvert.DeserializeObject
             <Dictionary<string, string>>(loadSaveString);
-        Debug.Log(saveDict.Count);
 
         _saveDict = saveDict;
 
@@ -144,13 +143,18 @@ public class SaveManager : Singleton<SaveManager>
         }
     }
 
+    protected override void OnStart()
+    {
+        StartCoroutine(Init());
+    }
+
     private void WriteToDisk()
     {
         File.WriteAllText(GetSaveLocation(),
             JsonConvert.SerializeObject(_saveDict));
     }
 
-    private IEnumerator Start()
+    private IEnumerator Init()
     {
         yield return null;
         LoadAll();

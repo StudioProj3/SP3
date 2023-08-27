@@ -50,7 +50,12 @@ public abstract class InventoryBase :
 
     public uint GetAmount(int index)
     {
-        return _allItems[index].Value;
+        if (_allItems[index] != null)
+        {
+            return _allItems[index].Value;
+        }
+
+        return 0;
     }
 
     public virtual void Reset()
@@ -88,8 +93,11 @@ public abstract class InventoryBase :
         {
             _allItems[index] = null;
         }
+        SaveInventory();
         return true;
     }
+
+    protected virtual void SaveInventory() {}
 
     // Function returns whether the modification request is valid
     // and caches the data needed for the modification

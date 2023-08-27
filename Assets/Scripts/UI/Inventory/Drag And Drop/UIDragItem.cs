@@ -14,7 +14,10 @@ public class UIDragItem :
     [field: SerializeField]
     public uint BringFrontCount { get; set; } = 1;
 
+    private UIInventoryItemSlot _parentSlot;
+    private string _tag;
     private UIInventory _uiinventory;
+    private UICrafting _uicrafting;
     private Image _image;
     private RectTransform _rectTransform;
     private Vector2 _size;
@@ -30,7 +33,14 @@ public class UIDragItem :
         _rectTransform.sizeDelta = _size;
         _image.raycastTarget = false;
 
-        _uiinventory.HideHoverPanel();
+        if (_tag == "UIInventory")
+        {
+            _uiinventory.HideHoverPanel();
+        }
+        else if (_tag == "UICrafting")
+        {
+            _uicrafting.HideHoverPanel();
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -40,7 +50,14 @@ public class UIDragItem :
         _rectTransform.anchoredPosition = new(0f, 4.9f);
         _image.raycastTarget = true;
 
-        _uiinventory.ShowHoverPanel();
+        if (_tag == "UIInventory")
+        {
+            _uiinventory.ShowHoverPanel();
+        }
+        else if (_tag == "UICrafting")
+        {
+            _uicrafting.ShowHoverPanel();
+        }
     }
 
     public void RevertParent()
@@ -57,8 +74,20 @@ public class UIDragItem :
         Parent = transform.parent;
         DropArea = Parent.GetComponent<UIDropArea>();
 
-        _uiinventory = GameObject.FindWithTag("UIInventory").
-            GetComponent<UIInventory>();
+        _parentSlot = GetComponentInParent<UIInventoryItemSlot>();
+        _tag = _parentSlot.Tag;
+
+        if (_tag == "UIInventory")
+        {
+            _uiinventory = GameObject.FindWithTag("UIInventory").
+                GetComponent<UIInventory>();
+        }
+        else if (_tag == "UICrafting")
+        {
+            _uicrafting = GameObject.FindWithTag("UICrafting").
+                GetComponent<UICrafting>();
+        }
+
         _image = GetComponent<Image>();
         _rectTransform = GetComponent<RectTransform>();
         _size = _rectTransform.sizeDelta;
