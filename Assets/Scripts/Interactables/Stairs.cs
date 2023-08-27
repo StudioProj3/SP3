@@ -18,9 +18,9 @@ public class Stairs : InteractableBase
         {
             _loadingManager.OnSceneStartLoading();
             _ = Delay.Execute(() => {
+                LoadingManager.Instance.UnloadScene(gameObject.scene.name);
                 LoadingManager.Instance.LoadSceneAdditive(_nextScene, false);
                 LoadingManager.Instance.LoadAfterAdditiveFinish();
-                LoadingManager.Instance.UnloadScene(gameObject.scene.name);
             }, 0.167f);
         }
     }
