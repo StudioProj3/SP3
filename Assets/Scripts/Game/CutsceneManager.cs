@@ -27,6 +27,7 @@ public class CutsceneManager : MonoBehaviour
         _cutscenePlaying = true;
         _cutsceneFinished = false;
         _boss = GameObject.FindWithTag("Enemy");
+        AudioManager.Instance.StopAllMusic();
         PlayCutscene();
     }
 
