@@ -51,6 +51,7 @@ public class BasicInventory :
 
             _allItems[i] = _itemInitializerList[i].Key ?
                 _itemInitializerList[i] : null;
+            continue;
 
 #endif
 
