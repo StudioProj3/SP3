@@ -46,7 +46,8 @@ public class HandInventory :
         for (int i = 0; i < _itemInitializerList.Count; ++i)
         {
             _allItems[i] = _itemInitializerList[i].Key ?
-                _itemInitializerList[i] : null;
+                _itemInitializerList[i].Value > 0 ? _itemInitializerList[i]
+                : null : null;
         }
     }
 
@@ -85,6 +86,11 @@ public class HandInventory :
         MaxPerSlot = 1;
 
         base.OnValidate();
+    }
+
+    protected override void SaveInventory()
+    {
+        SaveManager.Instance.Save(SaveID);
     }
 
     private void Awake()
