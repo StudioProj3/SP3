@@ -7,6 +7,8 @@ public class NormalCraft : MonoBehaviour
     [SerializeField]
     private List<NormalRecipe> _allRecipes = new();
 
+    private Animator _animator;
+
     public bool Craft(NormalRecipeInventory inventory,
         UnitInventory unit)
     {
@@ -43,6 +45,8 @@ public class NormalCraft : MonoBehaviour
             return true;
         }
 
+        Shake();
+
         return false;
     }
 
@@ -77,5 +81,15 @@ public class NormalCraft : MonoBehaviour
                 inventory.RemoveItemByIndex(i, 1);
             }
         }
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
+    private void Shake()
+    {
+        _animator.SetTrigger("shake");
     }
 }
