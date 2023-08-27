@@ -111,6 +111,8 @@ public class Stats :
 
         Dictionary<string, IModifiableValue> newDict = new();
 
+        // Remove all temporary modifiers 
+
         foreach (var pair in _stats)
         {
             newDict.Add(pair.Key.name, pair.Value);
@@ -159,6 +161,27 @@ public class Stats :
         }
 
         _stats = newDict;
+
+        // We only want to modify the stat in the saving list
+        foreach (var stat in _stats.Values)
+        {
+            var appliedModifiers = stat.AppliedModifiers;
+            List<Modifier> indexesToRemove = new();
+
+            for (int i = 0; i < appliedModifiers.Count; ++i)
+            {
+                if (!appliedModifiers[i].Permanent)
+                {
+                    indexesToRemove.Add(appliedModifiers[i]);
+                }
+            }
+
+            foreach (Modifier modifier in indexesToRemove)
+            {
+                stat.RemoveModifier(modifier);
+            }
+        }
+
         AddListenerToStats();
     }
 

@@ -41,7 +41,7 @@ public class DefenseMultiplierEffect : StatusEffectBase
 
         _duration = duration;
         _defenseChange = defenseChange;
-        _defenseModifier = Modifier.Multiply(defenseChange, 25);
+        _defenseModifier = Modifier.Multiply(defenseChange, 25, false);
 
         return this;
     }

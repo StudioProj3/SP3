@@ -40,7 +40,7 @@ public class SpeedMultiplierEffect : StatusEffectBase
 
         _duration = duration;
         _movementPenalty = movementPenalty; 
-        _movementModifier = Modifier.Multiply(movementPenalty, 25);
+        _movementModifier = Modifier.Multiply(movementPenalty, 25, false);
 
         return this;
     }
