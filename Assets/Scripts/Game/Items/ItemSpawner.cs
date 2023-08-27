@@ -23,6 +23,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
         public string itemJson;
         public uint quantity;
         public SerializableVector3 position;
+        public SerializableVector3 scale;
     }
 
     [Serializable]
@@ -106,6 +107,8 @@ public class ItemSpawner : MonoBehaviour, ISavable
                 _pickup.OnPlayerPickup.AddListener(OnPickupCallback);
             }
         }
+        // yield return null;
+        // SaveManager.Instance.Load(SaveID);
     }
 
     private void OnDestroy()
@@ -114,6 +117,7 @@ public class ItemSpawner : MonoBehaviour, ISavable
         if (EnableSave)
         {
             SaveManager.Instance.Unhook(SaveID);
+            _isHooked = false;
         }
     }
 
@@ -121,6 +125,15 @@ public class ItemSpawner : MonoBehaviour, ISavable
     {
         Collectible collectible = _droppedItemPool.Get();
         collectible.Initialize(_droppedItemPool, item, quantity, position);
+        SaveManager.Instance.Save(SaveID);
+        return collectible;
+    }
+
+    public Collectible SpawnObject(ItemBase item, uint quantity, Vector3 position, Vector3 scale)
+    {
+        Collectible collectible = _droppedItemPool.Get();
+        collectible.Initialize(_droppedItemPool, item, quantity, position);
+        collectible.transform.localScale = scale;
         SaveManager.Instance.Save(SaveID);
         return collectible;
     }
@@ -139,7 +152,8 @@ public class ItemSpawner : MonoBehaviour, ISavable
             .Select(c => new ItemSaveEntry() {
                 itemJson = JsonUtility.ToJson(new ItemWrapper(c.Item)),
                 quantity = c.Quantity,
-                position = new SerializableVector3(c.transform.position)
+                position = new SerializableVector3(c.GetComponent<Animator>().rootPosition),
+                scale = new SerializableVector3(c.transform.localScale)
             })
             .ToList();
 
@@ -156,8 +170,10 @@ public class ItemSpawner : MonoBehaviour, ISavable
         var collectiblePairs = JsonConvert
             .DeserializeObject<List<ItemSaveEntry>>(data);
 
-        collectiblePairs.ForEach(i => SpawnObject(
-            JsonUtility.FromJson<ItemWrapper>(i.itemJson).item, 
-            i.quantity, i.position.UnityVector));
+        collectiblePairs.ForEach(i => 
+        {
+            SpawnObject(JsonUtility.FromJson<ItemWrapper>(i.itemJson).item, 
+                i.quantity, i.position.UnityVector, i.scale.UnityVector);
+        });
     }
 }
