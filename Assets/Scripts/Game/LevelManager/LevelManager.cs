@@ -1,5 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -28,7 +29,6 @@ public class LevelManager : MonoBehaviour
         {
             _loadingManager.LoadSceneAdditive(_initScenes[i], false);
         }
-
         
     }
 
@@ -39,12 +39,13 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (_loadingManager.asyncLoad == null)
+        if (_loadingManager.additiveLoadingSceneOperations.Count < 0)
         {
             return;
         }
 
-        if (!_enemiesLoaded && _loadingManager.asyncLoad.isDone)
+        if (!_enemiesLoaded && _loadingManager.additiveLoadingSceneOperations
+            .Where(x => !x.isDone).Count() == 0)
         {
             GameObject startPos = GameObject.FindWithTag("PlayerStart");
             GameObject player = GameObject.FindWithTag("Player");
@@ -62,6 +63,9 @@ public class LevelManager : MonoBehaviour
 
             _enemiesLoaded = true;
             EnemyManager.Instance.SpawnEnemiesInScene(gameObject.scene.name, this);
+
+            _loadingManager.additiveLoadingSceneOperations.Clear();
+            _loadingManager.OnSceneFinishedLoading();
         }
     }
 }
