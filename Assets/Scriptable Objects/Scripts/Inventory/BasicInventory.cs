@@ -47,8 +47,15 @@ public class BasicInventory :
 
         for (int i = 0; i < _itemInitializerList.Count; ++i)
         {
+#if UNITY_EDITOR
+
             _allItems[i] = _itemInitializerList[i].Key ?
                 _itemInitializerList[i] : null;
+
+#endif
+
+            _allItems.Add(_itemInitializerList[i].Key ?
+                _itemInitializerList[i] : null);
         }
     }
     protected override void SaveInventory()
