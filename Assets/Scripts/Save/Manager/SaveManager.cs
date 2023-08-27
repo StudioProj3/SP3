@@ -67,11 +67,23 @@ public class SaveManager : Singleton<SaveManager>
         Assert(loadCallback != null,
             "`loadCallback` should not be null");
 
-        Assert(!_callbacks.ContainsKey(saveID),
-            "`saveID` already exist");
+        // Assert(!_callbacks.ContainsKey(saveID),
+        //     "`saveID` already exist");
 
-        _callbacks.Add(saveID, new(saveCallback, loadCallback));
+        if (!_callbacks.ContainsKey(saveID))
+        {
+            _callbacks.Add(saveID, new(saveCallback, loadCallback));
+        }
     }
+
+    public void Unhook(string saveID)
+    {
+        if (_callbacks.ContainsKey(saveID))
+        {
+            _callbacks.Remove(saveID);
+        }
+    }
+
 
     public void Save(string saveID)
     {

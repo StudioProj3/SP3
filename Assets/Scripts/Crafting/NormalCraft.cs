@@ -16,6 +16,13 @@ public class NormalCraft : MonoBehaviour
         {
             uint spaceNeeded = recipe.TargetQuantity;
 
+            // Target item is not the same hence stacking
+            // is not possible
+            if (recipe.Target != unit.Slot())
+            {
+                continue;
+            }
+
             // Not enough space in the target `UnitInventory`
             if (spaceNeeded > freeSpace)
             {

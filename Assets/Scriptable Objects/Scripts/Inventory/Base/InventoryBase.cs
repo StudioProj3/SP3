@@ -404,8 +404,8 @@ public abstract class InventoryBase :
             return true;
         }
 
-        uint maxPerSlot1 = MaxNumSlots;
-        uint maxPerSlot2 = other.MaxNumSlots;
+        uint maxPerSlot1 = MaxPerSlot;
+        uint maxPerSlot2 = other.MaxPerSlot;
 
         uint quantity1 = 0;
         uint quantity2 = 0;

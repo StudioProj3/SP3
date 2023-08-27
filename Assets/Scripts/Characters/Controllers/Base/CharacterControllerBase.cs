@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 // Abstract base class to be inherited from by
@@ -19,6 +19,8 @@ public abstract class CharacterControllerBase :
     protected SpriteRenderer _spriteRenderer;
     protected List<StatusEffectBase> _statusEffects = new();
     protected AudioManager _audioManager;
+    protected bool _statsHooked = false;
+    protected bool _dataHooked = false;
 
     public virtual void TakeDamage(Damage damage, Vector3 knockback)
     {
@@ -52,9 +54,13 @@ public abstract class CharacterControllerBase :
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioManager = AudioManager.Instance;
 
-        Stats stats = Data.CharacterStats;
-        stats.HookEvents();
-        stats.AddListenerToStats();
+        if (!_statsHooked)
+        {
+            _statsHooked = true;
+            Stats stats = Data.CharacterStats;
+            stats.HookEvents();
+            stats.AddListenerToStats();
+        }
     }
 
 
@@ -68,9 +74,12 @@ public abstract class CharacterControllerBase :
 
     protected virtual void Awake()
     {
-        Data.HookEvents();
+        if (!_dataHooked)
+        {
+            _dataHooked = true;
+            Data.HookEvents();
+        }
         Data.Reset();
-
     }
 
     protected void RemoveEffectImpl(StatusEffectBase statusEffect,
