@@ -30,8 +30,10 @@ public class BasicCraft : MonoBehaviour
             }
 
             // All conditions are met, perform the craft
+            Deduct(inventory, recipe);
+            unit.Add(recipe.Target, spaceNeeded);
 
-
+            return true;
         }
 
         return false;
@@ -44,5 +46,23 @@ public class BasicCraft : MonoBehaviour
             inventory.Row1Col2() == recipe.Row1Col2 &&
             inventory.Row2Col1() == recipe.Row2Col1 &&
             inventory.Row2Col2() == recipe.Row2Col2;
+    }
+
+    private void Deduct(BasicRecipeInventory inventory,
+        BasicRecipe recipe)
+    {
+        ItemBase[] arr = new ItemBase[]
+        {
+            recipe.Row1Col1, recipe.Row1Col2,
+            recipe.Row2Col1, recipe.Row2Col2,
+        };
+
+        for (int i = 0; i < arr.Length; ++i)
+        {
+            if (arr[i])
+            {
+                inventory.RemoveItemByIndex(i, 1);
+            }
+        }
     }
 }
