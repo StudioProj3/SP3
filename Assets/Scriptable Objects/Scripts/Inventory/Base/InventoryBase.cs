@@ -92,7 +92,9 @@ public abstract class InventoryBase :
         if (_allItems[index].Value == 0)
         {
             _allItems[index] = null;
+            _itemInitializerList[index] = null;
         }
+
         SaveInventory();
         return true;
     }

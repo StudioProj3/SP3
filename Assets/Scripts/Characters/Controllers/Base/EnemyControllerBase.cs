@@ -34,24 +34,27 @@ public class EnemyControllerBase :
             new GenericState("Death",
                 new ActionEntry("Enter", () =>
                 {
-                    OnEnemyDeath(GameObject.FindWithTag("EnemySpawner").scene.name,Weight);
-                    _playerController.EntityStats.GetStat("ExperiencePoints").Add(ExpAmount);
-
-                    _rigidbody.velocity = new Vector3(0, 0, 0);
-
-                    for (int i = 0; i < ItemDropList.Count; i++)
+                    if (gameObject.name != "Boss")
                     {
-                        float randomFloat = UnityEngine.Random.Range(0.0f, 1.0f);
-                        if (randomFloat < ItemDropList[i].percentChance)
-                        {
-                            float randomX = UnityEngine.Random.Range(-0.25f, 0.25f);
-                            float randomZ = UnityEngine.Random.Range(-0.25f, 0.25f);
+                        OnEnemyDeath(GameObject.FindWithTag("EnemySpawner").scene.name, Weight);
+                        _playerController.EntityStats.GetStat("ExperiencePoints").Add(ExpAmount);
 
-                            itemSpawner.SpawnObject(ItemDropList[i].item,
-                                ItemDropList[i].amount, new Vector3(
-                                transform.position.x + randomX,
-                                transform.position.y,
-                                transform.position.z + randomZ));
+                        _rigidbody.velocity = new Vector3(0, 0, 0);
+
+                        for (int i = 0; i < ItemDropList.Count; i++)
+                        {
+                            float randomFloat = UnityEngine.Random.Range(0.0f, 1.0f);
+                            if (randomFloat < ItemDropList[i].percentChance)
+                            {
+                                float randomX = UnityEngine.Random.Range(-0.25f, 0.25f);
+                                float randomZ = UnityEngine.Random.Range(-0.25f, 0.25f);
+
+                                itemSpawner.SpawnObject(ItemDropList[i].item,
+                                    ItemDropList[i].amount, new Vector3(
+                                    transform.position.x + randomX,
+                                    transform.position.y,
+                                    transform.position.z + randomZ));
+                            }
                         }
                     }
                 })

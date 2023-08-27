@@ -367,7 +367,10 @@ public class BossController :
         _distance = Vector3.Distance(_player.transform.position,
             transform.position);
 
-        _stateMachine.FixedUpdate();
+        if (GameManager.Instance.CurrentState == GameState.Play)
+        {
+            _stateMachine.FixedUpdate();
+        }
     }
 
     private void OnCollisionEnter(Collision col)
