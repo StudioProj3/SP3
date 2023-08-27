@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5410634781427599799}
   - component: {fileID: 5410634781427599752}
-  - component: {fileID: 5410634781427599753}
+  - component: {fileID: 5410634781515934873}
+  - component: {fileID: 5410634781515934874}
   m_Layer: 0
   m_Name: trees_14
-  m_TagString: Scene Object
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &5410634781427599753
+--- !u!65 &5410634781515934873
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,8 +94,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5410634781427599755}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.17928939, y: 0.32, z: 0.05}
-  m_Center: {x: -0.000025704503, y: 0, z: 0}
+  m_Size: {x: 0.32, y: 0.32, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5410634781515934874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5410634781427599755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a153f236b0a8b42a5bee0f428bcb2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactText: ~ Enter ~
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _nextScene: Layer1Room2
