@@ -28,11 +28,15 @@ public class UIHUDLevel : MonoBehaviour
 
         _experienceStat.ValueChanged += ExperienceValueChangedHandler;
         _levelStat.ValueChanged += LevelValueChangedHandler;
+
+        ExperienceValueChangedHandler();
+        LevelValueChangedHandler();
     }
 
     private void OnDisable()
     {
         _experienceStat.ValueChanged -= ExperienceValueChangedHandler;
+        _levelStat.ValueChanged -= LevelValueChangedHandler;
     }
 
     private void ExperienceValueChangedHandler()
