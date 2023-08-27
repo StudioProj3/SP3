@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,22 +10,30 @@ public class LoadingManager : Singleton<LoadingManager>
     public SceneList sceneList;
 
     public AsyncOperation asyncLoad;
+    public List<AsyncOperation> additiveLoadingSceneOperations = new();
 
     private Animator _animator;
 
     // Load new independent scene
+
+    public void OnSceneFinishedLoading()
+    {
+        _animator.SetBool("sceneLoad", false);
+    }
+
     public void LoadScene(string sceneName)
     {
         SaveManager.Instance.SaveAll();
         _animator.SetBool("sceneLoad", true);
-        asyncLoad =
-            SceneManager.LoadSceneAsync(sceneName);
-        
-        asyncLoad.completed += (_) => 
-        {
-            SaveManager.Instance.LoadAll();
-            _animator.SetBool("sceneLoad", false);
-        };
+        this.DelayExecute(() => {
+            asyncLoad =
+                SceneManager.LoadSceneAsync(sceneName);
+            
+            asyncLoad.completed += (_) => 
+            {
+                SaveManager.Instance.LoadAll();
+            };
+        }, 0.167f);
 
         // TODO (Aquila) Demon Code
 
@@ -90,9 +99,10 @@ public class LoadingManager : Singleton<LoadingManager>
                 return;
             }
         }
-        asyncLoad = SceneManager.LoadSceneAsync
-            (sceneName, LoadSceneMode.Additive);
-
+        // asyncLoad = SceneManager.LoadSceneAsync
+        //     (sceneName, LoadSceneMode.Additive);
+        additiveLoadingSceneOperations.Add(SceneManager.LoadSceneAsync
+            (sceneName, LoadSceneMode.Additive));
     }
 
     // Unload a scene
