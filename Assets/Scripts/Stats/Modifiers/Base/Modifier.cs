@@ -13,7 +13,7 @@ public abstract class Modifier : ICloneable
 
     public bool Permanent { get; protected set; }
 
-    public Modifier(float value, int priority, bool permanent = true)
+    public Modifier(float value, int priority, bool permanent)
     {
         _value = value;
         _priority = priority;

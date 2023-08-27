@@ -93,14 +93,14 @@ public class ConsumableItem : ItemBase, IConsumable
             {
                 modifier = Modifier.Plus(
                         consumptionEffectModifier.modifierValue, 
-                        consumptionEffectModifier.priority);
+                        consumptionEffectModifier.priority, false);
             }
             else if (consumptionEffectModifier.modifierType
                  == ModifierType.Multiply)
             {
                 modifier = Modifier.Multiply(
                         consumptionEffectModifier.modifierValue, 
-                        consumptionEffectModifier.priority);
+                        consumptionEffectModifier.priority, false);
             }
             else
             {
