@@ -88,6 +88,7 @@ public abstract class InventoryBase :
         {
             _allItems[index] = null;
         }
+
         return true;
     }
 
