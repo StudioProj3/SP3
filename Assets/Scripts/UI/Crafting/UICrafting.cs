@@ -17,6 +17,9 @@ public class UICrafting : MonoBehaviour
         Book,
     }
 
+    public Mode CurrentMode { get; private set; } =
+        Mode.Craft;
+
     private GameObject _content;
     private GameObject _basicTitle;
     private GameObject _basicCrafting;
@@ -30,7 +33,6 @@ public class UICrafting : MonoBehaviour
     private TMP_Text _modeButtonText;
 
     private Page _page = Page.Basic;
-    private Mode _mode = Mode.Craft;
 
     // To be used when player is dragging items to
     // reduce visual clutter
@@ -110,11 +112,11 @@ public class UICrafting : MonoBehaviour
 
     public void ToggleMode()
     {
-        _mode = _mode == Mode.Book ?
+        CurrentMode = CurrentMode == Mode.Book ?
             Mode.Craft : Mode.Book;
 
         _modeButtonText.text = "Current: " +
-            _mode.ToString() + " mode";
+            CurrentMode.ToString() + " mode";
     }
 
     public void ShowCrafting()
