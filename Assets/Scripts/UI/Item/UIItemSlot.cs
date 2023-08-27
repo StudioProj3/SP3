@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public class UIItemSlot : MonoBehaviour
 {
-
-    public static event Action<ItemBase, int> OnUseFromMainInventory;
-    public static event Action<ItemBase, int> OnUseFromHandInventory;
+    public static event Action<ItemBase, int>
+        OnUseFromMainInventory;
+    public static event Action<ItemBase, int>
+        OnUseFromHandInventory;
 
     private TMP_Text _itemQuantity;
     protected int _index;
     protected bool _inMain;
     protected ItemBase _item;
 
-    public UIItemSlot Init(int index, bool inMain, ItemBase item = null)
+    public UIItemSlot Init(int index, bool inMain,
+        ItemBase item = null)
     {
         _index = index;
         _inMain = inMain;
@@ -32,6 +34,7 @@ public class UIItemSlot : MonoBehaviour
     {
         _item = item;
     }
+
     public void SetIcon(Sprite sprite)
     {
         Transform icon = transform.GetChild(0);
@@ -58,7 +61,8 @@ public class UIItemSlot : MonoBehaviour
         _itemQuantity.text = quantity.ToString();
     }
 
-    public void SetIconAndQuantity(Sprite sprite, uint quantity)
+    public void SetIconAndQuantity(Sprite sprite,
+        uint quantity)
     {
         SetIcon(sprite);
         SetQuantity(quantity);

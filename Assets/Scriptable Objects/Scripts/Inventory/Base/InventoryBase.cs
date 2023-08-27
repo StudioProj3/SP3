@@ -50,7 +50,12 @@ public abstract class InventoryBase :
 
     public uint GetAmount(int index)
     {
-        return _allItems[index].Value;
+        if (_allItems[index] != null)
+        {
+            return _allItems[index].Value;
+        }
+
+        return 0;
     }
 
     public virtual void Reset()
