@@ -2,9 +2,9 @@ using UnityEngine;
 
 using static DebugUtils;
 
-public class UIBasicCrafting : MonoBehaviour
+public class UINormalCrafting : MonoBehaviour
 {
-    private BasicCraft _basicCraft;
+    private NormalCraft _normalCraft;
     private UICrafting _uicrafting;
     private GameObject _craftButton;
     private GameObject _book;
@@ -31,7 +31,7 @@ public class UIBasicCrafting : MonoBehaviour
 
     private void Awake()
     {
-        _basicCraft = GetComponent<BasicCraft>();
+        _normalCraft = GetComponent<NormalCraft>();
         _uicrafting = GameObject.FindWithTag("UICrafting").
             GetComponent<UICrafting>();
         _craftButton = transform.ChildGO(2);
