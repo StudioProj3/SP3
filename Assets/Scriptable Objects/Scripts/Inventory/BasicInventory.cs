@@ -51,4 +51,8 @@ public class BasicInventory :
                 _itemInitializerList[i] : null;
         }
     }
+    protected override void SaveInventory()
+    {
+        SaveManager.Instance.Save(SaveID);
+    }
 }

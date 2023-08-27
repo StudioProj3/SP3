@@ -88,8 +88,11 @@ public abstract class InventoryBase :
         {
             _allItems[index] = null;
         }
+        SaveInventory();
         return true;
     }
+
+    protected virtual void SaveInventory() {}
 
     // Function returns whether the modification request is valid
     // and caches the data needed for the modification
