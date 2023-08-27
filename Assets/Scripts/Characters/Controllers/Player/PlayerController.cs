@@ -170,7 +170,11 @@ public class PlayerController :
 
         if (Input.GetKeyDown(KeyCode.G))
         {
+#if UNITY_EDITOR
+
             Data.HandInventory.Print();
+
+#endif
         }
 
         // Temporary bandaid solution
