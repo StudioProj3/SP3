@@ -131,6 +131,24 @@ public sealed class QuestManager : Singleton<QuestManager>, ISavable
         }
     }
 
+    public void UpdateQuestTextOnSceneChange()
+    {
+        foreach (Quest quest in _allQuests.Values)
+        {
+
+            if (quest.state != QuestState.CanStart)
+            {
+                return;
+            }
+            QuestStep step = quest.InstantiateCurrentQuestStep(transform);
+
+            if (QuestDisplayInformation != null)
+            {
+                QuestDisplayInformation.UpdateDisplayText(quest.Info.ID, step.DisplayDescription);
+            }
+        }
+    }
+
     private void OnEnable()
     {
         OnQuestStart += StartQuestCallback;
