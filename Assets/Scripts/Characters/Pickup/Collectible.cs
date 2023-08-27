@@ -40,6 +40,11 @@ public class Collectible : MonoBehaviour
         }
     }
 
+    public void OverrideOriginalPosition(Vector3 position)
+    {
+        OriginalPosition = position;
+    }
+
     private void OnEnable()
     {
     }
