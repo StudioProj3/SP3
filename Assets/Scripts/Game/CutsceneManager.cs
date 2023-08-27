@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class CutsceneManager : MonoBehaviour
 {
-    private bool cutscenePlaying;
-    private bool cutsceneFinished;
+    private bool _cutscenePlaying;
+    private bool _cutsceneFinished;
+    private GameObject _boss;
+
+    public void WinCutscene()
+    {
+        GameManager.Instance.CurrentState = GameState.Win;
+    }
 
     public void PlayCutscene()
     {
@@ -12,27 +18,33 @@ public class CutsceneManager : MonoBehaviour
 
     public void StopCutscene()
     {
-        cutscenePlaying = false;
+        _cutscenePlaying = false;
         GameManager.Instance.CurrentState = GameState.Play;
     }
 
     private void Awake()
     {
-        cutscenePlaying = true;
-        cutsceneFinished = false;
+        _cutscenePlaying = true;
+        _cutsceneFinished = false;
+        _boss = GameObject.FindWithTag("Enemy");
         PlayCutscene();
     }
 
     private void FixedUpdate()
     {
-        if (cutscenePlaying)
+        if(!_boss.activeSelf)
+        {
+            WinCutscene();
+        }
+
+        if (_cutscenePlaying)
         {
             PlayCutscene();
         }
-        else if(!cutsceneFinished)
+        else if(!_cutsceneFinished)
         {
-            cutscenePlaying = false;
-            cutsceneFinished = true;
+            _cutscenePlaying = false;
+            _cutsceneFinished = true;
             StopCutscene();
         }
     }
