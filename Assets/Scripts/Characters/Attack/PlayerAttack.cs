@@ -68,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
         
         CalculateMousePos();
         
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             _usingLeftHand = !_usingLeftHand;
             UpdateHands();
