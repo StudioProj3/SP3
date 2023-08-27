@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -29,6 +31,19 @@ public class UIHUDLevel : MonoBehaviour
         _experienceStat.ValueChanged += ExperienceValueChangedHandler;
         _levelStat.ValueChanged += LevelValueChangedHandler;
 
+        ExperienceValueChangedHandler();
+        LevelValueChangedHandler();
+    }
+
+    private IEnumerator Start()
+    {
+        for (int i = 0; i < 3; ++i)
+        {
+            yield return null;
+        }
+
+        _experienceStat = _playerData.CharacterStats.GetStat("ExperiencePoints");
+        _levelStat = _playerData.CharacterStats.GetStat("Level");
         ExperienceValueChangedHandler();
         LevelValueChangedHandler();
     }
