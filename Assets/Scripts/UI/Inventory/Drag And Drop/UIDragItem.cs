@@ -7,6 +7,8 @@ public class UIDragItem :
     MonoBehaviour, IDragHandler, IBeginDragHandler,
     IEndDragHandler
 {
+    public bool Disable { get; set; } = false;
+
     public Transform Parent { get; set; }
 
     public UIDropArea DropArea { get; private set; }
@@ -24,11 +26,21 @@ public class UIDragItem :
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (Disable)
+        {
+            return;
+        }
+
         transform.position = eventData.position;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (Disable)
+        {
+            return;
+        }
+
         BringToFront();
         _rectTransform.sizeDelta = _size;
         _image.raycastTarget = false;
@@ -45,6 +57,11 @@ public class UIDragItem :
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (Disable)
+        {
+            return;
+        }
+
         RevertParent();
         _rectTransform.sizeDelta = _size;
         _rectTransform.anchoredPosition = new(0f, 4.9f);
