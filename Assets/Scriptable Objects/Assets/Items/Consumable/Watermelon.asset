@@ -16,7 +16,7 @@ MonoBehaviour:
   <Sprite>k__BackingField: {fileID: -404245196, guid: 2c9e6f375373fb5458a549f04ea87fe5,
     type: 3}
   <Atlas>k__BackingField: 0
-  <Stackable>k__BackingField: 0
+  <Stackable>k__BackingField: 1
   <Usable>k__BackingField: 1
   <Droppable>k__BackingField: 1
   <Weight>k__BackingField: 0
@@ -42,3 +42,12 @@ MonoBehaviour:
     modifierType: 0
     modifierValue: 25
   _statusEffects: []
+  <CurrencyCost>k__BackingField:
+    costs:
+    - <First>k__BackingField: {fileID: 11400000, guid: 800f81c548c6d7847924eea266ba727c,
+        type: 2}
+      <Second>k__BackingField: 5
+    - <First>k__BackingField: {fileID: 0}
+      <Second>k__BackingField: 0
+    - <First>k__BackingField: {fileID: 0}
+      <Second>k__BackingField: 0
