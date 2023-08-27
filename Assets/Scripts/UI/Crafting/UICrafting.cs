@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 using static DebugUtils;
@@ -10,6 +11,15 @@ public class UICrafting : MonoBehaviour
         Normal,
     }
 
+    public enum Mode
+    {
+        Craft,
+        Book,
+    }
+
+    public Mode CurrentMode { get; private set; } =
+        Mode.Craft;
+
     private GameObject _content;
     private GameObject _basicTitle;
     private GameObject _basicCrafting;
@@ -19,6 +29,8 @@ public class UICrafting : MonoBehaviour
 
     private GameObject _leftButton;
     private GameObject _rightButton;
+
+    private TMP_Text _modeButtonText;
 
     private Page _page = Page.Basic;
 
@@ -98,6 +110,15 @@ public class UICrafting : MonoBehaviour
         }
     }
 
+    public void ToggleMode()
+    {
+        CurrentMode = CurrentMode == Mode.Book ?
+            Mode.Craft : Mode.Book;
+
+        _modeButtonText.text = "Current: " +
+            CurrentMode.ToString() + " mode";
+    }
+
     public void ShowCrafting()
     {
         gameObject.SetActive(true);
@@ -124,5 +145,8 @@ public class UICrafting : MonoBehaviour
 
         _leftButton = transform.ChildGO(4);
         _rightButton = transform.ChildGO(5);
+
+        _modeButtonText = transform.GetChild(6).
+            GetComponentInChildren<TMP_Text>();
     }
 }
