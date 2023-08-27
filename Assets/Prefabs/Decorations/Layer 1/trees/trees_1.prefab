@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 649277105505654035}
   - component: {fileID: 649277105505654032}
   - component: {fileID: 649277105505654034}
+  - component: {fileID: 6097220812973002699}
   m_Layer: 0
   m_Name: trees_1
   m_TagString: Scene Object
@@ -96,5 +97,18 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.28, y: 0.32, z: 0.05}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.28, y: 0.1440607, z: 0.05}
+  m_Center: {x: 0, y: 0.087969646, z: 0}
+--- !u!65 &6097220812973002699
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649277105505654033}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08007923, y: 0.16802394, z: 0.05}
+  m_Center: {x: -0.013798192, y: -0.065988034, z: 0}
