@@ -9695,6 +9695,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 968611720}
+  - component: {fileID: 968611721}
   m_Layer: 5
   m_Name: Basic Crafting
   m_TagString: Untagged
@@ -9725,6 +9726,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 950, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &968611721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968611719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7c6d209e3f1224c9d906b774d24afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allRecipes:
+  - {fileID: 11400000, guid: 9db7eec0456d38b4c88998f37d6be611, type: 2}
+  - {fileID: 11400000, guid: 6e9e32d6d2b2fdd4a96b2a36f9df17db, type: 2}
+  - {fileID: 11400000, guid: c15a2cd48aaf42e46b16f512d08f0335, type: 2}
+  - {fileID: 11400000, guid: da0cddeb68e8fb4418c141953e2d3720, type: 2}
+  - {fileID: 11400000, guid: c223f2371f9cac749a8842542bae5a7b, type: 2}
+  - {fileID: 11400000, guid: daf5dffde14704c4f9323dd84fb49f2c, type: 2}
 --- !u!1001 &985917041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11411,8 +11431,9 @@ GameObject:
   - component: {fileID: 1313395558}
   - component: {fileID: 1313395561}
   - component: {fileID: 1313395560}
-  - component: {fileID: 1313395559}
   - component: {fileID: 1313395562}
+  - component: {fileID: 1313395559}
+  - component: {fileID: 1313395563}
   m_Layer: 5
   m_Name: Basic Craft Button
   m_TagString: Untagged
@@ -11544,6 +11565,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1313395563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313395557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb403ac4b329313428fd475f802e4dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1325029321
 GameObject:
   m_ObjectHideFlags: 0
