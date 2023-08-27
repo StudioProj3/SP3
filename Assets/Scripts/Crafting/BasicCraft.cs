@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BasicCraft : MonoBehaviour
 {
-    [SerializeField]
-    private List<BasicRecipe> _allRecipes = new();
+    [field: SerializeField]
+    public List<BasicRecipe> AllRecipes { get; private set; }
 
     private Animator _animator;
 
@@ -14,7 +14,7 @@ public class BasicCraft : MonoBehaviour
     {
         uint freeSpace = unit.MaxPerSlot - unit.SlotAmount();
 
-        foreach (BasicRecipe recipe in _allRecipes)
+        foreach (BasicRecipe recipe in AllRecipes)
         {
             uint spaceNeeded = recipe.TargetQuantity;
 

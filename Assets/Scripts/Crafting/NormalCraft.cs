@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NormalCraft : MonoBehaviour
 {
-    [SerializeField]
-    private List<NormalRecipe> _allRecipes = new();
+    [field: SerializeField]
+    public List<NormalRecipe> AllRecipes { get; private set; }
 
     private Animator _animator;
 
@@ -14,7 +14,7 @@ public class NormalCraft : MonoBehaviour
     {
         uint freeSpace = unit.MaxPerSlot - unit.SlotAmount();
 
-        foreach (NormalRecipe recipe in _allRecipes)
+        foreach (NormalRecipe recipe in AllRecipes)
         {
             uint spaceNeeded = recipe.TargetQuantity;
 
